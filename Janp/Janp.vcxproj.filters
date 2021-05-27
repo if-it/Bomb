@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{ff4de6eb-8cd7-45e2-a7e7-6bd9e3c35748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\ソースファイル">
+      <UniqueIdentifier>{cb166ec9-0202-4714-86b5-dccd69e468a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\ヘッダーファイル">
+      <UniqueIdentifier>{1fcf1a52-cf78-41f9-85e2-a91f9560ce0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="アプリケーション">
+      <UniqueIdentifier>{0b1678e9-0095-4462-9e13-3fc4c972c049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="アプリケーション\ソースファイル">
+      <UniqueIdentifier>{dce166f4-fce9-48b8-beff-531317f408e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="アプリケーション\ヘッダーファイル">
+      <UniqueIdentifier>{3e9a2c4d-ce79-423c-bdd2-fe3f631d35ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Fuse.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Map\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MapColl.cpp">
+      <Filter>Map\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MapExColl.cpp">
+      <Filter>Map\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPlayerColl.cpp">
+      <Filter>Map\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInclude.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Load.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Parent.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MapBombColl.cpp">
+      <Filter>Map\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleMana.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Fuse.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPlayerColl.h">
+      <Filter>Map\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Map\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MapColl.h">
+      <Filter>Map\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MapExColl.h">
+      <Filter>Map\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInclude.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Load.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Parent.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>アプリケーション\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBombColl.h">
+      <Filter>Map\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleMana.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
