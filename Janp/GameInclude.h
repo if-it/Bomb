@@ -4,7 +4,6 @@
 #include"Load.h"
 #include"Map.h"
 #include"Player.h"
-#include"MapPlayerColl.h"
 #include"Fuse.h"
 #include"MapExColl.h"
 #include"MapBombColl.h"
@@ -31,7 +30,6 @@ protected:
 	Load*load = new Load();
 	Map*map = new Map();
 	Player*player = new Player();
-	MapPlayerColl*mapPlayerColl = new MapPlayerColl();
 	Collision*coll = new Collision();
 	Fuse* fuse = new Fuse();
 	Bomb* bomb = new Bomb();

@@ -15,7 +15,6 @@ Game::~Game()
 
 	delete map;
 	delete player;
-	delete mapPlayerColl;
 	delete coll;
 	delete fuse;
 	delete bomb;
@@ -55,12 +54,10 @@ void Game::Init()
 	titleFlg = false;
 	title_To_Play = false;
 	bombShake = Count();
-	mapPlayerColl->Init();
 	map->Init(stage);
 	player->Init(map->map);
 	fuse->Init(map->map);
 	bomb->Init();
-	sc = mapPlayerColl->sc2;
 	shake = Vector2();
 	sceneCount = Count();
 	particleMana->Init();
@@ -204,10 +201,10 @@ void Game::PlayUpdate()
 	{
 		scene = MAPSET;
 	}
-	if (mapPlayerColl->clear)
-	{
-		scene = GAMECLEAR;
-	}
+	//if (mapPlayerColl->clear)
+	//{
+	//	scene = GAMECLEAR;
+	//}
 	Shake(bombShake, 7, Vector2((float)(GetRand(14) - GetRand(14)), (float)(GetRand(8) - GetRand(8))));
 	map->MapComparison(particleMana->blockFlg);
 }

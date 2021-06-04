@@ -4,6 +4,8 @@
 
 Player::Player()
 {
+	game_object = GameObject(true, Vector2(64.0f, 64.0f));
+	game_object.color = COLOR(0, 0, 255);
 }
 
 
@@ -13,7 +15,7 @@ Player::~Player()
 
 void Player::Init(int(*map)[MAPX])
 {
-	game_object = GameObject();
+	game_object = GameObject(true, Vector2(64.0f, 64.0f));
 	game_object.color = COLOR(0, 0, 255);
 	for (int y = 0; y < MAPY; ++y)
 	{
@@ -46,19 +48,19 @@ void Player::Init(int(*map)[MAPX])
 	left = false;
 	shot = false;
 	ani = ANIMATION();
-
 }
 
 void Player::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/SPlayer.png", MAXTEX, MAXTEX, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.texSize.x, (int)game_object.texSize.y, tex);
 }
 
 void Player::Update(Key* key, Controller* con, bool& shakeflg)
 {
 	Input(key, con);
 	Move(shakeflg, con);
-	ani.Animation(5, MAXTEX);
+
+	ani.Animation(GetRand(300), MAXTEX);
 }
 
 void Player::Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage)
@@ -125,7 +127,7 @@ void Player::Move(bool& shakeflg, Controller* con)
 	if (shot)
 	{
 		con->Shake(1000, 250);
-		//game_object.allVec.vec.y -= JAMP;
+		game_object.allVec.vec.y -= JAMP;
 	}
 }
 
@@ -144,11 +146,15 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 	MapJub(MapPointerY(SizeCut + 1, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
 	//上右
 	MapJub(MapPointerY(game_object.size.x - SizeCut - 1, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
+	//上真ん中
+	MapJub(MapPointerY(game_object.size.x / 2, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
 
 	//下左
 	MapJub(MapPointerY(SizeCut + 1, game_object.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
 	//下右
 	MapJub(MapPointerY(game_object.size.x - SizeCut - 1, game_object.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
+	//下真ん中
+	MapJub(MapPointerY(game_object.size.x / 2, game_object.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
 
 	game_object.allVec.vec.y = vec.y;
 	game_object.allVec.AddPosY();
@@ -157,11 +163,15 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 	MapJub(MapPointerX(game_object.size.x - SizeCut - 1, SizeCut + 1, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
 	//右下
 	MapJub(MapPointerX(game_object.size.x - SizeCut - 1, game_object.size.y - SizeCut - 1, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
+	//右真ん中
+	MapJub(MapPointerX(game_object.size.x - SizeCut - 1, game_object.size.y / 2, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
 
 	//左上
 	MapJub(MapPointerX(SizeCut + 1, SizeCut + 1, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
 	//左下
 	MapJub(MapPointerX(SizeCut + 1, game_object.size.y - SizeCut - 1, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
+	//左真ん中
+	MapJub(MapPointerX(SizeCut + 1, game_object.size.y / 2, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
 
 	//中心
 	MapJub(MapPointerX((game_object.size.x - SizeCut) / 2, (game_object.size.y - SizeCut) / 2, collMap, bxNum[4], byNum[4]), 4, stageChange, stage);

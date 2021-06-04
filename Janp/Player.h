@@ -2,9 +2,9 @@
 #include "MapColl.h"
 #include"Load.h"
 #define SPEED 0.2f
-#define JAMP 5.5f
+#define JAMP 7.5f
 #define MAXSPEED 4
-#define MAXTEX 8
+#define MAXTEX 6
 class Player :public MapColl
 {
 public:
