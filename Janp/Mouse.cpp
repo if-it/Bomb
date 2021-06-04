@@ -90,5 +90,5 @@ int Mouse::WheelFleame()
 vector::Vector2 Mouse::GetPoint()
 {
 	GetMousePoint(&x, &y);
-	return Vector2(x, y);
+	return Vector2((float)x, (float)y);
 }

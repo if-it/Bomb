@@ -13,7 +13,8 @@ public:
 	void Update();
 	void Draw();
 
-	bool gameEndFlg;
+	bool game_end_flg = false;
+	bool debug_mode_flg = false;
 
 private:
 	void PlayUpdate();

@@ -41,7 +41,7 @@ void Game::SystemInit()
 void Game::FirstInit()
 {
 	ParentInit();
-	gameEndFlg = false;
+	game_end_flg = false;
 
 	scene = OPENING;
 	stage = 1;
@@ -76,7 +76,7 @@ bool Game::Loading()
 	load->LoadAnimeTex("Load/Texture/CurveFuse.png", 12, 12, 1, SIZE, SIZE, fuse->curveTex);
 	load->LoadAnimeTex("Load/Texture/WFuse.png", 12, 12, 1, SIZE, SIZE, fuse->wTex);
 	load->LoadAnimeTex("Load/Texture/Bomb.png", 8, 8, 1, SIZE, SIZE, bomb->bombTex);
-	load->LoadAnimeTex("Load/Texture/Player.png", 8, 8, 1, SIZE, SIZE, player->tex);
+	load->LoadAnimeTex("Load/Texture/SPlayer.png", 8, 8, 1, SIZE, SIZE, player->tex);
 	load->LoadAnimeTex("Load/Texture/ExTex.png", 4, 4, 1, SIZE, SIZE, player->exTex);
 	load->LoadTex("Load/Texture/Cannon.png", fuse->cannonTex);
 	load->LoadTex("Load/Texture/haikei.png", haikei);
@@ -264,11 +264,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 {
 	map->Draw(sc2, shake2);
 	fuse->Draw(sc2, shake2);
-	if (stage == 1)
-	{
-		DrawGraph(SIZE * 2 - sc2.x + shake2.x, SIZE * 69 - sc2.y + shake2.y, stick, true);
-		DrawGraph(SIZE * 13 - sc2.x + shake2.x, SIZE * 69 - sc2.y + shake2.y, button, true);
-	}
+	
 	player->Draw(sc2, shake2);
 	bomb->Draw(sc2, shake2);
 	particleMana->Draw(sc2, shake2);

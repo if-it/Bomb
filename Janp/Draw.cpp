@@ -64,12 +64,12 @@ void Draw::DrawRotaTex(GameObject chara, int tex, bool flg, const Vector2& shake
 	if (!center)
 	{
 		if (chara.dis)DrawRotaGraph3F(chara.allVec.pos.x + size.x / 2 - sc.x + shake.x, chara.allVec.pos.y + size.y / 2 - sc.y + shake.y,
-			size.x / 2, size.y / 2, chara.scale.x, chara.scale.y, PI / 180 * chara.rote, tex, flg, chara.lr);
+			size.x / 2, size.y / 2, chara.scale.x, chara.scale.y, (float)PI / 180 * chara.rote, tex, flg, chara.lr);
 	}
 	else
 	{
 		if (chara.dis)DrawRotaGraph3F(chara.allVec.pos.x - sc.x + shake.x, chara.allVec.pos.y - sc.y + shake.y,
-			size.x / 2, size.y / 2, chara.scale.x, chara.scale.y, PI / 180 * chara.rote, tex, flg, chara.lr);
+			size.x / 2, size.y / 2, chara.scale.x, chara.scale.y, (float)PI / 180 * chara.rote, tex, flg, chara.lr);
 	}
 
 }

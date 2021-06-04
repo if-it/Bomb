@@ -54,7 +54,7 @@ int WINAPI WinMain(
 		//— ‰æ–Ê‚Ì•`‰æ‚ð•\‰æ–Ê‚É”½‰f‚³‚¹‚é
 		ScreenFlip();
 
-		if (game->gameEndFlg)break;
+		if (game->game_end_flg)break;
 		if (ProcessMessage() == -1)break;
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)break;
 	}
