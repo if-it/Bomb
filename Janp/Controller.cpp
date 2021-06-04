@@ -23,7 +23,7 @@ void Controller::Init()
 	stickLX = false;
 	stickRY = false;
 	stickRX = false;
-
+	shake_On = true;
 }
 //åƒÇŒÇ»Ç¢Ç∆égÇ¶Ç»Ç¢ÅI
 void Controller::Input(bool XorD)
@@ -245,7 +245,7 @@ int Controller::CheckHitAllBotton()
 
 void Controller::Shake(int power, int time)
 {
-	StartJoypadVibration(DX_INPUT_PAD1, power, time);
+	if(shake_On)StartJoypadVibration(DX_INPUT_PAD1, power, time);
 }
 
 void Controller::StopShake()

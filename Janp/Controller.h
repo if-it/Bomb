@@ -3,7 +3,7 @@
 #define XINPUT_MAX  32767
 class Controller
 {
-	
+
 	using Vector2 = vector::Vector2;
 public:
 	Controller();
@@ -34,6 +34,9 @@ public:
 	int CheckHitAllBotton();
 	void Shake(int power, int time);
 	void StopShake();
+	bool Get_Shake_On() { return shake_On;}
+	bool Set_Shake_On(bool shakeon) { shake_On = shakeon;}
+
 private:
 	bool XorD;
 	int PadInput;
@@ -51,5 +54,6 @@ private:
 	bool stickLX;
 	bool stickRY;
 	bool stickRX;
+	bool shake_On;
 };
 

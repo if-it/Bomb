@@ -44,21 +44,21 @@ void Player::Init(int(*map)[MAPX])
 	}
 	right = false;
 	left = false;
-	jamp = false;
-	jampFlg = false;
+	shot = false;
 	ani = ANIMATION();
 
 }
 
-void Player::Loading()
+void Player::Loading(Load* load)
 {
+	load->LoadAnimeTex("Load/Texture/Player_Walk.png", 6, 6, 1, SIZE, SIZE, tex);
 }
 
 void Player::Update(Key* key, Controller* con, bool& shakeflg)
 {
 	Input(key, con);
 	Move(shakeflg, con);
-	ani.Animation(5, 8);
+	ani.Animation(5, 6);
 }
 
 void Player::Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage)
@@ -70,7 +70,7 @@ void Player::Input(Key* key, Controller* con)
 {
 	right = false;
 	left = false;
-	jamp = false;
+	shot = false;
 	Vector2 stickL = con->StickL();
 	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 	{
@@ -84,7 +84,7 @@ void Player::Input(Key* key, Controller* con)
 	}
 	if (key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP) || key->KeyTrigger(KEY_INPUT_W) || con->TrlggerBotton(con->A))
 	{
-		jamp = true;
+		shot = true;
 	}
 }
 
@@ -122,13 +122,10 @@ void Player::Move(bool& shakeflg, Controller* con)
 		game_object.allVec.vec.x = -MAXSPEED;
 	}
 
-	if (jamp && jampFlg)
+	if (shot)
 	{
 		con->Shake(1000, 250);
-		jampFlg = false;
-		game_object.allVec.vec.y -= JAMP;
-
-		shakeflg = true;
+		//game_object.allVec.vec.y -= JAMP;
 	}
 }
 
@@ -139,7 +136,7 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 		back_flg[i] = false;
 		collFlg[i] = false;
 	}
-	game_object.allVec.vec = game_object.allVec.vec;
+	vec = game_object.allVec.vec;
 
 	int SizeCut = 0;
 

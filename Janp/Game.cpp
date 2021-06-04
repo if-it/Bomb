@@ -70,14 +70,15 @@ bool Game::Loading()
 {
 	if (loadCount > 0)return true;
 	loadCount++;
+
+	player->Loading(load);
+
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
 	load->LoadAnimeTex("Load/Texture/LineFuse.png", 12, 12, 1, SIZE, SIZE, fuse->lineTex);
 	load->LoadAnimeTex("Load/Texture/CurveFuse.png", 12, 12, 1, SIZE, SIZE, fuse->curveTex);
 	load->LoadAnimeTex("Load/Texture/WFuse.png", 12, 12, 1, SIZE, SIZE, fuse->wTex);
 	load->LoadAnimeTex("Load/Texture/Bomb.png", 8, 8, 1, SIZE, SIZE, bomb->bombTex);
-	load->LoadAnimeTex("Load/Texture/SPlayer.png", 8, 8, 1, SIZE, SIZE, player->tex);
-	load->LoadAnimeTex("Load/Texture/ExTex.png", 4, 4, 1, SIZE, SIZE, player->exTex);
 	load->LoadTex("Load/Texture/Cannon.png", fuse->cannonTex);
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -89,13 +90,6 @@ bool Game::Loading()
 	load->LoadSound("Load/Sound/SE/Explosion01.wav", bomb->exSound);
 	load->LoadSound("Load/Sound/SE/shoot.wav", fuse->bombSound);
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
-
-	player->exSound = bomb->exSound;
-
-	for (int i = 0;i < 4;++i)
-	{
-		bomb->exTex[i] = player->exTex[i];
-	}
 
 	if (loadCount >= 0)return true;
 	return false;
@@ -116,10 +110,10 @@ void Game::Update()
 		{
 			titleFlg = true;
 			if(!debug_mode_flg)PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
-			/*scene = PLAYINIT;
-			stage = 1;
-			player->mapNum = 35;
-			Init();*/
+			scene = PLAYINIT;
+			stage = 0;
+			player->player_mapset = 35;
+			Init();
 		}
 		break;
 	case TITLE:
@@ -129,7 +123,6 @@ void Game::Update()
 		}
 		if (!titleFlg && !title_To_Play && (con->TrlggerBotton(con->A) || key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP)))
 		{
-			PlaySoundMem(player->exSound, DX_PLAYTYPE_BACK, true);
 			title_To_Play = true;
 		}
 		if (title_To_Play)
@@ -168,7 +161,6 @@ void Game::Update()
 	case GAMECLEAR:
 		if (con->TrlggerBotton(con->A) || key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP))
 		{
-			PlaySoundMem(player->exSound, DX_PLAYTYPE_BACK, true);
 			titleFlg = true;
 		}
 		break;
@@ -195,6 +187,7 @@ void Game::PlayUpdate()
 	fuse->Update(map->map, bomb->bomb);
 	bomb->Update(bombShake.flg, con);
 	particleMana->Update();
+	player->Map_Coll_Update(map->map, sc, stageChange, stage);
 	//bomb->Coll(coll, player->game_object.allVec.pos, SIZE, player->game_object.allVec.vec, bombShake.flg, con);
 	for (int i = 0;i < bomb->bomb.size();i++)
 	{
