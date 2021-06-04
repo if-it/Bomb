@@ -28,6 +28,6 @@ protected:
 		bool turn = false, bool flg = true, Vector2 shake = Vector2(), Vector2 sc = Vector2());
 
 	void DrawRotaTex(GameObject chara, int tex,
-		bool flg = true, const Vector2& shake = Vector2(), const Vector2& sc = Vector2(), Vector2 size = Vector2(SIZE, SIZE), bool center = false);
+		bool flg = true, const Vector2& shake = Vector2(), const Vector2& sc = Vector2(), bool center = false);
 };
 

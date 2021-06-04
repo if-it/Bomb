@@ -11,7 +11,6 @@ public:
 	void Draw(const Vector2& sc, const Vector2& shake);
 	GameObject par;
 private:
-	Vector2 size;
 	Vector2 vec;
 	int type;
 	float scale;

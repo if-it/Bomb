@@ -116,6 +116,8 @@ protected:
 		ALLVECTOR allVec;
 		COLOR color;
 		Vector2 scale;
+		Vector2 texSize;
+		Vector2 size;
 		bool dis;
 		bool lr;
 		float rote;
@@ -126,12 +128,15 @@ protected:
 			allVec = ALLVECTOR();
 			color = COLOR();
 			scale = Vector2(1.0f, 1.0f);
+			texSize = Vector2(32.0f, 32.0f);
+			size = texSize * scale;
 			dis = disFlg;
 			lr = false;
 			rote = 0;
 			pal = 255;
 		}
 	};
+	GameObject game_object;
 	void SizeChange(Count &count, Vector2&size, Vector2 change, int maxCount);
 	void AnimeEnd(Count&ani, int maxCount, Vector2&size, Vector2 sizeNum);
 	void SetBright(COLOR color = COLOR(255, 255, 255));

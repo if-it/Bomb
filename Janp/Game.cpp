@@ -45,7 +45,7 @@ void Game::FirstInit()
 	debug_mode_flg = true;
 	scene = OPENING;
 	stage = 1;
-	player->mapNum = 50;
+	player->player_mapset = 50;
 	Init();
 }
 
@@ -57,7 +57,7 @@ void Game::Init()
 	bombShake = Count();
 	mapPlayerColl->Init();
 	map->Init(stage);
-	player->Init(map->map, mapPlayerColl->sc2);
+	player->Init(map->map);
 	fuse->Init(map->map);
 	bomb->Init();
 	sc = mapPlayerColl->sc2;
@@ -138,7 +138,7 @@ void Game::Update()
 			{
 				scene = PLAYINIT;
 				stage = 1;
-				player->mapNum = 50;
+				player->player_mapset = 50;
 				Init();
 			}
 		}
@@ -195,14 +195,7 @@ void Game::PlayUpdate()
 	fuse->Update(map->map, bomb->bomb);
 	bomb->Update(bombShake.flg, con);
 	particleMana->Update();
-	bomb->Coll(coll, player->player.allVec.pos, SIZE, player->player.allVec.vec, bombShake.flg, con);
-	mapPlayerColl->MapColl(map->map, sc, player->player,
-		SIZE, SIZE, 0, player->jampFlg, player->mapNum, stageChange, stage);
-	if (player->exFlg)
-	{
-		fuse->Coll(coll, player->exPos, SIZE);
-		mapExColl->MapColl(map->map, player->exPos, SIZE, SIZE, 0, true);
-	}
+	//bomb->Coll(coll, player->game_object.allVec.pos, SIZE, player->game_object.allVec.vec, bombShake.flg, con);
 	for (int i = 0;i < bomb->bomb.size();i++)
 	{
 		if (bomb->bomb[i].bomb.dis)

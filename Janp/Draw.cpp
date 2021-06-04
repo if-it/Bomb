@@ -59,17 +59,17 @@ void Draw::DrawRotaTex(Vector2 pos, Vector2 texPos, Vector2 up, float ang, int t
 	if (dis)DrawRotaGraph3F(pos.x - sc.x + shake.x, pos.y - sc.y + shake.y, texPos.x, texPos.y, up.x, up.y, PI / 180 * ang, tex, flg, turn);
 }
 
-void Draw::DrawRotaTex(GameObject chara, int tex, bool flg, const Vector2& shake, const Vector2& sc, Vector2 size, bool center)
+void Draw::DrawRotaTex(GameObject chara, int tex, bool flg, const Vector2& shake, const Vector2& sc, bool center)
 {
 	if (!center)
 	{
-		if (chara.dis)DrawRotaGraph3F(chara.allVec.pos.x + size.x / 2 - sc.x + shake.x, chara.allVec.pos.y + size.y / 2 - sc.y + shake.y,
-			size.x / 2, size.y / 2, chara.scale.x, chara.scale.y, (float)PI / 180 * chara.rote, tex, flg, chara.lr);
+		if (chara.dis)DrawRotaGraph3F(chara.allVec.pos.x + chara.size.x / 2 - sc.x + shake.x, chara.allVec.pos.y + chara.size.y / 2 - sc.y + shake.y,
+			chara.size.x / 2, chara.size.y / 2, chara.scale.x, chara.scale.y, PI / 180 * chara.rote, tex, flg, chara.lr);
 	}
 	else
 	{
 		if (chara.dis)DrawRotaGraph3F(chara.allVec.pos.x - sc.x + shake.x, chara.allVec.pos.y - sc.y + shake.y,
-			size.x / 2, size.y / 2, chara.scale.x, chara.scale.y, (float)PI / 180 * chara.rote, tex, flg, chara.lr);
+			chara.size.x / 2, chara.size.y / 2, chara.scale.x, chara.scale.y, PI / 180 * chara.rote, tex, flg, chara.lr);
 	}
 
 }

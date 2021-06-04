@@ -22,7 +22,7 @@ void Particle::Init(int num, const Vector2& pos, const int &texs)
 	type = num;
 	tex = texs;
 	vec = Vector2();
-	size = Vector2(1.0f, 1.0f);
+	par.size = Vector2(1.0f, 1.0f);
 	switch (type)
 	{
 	case 0:
@@ -92,7 +92,7 @@ void Particle::Draw(const Vector2& sc, const Vector2& shake)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)par.pal);
 		SetBright(par.color);
-		DrawRotaTex(par, tex, true, shake, sc, size, true);
+		DrawRotaTex(par, tex, true, shake, sc, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		SetBright();
 	}
