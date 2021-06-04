@@ -21,7 +21,7 @@ void MapPlayerColl::Init()
 	{
 		bxNum[i] = 0;
 		byNum[i] = 0;
-		bflg[i] = false;
+		back_flg[i] = false;
 		collFlg[i] = false;
 	}
 }
@@ -32,7 +32,7 @@ void MapPlayerColl::MapColl(int(*collMap)[MAPX], Vector2& sc, GameObject& chara,
 	jamp = false;
 	for (int i = 0;i < 5;++i)
 	{
-		bflg[i] = false;
+		back_flg[i] = false;
 		collFlg[i] = false;
 	}
 	vec = chara.allVec.vec;
@@ -76,7 +76,7 @@ void MapPlayerColl::MapColl(int(*collMap)[MAPX], Vector2& sc, GameObject& chara,
 	chara.allVec.AddPosX();
 	for (int i = 0;i < 5;++i)
 	{
-		if (bflg[i])
+		if (back_flg[i])
 		{
 			collMap[byNum[i]][bxNum[i]] = 41;
 		}
@@ -123,7 +123,7 @@ void MapPlayerColl::MapJub(int mapPoint, GameObject& chara, int XY, bool &jampFl
 		{
 			if (!collFlg[0] && vec.y == 0)
 			{
-				bflg[0] = true;
+				back_flg[0] = true;
 			}
 		}
 		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
@@ -138,7 +138,7 @@ void MapPlayerColl::MapJub(int mapPoint, GameObject& chara, int XY, bool &jampFl
 		{
 			if (!collFlg[1] && vec.y == 0)
 			{
-				bflg[1] = true;
+				back_flg[1] = true;
 			}
 		}
 		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
@@ -155,7 +155,7 @@ void MapPlayerColl::MapJub(int mapPoint, GameObject& chara, int XY, bool &jampFl
 		{
 			if (!collFlg[2] && vec.x == 0)
 			{
-				bflg[2] = true;
+				back_flg[2] = true;
 			}
 		}
 		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
@@ -171,7 +171,7 @@ void MapPlayerColl::MapJub(int mapPoint, GameObject& chara, int XY, bool &jampFl
 		{
 			if (!collFlg[3] && vec.x == 0)
 			{
-				bflg[3] = true;
+				back_flg[3] = true;
 			}
 		}
 		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
@@ -278,7 +278,7 @@ void MapPlayerColl::MapJub(int mapPoint, GameObject& chara, int XY, bool &jampFl
 			}
 			break;
 		case 40:
-			bflg[4] = true;
+			back_flg[4] = true;
 			break;
 		case 65:
 			clear = true;

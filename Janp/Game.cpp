@@ -42,7 +42,7 @@ void Game::FirstInit()
 {
 	ParentInit();
 	game_end_flg = false;
-
+	debug_mode_flg = true;
 	scene = OPENING;
 	stage = 1;
 	player->mapNum = 50;
@@ -115,7 +115,7 @@ void Game::Update()
 		if (Loading())
 		{
 			titleFlg = true;
-			PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+			if(!debug_mode_flg)PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 			/*scene = PLAYINIT;
 			stage = 1;
 			player->mapNum = 35;

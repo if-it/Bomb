@@ -11,7 +11,7 @@ public:
 	Vector2 sc2;
 	bool clear;
 private:
-	bool bflg[5];
+	bool back_flg[5];
 	bool collFlg[5];
 	int bxNum[5];
 	int byNum[5];
