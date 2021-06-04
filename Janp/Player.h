@@ -4,6 +4,7 @@
 #define SPEED 0.2f
 #define JAMP 5.5f
 #define MAXSPEED 4
+#define MAXTEX 8
 class Player :public MapColl
 {
 public:
@@ -19,7 +20,7 @@ public:
 	int player_mapset;
 
 private:
-	int tex[6];
+	int tex[MAXTEX];
 
 	ANIMATION ani;
 	void Input(Key* key, Controller*con);

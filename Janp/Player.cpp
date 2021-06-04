@@ -51,14 +51,14 @@ void Player::Init(int(*map)[MAPX])
 
 void Player::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Player_Walk.png", 6, 6, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/SPlayer.png", MAXTEX, MAXTEX, 1, SIZE, SIZE, tex);
 }
 
 void Player::Update(Key* key, Controller* con, bool& shakeflg)
 {
 	Input(key, con);
 	Move(shakeflg, con);
-	ani.Animation(5, 6);
+	ani.Animation(5, MAXTEX);
 }
 
 void Player::Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage)
