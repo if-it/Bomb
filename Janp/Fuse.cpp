@@ -163,7 +163,7 @@ void Fuse::Init(int(*map)[MAPX])
 	}
 }
 
-void Fuse::Update(int(*map)[MAPX], std::vector<BOMB>& bomb)
+void Fuse::Update(int(*map)[MAPX], std::vector<Bomb>& bomb)
 {
 	for (int i = 0;i < (int)fuses.size();++i)
 	{
@@ -243,20 +243,30 @@ void Fuse::Update(int(*map)[MAPX], std::vector<BOMB>& bomb)
 	}
 }
 
-void Fuse::BombSpawn(std::vector<BOMB>& bomb, Vector2 set_pos, Vector2 set_vec)
+void Fuse::BombSpawn(std::vector<Bomb>& bomb, Vector2 set_pos, Vector2 set_vec)
 {
-	for (int i = 0;i < (int)bomb.size();++i)
+	static Bomb InitBomb;
+
+	InitBomb.Init();
+	InitBomb.game_object.dis = true;
+	InitBomb.game_object.allVec.pos = set_pos;
+	InitBomb.game_object.allVec.vec = set_vec;
+	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
+
+	bomb.push_back(InitBomb);
+
+	/*for (int i = 0;i < (int)bomb.size();++i)
 	{
-		if (!bomb[i].bomb.dis)
+		if (!bomb[i].game_object.dis)
 		{
-			bomb[i] = BOMB();
-			bomb[i].bomb.dis = true;
-			bomb[i].bomb.allVec.pos = set_pos;
-			bomb[i].bomb.allVec.vec = set_vec;
+			bomb[i].Init();
+			bomb[i].game_object.dis = true;
+			bomb[i].game_object.allVec.pos = set_pos;
+			bomb[i].game_object.allVec.vec = set_vec;
 			PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
 			break;
 		}
-	}
+	}*/
 }
 
 void Fuse::NextAnimation(Vector2 nextPos, int(*map)[MAPX])

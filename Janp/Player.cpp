@@ -218,7 +218,7 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 	sc = Vector2::Lerp(sc, sc2, 0.05f);
 }
 
-void Player::MapJub(const int& mapPoint, int pointNum, bool& stageChange, int& stage)
+void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage)
 {
 	if (pointNum == 0) //YŽ²
 	{

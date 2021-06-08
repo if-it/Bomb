@@ -59,7 +59,7 @@ void Draw::DrawRotaTex(Vector2 pos, Vector2 texPos, Vector2 up, float ang, int t
 	if (dis)DrawRotaGraph3F(pos.x - sc.x + shake.x, pos.y - sc.y + shake.y, texPos.x, texPos.y, up.x, up.y, PI / 180 * ang, tex, flg, turn);
 }
 
-void Draw::DrawRotaTex(GameObject chara, int tex, bool flg, const Vector2& shake, const Vector2& sc, bool center)
+void Draw::DrawRotaTex(const GameObject& chara,const int& tex, bool flg, const Vector2& shake, const Vector2& sc, bool center)
 {
 	if (!center)
 	{

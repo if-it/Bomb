@@ -17,10 +17,10 @@ Game::~Game()
 	delete player;
 	delete coll;
 	delete fuse;
-	delete bomb;
 	delete mapExColl;
 	delete mapBombColl;
 	delete particleMana;
+	delete bombMana;
 
 	InitGraph();
 	InitSoundMem();
@@ -57,7 +57,7 @@ void Game::Init()
 	map->Init(stage);
 	player->Init(map->map);
 	fuse->Init(map->map);
-	bomb->Init();
+	bombMana->Init();
 	shake = Vector2();
 	sceneCount = Count();
 	particleMana->Init();
@@ -69,13 +69,13 @@ bool Game::Loading()
 	loadCount++;
 
 	player->Loading(load);
+	bombMana->Loading(load);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
 	load->LoadAnimeTex("Load/Texture/LineFuse.png", 12, 12, 1, SIZE, SIZE, fuse->lineTex);
 	load->LoadAnimeTex("Load/Texture/CurveFuse.png", 12, 12, 1, SIZE, SIZE, fuse->curveTex);
 	load->LoadAnimeTex("Load/Texture/WFuse.png", 12, 12, 1, SIZE, SIZE, fuse->wTex);
-	load->LoadAnimeTex("Load/Texture/Bomb.png", 8, 8, 1, SIZE, SIZE, bomb->bombTex);
 	load->LoadTex("Load/Texture/Cannon.png", fuse->cannonTex);
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -84,7 +84,6 @@ bool Game::Loading()
 	load->LoadTex("Load/Texture/Stick.png", stick);
 	load->LoadTex("Load/Texture/Box.png", particleMana->boxTex);
 
-	load->LoadSound("Load/Sound/SE/Explosion01.wav", bomb->exSound);
 	load->LoadSound("Load/Sound/SE/shoot.wav", fuse->bombSound);
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
 
@@ -106,7 +105,7 @@ void Game::Update()
 		if (Loading())
 		{
 			titleFlg = true;
-			if(!debug_mode_flg)PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+			if (!debug_mode_flg)PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 			scene = PLAYINIT;
 			stage = 0;
 			player->player_mapset = 35;
@@ -114,7 +113,7 @@ void Game::Update()
 		}
 		break;
 	case TITLE:
-		if (titleFlg&&SceneChangeSeb(8))
+		if (titleFlg && SceneChangeSeb(8))
 		{
 			titleFlg = false;
 		}
@@ -181,22 +180,25 @@ void Game::PlayUpdate()
 {
 	map->Update();
 	player->Update(key, con, bombShake.flg);
-	fuse->Update(map->map, bomb->bomb);
-	bomb->Update(bombShake.flg, con);
+	fuse->Update(map->map, bombMana->bomb);
+	bombMana->Update(bombShake.flg, con);
 	particleMana->Update();
 	player->Map_Coll_Update(map->map, sc, stageChange, stage);
 	//bomb->Coll(coll, player->game_object.allVec.pos, SIZE, player->game_object.allVec.vec, bombShake.flg, con);
-	for (int i = 0;i < bomb->bomb.size();i++)
-	{
-		if (bomb->bomb[i].bomb.dis)
-		{
-			mapBombColl->MapColl(map->map, bomb->bomb[i].bomb, SIZE, SIZE, 0);
-		}
-		if (bomb->bomb[i].ex.dis)
-		{
-			mapExColl->MapColl(map->map, bomb->bomb[i].ex.allVec.pos, SIZE * 2, SIZE * 2, 0, false);
-		}
-	}
+	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con);
+
+	//bombMana->MapCollUpdate(map->map);
+	//for (int i = 0;i < bombMana->bomb.size();i++)
+	//{
+	//	if (bombMana->bomb[i].game_object.dis)
+	//	{
+	//		mapBombColl->MapColl(map->map, bombMana->bomb[i].game_object, SIZE, SIZE, 0);
+	//	}
+	//	/*if (bomb->game_object[i].ex.dis)
+	//	{
+	//		mapExColl->MapColl(map->map, bomb->game_object[i].ex.allVec.pos, SIZE * 2, SIZE * 2, 0, false);
+	//	}*/
+	//}
 	if (stageChange)
 	{
 		scene = MAPSET;
@@ -247,8 +249,8 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 {
 	map->Draw(sc2, shake2);
 	fuse->Draw(sc2, shake2);
-	
+
 	player->Draw(sc2, shake2);
-	bomb->Draw(sc2, shake2);
+	bombMana->Draw(sc2, shake2);
 	particleMana->Draw(sc2, shake2);
 }

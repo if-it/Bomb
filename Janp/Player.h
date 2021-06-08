@@ -31,7 +31,7 @@ private:
 private:
 	//MapŠÖ˜A
 	void Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage);
-	void MapJub(const int& mapPoint,int pointNum, bool& stageChange, int& stage);
+	void MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage);
 	Vector2 sc2;
 	Vector2 vec;
 	bool back_flg[5];

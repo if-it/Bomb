@@ -128,7 +128,7 @@ protected:
 			allVec = ALLVECTOR();
 			color = COLOR();
 			scale = Vector2(1.0f, 1.0f);
-			texSize =TexSize;
+			texSize = TexSize;
 			size = texSize * scale;
 			dis = disFlg;
 			lr = false;
@@ -136,10 +136,12 @@ protected:
 			pal = 255;
 		}
 	};
-	GameObject game_object;
-	void SizeChange(Count &count, Vector2&size, Vector2 change, int maxCount);
-	void AnimeEnd(Count&ani, int maxCount, Vector2&size, Vector2 sizeNum);
+	void SizeChange(Count& count, Vector2& size, Vector2 change, int maxCount);
+	void AnimeEnd(Count& ani, int maxCount, Vector2& size, Vector2 sizeNum);
 	void SetBright(COLOR color = COLOR(255, 255, 255));
 	unsigned int MyGetColor(COLOR color);
+public:
+	GameObject game_object;
+
 };
 

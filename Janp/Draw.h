@@ -27,7 +27,7 @@ protected:
 	void DrawRotaTex(Vector2 pos, Vector2 texPos, Vector2 up, float ang, int tex, bool dis,
 		bool turn = false, bool flg = true, Vector2 shake = Vector2(), Vector2 sc = Vector2());
 
-	void DrawRotaTex(GameObject chara, int tex,
+	void DrawRotaTex(const  GameObject& chara, const int& tex,
 		bool flg = true, const Vector2& shake = Vector2(), const Vector2& sc = Vector2(), bool center = false);
 };
 

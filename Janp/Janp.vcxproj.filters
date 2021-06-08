@@ -31,18 +31,27 @@
     <Filter Include="アプリケーション\ヘッダーファイル">
       <UniqueIdentifier>{3e9a2c4d-ce79-423c-bdd2-fe3f631d35ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct">
+      <UniqueIdentifier>{0c376edb-fb5a-4dab-b0df-d2d05129fcee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Bomb">
+      <UniqueIdentifier>{8d2f9a36-7482-479a-addb-f683f071b6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Bomb\ヘッダーファイル">
+      <UniqueIdentifier>{5592470e-4c11-45d2-8042-55ca8eda921c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Bomb\ソースファイル">
+      <UniqueIdentifier>{ad041bfd-765b-4e03-8446-a1c0ae4197c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Player">
+      <UniqueIdentifier>{6ee14a3c-f9ac-4afd-8076-3515cf49bab0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Fuse.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Bomb.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
@@ -99,15 +108,18 @@
     <ClCompile Include="ParticleMana.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>GameObjct\Bomb\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BombMana.cpp">
+      <Filter>GameObjct\Bomb\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObjct\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Fuse.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Bomb.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="MapPlayerColl.h">
@@ -163,6 +175,15 @@
     </ClInclude>
     <ClInclude Include="ParticleMana.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>GameObjct\Bomb\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BombMana.h">
+      <Filter>GameObjct\Bomb\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObjct\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
