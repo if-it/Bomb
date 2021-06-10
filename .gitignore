@@ -36,6 +36,7 @@ x86/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Ll]og.tex
 
 # リソースファイルは必要
 !/Load/
