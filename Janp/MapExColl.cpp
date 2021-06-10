@@ -13,20 +13,8 @@ MapExColl::~MapExColl()
 
 void MapExColl::MapColl(int(*collMap)[MAPX], const Vector2 & pos, int sizeX, int sizeY, int SizeCut, bool flg)
 {
-	if (flg)
-	{
-		//上左
-		MapJub(MapPointer(pos, SizeCut + 1, SizeCut + 1, collMap), pos, 0, collMap, true);
-		//上右
-		MapJub(MapPointer(pos, sizeX - SizeCut - 1, SizeCut + 1, collMap), pos, 1, collMap, true);
-
-		//下左
-		MapJub(MapPointer(pos, SizeCut + 1, sizeY - SizeCut - 1, collMap), pos, 2, collMap, true);
-		//下右
-		MapJub(MapPointer(pos, sizeX - SizeCut - 1, sizeY - SizeCut - 1, collMap), pos, 3, collMap, true);
-	}
-	else
-	{
+	
+		
 
 		//上左
 		MapJub(MapPointer(Vector2(pos.x - SIZE / 2, pos.y - SIZE / 2), SizeCut + 1, SizeCut + 1, collMap),
@@ -57,7 +45,7 @@ void MapExColl::MapColl(int(*collMap)[MAPX], const Vector2 & pos, int sizeX, int
 		//真ん中右
 		MapJub(MapPointer(Vector2(pos.x + SIZE * 1.5f, pos.y + 1), 0, 0, collMap),
 			Vector2(pos.x + SIZE * 1.5f, pos.y + 1), 4, collMap, false);
-	}
+	
 }
 
 void MapExColl::MapJub(int mapPoint, const Vector2  pos, int XY, int(*collMap)[MAPX], bool flg)

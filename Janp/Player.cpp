@@ -5,7 +5,6 @@
 Player::Player()
 {
 	game_object = GameObject(true, Vector2(64.0f, 64.0f));
-	game_object.color = COLOR(0, 0, 255);
 }
 
 
@@ -16,7 +15,6 @@ Player::~Player()
 void Player::Init(int(*map)[MAPX])
 {
 	game_object = GameObject(true, Vector2(64.0f, 64.0f));
-	game_object.color = COLOR(0, 0, 255);
 	for (int y = 0; y < MAPY; ++y)
 	{
 		for (int x = 0; x < MAPX; ++x)

@@ -20,7 +20,7 @@ int MapColl::MapPointer(ALLVECTOR allvec, int x, int y, bool flg, int(*collMap)[
 	}
 }
 
-int MapColl::MapPointer(ALLVECTOR allvec, int x, int y, bool flg, int(*collMap)[MAPX], int & xNum, int & yNum)
+int MapColl::MapPointer(ALLVECTOR allvec, int x, int y, bool flg, int(*collMap)[MAPX], int& xNum, int& yNum)
 {
 	if (flg)
 	{
@@ -57,6 +57,13 @@ int MapColl::MapPointerY(int x, int y, int(*collMap)[MAPX], int& xNum, int& yNum
 {
 	xNum = (int)((game_object.allVec.pos.x + x) / SIZE);
 	yNum = (int)((game_object.allVec.pos.y + game_object.allVec.vec.y + y) / SIZE);
+	return collMap[yNum][xNum];
+}
+
+int MapColl::MapPointer(int x, int y, int(*collMap)[MAPX], int& xNum, int& yNum)
+{
+	xNum = (int)((game_object.allVec.pos.x + x) / SIZE);
+	yNum = (int)((game_object.allVec.pos.y + y) / SIZE);
 	return collMap[yNum][xNum];
 }
 

@@ -62,6 +62,7 @@ void Game::Init()
 	shake = Vector2();
 	sceneCount = Count();
 	particleMana->Init();
+	exMana->Init();
 }
 
 bool Game::Loading()
@@ -71,6 +72,7 @@ bool Game::Loading()
 
 	player->Loading(load);
 	bombMana->Loading(load);
+	exMana->Loading(load);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
@@ -183,12 +185,13 @@ void Game::PlayUpdate()
 	player->Update(key, con, bombShake.flg);
 	fuse->Update(map->map, bombMana->bomb);
 	bombMana->Update(bombShake.flg, con,exMana->ex);
+	exMana->Update();
 	particleMana->Update();
 	player->Map_Coll_Update(map->map, sc, stageChange, stage);
-	//bomb->Coll(coll, player->game_object.allVec.pos, SIZE, player->game_object.allVec.vec, bombShake.flg, con);
 	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana->ex);
+	bombMana->MapCollUpdate(map->map);
+	exMana->Map_Coll_Update(map->map);
 
-	//bombMana->MapCollUpdate(map->map);
 	//for (int i = 0;i < bombMana->bomb.size();i++)
 	//{
 	//	if (bombMana->bomb[i].game_object.dis)

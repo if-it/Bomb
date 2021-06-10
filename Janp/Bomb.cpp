@@ -142,6 +142,7 @@ void Bomb::exSpawn(const int& exSound, std::vector<Explosion>& ex)
 	InitEx.Init();
 	InitEx.game_object.dis = true;
 	InitEx.game_object.allVec = game_object.allVec;
+	InitEx.game_object.allVec.pos -= SIZE/2;
 	ex.push_back(InitEx);
 }
 

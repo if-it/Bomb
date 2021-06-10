@@ -15,10 +15,11 @@ public:
 	void MapCollUpdate(int(*collMap)[MAPX]);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
+	std::vector<Bomb> bomb;
+
+private:
 	int bombTex[8];
-	int exTex[4];
 	int exSound;
 
-	std::vector<Bomb> bomb;
 };
 
