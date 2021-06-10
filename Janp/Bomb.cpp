@@ -14,14 +14,12 @@ Bomb::~Bomb()
 void Bomb::Init()
 {
 	game_object = GameObject(false);
-	ex = GameObject(false);
 	bombAni = ANIMATION();
-	//exAni = ANIMATION();
 	time = 0;
 	exFlg = false;
 }
 
-void Bomb::Update(bool& shakeflg, Controller* con)
+void Bomb::Update(bool& shakeflg, Controller* con, const int& exSound, std::vector<Explosion>& ex)
 {
 	if (game_object.dis)
 	{
@@ -43,13 +41,9 @@ void Bomb::Update(bool& shakeflg, Controller* con)
 
 		if (bombAni.OneAnimation(30, 8))
 		{
-			//exSpawn(shakeflg);
+			exSpawn(exSound,ex);
 			con->Shake(1000, 200);
 		}
-	}
-	if (ex.dis)
-	{
-		
 	}
 }
 
@@ -59,21 +53,13 @@ void Bomb::Map_Coll_Update(int(*collMap)[MAPX])
 }
 
 
-void Bomb::Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, const int& exSound)
+void Bomb::Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, const int& exSound, std::vector<Explosion>& ex)
 {
-
-	if (ex.dis)
-	{
-		if (!exFlg && coll->Collsion(ex.allVec.pos, SIZE, SIZE, all.pos, size.x, size.y))
-		{
-			exFlg = true;
-		}
-	}
 	if (game_object.dis)
 	{
 		if (coll->Collsion(game_object.allVec.pos, game_object.size.x, game_object.size.y, all.pos, size.x, size.y))
 		{
-			//exSpawn(shakeflg,exSound);
+			exSpawn(exSound,ex);
 			if (all.vec.y > 0) { all.vec.y = 0; }
 			all.vec.y -= EXJUMP;
 			con->Shake(1000, 300);
@@ -148,22 +134,21 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	}
 }
 
-void Bomb::exSpawn(bool& shakeflg, const int& exSound)
+void Bomb::exSpawn(const int& exSound, std::vector<Explosion>& ex)
 {
-	ex.allVec.pos = game_object.allVec.pos;
 	game_object.dis = false;
-	ex.dis = true;
-	//exAni = ANIMATION();
-	ex.allVec = game_object.allVec;
-	shakeflg = true;
-	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);
+
+	static Explosion InitEx;
+	InitEx.Init();
+	InitEx.game_object.dis = true;
+	InitEx.game_object.allVec = game_object.allVec;
+	ex.push_back(InitEx);
 }
 
 void Bomb::Draw(const Vector2& sc, const Vector2& shake, const int* bombTex)
 {
 
 	DrawRotaTex(game_object, bombTex[bombAni.num], true, shake, sc);
-	//DrawRotaTex(ex, exTex[exAni.num], true, shake, sc);
 
 }
 

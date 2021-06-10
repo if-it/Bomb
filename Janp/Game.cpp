@@ -21,6 +21,7 @@ Game::~Game()
 	delete mapBombColl;
 	delete particleMana;
 	delete bombMana;
+	delete exMana;
 
 	InitGraph();
 	InitSoundMem();
@@ -181,11 +182,11 @@ void Game::PlayUpdate()
 	map->Update();
 	player->Update(key, con, bombShake.flg);
 	fuse->Update(map->map, bombMana->bomb);
-	bombMana->Update(bombShake.flg, con);
+	bombMana->Update(bombShake.flg, con,exMana->ex);
 	particleMana->Update();
 	player->Map_Coll_Update(map->map, sc, stageChange, stage);
 	//bomb->Coll(coll, player->game_object.allVec.pos, SIZE, player->game_object.allVec.vec, bombShake.flg, con);
-	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con);
+	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana->ex);
 
 	//bombMana->MapCollUpdate(map->map);
 	//for (int i = 0;i < bombMana->bomb.size();i++)

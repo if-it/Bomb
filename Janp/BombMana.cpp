@@ -23,19 +23,19 @@ void BombMana::Loading(Load* load)
 	load->LoadSound("Load/Sound/SE/Explosion01.wav", exSound);
 }
 
-void BombMana::Update(bool& shakeflg, Controller* con)
+void BombMana::Update(bool& shakeflg, Controller* con, std::vector<Explosion>& ex)
 {
 	for (int i = 0; i < bomb.size(); ++i)
 	{
-		bomb[i].Update(shakeflg, con);
+		bomb[i].Update(shakeflg, con,exSound,ex);
 	}
 }
 
-void BombMana::Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con)
+void BombMana::Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, std::vector<Explosion>& ex)
 {
 	for (int i = 0; i < bomb.size(); ++i)
 	{
-		bomb[i].Coll(coll, all, size,shakeflg, con, exSound);
+		bomb[i].Coll(coll, all, size,shakeflg, con, exSound,ex);
 	}
 }
 

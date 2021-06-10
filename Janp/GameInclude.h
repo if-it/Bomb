@@ -9,6 +9,7 @@
 #include"MapBombColl.h"
 #include"ParticleMana.h"
 #include"BombMana.h"
+#include"ExplosionMana.h"
 
 class GameInclude :public Draw
 {
@@ -37,6 +38,7 @@ protected:
 	MapBombColl* mapBombColl = new MapBombColl();
 	ParticleMana* particleMana = new ParticleMana();
 	BombMana* bombMana = new BombMana();
+	ExplosionMana* exMana = new ExplosionMana();
 
 	bool controllerOnly;
 	bool drawScene;

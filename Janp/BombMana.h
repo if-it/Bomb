@@ -10,8 +10,8 @@ public:
 
 	void Init();
 	void Loading(Load* load);
-	void Update(bool& shakeflg, Controller* con);
-	void Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con);
+	void Update(bool& shakeflg, Controller* con, std::vector<Explosion>& ex);
+	void Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, std::vector<Explosion>& ex);
 	void MapCollUpdate(int(*collMap)[MAPX]);
 	void Draw(const Vector2& sc, const Vector2& shake);
 

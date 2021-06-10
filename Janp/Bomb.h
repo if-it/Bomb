@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include"MapColl.h"
+#include"Explosion.h"
 #define BSPEED 10.0f
 #define EXJUMP 9.0f
 class Bomb :public MapColl
@@ -9,13 +10,13 @@ public:
 	Bomb();
 	~Bomb();
 	void Init();
-	void Update(bool& shakeflg, Controller* con);
+	void Update(bool& shakeflg, Controller* con, const int& exSound, std::vector<Explosion>& ex);
 	void Map_Coll_Update(int(*collMap)[MAPX]);
-	void Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, const int& exSound);
+	void Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, const int& exSound, std::vector<Explosion>& ex);
 	void Draw(const Vector2& sc, const Vector2& shakeconst, const int* bombTex);
 
 
-	GameObject ex;
+	//GameObject ex;
 	ANIMATION bombAni;
 	int time;
 	bool exFlg;
@@ -26,7 +27,7 @@ private:
 	void Map_Coll(int(*collMap)[MAPX]);
 	void MapJub(const int& mapPoint, const int& pointNum);
 
-	void exSpawn(bool& shakeflg, const int& exSound);
+	void exSpawn(const int& exSound, std::vector<Explosion>& ex);
 
 };
 
