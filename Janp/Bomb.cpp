@@ -16,7 +16,7 @@ void Bomb::Init()
 	game_object = GameObject(false);
 	ex = GameObject(false);
 	bombAni = ANIMATION();
-	exAni = ANIMATION();
+	//exAni = ANIMATION();
 	time = 0;
 	exFlg = false;
 }
@@ -49,10 +49,7 @@ void Bomb::Update(bool& shakeflg, Controller* con)
 	}
 	if (ex.dis)
 	{
-		if (exAni.OneAnimation(10, 4))
-		{
-			ex = GameObject(false);
-		}
+		
 	}
 }
 
@@ -156,7 +153,7 @@ void Bomb::exSpawn(bool& shakeflg, const int& exSound)
 	ex.allVec.pos = game_object.allVec.pos;
 	game_object.dis = false;
 	ex.dis = true;
-	exAni = ANIMATION();
+	//exAni = ANIMATION();
 	ex.allVec = game_object.allVec;
 	shakeflg = true;
 	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);

@@ -17,7 +17,6 @@ public:
 
 	GameObject ex;
 	ANIMATION bombAni;
-	ANIMATION exAni;
 	int time;
 	bool exFlg;
 
