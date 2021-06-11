@@ -44,11 +44,9 @@ float Vector2::Dot(Vector2 objPos, Vector2 lineBeginPos, Vector2 lineEndPos)
 	return { v1.x*v2.x + v1.y*v2.y };
 }
 
-Vector2 vector::Vector2::Lerp(Vector2 a, Vector2 b, float c)
+Vector2 Vector2::Lerp(Vector2 a, Vector2 b, float c)
 {
 	//二点間のcの割合の位置を求める。
-	//0.5なら二点間の1/2の位置　0.25なら1/4の位置
-	//unityで使ったから入れた
 	Vector2 v1 = a * (1 - c);
 
 

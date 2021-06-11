@@ -16,6 +16,8 @@ void ExplosionMana::Init()
 void ExplosionMana::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/ExTex.png", 4, 4, 1, SIZE, SIZE, exTex);
+	load->LoadSound("Load/Sound/SE/Explosion01.wav", exSound);
+
 }
 
 void ExplosionMana::Update()
@@ -24,6 +26,19 @@ void ExplosionMana::Update()
 	{
 		ex[i].Update();
 	}
+}
+
+void ExplosionMana::ExSpawn(GameObject& go)
+{
+
+	Explosion InitEx;
+	InitEx.Init();
+	InitEx.game_object.dis = true;
+	InitEx.game_object.allVec.pos = go.allVec.pos;
+	InitEx.game_object.allVec = go.allVec;
+	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);
+	//InitEx.game_object.allVec.pos -= SIZE / 2;
+	ex.push_back(InitEx);
 }
 
 void ExplosionMana::Map_Coll_Update(int(*collMap)[MAPX])

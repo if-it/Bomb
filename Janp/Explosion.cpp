@@ -18,7 +18,7 @@ void Explosion::Init()
 
 void Explosion::Update()
 {
-	if (exAni.OneAnimation(10, 4))
+	if (game_object.dis && exAni.OneAnimation(10, 4))
 	{
 		game_object = GameObject(false);
 	}
@@ -184,16 +184,16 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, int(*collMap)[M
 	}
 	else if ((pointNum == 8))
 	{
-	switch (mapPoint)
-	{
-	case 3:
-		collMap[xNum[8]][yNum[8]] = 0;
-		break;
-	case 40:
-		collMap[xNum[8]][yNum[8]] = 41;
-		break;
-	default:
-		break;
-	}
+		switch (mapPoint)
+		{
+		case 3:
+			collMap[xNum[8]][yNum[8]] = 0;
+			break;
+		case 40:
+			collMap[xNum[8]][yNum[8]] = 41;
+			break;
+		default:
+			break;
+		}
 	}
 }

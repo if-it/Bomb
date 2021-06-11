@@ -16,11 +16,11 @@ void Bomb::Init()
 	game_object = GameObject(false);
 	bombAni = ANIMATION();
 	time = 0;
-	exFlg = false;
 }
 
-void Bomb::Update(bool& shakeflg, Controller* con, const int& exSound, std::vector<Explosion>& ex)
+void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
+	time++;
 	if (game_object.dis)
 	{
 		game_object.allVec.vec.y += 0.1f;
@@ -41,8 +41,13 @@ void Bomb::Update(bool& shakeflg, Controller* con, const int& exSound, std::vect
 
 		if (bombAni.OneAnimation(30, 8))
 		{
-			exSpawn(exSound,ex);
+			game_object.dis = false;
+			ex->ExSpawn(game_object);
 			con->Shake(1000, 200);
+		}
+		if (time == 60)
+		{
+			playerSpawn = false;
 		}
 	}
 }
@@ -53,14 +58,20 @@ void Bomb::Map_Coll_Update(int(*collMap)[MAPX])
 }
 
 
-void Bomb::Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, const int& exSound, std::vector<Explosion>& ex)
+void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	if (game_object.dis)
 	{
-		if (coll->Collsion(game_object.allVec.pos, game_object.size.x, game_object.size.y, all.pos, size.x, size.y))
-		{
-			exSpawn(exSound,ex);
-			if (all.vec.y > 0) { all.vec.y = 0; }
+		//player
+		bool playerColl = coll->Collsion(game_object.allVec.pos, game_object.size.x, game_object.size.y, all.pos, size.x, size.y);
+
+		if (playerSpawn && !playerColl)playerSpawn = false;
+
+		if (!playerSpawn&&playerColl)
+		{ 
+			game_object.dis = false;
+			ex->ExSpawn(game_object);
+			all.vec.y = 0; 
 			all.vec.y -= EXJUMP;
 			con->Shake(1000, 300);
 		}
@@ -134,17 +145,17 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	}
 }
 
-void Bomb::exSpawn(const int& exSound, std::vector<Explosion>& ex)
-{
-	game_object.dis = false;
-
-	static Explosion InitEx;
-	InitEx.Init();
-	InitEx.game_object.dis = true;
-	InitEx.game_object.allVec = game_object.allVec;
-	InitEx.game_object.allVec.pos -= SIZE/2;
-	ex.push_back(InitEx);
-}
+//void Bomb::exSpawn(const int& exSound, std::vector<Explosion>& ex)
+//{
+//	game_object.dis = false;
+//
+//	static Explosion InitEx;
+//	InitEx.Init();
+//	InitEx.game_object.dis = true;
+//	InitEx.game_object.allVec = game_object.allVec;
+//	InitEx.game_object.allVec.pos -= SIZE/2;
+//	ex.push_back(InitEx);
+//}
 
 void Bomb::Draw(const Vector2& sc, const Vector2& shake, const int* bombTex)
 {

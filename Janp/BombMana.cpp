@@ -20,24 +20,41 @@ void BombMana::Init()
 void BombMana::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Bomb.png", 8, 8, 1, SIZE, SIZE, bombTex);
-	load->LoadSound("Load/Sound/SE/Explosion01.wav", exSound);
+	load->LoadSound("Load/Sound/SE/shoot.wav", bombSound);
+
 }
 
-void BombMana::Update(bool& shakeflg, Controller* con, std::vector<Explosion>& ex)
+void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	for (int i = 0; i < bomb.size(); ++i)
 	{
-		bomb[i].Update(shakeflg, con,exSound,ex);
+		bomb[i].Update(shakeflg, con, ex);
 	}
 }
 
-void BombMana::Coll(Collision* coll, ALLVECTOR all, Vector2 size, bool& shakeflg, Controller* con, std::vector<Explosion>& ex)
+void BombMana::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	for (int i = 0; i < bomb.size(); ++i)
 	{
-		bomb[i].Coll(coll, all, size,shakeflg, con, exSound,ex);
+		bomb[i].Coll(coll, all, size, shakeflg, con, ex);
 	}
 }
+
+
+void BombMana::BombSpawn(const Vector2& set_pos, const Vector2& set_vec,const bool&playerSp)
+{
+	Bomb InitBomb;
+
+	InitBomb.Init();
+	InitBomb.game_object.dis = true;
+	InitBomb.game_object.allVec.pos = set_pos;
+	InitBomb.game_object.allVec.vec = set_vec;
+	InitBomb.playerSpawn = playerSp;
+	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
+
+	bomb.push_back(InitBomb);
+}
+
 
 void BombMana::MapCollUpdate(int(*collMap)[MAPX])
 {

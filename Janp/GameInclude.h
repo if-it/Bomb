@@ -34,8 +34,8 @@ protected:
 	Player*player = new Player();
 	Collision*coll = new Collision();
 	Fuse* fuse = new Fuse();
-	MapExColl* mapExColl = new MapExColl();
-	MapBombColl* mapBombColl = new MapBombColl();
+	//MapExColl* mapExColl = new MapExColl();
+	//MapBombColl* mapBombColl = new MapBombColl();
 	ParticleMana* particleMana = new ParticleMana();
 	BombMana* bombMana = new BombMana();
 	ExplosionMana* exMana = new ExplosionMana();

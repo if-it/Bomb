@@ -17,8 +17,8 @@ Game::~Game()
 	delete player;
 	delete coll;
 	delete fuse;
-	delete mapExColl;
-	delete mapBombColl;
+	/*delete mapExColl;
+	delete mapBombColl;*/
 	delete particleMana;
 	delete bombMana;
 	delete exMana;
@@ -30,7 +30,7 @@ Game::~Game()
 void Game::SystemInit()
 {
 	// マウスを表示状態にする？
-	SetMouseDispFlag(FALSE);
+	SetMouseDispFlag(TRUE);
 
 	//コントローラーしか使えない？
 	ControllerOn(false);
@@ -87,7 +87,7 @@ bool Game::Loading()
 	load->LoadTex("Load/Texture/Stick.png", stick);
 	load->LoadTex("Load/Texture/Box.png", particleMana->boxTex);
 
-	load->LoadSound("Load/Sound/SE/shoot.wav", fuse->bombSound);
+	
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
 
 	if (loadCount >= 0)return true;
@@ -182,13 +182,13 @@ void Game::Update()
 void Game::PlayUpdate()
 {
 	map->Update();
-	player->Update(key, con, bombShake.flg);
-	fuse->Update(map->map, bombMana->bomb);
-	bombMana->Update(bombShake.flg, con,exMana->ex);
+	player->Update(key, con, bombShake.flg,bombMana);
+	fuse->Update(map->map, bombMana);
+	bombMana->Update(bombShake.flg, con,exMana);
 	exMana->Update();
 	particleMana->Update();
 	player->Map_Coll_Update(map->map, sc, stageChange, stage);
-	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana->ex);
+	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana);
 	bombMana->MapCollUpdate(map->map);
 	exMana->Map_Coll_Update(map->map);
 
@@ -257,4 +257,5 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
 	particleMana->Draw(sc2, shake2);
+	exMana->Draw(sc2, shake2);
 }

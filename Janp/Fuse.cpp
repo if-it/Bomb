@@ -15,14 +15,14 @@ void Fuse::Init(int(*map)[MAPX])
 {
 	fuses.clear();
 	InitFuse = FUSE();
-	for (int y = 0;y < MAPY;++y)
+	for (int y = 0; y < MAPY; ++y)
 	{
-		for (int x = 0; x < MAPX;++x)
+		for (int x = 0; x < MAPX; ++x)
 		{
 			if (map[y][x] >= 4 && map[y][x] <= 7)
 			{
 				InitFuse = FUSE();
-				InitFuse.object.allVec.pos = Vector2((float)(SIZE*x), (float)(SIZE*y));
+				InitFuse.object.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				InitFuse.type = map[y][x];
 				InitFuse.object.dis = true;
 				InitFuse.maxAnime = 1;
@@ -49,7 +49,7 @@ void Fuse::Init(int(*map)[MAPX])
 			if (map[y][x] >= 8 && map[y][x] <= 23)
 			{
 				InitFuse = FUSE();
-				InitFuse.object.allVec.pos = Vector2((float)(SIZE*x), (float)(SIZE*y));
+				InitFuse.object.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				InitFuse.type = map[y][x];
 				InitFuse.object.dis = true;
 				InitFuse.maxAnime = 12;
@@ -102,13 +102,13 @@ void Fuse::Init(int(*map)[MAPX])
 		}
 	}
 
-	for (int i = 0;i < (int)fuses.size();++i)
+	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
 		if (fuses[i].type >= 8 && fuses[i].type <= 23)
 		{
 			int y = (int)(fuses[i].object.allVec.pos.y / SIZE);
 			int x = (int)(fuses[i].object.allVec.pos.x / SIZE);
-			if (y - 1 >= 0 && y + 1 < MAPY&&x - 1 >= 0 && x + 1 < MAPX)
+			if (y - 1 >= 0 && y + 1 < MAPY && x - 1 >= 0 && x + 1 < MAPX)
 			{
 				int mapy = 0;
 				int mapx = 0;
@@ -163,9 +163,9 @@ void Fuse::Init(int(*map)[MAPX])
 	}
 }
 
-void Fuse::Update(int(*map)[MAPX], std::vector<Bomb>& bomb)
+void Fuse::Update(int(*map)[MAPX], BombMana* bombMana)
 {
-	for (int i = 0;i < (int)fuses.size();++i)
+	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
 		if (fuses[i].coll)
 		{
@@ -178,20 +178,20 @@ void Fuse::Update(int(*map)[MAPX], std::vector<Bomb>& bomb)
 					switch (fuses[i].type)
 					{
 					case 4:// 4 è„ëÂñC
-						BombSpawn(bomb,
-							Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y - SIZE), Vector2(0.0f, -BSPEED));
+						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y - SIZE), 
+							Vector2(0.0f, -BSPEED),false);
 						break;
 					case 5:// 5 â∫ëÂñC
-						BombSpawn(bomb,
-							Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y + SIZE), Vector2(0.0f, BSPEED));
+						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y + SIZE),
+							Vector2(0.0f, BSPEED),false);
 						break;
 					case 6:// 6 ç∂ëÂñC
-						BombSpawn(bomb,
-							Vector2(fuses[i].object.allVec.pos.x - SIZE, fuses[i].object.allVec.pos.y), Vector2(-BSPEED, 0.0f));
+						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x - SIZE, fuses[i].object.allVec.pos.y), 
+							Vector2(-BSPEED, 0.0f),false);
 						break;
 					case 7:// 7 âEëÂñC
-						BombSpawn(bomb,
-							Vector2(fuses[i].object.allVec.pos.x + SIZE, fuses[i].object.allVec.pos.y), Vector2(BSPEED, 0.0f));
+						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x + SIZE, fuses[i].object.allVec.pos.y), 
+							Vector2(BSPEED, 0.0f),false);
 						break;
 					case 8:// 8 è„ì±âŒê¸
 					case 14:// 14 ç∂â∫äp
@@ -243,31 +243,31 @@ void Fuse::Update(int(*map)[MAPX], std::vector<Bomb>& bomb)
 	}
 }
 
-void Fuse::BombSpawn(std::vector<Bomb>& bomb, Vector2 set_pos, Vector2 set_vec)
-{
-	static Bomb InitBomb;
-
-	InitBomb.Init();
-	InitBomb.game_object.dis = true;
-	InitBomb.game_object.allVec.pos = set_pos;
-	InitBomb.game_object.allVec.vec = set_vec;
-	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
-
-	bomb.push_back(InitBomb);
-
-	/*for (int i = 0;i < (int)bomb.size();++i)
-	{
-		if (!bomb[i].game_object.dis)
-		{
-			bomb[i].Init();
-			bomb[i].game_object.dis = true;
-			bomb[i].game_object.allVec.pos = set_pos;
-			bomb[i].game_object.allVec.vec = set_vec;
-			PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
-			break;
-		}
-	}*/
-}
+//void Fuse::BombSpawn(std::vector<Bomb>& bomb, Vector2 set_pos, Vector2 set_vec)
+//{
+//	static Bomb InitBomb;
+//
+//	InitBomb.Init();
+//	InitBomb.game_object.dis = true;
+//	InitBomb.game_object.allVec.pos = set_pos;
+//	InitBomb.game_object.allVec.vec = set_vec;
+//	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
+//
+//	bomb.push_back(InitBomb);
+//
+//	/*for (int i = 0;i < (int)bomb.size();++i)
+//	{
+//		if (!bomb[i].game_object.dis)
+//		{
+//			bomb[i].Init();
+//			bomb[i].game_object.dis = true;
+//			bomb[i].game_object.allVec.pos = set_pos;
+//			bomb[i].game_object.allVec.vec = set_vec;
+//			PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
+//			break;
+//		}
+//	}*/
+//}
 
 void Fuse::NextAnimation(Vector2 nextPos, int(*map)[MAPX])
 {
@@ -275,7 +275,7 @@ void Fuse::NextAnimation(Vector2 nextPos, int(*map)[MAPX])
 
 	if (nextMap >= 4 && nextMap <= 23)
 	{
-		for (int i = 0;i < (int)fuses.size();++i)
+		for (int i = 0; i < (int)fuses.size(); ++i)
 		{
 			if (fuses[i].object.allVec.pos == nextPos)
 			{
@@ -290,14 +290,14 @@ void Fuse::NextAnimation(Vector2 nextPos, int(*map)[MAPX])
 
 
 
-void Fuse::Coll(Collision * coll, Vector2 pos, int size)
+void Fuse::Coll(Collision* coll, Vector2 pos, int size)
 {
-	for (int i = 0;i < (int)fuses.size();++i)
+	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
 		if (fuses[i].type >= 8 && fuses[i].type <= 23)
 		{
 
-			if (fuses[i].ignitionFlg && !fuses[i].coll&&coll->Collsion(fuses[i].object.allVec.pos, SIZE, SIZE, pos, size, size))
+			if (fuses[i].ignitionFlg && !fuses[i].coll && coll->Collsion(fuses[i].object.allVec.pos, SIZE, SIZE, pos, size, size))
 			{
 				fuses[i].coll = true;
 				fuses[i].anime.counter.flg = false;
@@ -310,7 +310,7 @@ void Fuse::Coll(Collision * coll, Vector2 pos, int size)
 
 void Fuse::Draw(const Vector2& sc, const Vector2& shake)
 {
-	for (int i = 0;i < (int)fuses.size();++i)
+	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
 		if (fuses[i].type >= 4 && fuses[i].type <= 7)
 		{

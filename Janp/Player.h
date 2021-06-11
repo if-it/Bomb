@@ -1,10 +1,12 @@
 #pragma once
 #include "MapColl.h"
 #include"Load.h"
+#include"BombMana.h"
 #define SPEED 0.2f
 #define JAMP 7.5f
 #define MAXSPEED 4
 #define MAXTEX 6
+#define BOMBVEC 10.0f
 class Player :public MapColl
 {
 public:
@@ -13,7 +15,7 @@ public:
 
 	void Init(int(*map)[MAPX]);
 	void Loading(Load* load);
-	void Update(Key* key, Controller*con, bool &shakeflg);
+	void Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
@@ -23,8 +25,8 @@ private:
 	int tex[MAXTEX];
 
 	ANIMATION ani;
-	void Input(Key* key, Controller*con);
-	void Move(bool &shakeflg, Controller * con);
+	void Input(Key* key, Controller* con);
+	void Move(bool& shakeflg, Controller* con, BombMana* bomb);
 	bool left;
 	bool right;
 	bool shot;

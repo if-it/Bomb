@@ -53,10 +53,10 @@ void Player::Loading(Load* load)
 	load->LoadAnimeTex("Load/Texture/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.texSize.x, (int)game_object.texSize.y, tex);
 }
 
-void Player::Update(Key* key, Controller* con, bool& shakeflg)
+void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 {
 	Input(key, con);
-	Move(shakeflg, con);
+	Move(shakeflg, con, bomb);
 
 	ani.Animation(GetRand(300), MAXTEX);
 }
@@ -88,7 +88,7 @@ void Player::Input(Key* key, Controller* con)
 	}
 }
 
-void Player::Move(bool& shakeflg, Controller* con)
+void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 {
 	game_object.allVec.vec.y += 0.2f;
 	if (right)
@@ -124,8 +124,22 @@ void Player::Move(bool& shakeflg, Controller* con)
 
 	if (shot)
 	{
-		con->Shake(1000, 250);
-		game_object.allVec.vec.y -= JAMP;
+		//con->Shake(1000, 250);
+		//game_object.allVec.vec.y -= JAMP;
+		Vector2 bombPos = game_object.allVec.pos;
+		bombPos += SIZE/2;
+		Vector2 bombVec = Vector2();
+		//if (game_object.lr)
+		//{
+		//	//bombPos.x -= game_object.size.x/2;
+		//	//bombVec.x = -BOMBVEC;
+		//}
+		//else
+		//{
+		//	bombPos.x += game_object.size.x-SIZE;
+		//	//bombVec.x = BOMBVEC;
+		//}
+		bomb->BombSpawn(bombPos, bombVec,true);
 	}
 }
 
