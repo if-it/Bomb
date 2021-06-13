@@ -185,7 +185,7 @@ void Game::Update()
 void Game::PlayUpdate()
 {
 	map->Update();
-	player->SetNowBombNum(playerBombMana->PlayerNowBombNum());
+	player->SetNowBombNum(playerBombMana->NowBombNum());
 	player->Update(key, con, bombShake.flg,playerBombMana);
 	fuse->Update(map->map, bombMana);
 	bombMana->Update(bombShake.flg, con,exMana);

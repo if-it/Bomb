@@ -41,6 +41,10 @@ void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 	{
 		bomb[i].Update(shakeflg, con, ex);
 	}
+	if (NowBombNum() == 0)
+	{
+		bomb.clear();
+	}
 }
 
 void BombMana::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
@@ -76,17 +80,17 @@ void BombMana::MapCollUpdate(int(*collMap)[MAPX])
 	}
 }
 
-int BombMana::PlayerNowBombNum()
+int BombMana::NowBombNum()
 {
-	int playerNowNum = 0;
+	int nowNum = 0;
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		if (bomb[i].game_object.dis && bomb[i].playerSpawn)
+		if (bomb[i].game_object.dis)
 		{
-			playerNowNum++;
+			nowNum++;
 		}
 	}
-	return playerNowNum;
+	return nowNum;
 }
 
 void BombMana::Draw(const Vector2& sc, const Vector2& shake)
