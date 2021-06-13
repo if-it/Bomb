@@ -21,6 +21,7 @@ Game::~Game()
 	delete mapBombColl;*/
 	delete particleMana;
 	delete bombMana;
+	delete playerBombMana;
 	delete exMana;
 
 	InitGraph();
@@ -63,6 +64,7 @@ void Game::Init()
 	sceneCount = Count();
 	particleMana->Init();
 	exMana->Init();
+	playerBombMana->Init();
 }
 
 bool Game::Loading()
@@ -72,6 +74,7 @@ bool Game::Loading()
 
 	player->Loading(load);
 	bombMana->Loading(load);
+	playerBombMana->Loading(bombMana->GetBombSound(), bombMana->GetBombTex());
 	exMana->Loading(load);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
@@ -182,14 +185,18 @@ void Game::Update()
 void Game::PlayUpdate()
 {
 	map->Update();
-	player->Update(key, con, bombShake.flg,bombMana);
+	player->SetNowBombNum(playerBombMana->PlayerNowBombNum());
+	player->Update(key, con, bombShake.flg,playerBombMana);
 	fuse->Update(map->map, bombMana);
 	bombMana->Update(bombShake.flg, con,exMana);
+	playerBombMana->Update(bombShake.flg, con, exMana);
 	exMana->Update();
 	particleMana->Update();
 	player->Map_Coll_Update(map->map, sc, stageChange, stage);
 	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana);
+	playerBombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con, exMana);
 	bombMana->MapCollUpdate(map->map);
+	playerBombMana->MapCollUpdate(map->map);
 	exMana->Map_Coll_Update(map->map);
 
 	//for (int i = 0;i < bombMana->bomb.size();i++)
@@ -256,6 +263,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
+	playerBombMana->Draw(sc2, shake2);
 	particleMana->Draw(sc2, shake2);
 	exMana->Draw(sc2, shake2);
 }

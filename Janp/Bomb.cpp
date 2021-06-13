@@ -16,6 +16,8 @@ void Bomb::Init()
 	game_object = GameObject(false);
 	bombAni = ANIMATION();
 	time = 0;
+	playerOneColl = false;
+	playerSpawn = false;
 }
 
 void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
@@ -47,7 +49,7 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 		}
 		if (time == 60)
 		{
-			playerSpawn = false;
+			playerOneColl = false;
 		}
 	}
 }
@@ -65,9 +67,9 @@ void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, C
 		//player
 		bool playerColl = coll->Collsion(game_object.allVec.pos, game_object.size.x, game_object.size.y, all.pos, size.x, size.y);
 
-		if (playerSpawn && !playerColl)playerSpawn = false;
+		if (playerOneColl && !playerColl)playerOneColl = false;
 
-		if (!playerSpawn&&playerColl)
+		if (!playerOneColl &&playerColl)
 		{ 
 			game_object.dis = false;
 			ex->ExSpawn(game_object);
@@ -76,8 +78,6 @@ void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, C
 			con->Shake(1000, 300);
 		}
 	}
-
-
 }
 
 void Bomb::Map_Coll(int(*collMap)[MAPX])

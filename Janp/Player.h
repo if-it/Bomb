@@ -19,7 +19,10 @@ public:
 	void Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
+
 	int player_mapset;
+
+	void SetNowBombNum(const int& num) { nowBombNum = num; }
 
 private:
 	int tex[MAXTEX];
@@ -30,6 +33,8 @@ private:
 	bool left;
 	bool right;
 	bool shot;
+	int maxBombNum;
+	int nowBombNum;
 private:
 	//MapŠÖ˜A
 	void Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage);

@@ -20,7 +20,7 @@ public:
 	ANIMATION bombAni;
 	int time;
 	bool playerSpawn;
-
+	bool playerOneColl;
 
 private:
 

@@ -38,6 +38,7 @@ protected:
 	//MapBombColl* mapBombColl = new MapBombColl();
 	ParticleMana* particleMana = new ParticleMana();
 	BombMana* bombMana = new BombMana();
+	BombMana* playerBombMana = new BombMana();
 	ExplosionMana* exMana = new ExplosionMana();
 
 	bool controllerOnly;
