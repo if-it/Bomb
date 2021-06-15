@@ -24,7 +24,7 @@ void Explosion::Update()
 	}
 }
 
-void Explosion::Map_Coll_Update(int(*collMap)[MAPX])
+void Explosion::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
 }
 
@@ -37,7 +37,7 @@ void Explosion::Draw(const Vector2& sc, const Vector2& shake, const int* exTex)
 	DrawRotaTex(game_object, exTex[exAni.num], true, shake, sc);
 }
 
-void Explosion::Map_Coll(int(*collMap)[MAPX])
+void Explosion::Map_Coll(std::vector<std::vector<int>>& collMap)
 {
 	static int SizeCut = 0;
 	//è„ç∂
@@ -68,7 +68,7 @@ void Explosion::Map_Coll(int(*collMap)[MAPX])
 	MapJub(MapPointer(game_object.size.x - SizeCut - 1, game_object.size.y - SizeCut - 1, collMap, xNum[8], yNum[8]), 8, collMap);
 }
 
-void Explosion::MapJub(const int& mapPoint, const int& pointNum, int(*collMap)[MAPX])
+void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std::vector<int>>& collMap)
 {
 	if (pointNum == 0)
 	{

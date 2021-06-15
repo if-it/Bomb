@@ -13,12 +13,12 @@ Player::~Player()
 {
 }
 
-void Player::Init(int(*map)[MAPX])
+void Player::Init(std::vector<std::vector<int>>& map)
 {
 	game_object = GameObject(true, Vector2(64.0f, 64.0f));
-	for (int y = 0; y < MAPY; ++y)
+	for (int y = 0; y < (int)map.size(); ++y)
 	{
-		for (int x = 0; x < MAPX; ++x)
+		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 			if (map[y][x] == player_mapset)
 			{
@@ -28,17 +28,17 @@ void Player::Init(int(*map)[MAPX])
 				{
 					sc2.x = 0;
 				}
-				if (game_object.allVec.pos.x > (SIZE * MAPX) - WIDTH / 2 + SIZE / 2)
+				if (game_object.allVec.pos.x > (SIZE * (int)map[y].size()) - WIDTH / 2 + SIZE / 2)
 				{
-					sc2.x = (SIZE * MAPX) - WIDTH;
+					sc2.x = (SIZE * (int)map[y].size()) - WIDTH;
 				}
 				if (game_object.allVec.pos.y < HEIGHT / 2 + SIZE / 2)
 				{
 					sc2.y = 0;
 				}
-				if (game_object.allVec.pos.y > (SIZE * MAPY) - HEIGHT / 2 - SIZE / 2)
+				if (game_object.allVec.pos.y > (SIZE * (int)map.size()) - HEIGHT / 2 - SIZE / 2)
 				{
-					sc2.y = (SIZE * MAPY) - HEIGHT;
+					sc2.y = (SIZE * (int)map.size()) - HEIGHT;
 				}
 			}
 		}
@@ -63,7 +63,7 @@ void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 	ani.Animation(GetRand(300), MAXTEX);
 }
 
-void Player::Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage)
+void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
 {
 	Map_Coll(collMap, sc, stageChange, stage);
 }
@@ -138,7 +138,7 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 	}
 }
 
-void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage)
+void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
 {
 	for (int i = 0; i < 5; ++i)
 	{
@@ -194,7 +194,7 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 		}
 	}
 
-	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * MAPX) - WIDTH / 2 + SIZE / 2)
+	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2 + SIZE / 2)
 	{
 		sc2.x += vec.x;
 	}
@@ -203,13 +203,13 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 	{
 		sc2.x = 0;
 	}
-	if (game_object.allVec.pos.x > (SIZE * MAPX) - WIDTH / 2 + SIZE / 2)
+	if (game_object.allVec.pos.x > (SIZE * (int)collMap[0].size()) - WIDTH / 2 + SIZE / 2)
 	{
-		sc2.x = (SIZE * MAPX) - WIDTH;
+		sc2.x = (SIZE * (int)collMap[0].size()) - WIDTH;
 	}
 
 
-	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * MAPY) - HEIGHT / 2 - SIZE / 2)
+	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2 - SIZE / 2)
 	{
 		sc2.y += vec.y;
 	}
@@ -217,9 +217,9 @@ void Player::Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& 
 	{
 		sc2.y = 0;
 	}
-	if (game_object.allVec.pos.y > (SIZE * MAPY) - HEIGHT / 2 - SIZE / 2)
+	if (game_object.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2 - SIZE / 2)
 	{
-		sc2.y = (SIZE * MAPY) - HEIGHT;
+		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
 	}
 
 	sc = Vector2::Lerp(sc, sc2, 0.05f);

@@ -11,13 +11,13 @@ Fuse::~Fuse()
 {
 }
 
-void Fuse::Init(int(*map)[MAPX])
+void Fuse::Init(std::vector<std::vector<int>>& map)
 {
 	fuses.clear();
 	InitFuse = FUSE();
-	for (int y = 0; y < MAPY; ++y)
+	for (int y = 0; y < (int)map.size(); ++y)
 	{
-		for (int x = 0; x < MAPX; ++x)
+		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 			if (map[y][x] >= 4 && map[y][x] <= 7)
 			{
@@ -108,7 +108,7 @@ void Fuse::Init(int(*map)[MAPX])
 		{
 			int y = (int)(fuses[i].object.allVec.pos.y / SIZE);
 			int x = (int)(fuses[i].object.allVec.pos.x / SIZE);
-			if (y - 1 >= 0 && y + 1 < MAPY && x - 1 >= 0 && x + 1 < MAPX)
+			if (y - 1 >= 0 && y + 1 < (int)map.size() && x - 1 >= 0 && x + 1 < (int)map[0].size())
 			{
 				int mapy = 0;
 				int mapx = 0;
@@ -126,7 +126,7 @@ void Fuse::Init(int(*map)[MAPX])
 				if (fuses[i].type == 9 || fuses[i].type == 18 || fuses[i].type == 19 || fuses[i].type == 21)
 				{
 					mapy = y + 1;
-					if (mapy < MAPY)
+					if (mapy < (int)map.size())
 					{
 						if (map[y + 1][x] == 0)
 						{
@@ -149,7 +149,7 @@ void Fuse::Init(int(*map)[MAPX])
 				if (fuses[i].type == 11 || fuses[i].type == 13 || fuses[i].type == 15 || fuses[i].type == 23)
 				{
 					mapx = x + 1;
-					if (mapx < MAPX)
+					if (mapx < (int)map[0].size())
 					{
 						if (map[y][x + 1] == 0)
 						{
@@ -163,7 +163,7 @@ void Fuse::Init(int(*map)[MAPX])
 	}
 }
 
-void Fuse::Update(int(*map)[MAPX], BombMana* bombMana)
+void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
 {
 	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
@@ -269,7 +269,7 @@ void Fuse::Update(int(*map)[MAPX], BombMana* bombMana)
 //	}*/
 //}
 
-void Fuse::NextAnimation(Vector2 nextPos, int(*map)[MAPX])
+void Fuse::NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& map)
 {
 	int nextMap = map[(int)(nextPos.y / SIZE)][(int)(nextPos.x / SIZE)];
 

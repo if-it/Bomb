@@ -12,9 +12,6 @@
 
 #define SIZE 32
 
-#define MAPX 160
-#define MAPY 72
-
 #define PI    3.1415926535897932384626433832795f
 
 using Vector2 = vector::Vector2;

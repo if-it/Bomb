@@ -5,8 +5,6 @@
 #include"Map.h"
 #include"Player.h"
 #include"Fuse.h"
-#include"MapExColl.h"
-#include"MapBombColl.h"
 #include"ParticleMana.h"
 #include"BombMana.h"
 #include"ExplosionMana.h"

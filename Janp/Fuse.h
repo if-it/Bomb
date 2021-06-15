@@ -8,8 +8,8 @@ class Fuse :public Draw
 public:
 	Fuse();
 	~Fuse();
-	void Init(int(*map)[MAPX]);
-	void Update(int(*map)[MAPX], BombMana* bombMana);
+	void Init(std::vector<std::vector<int>>& collMap);
+	void Update(std::vector<std::vector<int>>& collMap, BombMana* bombMana);
 	void Coll(Collision*coll, Vector2 pos, int size);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	int lineTex[12];
@@ -18,7 +18,7 @@ public:
 	int cannonTex;
 private :
 	//void BombSpawn(std::vector<Bomb>& bomb,Vector2 set_pos, Vector2 set_vec);
-	void NextAnimation(Vector2 nextPos, int(*map)[MAPX]);
+	void NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& collMap);
 	struct FUSE
 	{
 		GameObject object;

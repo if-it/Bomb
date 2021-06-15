@@ -144,10 +144,7 @@
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapBombColl.cpp" />
     <ClCompile Include="MapColl.cpp" />
-    <ClCompile Include="MapExColl.cpp" />
-    <ClCompile Include="MapPlayerColl.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -170,10 +167,7 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="Load.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="MapBombColl.h" />
     <ClInclude Include="MapColl.h" />
-    <ClInclude Include="MapExColl.h" />
-    <ClInclude Include="MapPlayerColl.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Particle.h" />

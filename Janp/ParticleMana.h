@@ -12,6 +12,6 @@ public:
 	void Draw(const Vector2& sc, const Vector2& shake);
 	int boxTex;
 	Particle*particle[PARTICLENUM];
-	bool blockFlg[MAPY][MAPX];
+	//bool blockFlg[MAPY][MAPX];
 };
 

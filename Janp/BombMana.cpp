@@ -72,7 +72,7 @@ void BombMana::BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const b
 }
 
 
-void BombMana::MapCollUpdate(int(*collMap)[MAPX])
+void BombMana::MapCollUpdate(std::vector<std::vector<int>>& collMap)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{

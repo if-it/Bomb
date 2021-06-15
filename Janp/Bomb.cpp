@@ -54,7 +54,7 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 	}
 }
 
-void Bomb::Map_Coll_Update(int(*collMap)[MAPX])
+void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
 	Map_Coll(collMap);
 }
@@ -80,7 +80,7 @@ void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, C
 	}
 }
 
-void Bomb::Map_Coll(int(*collMap)[MAPX])
+void Bomb::Map_Coll(std::vector<std::vector<int>>& collMap)
 {
 	//è„ç∂
 	MapJub(MapPointerY(1, 1, collMap), 0);

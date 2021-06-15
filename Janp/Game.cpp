@@ -219,7 +219,7 @@ void Game::PlayUpdate()
 	//	scene = GAMECLEAR;
 	//}
 	Shake(bombShake, 7, Vector2((float)(GetRand(14) - GetRand(14)), (float)(GetRand(8) - GetRand(8))));
-	map->MapComparison(particleMana->blockFlg);
+	
 }
 
 void Game::Draw()

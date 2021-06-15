@@ -41,7 +41,7 @@ void ExplosionMana::ExSpawn(GameObject& go)
 	ex.push_back(InitEx);
 }
 
-void ExplosionMana::Map_Coll_Update(int(*collMap)[MAPX])
+void ExplosionMana::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
 	for (int i = 0; i < (int)ex.size(); ++i)
 	{

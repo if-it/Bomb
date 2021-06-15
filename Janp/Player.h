@@ -13,10 +13,10 @@ public:
 	Player();
 	~Player();
 
-	void Init(int(*map)[MAPX]);
+	void Init(std::vector<std::vector<int>>& collMap);
 	void Loading(Load* load);
 	void Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb);
-	void Map_Coll_Update(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage);
+	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
 
@@ -37,7 +37,7 @@ private:
 	int nowBombNum;
 private:
 	//MapŠÖ˜A
-	void Map_Coll(int(*collMap)[MAPX], Vector2& sc, bool& stageChange, int& stage);
+	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage);
 	Vector2 sc2;
 	Vector2 vec;

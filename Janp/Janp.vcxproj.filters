@@ -69,12 +69,6 @@
     <ClCompile Include="MapColl.cpp">
       <Filter>Map\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MapExColl.cpp">
-      <Filter>Map\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MapPlayerColl.cpp">
-      <Filter>Map\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>アプリケーション\ソースファイル</Filter>
     </ClCompile>
@@ -108,9 +102,6 @@
     <ClCompile Include="Vector.cpp">
       <Filter>アプリケーション\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MapBombColl.cpp">
-      <Filter>Map\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Bomb.cpp">
       <Filter>GameObjct\Bomb\ソースファイル</Filter>
     </ClCompile>
@@ -137,16 +128,10 @@
     <ClInclude Include="Fuse.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MapPlayerColl.h">
-      <Filter>Map\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Map\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="MapColl.h">
-      <Filter>Map\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MapExColl.h">
       <Filter>Map\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
@@ -181,9 +166,6 @@
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>アプリケーション\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MapBombColl.h">
-      <Filter>Map\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h">
       <Filter>GameObjct\Bomb\ヘッダーファイル</Filter>
