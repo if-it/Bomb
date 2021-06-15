@@ -1,5 +1,7 @@
 #pragma once
 #include "MapColl.h"
+#include"Collision.h"
+
 class Explosion :public MapColl
 {
 public:

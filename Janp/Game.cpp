@@ -184,6 +184,7 @@ void Game::Update()
 
 void Game::PlayUpdate()
 {
+	//Update
 	map->Update();
 	player->SetNowBombNum(playerBombMana->NowBombNum());
 	player->Update(key, con, bombShake.flg,playerBombMana);
@@ -192,6 +193,8 @@ void Game::PlayUpdate()
 	playerBombMana->Update(bombShake.flg, con, exMana);
 	exMana->Update();
 	particleMana->Update();
+
+	//Map当たり判定
 	player->Map_Coll_Update(map->map, sc, stageChange, stage);
 	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana);
 	playerBombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con, exMana);
@@ -199,18 +202,12 @@ void Game::PlayUpdate()
 	playerBombMana->MapCollUpdate(map->map);
 	exMana->Map_Coll_Update(map->map);
 
+	//オブジェクト当たり判定
+	for (int i = 0; i < exMana->ex.size(); ++i)
+	{
+		fuse->Coll(coll, exMana->ex[i].game_object);
+	}
 
-	//for (int i = 0;i < bombMana->bomb.size();i++)
-	//{
-	//	if (bombMana->bomb[i].game_object.dis)
-	//	{
-	//		mapBombColl->MapColl(map->map, bombMana->bomb[i].game_object, SIZE, SIZE, 0);
-	//	}
-	//	/*if (bomb->game_object[i].ex.dis)
-	//	{
-	//		mapExColl->MapColl(map->map, bomb->game_object[i].ex.allVec.pos, SIZE * 2, SIZE * 2, 0, false);
-	//	}*/
-	//}
 	if (stageChange)
 	{
 		scene = MAPSET;

@@ -1,6 +1,8 @@
 #pragma once
 #include"Explosion.h"
 #include"Load.h"
+#include"Collision.h"
+
 class ExplosionMana :public MapColl
 {
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Draw.h"
 #include"BombMana.h"
-
+#include"Collision.h"
 
 class Fuse :public Draw
 {
@@ -10,7 +10,7 @@ public:
 	~Fuse();
 	void Init(std::vector<std::vector<int>>& collMap);
 	void Update(std::vector<std::vector<int>>& collMap, BombMana* bombMana);
-	void Coll(Collision*coll, Vector2 pos, int size);
+	void Coll(Collision*coll,const GameObject& obj);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	int lineTex[12];
 	int curveTex[12];

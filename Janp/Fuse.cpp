@@ -287,17 +287,15 @@ void Fuse::NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& map)
 }
 
 
-
-
-
-void Fuse::Coll(Collision* coll, Vector2 pos, int size)
+void Fuse::Coll(Collision* coll, const GameObject& obj)
 {
 	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
 		if (fuses[i].type >= 8 && fuses[i].type <= 23)
 		{
 
-			if (fuses[i].ignitionFlg && !fuses[i].coll && coll->Collsion(fuses[i].object.allVec.pos, SIZE, SIZE, pos, size, size))
+			if (fuses[i].ignitionFlg && !fuses[i].coll && 
+				coll->CollsionObj(fuses[i].object,obj))
 			{
 				fuses[i].coll = true;
 				fuses[i].anime.counter.flg = false;

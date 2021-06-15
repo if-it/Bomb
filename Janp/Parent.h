@@ -4,7 +4,6 @@
 #include"Mouse.h"
 #include"Controller.h"
 #include"Key.h"
-#include"Collision.h"
 #include<vector>
 
 #define WIDTH 1280

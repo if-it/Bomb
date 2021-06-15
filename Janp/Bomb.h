@@ -2,6 +2,7 @@
 #pragma once
 #include"MapColl.h"
 #include"ExplosionMana.h"
+#include"Collision.h"
 #define BSPEED 10.0f
 #define EXJUMP 9.0f
 class Bomb :public MapColl

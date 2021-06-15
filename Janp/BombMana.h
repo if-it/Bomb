@@ -1,6 +1,8 @@
 #pragma once
 #include "Bomb.h"
 #include"Load.h"
+#include"Collision.h"
+
 #define BOMBTEX 8
 
 class BombMana :public MapColl
