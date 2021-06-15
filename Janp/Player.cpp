@@ -194,7 +194,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		}
 	}
 
-	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2 + SIZE / 2)
+	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2 )
 	{
 		sc2.x += vec.x;
 	}
@@ -203,21 +203,21 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	{
 		sc2.x = 0;
 	}
-	if (game_object.allVec.pos.x > (SIZE * (int)collMap[0].size()) - WIDTH / 2 + SIZE / 2)
+	if (game_object.allVec.pos.x > (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
 		sc2.x = (SIZE * (int)collMap[0].size()) - WIDTH;
 	}
 
 
-	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2 - SIZE / 2)
+	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2 )
 	{
 		sc2.y += vec.y;
 	}
-	if (game_object.allVec.pos.y < HEIGHT / 2 + SIZE / 2)
+	if (game_object.allVec.pos.y < HEIGHT / 2 )
 	{
 		sc2.y = 0;
 	}
-	if (game_object.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2 - SIZE / 2)
+	if (game_object.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2 )
 	{
 		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
 	}
