@@ -1,6 +1,5 @@
 #include "Explosion.h"
 
-
 Explosion::Explosion()
 {
 	game_object = GameObject(true, Vector2(64.0f, 64.0f));
@@ -26,6 +25,7 @@ void Explosion::Update()
 
 void Explosion::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
+	if(game_object.dis)Map_Coll(collMap);
 }
 
 void Explosion::Coll(Collision* coll, ALLVECTOR all, Vector2 size)
@@ -75,10 +75,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[0]][yNum[0]] = 0;
+			collMap[yNum[0]][xNum[0]] = 0;
 			break;
 		case 40:
-			collMap[xNum[0]][yNum[0]] = 41;
+			collMap[yNum[0]][xNum[0]] = 41;
 			break;
 		default:
 			break;
@@ -89,10 +89,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[1]][yNum[1]] = 0;
+			collMap[yNum[1]][xNum[1]] = 0;
 			break;
 		case 40:
-			collMap[xNum[1]][yNum[1]] = 41;
+			collMap[yNum[1]][xNum[1]] = 41;
 			break;
 		default:
 			break;
@@ -103,10 +103,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[2]][yNum[2]] = 0;
+			collMap[yNum[2]][xNum[2]] = 0;
 			break;
 		case 40:
-			collMap[xNum[2]][yNum[2]] = 41;
+			collMap[yNum[2]][xNum[2]] = 41;
 			break;
 		default:
 			break;
@@ -117,10 +117,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[3]][yNum[3]] = 0;
+			collMap[yNum[3]][xNum[3]] = 0;
 			break;
 		case 40:
-			collMap[xNum[3]][yNum[3]] = 41;
+			collMap[yNum[3]][xNum[3]] = 41;
 			break;
 		default:
 			break;
@@ -131,10 +131,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[4]][yNum[4]] = 0;
+			collMap[yNum[4]][xNum[4]] = 0;
 			break;
 		case 40:
-			collMap[xNum[4]][yNum[4]] = 41;
+			collMap[yNum[4]][xNum[4]] = 41;
 			break;
 		default:
 			break;
@@ -145,10 +145,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[5]][yNum[5]] = 0;
+			collMap[yNum[5]][xNum[5]] = 0;
 			break;
 		case 40:
-			collMap[xNum[5]][yNum[5]] = 41;
+			collMap[yNum[5]][xNum[5]] = 41;
 			break;
 		default:
 			break;
@@ -159,10 +159,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[6]][yNum[6]] = 0;
+			collMap[yNum[6]][xNum[6]] = 0;
 			break;
 		case 40:
-			collMap[xNum[6]][yNum[6]] = 41;
+			collMap[yNum[6]][xNum[6]] = 41;
 			break;
 		default:
 			break;
@@ -173,10 +173,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[7]][yNum[7]] = 0;
+			collMap[yNum[7]][xNum[7]] = 0;
 			break;
 		case 40:
-			collMap[xNum[7]][yNum[7]] = 41;
+			collMap[yNum[7]][xNum[7]] = 41;
 			break;
 		default:
 			break;
@@ -187,10 +187,10 @@ void Explosion::MapJub(const int& mapPoint, const int& pointNum, std::vector<std
 		switch (mapPoint)
 		{
 		case 3:
-			collMap[xNum[8]][yNum[8]] = 0;
+			collMap[yNum[8]][xNum[8]] = 0;
 			break;
 		case 40:
-			collMap[xNum[8]][yNum[8]] = 41;
+			collMap[yNum[8]][xNum[8]] = 41;
 			break;
 		default:
 			break;

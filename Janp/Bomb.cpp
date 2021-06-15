@@ -56,7 +56,7 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 
 void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
-	Map_Coll(collMap);
+	if(game_object.dis)Map_Coll(collMap);
 }
 
 
@@ -69,11 +69,11 @@ void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, C
 
 		if (playerOneColl && !playerColl)playerOneColl = false;
 
-		if (!playerOneColl &&playerColl)
-		{ 
+		if (!playerOneColl && playerColl)
+		{
 			game_object.dis = false;
 			ex->ExSpawn(game_object);
-			all.vec.y = 0; 
+			all.vec.y = 0;
 			all.vec.y -= EXJUMP;
 			con->Shake(1000, 300);
 		}

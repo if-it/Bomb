@@ -199,6 +199,7 @@ void Game::PlayUpdate()
 	playerBombMana->MapCollUpdate(map->map);
 	exMana->Map_Coll_Update(map->map);
 
+
 	//for (int i = 0;i < bombMana->bomb.size();i++)
 	//{
 	//	if (bombMana->bomb[i].game_object.dis)

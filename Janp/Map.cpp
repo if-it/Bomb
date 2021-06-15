@@ -25,7 +25,19 @@ void Map::StageSet(int stage)
 	fleMap.clear();
 	bBlockCount.clear();
 	ifstream ifs;
-	ifs.open("Load/Data/Map.dat");
+	string fileNama;
+
+	switch (stage)
+	{
+	case 0:
+		fileNama = "Load/Data/Map/DemoMap.dat";
+		break;
+	default:
+		fileNama = "Load/Data/Map/DemoMap.dat";
+		break;
+	}
+
+	ifs.open(fileNama.c_str());
 	if (!ifs)
 	{
 		MessageBox(NULL, "Map", "Map‚ÌƒGƒ‰[", MB_OK);
