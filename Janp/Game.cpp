@@ -75,7 +75,8 @@ bool Game::Loading()
 	player->Loading(load);
 	bombMana->Loading(load);
 	playerBombMana->Loading(bombMana->GetBombSound(), bombMana->GetBombTex());
-	exMana->Loading(load);
+	load->LoadTex("Load/Texture/Box.png", particleMana->boxTex);
+	exMana->Loading(load, particleMana->boxTex);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
@@ -88,7 +89,6 @@ bool Game::Loading()
 	load->LoadTex("Load/Texture/BombBombBang.png", title);
 	load->LoadTex("Load/Texture/Button.png", button);
 	load->LoadTex("Load/Texture/Stick.png", stick);
-	load->LoadTex("Load/Texture/Box.png", particleMana->boxTex);
 
 	
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);

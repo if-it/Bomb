@@ -2,7 +2,6 @@
 
 Explosion::Explosion()
 {
-	game_object = GameObject(true, Vector2(64.0f, 64.0f));
 }
 
 Explosion::~Explosion()
@@ -11,30 +10,122 @@ Explosion::~Explosion()
 
 void Explosion::Init()
 {
+	boxObj.clear();
+	boxTime.clear();
+	boxFlg.clear();
 	game_object = GameObject(false, Vector2(64.0f, 64.0f));
 	exAni = ANIMATION();
+	spawn = false;
+	time = 0;
+	//game_object.allVec.pos = go.allVec.pos;
+	for (int i = 0; i < EXNUM; ++i)
+	{
+		exs[i] = GameObject(false, Vector2(16.0f, 16.0f));
+	}
+
 }
 
 void Explosion::Update()
 {
-	if (game_object.dis && exAni.OneAnimation(10, 4))
+	if (game_object.dis)
 	{
-		game_object = GameObject(false);
+		if (!spawn)
+		{
+
+			Vector2 spos = game_object.allVec.pos;
+
+			spawn = true;
+			for (int i = 0; i < EXNUM; ++i)
+			{
+				exs[i].dis = true;
+				exs[i].allVec.pos = Vector2((float)(spos.x + GetRand(game_object.size.x / 2)),
+					(float)(spos.y + GetRand(game_object.size.y / 2)));
+				exs[i].allVec.vec = Vector2((float)GetRand(3) - (float)GetRand(3), (float)GetRand(3) - (float)GetRand(3));
+			}
+			for (int i = 0; i < BOXNUM; ++i)
+			{
+				boxTime.push_back(0);
+				boxFlg.push_back(true);
+				GameObject InitBox;
+				InitBox = GameObject(true, Vector2(1.0f, 1.0f), Vector2(4.0f, 4.0f));
+				InitBox.allVec.pos = Vector2((float)(spos.x + game_object.size.x / 2), (float)(spos.y + game_object.size.y / 2));
+				InitBox.allVec.vec = exs[i].allVec.vec = Vector2((float)GetRand(3) - (float)GetRand(3), -(float)(GetRand(2) + 1));
+				InitBox.pal = 255;
+				InitBox.color = COLOR();
+				boxObj.push_back(InitBox);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < EXNUM; ++i)
+			{
+				//exs[i].allVec.AddPos();
+				exs[i].pal -= 3;
+			}
+			for (int i = 0; i < (int)boxObj.size(); ++i)
+			{
+				if (!boxFlg[i])boxObj[i].pal -= 3;
+				else {
+					boxObj[i].allVec.vec.y += 0.1f;
+					boxObj[i].allVec.AddPos();
+					boxTime[i]++;
+				}
+				if (boxTime[i] == 2)
+				{
+					boxTime[i] = 0;
+					boxTime.push_back(0);
+					boxFlg.push_back(false);
+					GameObject box2 = GameObject();
+					box2 = boxObj[i];
+					box2.pal = 120;
+					box2.color = COLOR(120, 120, 120);
+					boxObj.push_back(box2);
+
+				}
+			}
+			if (exAni.OneAnimation(5, 12))
+			{
+				for (int i = 0; i < EXNUM; ++i)
+				{
+					exs[i] = GameObject(false);
+				}
+				game_object = GameObject(false);
+				boxObj.clear();
+				boxTime.clear();
+				boxFlg.clear();
+			}
+		}
 	}
 }
 
 void Explosion::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
-	if(game_object.dis)Map_Coll(collMap);
+	if (game_object.dis)Map_Coll(collMap);
 }
 
 void Explosion::Coll(Collision* coll, ALLVECTOR all, Vector2 size)
 {
 }
 
-void Explosion::Draw(const Vector2& sc, const Vector2& shake, const int* exTex)
+void Explosion::Draw(const Vector2& sc, const Vector2& shake, const int* exTex, const int& box)
 {
-	DrawRotaTex(game_object, exTex[exAni.num], true, shake, sc);
+	for (int i = 0; i < EXNUM; ++i)
+	{
+		if (exs[i].dis)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)exs[i].pal);
+			DrawRotaTex(exs[i], exTex[exAni.num], true, shake, sc);
+		}
+	}
+	for (int i = 0; i < (int)boxObj.size(); ++i)
+	{
+		SetBright(boxObj[i].color);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)boxObj[i].pal);
+		DrawRotaTex(boxObj[i], box, true, shake, sc);
+	}
+	SetBright();
+	//DrawRotaTex(game_object, exTex[exAni.num], true, shake, sc);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void Explosion::Map_Coll(std::vector<std::vector<int>>& collMap)

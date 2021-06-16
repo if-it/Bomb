@@ -123,11 +123,11 @@ protected:
 		float rote;
 		float pal;
 
-		GameObject(bool disFlg = true,Vector2 TexSize = Vector2(32.0f,32.0f))
+		GameObject(bool disFlg = true,Vector2 TexSize = Vector2(32.0f,32.0f), Vector2 Scale = Vector2(1.0f, 1.0f))
 		{
 			allVec = ALLVECTOR();
 			color = COLOR();
-			scale = Vector2(1.0f, 1.0f);
+			scale = Scale;
 			texSize = TexSize;
 			size = texSize * scale;
 			dis = disFlg;

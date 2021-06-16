@@ -13,11 +13,11 @@ void ExplosionMana::Init()
 	ex.clear();
 }
 
-void ExplosionMana::Loading(Load* load)
+void ExplosionMana::Loading(Load* load,const int&box)
 {
-	load->LoadAnimeTex("Load/Texture/ExTex.png", 4, 4, 1, SIZE*2, SIZE*2, exTex);
+	load->LoadAnimeTex("Load/Texture/ExTex16.png", 12, 12, 1, SIZE, SIZE, exTex);
 	load->LoadSound("Load/Sound/SE/Explosion01.wav", exSound);
-
+	boxTex = box;
 }
 
 void ExplosionMana::Update()
@@ -25,6 +25,10 @@ void ExplosionMana::Update()
 	for (int i = 0; i < (int)ex.size(); ++i)
 	{
 		ex[i].Update();
+	}
+	if (NowExNum() == 0)
+	{
+		ex.clear();
 	}
 }
 
@@ -34,8 +38,8 @@ void ExplosionMana::ExSpawn(GameObject& go)
 	Explosion InitEx;
 	InitEx.Init();
 	InitEx.game_object.dis = true;
-	InitEx.game_object.allVec.pos = go.allVec.pos-SIZE/2;
-	InitEx.game_object.allVec = go.allVec;
+	InitEx.game_object.allVec.pos = go.allVec.pos;
+	InitEx.game_object.allVec.pos -= SIZE / 2;
 	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);
 	//InitEx.game_object.allVec.pos -= SIZE / 2;
 	ex.push_back(InitEx);
@@ -61,6 +65,16 @@ void ExplosionMana::Draw(const Vector2& sc, const Vector2& shakeconst)
 {
 	for (int i = 0; i < (int)ex.size(); ++i)
 	{
-		ex[i].Draw(sc, shakeconst, exTex);
+		ex[i].Draw(sc, shakeconst, exTex,boxTex);
 	}
+}
+
+int ExplosionMana::NowExNum()
+{
+	int nuwNum = 0;
+	for (int i = 0; i < (int)ex.size(); ++i)
+	{
+		if (ex[i].game_object.dis)++nuwNum;
+	}
+	return nuwNum;
 }

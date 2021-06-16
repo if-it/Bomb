@@ -5,7 +5,7 @@
 Player::Player()
 {
 	game_object = GameObject(true, Vector2(64.0f, 64.0f));
-	maxBombNum = 1;
+	maxBombNum = 10;
 }
 
 

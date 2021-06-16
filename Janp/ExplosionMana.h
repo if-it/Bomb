@@ -2,6 +2,7 @@
 #include"Explosion.h"
 #include"Load.h"
 #include"Collision.h"
+#define EXTEXNUM 12
 
 class ExplosionMana :public MapColl
 {
@@ -11,7 +12,7 @@ public:
 	~ExplosionMana();
 
 	void Init();
-	void Loading(Load* load);
+	void Loading(Load* load, const int& box);
 	void Update();
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
 	void ExSpawn(GameObject& go);
@@ -20,8 +21,9 @@ public:
 
 	std::vector<Explosion>ex;
 private:
-	int exTex[4];
+	int NowExNum();
+	int exTex[EXTEXNUM];
 	int exSound;
-
+	int boxTex;
 };
 
