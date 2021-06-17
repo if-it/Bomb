@@ -6,6 +6,8 @@ Player::Player()
 {
 	game_object = GameObject(true, Vector2(64.0f, 64.0f));
 	maxBombNum = 10;
+	maxHp = 5;
+	hp = maxHp;
 }
 
 
@@ -48,6 +50,8 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	shot = false;
 	nowBombNum = maxBombNum;
 	ani = ANIMATION();
+
+	invincible = Count();
 }
 
 void Player::Loading(Load* load)
@@ -61,6 +65,8 @@ void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 	Move(shakeflg, con, bomb);
 
 	ani.Animation(GetRand(300), MAXTEX);
+	invincible.Conuter(60);
+	
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -236,7 +242,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 				back_flg[0] = true;
 			}
 		}
-		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			vec.y = 0;
 			collFlg[0] = true;
@@ -251,7 +257,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 				back_flg[1] = true;
 			}
 		}
-		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			vec.y = 0;
 			collFlg[1] = true;
@@ -267,7 +273,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 				back_flg[2] = true;
 			}
 		}
-		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			vec.x = 0;
 			collFlg[2] = true;
@@ -283,7 +289,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 				back_flg[3] = true;
 			}
 		}
-		if (mapPoint == 1 || (mapPoint >= 2 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			vec.x = 0;
 			collFlg[3] = true;
@@ -399,6 +405,22 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 }
 
 
+void Player::EnemyColl(const bool& lr)
+{
+	if (!invincible.flg)
+	{
+		invincible.flg = true;
+		--hp;
+		if (!lr)
+		{
+			game_object.allVec.vec += Vector2(10, -3);
+		}
+		else
+		{
+			game_object.allVec.vec += Vector2(-10, -3);
+		}
+	}
+}
 
 
 
@@ -406,3 +428,4 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
 	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
 }
+

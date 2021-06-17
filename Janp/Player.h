@@ -19,6 +19,7 @@ public:
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
+	void EnemyColl(const bool& lr);
 
 	int player_mapset;
 
@@ -33,6 +34,9 @@ private:
 	bool left;
 	bool right;
 	bool shot;
+	Count invincible;//–³“G
+	int hp;
+	int maxHp;
 	int maxBombNum;
 	int nowBombNum;
 private:

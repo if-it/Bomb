@@ -111,7 +111,7 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 {
 	if (pointNum == 0) //YŽ²
 	{
-		if (mapPoint == 1 || (mapPoint >= 3 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			game_object.allVec.vec.y -= game_object.allVec.vec.y;
 			game_object.allVec.vec.y = 0;
@@ -119,7 +119,7 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	}
 	else if (pointNum == 1) //YŽ²
 	{
-		if (mapPoint == 1 || (mapPoint >= 3 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			game_object.allVec.vec.y -= game_object.allVec.vec.y;
 			game_object.allVec.vec.y = 0;
@@ -128,7 +128,7 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 
 	else if (pointNum == 2)//XŽ²
 	{
-		if (mapPoint == 1 || (mapPoint >= 3 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			game_object.allVec.vec.x -= game_object.allVec.vec.x;
 			game_object.allVec.vec.x = 0;
@@ -137,7 +137,7 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 
 	else if (pointNum == 3)//XŽ²
 	{
-		if (mapPoint == 1 || (mapPoint >= 3 && mapPoint <= 23) || mapPoint == 40)
+		if (WALL)
 		{
 			game_object.allVec.vec.x -= game_object.allVec.vec.x;
 			game_object.allVec.vec.x = 0;

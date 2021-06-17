@@ -8,6 +8,7 @@
 #include"ParticleMana.h"
 #include"BombMana.h"
 #include"ExplosionMana.h"
+#include"Enemy1Mana.h"
 
 class GameInclude :public Draw
 {
@@ -27,10 +28,10 @@ protected:
 	Controller* con = new Controller();
 	Key* key = new Key();
 	Mouse* mouse = new Mouse();
-	Load*load = new Load();
-	Map*map = new Map();
-	Player*player = new Player();
-	Collision*coll = new Collision();
+	Load* load = new Load();
+	Map* map = new Map();
+	Player* player = new Player();
+	Collision* coll = new Collision();
 	Fuse* fuse = new Fuse();
 	//MapExColl* mapExColl = new MapExColl();
 	//MapBombColl* mapBombColl = new MapBombColl();
@@ -38,6 +39,7 @@ protected:
 	BombMana* bombMana = new BombMana();
 	BombMana* playerBombMana = new BombMana();
 	ExplosionMana* exMana = new ExplosionMana();
+	Enemy1Mana* enemy1Mana = new Enemy1Mana();
 
 	bool controllerOnly;
 	bool drawScene;

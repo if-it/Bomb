@@ -55,6 +55,18 @@
     <Filter Include="Effect\ヘッダーファイル">
       <UniqueIdentifier>{cc133d39-cf06-4a43-85b8-f626da645947}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\Enemy">
+      <UniqueIdentifier>{90a073dd-b65b-4d0a-a0f2-511c50c9dc08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy1">
+      <UniqueIdentifier>{da2f4227-5e19-4906-9c6f-a7818110cdac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy1\ソースファイル">
+      <UniqueIdentifier>{eecdc02a-866f-47f1-907e-501de57b55d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy1\ヘッダーファイル">
+      <UniqueIdentifier>{8f296e0a-d967-4728-a947-f738a64291d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,6 +135,12 @@
     <ClCompile Include="ExplosionMana.cpp">
       <Filter>Effect\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy1.cpp">
+      <Filter>GameObjct\Enemy\Enemy1\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy1Mana.cpp">
+      <Filter>GameObjct\Enemy\Enemy1\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fuse.h">
@@ -187,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="ExplosionMana.h">
       <Filter>Effect\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy1.h">
+      <Filter>GameObjct\Enemy\Enemy1\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy1Mana.h">
+      <Filter>GameObjct\Enemy\Enemy1\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

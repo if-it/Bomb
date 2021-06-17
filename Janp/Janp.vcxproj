@@ -135,6 +135,8 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Enemy1.cpp" />
+    <ClCompile Include="Enemy1Mana.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="ExplosionMana.cpp" />
     <ClCompile Include="Fuse.cpp" />
@@ -159,6 +161,8 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Enemy1.h" />
+    <ClInclude Include="Enemy1Mana.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="ExplosionMana.h" />
     <ClInclude Include="Fuse.h" />
