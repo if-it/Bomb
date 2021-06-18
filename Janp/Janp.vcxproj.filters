@@ -67,6 +67,18 @@
     <Filter Include="GameObjct\Enemy\Enemy1\ヘッダーファイル">
       <UniqueIdentifier>{8f296e0a-d967-4728-a947-f738a64291d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy2">
+      <UniqueIdentifier>{2f54277d-4864-4fe3-99c2-79be21d15957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy2\ソースファイル">
+      <UniqueIdentifier>{df7ef126-2b9f-4ef7-aa4b-39870d1f46d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy2\ヘッダーファイル">
+      <UniqueIdentifier>{2c70eb6c-0698-4896-b1ab-e4826863f154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy0">
+      <UniqueIdentifier>{bb24f7f9-f912-4fc7-a0ed-ad72d12ee853}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -141,6 +153,12 @@
     <ClCompile Include="Enemy1Mana.cpp">
       <Filter>GameObjct\Enemy\Enemy1\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy2.cpp">
+      <Filter>GameObjct\Enemy\Enemy2\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameObjct\Enemy\Enemy0</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fuse.h">
@@ -211,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="Enemy1Mana.h">
       <Filter>GameObjct\Enemy\Enemy1\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy2.h">
+      <Filter>GameObjct\Enemy\Enemy2\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameObjct\Enemy\Enemy0</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

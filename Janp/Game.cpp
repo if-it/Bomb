@@ -17,11 +17,9 @@ Game::~Game()
 	delete player;
 	delete coll;
 	delete fuse;
-	/*delete mapExColl;
-	delete mapBombColl;*/
+
 	delete particleMana;
 	delete bombMana;
-	delete playerBombMana;
 	delete exMana;
 	delete enemy1Mana;
 
@@ -36,6 +34,7 @@ void Game::SystemInit()
 
 	//コントローラーしか使えない？
 	ControllerOn(false);
+
 }
 
 
@@ -43,6 +42,8 @@ void Game::SystemInit()
 void Game::FirstInit()
 {
 	ParentInit();
+	//コントローラー振動ONOFF
+	con->Set_Shake_On(false);
 	game_end_flg = false;
 	debug_mode_flg = true;
 	scene = OPENING;
@@ -66,7 +67,6 @@ void Game::Init()
 	sceneCount = Count();
 	particleMana->Init();
 	exMana->Init();
-	playerBombMana->Init();
 }
 
 bool Game::Loading()
@@ -76,7 +76,6 @@ bool Game::Loading()
 
 	player->Loading(load);
 	bombMana->Loading(load);
-	playerBombMana->Loading(bombMana->GetBombSound(), bombMana->GetBombTex());
 	load->LoadTex("Load/Texture/Box.png", particleMana->boxTex);
 	exMana->Loading(load, particleMana->boxTex);
 	enemy1Mana->Loading(load);
@@ -93,7 +92,7 @@ bool Game::Loading()
 	load->LoadTex("Load/Texture/Button.png", button);
 	load->LoadTex("Load/Texture/Stick.png", stick);
 
-	
+
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
 
 	if (loadCount >= 0)return true;
@@ -148,7 +147,7 @@ void Game::Update()
 		}
 		break;
 	case PLAY:
-		PlayUpdate();
+		Play_Scene_Update();
 		break;
 	case MAPSET:
 		if (SceneChangeAdd(5))
@@ -172,7 +171,7 @@ void Game::Update()
 	default:
 		break;
 	}
-	if (debug_mode_flg&& key->KeyTrigger(KEY_INPUT_1))
+	if (debug_mode_flg && key->KeyTrigger(KEY_INPUT_1))
 	{
 		scene = PLAYINIT;
 	}
@@ -185,46 +184,23 @@ void Game::Update()
 	}
 }
 
-void Game::PlayUpdate()
+void Game::Play_Scene_Update()
 {
 	//Update
-	map->Update();
-	player->SetNowBombNum(playerBombMana->NowBombNum());
-	player->Update(key, con, bombShake.flg,playerBombMana);
-	enemy1Mana->Update();
-	fuse->Update(map->map, bombMana);
-	bombMana->Update(bombShake.flg, con,exMana);
-	playerBombMana->Update(bombShake.flg, con, exMana);
-	exMana->Update();
-	particleMana->Update();
+	Main_Play_Update();
 
 	//layerチェック
 
 	enemy1Mana->MoveChack(player->game_object.allVec.pos, coll);
 
 	//Map当たり判定
-	player->Map_Coll_Update(map->map, sc, stageChange, stage);
-	bombMana->MapCollUpdate(map->map);
-	playerBombMana->MapCollUpdate(map->map);
-	enemy1Mana->MapCollUpdate(map->map);
-	exMana->Map_Coll_Update(map->map);
+	Map_Coll_Update();
 
 	//オブジェクト当たり判定
-	bombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con,exMana);
-	playerBombMana->Coll(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con, exMana);
-	for (int i = 0; i < exMana->ex.size(); ++i)
+	Obj_Coll_Update();
+	if (player->Die())
 	{
-		//爆発とひも
-		fuse->Coll(coll, exMana->ex[i].game_object);
-	}
-	for (int i = 0; i < (int)enemy1Mana->enemy1.size(); ++i)
-	{
-		//Enemy1とplayer
-		if (coll->CollsionObj(enemy1Mana->enemy1[i].game_object, player->game_object))
-		{
-			enemy1Mana->enemy1[i].PlayerColl();
-			player->EnemyColl(enemy1Mana->enemy1[i].game_object.lr);
-		}
+		titleFlg = true;
 	}
 	if (stageChange)
 	{
@@ -234,8 +210,66 @@ void Game::PlayUpdate()
 	//{
 	//	scene = GAMECLEAR;
 	//}
-	Shake(bombShake, 7, Vector2((float)(GetRand(14) - GetRand(14)), (float)(GetRand(8) - GetRand(8))));
-	
+	Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
+
+}
+
+void Game::Main_Play_Update()
+{
+	map->Update();
+	player->SetNowBombNum(bombMana->NowBombNum());
+	player->Update(key, con, bombShake.flg, bombMana);
+	enemy1Mana->Update();
+	fuse->Update(map->map, bombMana);
+	bombMana->Update(bombShake.flg, con, exMana);
+	exMana->Update();
+	particleMana->Update();
+
+}
+
+void Game::Map_Coll_Update()
+{
+	player->Map_Coll_Update(map->map, sc, stageChange, stage);
+	bombMana->MapCollUpdate(map->map);
+	enemy1Mana->MapCollUpdate(map->map);
+	exMana->Map_Coll_Update(map->map);
+}
+
+void Game::Obj_Coll_Update()
+{
+	//plyaerと爆弾
+	bombMana->PlayerColl(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con, exMana);
+	//爆発とひも
+	for (int i = 0; i < exMana->ex.size(); ++i)
+	{
+		fuse->Coll(coll, exMana->ex[i].game_object);
+	}
+
+	for (int i = 0; i < (int)enemy1Mana->enemy1.size(); ++i)
+	{
+		//Enemy1と爆弾
+		for (int n = 0; n < (int)bombMana->bomb.size(); ++n)
+		{
+			if (coll->CollsionObj(enemy1Mana->enemy1[i].game_object, bombMana->bomb[n].game_object))
+			{
+				bombMana->bomb[n].EnemyColl();
+			}
+		}
+		//Enemy1と爆発
+		for (int n = 0; n < (int)exMana->ex.size(); ++n)
+		{
+			if (coll->CollsionObj(enemy1Mana->enemy1[i].game_object, exMana->ex[n].game_object))
+			{
+				enemy1Mana->enemy1[i].ExColl(exMana->ex[n].damage);
+			}
+		}
+		//Enemy1とplayer
+		if (coll->CollsionObj(enemy1Mana->enemy1[i].game_object, player->game_object))
+		{
+			enemy1Mana->enemy1[i].PlayerColl();
+			player->EnemyColl(enemy1Mana->enemy1[i].game_object.lr);
+		}
+	}
 }
 
 void Game::Draw()
@@ -272,6 +306,8 @@ void Game::Draw()
 
 
 
+
+
 void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 {
 	//Map関連
@@ -281,7 +317,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//オブジェクト関連
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
-	playerBombMana->Draw(sc2, shake2);
+	//playerBombMana->Draw(sc2, shake2);
 	enemy1Mana->Draw(sc2, shake2);
 
 	//エフェクト関連

@@ -13,7 +13,8 @@ public:
 	void Init();
 	void Update(bool& shakeflg, Controller* con,ExplosionMana* ex);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
-	void Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con,  ExplosionMana* ex);
+	void PlayerColl(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con,  ExplosionMana* ex);
+	void EnemyColl();
 	void Draw(const Vector2& sc, const Vector2& shakeconst, const int* bombTex);
 
 
@@ -22,9 +23,9 @@ public:
 	int time;
 	bool playerSpawn;
 	bool playerOneColl;
+	int damage;
 
 private:
-
 	void Map_Coll(std::vector<std::vector<int>>& collMap);
 	void MapJub(const int& mapPoint, const int& pointNum);
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "MapColl.h"
 #include"Enemy1.h"
 #include"Load.h"
 class Enemy1Mana :

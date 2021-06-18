@@ -8,6 +8,7 @@ Player::Player()
 	maxBombNum = 10;
 	maxHp = 5;
 	hp = maxHp;
+	damage = 1;
 }
 
 
@@ -66,7 +67,7 @@ void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 
 	ani.Animation(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
-	
+
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -139,9 +140,16 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 		nowBombNum = maxBombNum - nowBombNum;
 		if (nowBombNum > 0)
 		{
-			bomb->BombSpawn(bombPos, bombVec, true);
+			bomb->BombSpawn(bombPos, bombVec, true, damage);
 		}
 	}
+}
+
+bool Player::Die()
+{
+	if (hp <= 0)return true;
+
+	return false;
 }
 
 void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -200,7 +208,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		}
 	}
 
-	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2 )
+	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
 		sc2.x += vec.x;
 	}
@@ -215,15 +223,15 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	}
 
 
-	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2 )
+	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2)
 	{
 		sc2.y += vec.y;
 	}
-	if (game_object.allVec.pos.y < HEIGHT / 2 )
+	if (game_object.allVec.pos.y < HEIGHT / 2)
 	{
 		sc2.y = 0;
 	}
-	if (game_object.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2 )
+	if (game_object.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2)
 	{
 		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
 	}
@@ -428,4 +436,6 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
 	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
 }
+
+
 

@@ -2,6 +2,14 @@
 
 Explosion::Explosion()
 {
+	for (int i = 0; i < 9; ++i)
+	{
+		yNum[i] = 0;
+		xNum[i] = 0;
+	}
+	damage = 0;
+	spawn = false;
+	time = 0;
 }
 
 Explosion::~Explosion()
@@ -22,7 +30,7 @@ void Explosion::Init()
 	{
 		exs[i] = GameObject(false, Vector2(16.0f, 16.0f));
 	}
-
+	damage = 1;
 }
 
 void Explosion::Update()

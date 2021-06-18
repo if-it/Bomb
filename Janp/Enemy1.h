@@ -1,8 +1,8 @@
 #pragma once
-#include "MapColl.h"
+#include "Enemy.h"
 #include"Collision.h"
 class Enemy1 :
-    public MapColl
+    public Enemy
 {
 public:
     Enemy1();
@@ -16,6 +16,6 @@ public:
 private:
     void Map_Coll(std::vector<std::vector<int>>& collMap);
     void MapJub(const int& mapPoint, const int& pointNum);
-    Count invincible;//–³“G
+  
 };
 

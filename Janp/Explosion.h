@@ -14,7 +14,7 @@ public:
 	void Coll(Collision* coll, ALLVECTOR all, Vector2 size);
 	void Draw(const Vector2& sc, const Vector2& shakeconst, const int* exTex, const int& box);
 
-
+	int damage;
 private:
 
 	ANIMATION exAni;

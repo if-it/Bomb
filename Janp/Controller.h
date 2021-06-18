@@ -35,7 +35,8 @@ public:
 	void Shake(int power, int time);
 	void StopShake();
 	bool Get_Shake_On() { return shake_On;}
-	bool Set_Shake_On(bool shakeon) { shake_On = shakeon;}
+	void Set_Shake_On(bool shakeon) { shake_On = shakeon;}
+	
 
 private:
 	bool XorD;

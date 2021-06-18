@@ -18,7 +18,7 @@ public:
 	void Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
-
+	bool Die();
 	void EnemyColl(const bool& lr);
 
 	int player_mapset;
@@ -39,6 +39,7 @@ private:
 	int maxHp;
 	int maxBombNum;
 	int nowBombNum;
+	int damage;
 private:
 	//MapŠÖ˜A
 	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);

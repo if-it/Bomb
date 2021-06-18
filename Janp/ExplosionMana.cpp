@@ -32,7 +32,7 @@ void ExplosionMana::Update()
 	}
 }
 
-void ExplosionMana::ExSpawn(GameObject& go)
+void ExplosionMana::ExSpawn(GameObject& go , const int& damage)
 {
 
 	Explosion InitEx;
@@ -40,6 +40,7 @@ void ExplosionMana::ExSpawn(GameObject& go)
 	InitEx.game_object.dis = true;
 	InitEx.game_object.allVec.pos = go.allVec.pos;
 	InitEx.game_object.allVec.pos -= SIZE / 2;
+	InitEx.damage = damage;
 	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);
 	//InitEx.game_object.allVec.pos -= SIZE / 2;
 	ex.push_back(InitEx);

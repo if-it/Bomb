@@ -18,6 +18,7 @@ void Bomb::Init()
 	time = 0;
 	playerOneColl = false;
 	playerSpawn = false;
+	damage = 1;
 }
 
 void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
@@ -44,7 +45,8 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 		if (bombAni.OneAnimation(30, 8))
 		{
 			game_object.dis = false;
-			ex->ExSpawn(game_object);
+			ex->ExSpawn(game_object,damage);
+			shakeflg = true;
 			con->Shake(1000, 200);
 		}
 		if (time == 60)
@@ -60,7 +62,7 @@ void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 }
 
 
-void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
+void Bomb::PlayerColl(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	if (game_object.dis)
 	{
@@ -71,13 +73,21 @@ void Bomb::Coll(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, C
 
 		if (!playerOneColl && playerColl)
 		{
+			shakeflg = true;
 			game_object.dis = false;
-			ex->ExSpawn(game_object);
+			ex->ExSpawn(game_object,damage);
 			all.vec.y = 0;
 			all.vec.y -= EXJUMP;
 			con->Shake(1000, 300);
 		}
 	}
+}
+
+void Bomb::EnemyColl()
+{
+	/*game_object.dis = false;
+	ex->ExSpawn(game_object);
+	con->Shake(1000, 300);*/
 }
 
 void Bomb::Map_Coll(std::vector<std::vector<int>>& collMap)

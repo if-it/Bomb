@@ -15,10 +15,12 @@ void Enemy1::Init(Vector2 pos)
 	game_object.color = COLOR(255, 0, 0);
 	game_object.allVec.pos = pos;
 	invincible = Count();
+	hp = 3;
 }
 
 void Enemy1::Update()
 {
+	DieChack();
 	const float ENEMY1_SPEED = 0.3f; //エネミーの速さ
 	const float ENEMY1_MAX_SPEED = 5.0f; //最大の速さ
 	if (game_object.dis)
@@ -147,7 +149,7 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 
 	if (coll->Collsion(layer, LAYERSIZE, game_object.size.y, pos, SIZE * 2, SIZE * 2))
 	{
-		game_object.allVec.vec.x += 1.5f;
+		game_object.allVec.vec.x += 0.5f;
 		game_object.lr = false;
 	}
 
@@ -157,7 +159,7 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 	layer.x -= LAYERSIZE;
 	if (coll->Collsion(layer, LAYERSIZE, game_object.size.y, pos, SIZE * 2, SIZE * 2))
 	{
-		game_object.allVec.vec.x -= 1.5f;
+		game_object.allVec.vec.x -= 0.5f;
 		game_object.lr = true;
 	}
 

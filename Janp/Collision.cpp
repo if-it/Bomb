@@ -20,10 +20,14 @@ bool Collision::Collsion(Vector2 pos, int sizeX, int sizeY, Vector2 poss, int si
 	return false;
 }
 //GameObject”Å–Ê
-bool Collision::CollsionObj(const GameObject& gameobject1,const GameObject& gameobject2)
+bool Collision::CollsionObj(const GameObject& gameobject1, const GameObject& gameobject2)
 {
-	return Collsion(gameobject1.allVec.pos, gameobject1.size.x, gameobject1.size.y,
-		gameobject2.allVec.pos, gameobject2.size.x, gameobject2.size.y);
+	if (gameobject1.dis && gameobject2.dis)
+	{
+		return Collsion(gameobject1.allVec.pos, gameobject1.size.x, gameobject1.size.y,
+			gameobject2.allVec.pos, gameobject2.size.x, gameobject2.size.y);
+	}
+	return false;
 }
 //“_‚Æ–Ê
 bool Collision::PointCollsion(Vector2 pos, int sizeX, int sizeY, Vector2 poss, int size2X, int size2Y)

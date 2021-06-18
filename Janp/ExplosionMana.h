@@ -15,7 +15,7 @@ public:
 	void Loading(Load* load, const int& box);
 	void Update();
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
-	void ExSpawn(GameObject& go);
+	void ExSpawn(GameObject& go, const int& damage);
 	void Coll(Collision* coll, ALLVECTOR all, Vector2 size);
 	void Draw(const Vector2& sc, const Vector2& shakeconst);
 
