@@ -2,7 +2,7 @@
 #include "MapColl.h"
 #include"Collision.h"
 #define EXNUM 8
-#define BOXNUM 6
+
 class Explosion :public MapColl
 {
 public:

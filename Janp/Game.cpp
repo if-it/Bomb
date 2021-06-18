@@ -252,7 +252,7 @@ void Game::Obj_Coll_Update()
 		{
 			if (coll->CollsionObj(enemy1Mana->enemy1[i].game_object, bombMana->bomb[n].game_object))
 			{
-				bombMana->bomb[n].EnemyColl();
+				bombMana->bomb[n].EnemyColl(bombShake.flg,con,exMana);
 			}
 		}
 		//Enemy1‚Æ”š”­

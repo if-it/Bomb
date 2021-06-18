@@ -83,11 +83,12 @@ void Bomb::PlayerColl(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shake
 	}
 }
 
-void Bomb::EnemyColl()
+void Bomb::EnemyColl(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
-	/*game_object.dis = false;
-	ex->ExSpawn(game_object);
-	con->Shake(1000, 300);*/
+	shakeflg = true;
+	game_object.dis = false;
+	ex->ExSpawn(game_object,damage);
+	con->Shake(1000, 300);
 }
 
 void Bomb::Map_Coll(std::vector<std::vector<int>>& collMap)

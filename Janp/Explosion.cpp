@@ -50,7 +50,10 @@ void Explosion::Update()
 					(float)(spos.y + GetRand(game_object.size.y / 2)));
 				exs[i].allVec.vec = Vector2((float)GetRand(3) - (float)GetRand(3), (float)GetRand(3) - (float)GetRand(3));
 			}
-			for (int i = 0; i < BOXNUM; ++i)
+			int boxNum = 0;
+			boxNum = GetRand(2);
+			boxNum += 4;
+			for (int i = 0; i < boxNum; ++i)
 			{
 				boxTime.push_back(0);
 				boxFlg.push_back(true);
