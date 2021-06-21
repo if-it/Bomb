@@ -12,7 +12,7 @@ public:
 	~ExplosionMana();
 
 	void Init();
-	void Loading(Load* load, const int& box);
+	void Loading(Load* load);
 	void Update();
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
 	void ExSpawn(GameObject& go, const int& damage);

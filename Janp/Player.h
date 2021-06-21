@@ -19,7 +19,7 @@ public:
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
-	void EnemyColl(const bool& lr);
+	void Coll();
 
 	int player_mapset;
 

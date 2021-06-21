@@ -4,7 +4,7 @@
 
 Player::Player()
 {
-	game_object = GameObject(true, Vector2(64.0f, 64.0f));
+	game_object = GameObject("Player",true, Vector2(64.0f, 64.0f));
 	maxBombNum = 10;
 	maxHp = 5;
 	hp = maxHp;
@@ -18,28 +18,28 @@ Player::~Player()
 
 void Player::Init(std::vector<std::vector<int>>& map)
 {
-	game_object = GameObject(true, Vector2(64.0f, 64.0f));
+	game_object = GameObject("Player",true, Vector2(64.0f, 64.0f));
 	for (int y = 0; y < (int)map.size(); ++y)
 	{
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 			if (map[y][x] == player_mapset)
 			{
-				game_object.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
+				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				sc2 = Vector2(((float)(-WIDTH / 2) + SIZE * x), (float)((-HEIGHT / 2) + SIZE * y + SIZE / 2));
-				if (game_object.allVec.pos.x < WIDTH / 2 - SIZE / 2)
+				if (game_object.game.allVec.pos.x < WIDTH / 2 - SIZE / 2)
 				{
 					sc2.x = 0;
 				}
-				if (game_object.allVec.pos.x > (SIZE * (int)map[y].size()) - WIDTH / 2 + SIZE / 2)
+				if (game_object.game.allVec.pos.x > (SIZE * (int)map[y].size()) - WIDTH / 2 + SIZE / 2)
 				{
 					sc2.x = (SIZE * (int)map[y].size()) - WIDTH;
 				}
-				if (game_object.allVec.pos.y < HEIGHT / 2 + SIZE / 2)
+				if (game_object.game.allVec.pos.y < HEIGHT / 2 + SIZE / 2)
 				{
 					sc2.y = 0;
 				}
-				if (game_object.allVec.pos.y > (SIZE * (int)map.size()) - HEIGHT / 2 - SIZE / 2)
+				if (game_object.game.allVec.pos.y > (SIZE * (int)map.size()) - HEIGHT / 2 - SIZE / 2)
 				{
 					sc2.y = (SIZE * (int)map.size()) - HEIGHT;
 				}
@@ -57,7 +57,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 
 void Player::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.texSize.x, (int)game_object.texSize.y, tex);
+	load->LoadAnimeTex("Load/Texture/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
 }
 
 void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
@@ -84,12 +84,12 @@ void Player::Input(Key* key, Controller* con)
 	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 	{
 		right = true;
-		game_object.lr = false;
+		game_object.game.lr = false;
 	}
 	if (key->keyFlame(KEY_INPUT_A) > 0 || key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
 	{
 		left = true;
-		game_object.lr = true;
+		game_object.game.lr = true;
 	}
 	if (key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP) || key->KeyTrigger(KEY_INPUT_W) || con->TrlggerBotton(con->A))
 	{
@@ -99,42 +99,43 @@ void Player::Input(Key* key, Controller* con)
 
 void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 {
-	game_object.allVec.vec.y += 0.2f;
+	game_object.game.allVec.vec.y += 0.2f;
 	if (right)
 	{
-		game_object.allVec.vec.x += SPEED;
+		game_object.game.allVec.vec.x += SPEED;
 	}
 	else if (left)
 	{
-		game_object.allVec.vec.x -= SPEED;
+		game_object.game.allVec.vec.x -= SPEED;
 	}
-	else if (game_object.allVec.vec.x > 0)
+	else if (game_object.game.allVec.vec.x > 0)
 	{
-		game_object.allVec.vec.x -= SPEED;
+		game_object.game.allVec.vec.x -= SPEED;
 	}
-	else if (game_object.allVec.vec.x < 0)
+	else if (game_object.game.allVec.vec.x < 0)
 	{
-		game_object.allVec.vec.x += SPEED;
+		game_object.game.allVec.vec.x += SPEED;
 	}
-	if ((game_object.allVec.vec.x < 0 && game_object.allVec.vec.x>-SPEED) || (game_object.allVec.vec.x > 0 && game_object.allVec.vec.x < SPEED))
+	if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) || 
+		(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < SPEED))
 	{
-		game_object.allVec.vec.x = 0;
+		game_object.game.allVec.vec.x = 0;
 	}
 
 
-	if (game_object.allVec.vec.x > MAXSPEED)
+	if (game_object.game.allVec.vec.x > MAXSPEED)
 	{
-		game_object.allVec.vec.x = MAXSPEED;
+		game_object.game.allVec.vec.x = MAXSPEED;
 	}
-	if (game_object.allVec.vec.x < -MAXSPEED)
+	if (game_object.game.allVec.vec.x < -MAXSPEED)
 	{
-		game_object.allVec.vec.x = -MAXSPEED;
+		game_object.game.allVec.vec.x = -MAXSPEED;
 	}
 
 	if (shot)
 	{
 
-		Vector2 bombPos = game_object.allVec.pos;
+		Vector2 bombPos = game_object.game.allVec.pos;
 		bombPos += SIZE / 2;
 		Vector2 bombVec = Vector2();
 		nowBombNum = maxBombNum - nowBombNum;
@@ -159,46 +160,46 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		back_flg[i] = false;
 		collFlg[i] = false;
 	}
-	vec = game_object.allVec.vec;
+	vec = game_object.game.allVec.vec;
 
 	int SizeCut = 0;
 
 	//上左
 	MapJub(MapPointerY(SizeCut + 1, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
 	//上右
-	MapJub(MapPointerY(game_object.size.x - SizeCut - 1, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
+	MapJub(MapPointerY(game_object.game.size.x - SizeCut - 1, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
 	//上真ん中
-	MapJub(MapPointerY(game_object.size.x / 2, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
+	MapJub(MapPointerY(game_object.game.size.x / 2, SizeCut + 1, collMap, bxNum[0], byNum[0]), 0, stageChange, stage);
 
 	//下左
-	MapJub(MapPointerY(SizeCut + 1, game_object.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
+	MapJub(MapPointerY(SizeCut + 1, game_object.game.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
 	//下右
-	MapJub(MapPointerY(game_object.size.x - SizeCut - 1, game_object.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
+	MapJub(MapPointerY(game_object.game.size.x - SizeCut - 1, game_object.game.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
 	//下真ん中
-	MapJub(MapPointerY(game_object.size.x / 2, game_object.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
+	MapJub(MapPointerY(game_object.game.size.x / 2, game_object.game.size.y - SizeCut - 1, collMap, bxNum[1], byNum[1]), 1, stageChange, stage);
 
-	game_object.allVec.vec.y = vec.y;
-	game_object.allVec.AddPosY();
+	game_object.game.allVec.vec.y = vec.y;
+	game_object.game.allVec.AddPosY();
 
 	//右上
-	MapJub(MapPointerX(game_object.size.x - SizeCut - 1, SizeCut + 1, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
+	MapJub(MapPointerX(game_object.game.size.x - SizeCut - 1, SizeCut + 1, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
 	//右下
-	MapJub(MapPointerX(game_object.size.x - SizeCut - 1, game_object.size.y - SizeCut - 1, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
+	MapJub(MapPointerX(game_object.game.size.x - SizeCut - 1, game_object.game.size.y - SizeCut - 1, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
 	//右真ん中
-	MapJub(MapPointerX(game_object.size.x - SizeCut - 1, game_object.size.y / 2, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
+	MapJub(MapPointerX(game_object.game.size.x - SizeCut - 1, game_object.game.size.y / 2, collMap, bxNum[2], byNum[2]), 2, stageChange, stage);
 
 	//左上
 	MapJub(MapPointerX(SizeCut + 1, SizeCut + 1, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
 	//左下
-	MapJub(MapPointerX(SizeCut + 1, game_object.size.y - SizeCut - 1, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
+	MapJub(MapPointerX(SizeCut + 1, game_object.game.size.y - SizeCut - 1, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
 	//左真ん中
-	MapJub(MapPointerX(SizeCut + 1, game_object.size.y / 2, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
+	MapJub(MapPointerX(SizeCut + 1, game_object.game.size.y / 2, collMap, bxNum[3], byNum[3]), 3, stageChange, stage);
 
 	//中心
-	MapJub(MapPointerX((game_object.size.x - SizeCut) / 2, (game_object.size.y - SizeCut) / 2, collMap, bxNum[4], byNum[4]), 4, stageChange, stage);
+	MapJub(MapPointerX((game_object.game.size.x - SizeCut) / 2, (game_object.game.size.y - SizeCut) / 2, collMap, bxNum[4], byNum[4]), 4, stageChange, stage);
 
-	game_object.allVec.vec.x = vec.x;
-	game_object.allVec.AddPosX();
+	game_object.game.allVec.vec.x = vec.x;
+	game_object.game.allVec.AddPosX();
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -208,30 +209,30 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		}
 	}
 
-	if (game_object.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
+	if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
 		sc2.x += vec.x;
 	}
 
-	if (game_object.allVec.pos.x < WIDTH / 2 - SIZE / 2)
+	if (game_object.game.allVec.pos.x < WIDTH / 2 - SIZE / 2)
 	{
 		sc2.x = 0;
 	}
-	if (game_object.allVec.pos.x > (SIZE * (int)collMap[0].size()) - WIDTH / 2)
+	if (game_object.game.allVec.pos.x > (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
 		sc2.x = (SIZE * (int)collMap[0].size()) - WIDTH;
 	}
 
 
-	if (game_object.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2)
+	if (game_object.game.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.game.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2)
 	{
 		sc2.y += vec.y;
 	}
-	if (game_object.allVec.pos.y < HEIGHT / 2)
+	if (game_object.game.allVec.pos.y < HEIGHT / 2)
 	{
 		sc2.y = 0;
 	}
-	if (game_object.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2)
+	if (game_object.game.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2)
 	{
 		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
 	}
@@ -413,21 +414,28 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 }
 
 
-void Player::EnemyColl(const bool& lr)
+void Player::Coll()
 {
-	if (!invincible.flg)
+	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
-		invincible.flg = true;
-		--hp;
-		if (!lr)
+		if (game_object.coll_Obj_List[i]->nameTag == "Enemy1")
 		{
-			game_object.allVec.vec += Vector2(10, -3);
-		}
-		else
-		{
-			game_object.allVec.vec += Vector2(-10, -3);
+			if (!invincible.flg)
+			{
+				invincible.flg = true;
+				--hp;
+				if (!game_object.coll_Obj_List[i]->lr)
+				{
+					game_object.game.allVec.vec += Vector2(10, -3);
+				}
+				else
+				{
+					game_object.game.allVec.vec += Vector2(-10, -3);
+				}
+			}
 		}
 	}
+	
 }
 
 
@@ -436,6 +444,3 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
 	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
 }
-
-
-

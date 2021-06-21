@@ -13,7 +13,7 @@ Bomb::~Bomb()
 
 void Bomb::Init()
 {
-	game_object = GameObject(false);
+	game_object = GameObject("Bomb",false);
 	bombAni = ANIMATION();
 	time = 0;
 	playerOneColl = false;
@@ -24,27 +24,27 @@ void Bomb::Init()
 void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	time++;
-	if (game_object.dis)
+	if (game_object.game.dis)
 	{
-		game_object.allVec.vec.y += 0.1f;
+		game_object.game.allVec.vec.y += 0.1f;
 
-		if (game_object.allVec.vec.x > 0)
+		if (game_object.game.allVec.vec.x > 0)
 		{
-			game_object.allVec.vec.x -= 0.1f;
+			game_object.game.allVec.vec.x -= 0.1f;
 		}
-		else if (game_object.allVec.vec.x < 0)
+		else if (game_object.game.allVec.vec.x < 0)
 		{
-			game_object.allVec.vec.x += 0.1f;
+			game_object.game.allVec.vec.x += 0.1f;
 		}
-		if ((game_object.allVec.vec.x < 0 && game_object.allVec.vec.x>-0.1f) ||
-			(game_object.allVec.vec.x > 0 && game_object.allVec.vec.x < 0.1f))
+		if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-0.1f) ||
+			(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.1f))
 		{
-			game_object.allVec.vec.x = 0;
+			game_object.game.allVec.vec.x = 0;
 		}
 
 		if (bombAni.OneAnimation(30, 8))
 		{
-			game_object.dis = false;
+			game_object.game.dis = false;
 			ex->ExSpawn(game_object,damage);
 			shakeflg = true;
 			con->Shake(1000, 200);
@@ -58,23 +58,23 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 
 void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 {
-	if(game_object.dis)Map_Coll(collMap);
+	if(game_object.game.dis)Map_Coll(collMap);
 }
 
 
 void Bomb::PlayerColl(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
-	if (game_object.dis)
+	if (game_object.game.dis)
 	{
 		//player
-		bool playerColl = coll->Collsion(game_object.allVec.pos, game_object.size.x, game_object.size.y, all.pos, size.x, size.y);
+		bool playerColl = coll->Collsion(game_object.game.allVec.pos, game_object.game.size.x, game_object.game.size.y, all.pos, size.x, size.y);
 
 		if (playerOneColl && !playerColl)playerOneColl = false;
 
 		if (!playerOneColl && playerColl)
 		{
 			shakeflg = true;
-			game_object.dis = false;
+			game_object.game.dis = false;
 			ex->ExSpawn(game_object,damage);
 			all.vec.y = 0;
 			all.vec.y -= EXJUMP;
@@ -86,7 +86,7 @@ void Bomb::PlayerColl(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shake
 void Bomb::EnemyColl(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	shakeflg = true;
-	game_object.dis = false;
+	game_object.game.dis = false;
 	ex->ExSpawn(game_object,damage);
 	con->Shake(1000, 300);
 }
@@ -96,26 +96,26 @@ void Bomb::Map_Coll(std::vector<std::vector<int>>& collMap)
 	//上左
 	MapJub(MapPointerY(1, 1, collMap), 0);
 	//上右
-	MapJub(MapPointerY(game_object.size.x - 1, 1, collMap), 0);
+	MapJub(MapPointerY(game_object.game.size.x - 1, 1, collMap), 0);
 
 	//下左
-	MapJub(MapPointerY(1, game_object.size.y - 1, collMap), 1);
+	MapJub(MapPointerY(1, game_object.game.size.y - 1, collMap), 1);
 	//下右
-	MapJub(MapPointerY(game_object.size.x - 1, game_object.size.y - 1, collMap), 1);
+	MapJub(MapPointerY(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 1);
 
-	game_object.allVec.AddPosY();
+	game_object.game.allVec.AddPosY();
 
 	//右上
-	MapJub(MapPointerX(game_object.size.x - 1, 1, collMap), 2);
+	MapJub(MapPointerX(game_object.game.size.x - 1, 1, collMap), 2);
 	//右下
-	MapJub(MapPointerX(game_object.size.x - 1, game_object.size.y - 1, collMap), 2);
+	MapJub(MapPointerX(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 2);
 
 	//左上
 	MapJub(MapPointerX(1, 1, collMap), 3);
 	//左下
-	MapJub(MapPointerX(1, game_object.size.y - 1, collMap), 3);
+	MapJub(MapPointerX(1, game_object.game.size.y - 1, collMap), 3);
 
-	game_object.allVec.AddPosX();
+	game_object.game.allVec.AddPosX();
 }
 
 void Bomb::MapJub(const int& mapPoint, const int& pointNum)
@@ -124,16 +124,16 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.allVec.vec.y -= game_object.allVec.vec.y;
-			game_object.allVec.vec.y = 0;
+			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
+			game_object.game.allVec.vec.y = 0;
 		}
 	}
 	else if (pointNum == 1) //Y軸
 	{
 		if (WALL)
 		{
-			game_object.allVec.vec.y -= game_object.allVec.vec.y;
-			game_object.allVec.vec.y = 0;
+			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
+			game_object.game.allVec.vec.y = 0;
 		}
 	}
 
@@ -141,8 +141,8 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.allVec.vec.x -= game_object.allVec.vec.x;
-			game_object.allVec.vec.x = 0;
+			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
+			game_object.game.allVec.vec.x = 0;
 		}
 	}
 
@@ -150,8 +150,8 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.allVec.vec.x -= game_object.allVec.vec.x;
-			game_object.allVec.vec.x = 0;
+			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
+			game_object.game.allVec.vec.x = 0;
 		}
 	}
 }

@@ -18,11 +18,10 @@ Game::~Game()
 	delete coll;
 	delete fuse;
 
-	delete particleMana;
 	delete bombMana;
 	delete exMana;
 	delete enemy1Mana;
-
+	coll_List.clear();
 	InitGraph();
 	InitSoundMem();
 }
@@ -65,8 +64,8 @@ void Game::Init()
 	bombMana->Init();
 	shake = Vector2();
 	sceneCount = Count();
-	particleMana->Init();
 	exMana->Init();
+	coll_List.clear();
 }
 
 bool Game::Loading()
@@ -76,8 +75,7 @@ bool Game::Loading()
 
 	player->Loading(load);
 	bombMana->Loading(load);
-	load->LoadTex("Load/Texture/Box.png", particleMana->boxTex);
-	exMana->Loading(load, particleMana->boxTex);
+	exMana->Loading(load);
 	enemy1Mana->Loading(load);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
@@ -191,7 +189,7 @@ void Game::Play_Scene_Update()
 
 	//layerチェック
 
-	enemy1Mana->MoveChack(player->game_object.allVec.pos, coll);
+	enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
 
 	//Map当たり判定
 	Map_Coll_Update();
@@ -223,7 +221,6 @@ void Game::Main_Play_Update()
 	fuse->Update(map->map, bombMana);
 	bombMana->Update(bombShake.flg, con, exMana);
 	exMana->Update();
-	particleMana->Update();
 
 }
 
@@ -237,8 +234,42 @@ void Game::Map_Coll_Update()
 
 void Game::Obj_Coll_Update()
 {
+
+	coll_List.clear();
+
+	coll_List.push_back(&player->game_object);
+	for (int i = 0; i < exMana->ex.size(); ++i)
+	{
+		coll_List.push_back(&exMana->ex[i].game_object);
+	}
+	for (int i = 0; i < (int)bombMana->bomb.size(); ++i)
+	{
+		coll_List.push_back(&bombMana->bomb[i].game_object);
+	}
+	for (int i = 0; i < (int)enemy1Mana->enemy1.size(); ++i)
+	{
+		coll_List.push_back(&enemy1Mana->enemy1[i].game_object);
+	}
+
+	for (int i = 0; i < (int)coll_List.size(); ++i)
+	{
+		coll_List[i]->coll_Obj_List.clear();
+		for (int n = 0; n < (int)coll_List.size(); ++n)
+		{
+			if (i == n || !coll_List[i]->same) { continue; }
+
+			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
+			{
+				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
+			}
+
+		}
+	}
+
+
+
 	//plyaerと爆弾
-	bombMana->PlayerColl(coll, player->game_object.allVec, player->game_object.size, bombShake.flg, con, exMana);
+	bombMana->PlayerColl(coll, player->game_object.game.allVec, player->game_object.game.size, bombShake.flg, con, exMana);
 	//爆発とひも
 	for (int i = 0; i < exMana->ex.size(); ++i)
 	{
@@ -267,9 +298,10 @@ void Game::Obj_Coll_Update()
 		if (coll->CollsionObj(enemy1Mana->enemy1[i].game_object, player->game_object))
 		{
 			enemy1Mana->enemy1[i].PlayerColl();
-			player->EnemyColl(enemy1Mana->enemy1[i].game_object.lr);
+			//player->EnemyColl(enemy1Mana->enemy1[i].game_object.lr);
 		}
 	}
+	player->Coll();
 }
 
 void Game::Draw()
@@ -321,6 +353,5 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	enemy1Mana->Draw(sc2, shake2);
 
 	//エフェクト関連
-	particleMana->Draw(sc2, shake2);
 	exMana->Draw(sc2, shake2);
 }

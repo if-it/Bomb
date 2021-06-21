@@ -61,9 +61,9 @@ void BombMana::BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const b
 	Bomb InitBomb;
 
 	InitBomb.Init();
-	InitBomb.game_object.dis = true;
-	InitBomb.game_object.allVec.pos = set_pos;
-	InitBomb.game_object.allVec.vec = set_vec;
+	InitBomb.game_object.game.dis = true;
+	InitBomb.game_object.game.allVec.pos = set_pos;
+	InitBomb.game_object.game.allVec.vec = set_vec;
 	InitBomb.playerSpawn = playerSp;
 	InitBomb.playerOneColl = playerSp;
 	InitBomb.damage = damage;
@@ -86,7 +86,7 @@ int BombMana::NowBombNum()
 	int nowNum = 0;
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		if (bomb[i].game_object.dis)
+		if (bomb[i].game_object.game.dis)
 		{
 			nowNum++;
 		}

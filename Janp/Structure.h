@@ -1,5 +1,6 @@
 #pragma once
 #include"Parent.h"
+#include<string>
 class Structure
 {
 public:
@@ -110,11 +111,10 @@ protected:
 		}
 	};
 
-
-	struct GameObject
+	struct Game
 	{
+		std::string nameTag;
 		ALLVECTOR allVec;
-		COLOR color;
 		Vector2 scale;
 		Vector2 texSize;
 		Vector2 size;
@@ -122,11 +122,12 @@ protected:
 		bool lr;
 		float rote;
 		float pal;
-
-		GameObject(bool disFlg = true,Vector2 TexSize = Vector2(32.0f,32.0f), Vector2 Scale = Vector2(1.0f, 1.0f))
+		Game(const std::string& NameTag = "noName",
+			const bool& disFlg = true,const Vector2& TexSize = Vector2(32.0f, 32.0f), const Vector2& Scale = Vector2(1.0f, 1.0f))
 		{
+			
+			nameTag = NameTag;
 			allVec = ALLVECTOR();
-			color = COLOR();
 			scale = Scale;
 			texSize = TexSize;
 			size = texSize * scale;
@@ -134,6 +135,24 @@ protected:
 			lr = false;
 			rote = 0;
 			pal = 255;
+		}
+	};
+
+	struct GameObject
+	{
+		
+		Game game;
+		COLOR color;
+		std::vector<Game*>coll_Obj_List;
+		bool same;
+
+		GameObject(const std::string& NameTag = "noName", const bool& disFlg = true,
+			const Vector2& TexSize = Vector2(32.0f, 32.0f),const Vector2& Scale = Vector2(1.0f, 1.0f),const bool& Same = false)
+		{
+			
+			game = Game(NameTag,disFlg, TexSize, Scale);
+			color = COLOR();
+			coll_Obj_List.clear();
 		}
 	};
 	void SizeChange(Count& count, Vector2& size, Vector2 change, int maxCount);

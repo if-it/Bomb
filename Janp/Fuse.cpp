@@ -22,24 +22,24 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 			if (map[y][x] >= 4 && map[y][x] <= 7)
 			{
 				InitFuse = FUSE();
-				InitFuse.object.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
+				InitFuse.object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				InitFuse.type = map[y][x];
-				InitFuse.object.dis = true;
+				InitFuse.object.game.dis = true;
 				InitFuse.maxAnime = 1;
 				InitFuse.animeFrame = 1;
 				switch (InitFuse.type)
 				{
 				case 4:
-					InitFuse.object.rote = 0;
+					InitFuse.object.game.rote = 0;
 					break;
 				case 5:
-					InitFuse.object.rote = 180;
+					InitFuse.object.game.rote = 180;
 					break;
 				case 6:
-					InitFuse.object.rote = 270;
+					InitFuse.object.game.rote = 270;
 					break;
 				case 7:
-					InitFuse.object.rote = 90;
+					InitFuse.object.game.rote = 90;
 					break;
 				default:
 					break;
@@ -49,9 +49,9 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 			if (map[y][x] >= 8 && map[y][x] <= 23)
 			{
 				InitFuse = FUSE();
-				InitFuse.object.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
+				InitFuse.object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				InitFuse.type = map[y][x];
-				InitFuse.object.dis = true;
+				InitFuse.object.game.dis = true;
 				InitFuse.maxAnime = 12;
 				InitFuse.animeFrame = 2;
 				switch (InitFuse.type)
@@ -60,37 +60,37 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 				case 8:
 				case 12:
 				case 20:
-					InitFuse.object.rote = 0;
+					InitFuse.object.game.rote = 0;
 					break;
 				case 9:
 				case 15:
 				case 21:
-					InitFuse.object.rote = 180;
+					InitFuse.object.game.rote = 180;
 					break;
 				case 10:
 				case 18:
 				case 22:
-					InitFuse.object.rote = 270;
+					InitFuse.object.game.rote = 270;
 					break;
 				case 11:
 				case 17:
 				case 23:
-					InitFuse.object.rote = 90;
+					InitFuse.object.game.rote = 90;
 					break;
 				case 13:
-					InitFuse.object.lr = true;
+					InitFuse.object.game.lr = true;
 					break;
 				case 14:
-					InitFuse.object.lr = true;
-					InitFuse.object.rote = 180;
+					InitFuse.object.game.lr = true;
+					InitFuse.object.game.rote = 180;
 					break;
 				case 16:
-					InitFuse.object.lr = true;
-					InitFuse.object.rote = 270;
+					InitFuse.object.game.lr = true;
+					InitFuse.object.game.rote = 270;
 					break;
 				case 19:
-					InitFuse.object.rote = 90;
-					InitFuse.object.lr = true;
+					InitFuse.object.game.rote = 90;
+					InitFuse.object.game.lr = true;
 					break;
 				default:
 					break;
@@ -106,8 +106,8 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 	{
 		if (fuses[i].type >= 8 && fuses[i].type <= 23)
 		{
-			int y = (int)(fuses[i].object.allVec.pos.y / SIZE);
-			int x = (int)(fuses[i].object.allVec.pos.x / SIZE);
+			int y = (int)(fuses[i].object.game.allVec.pos.y / SIZE);
+			int x = (int)(fuses[i].object.game.allVec.pos.x / SIZE);
 			if (y - 1 >= 0 && y + 1 < (int)map.size() && x - 1 >= 0 && x + 1 < (int)map[0].size())
 			{
 				int mapy = 0;
@@ -178,50 +178,50 @@ void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
 					switch (fuses[i].type)
 					{
 					case 4:// 4 è„ëÂñC
-						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y - SIZE), 
+						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y - SIZE),
 							Vector2(0.0f, -BSPEED),false,1);
 						break;
 					case 5:// 5 â∫ëÂñC
-						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y + SIZE),
+						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y + SIZE),
 							Vector2(0.0f, BSPEED),false,1);
 						break;
 					case 6:// 6 ç∂ëÂñC
-						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x - SIZE, fuses[i].object.allVec.pos.y), 
+						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x - SIZE, fuses[i].object.game.allVec.pos.y),
 							Vector2(-BSPEED, 0.0f),false,1);
 						break;
 					case 7:// 7 âEëÂñC
-						bombMana->BombSpawn(Vector2(fuses[i].object.allVec.pos.x + SIZE, fuses[i].object.allVec.pos.y), 
+						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x + SIZE, fuses[i].object.game.allVec.pos.y),
 							Vector2(BSPEED, 0.0f),false,1);
 						break;
 					case 8:// 8 è„ì±âŒê¸
 					case 14:// 14 ç∂â∫äp
 					case 15:// 15 âEâ∫äp
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y + SIZE), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y + SIZE), map);
 						break;
 					case 9:// 9 â∫ì±âŒê¸
 					case 12:// 12 ç∂è„äp
 					case 13:// 13 âEè„äp
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y - SIZE), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y - SIZE), map);
 						break;
 					case 10:// 10 ç∂ì±âŒê¸
 					case 17:// 17 è„âEäp
 					case 19:// 19 â∫âEäp
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x + SIZE, fuses[i].object.allVec.pos.y), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x + SIZE, fuses[i].object.game.allVec.pos.y), map);
 						break;
 					case 11:// 11 âEì±âŒê¸
 					case 16:// 16 è„ç∂äp
 					case 18:// 18 â∫ç∂äp
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x - SIZE, fuses[i].object.allVec.pos.y), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x - SIZE, fuses[i].object.game.allVec.pos.y), map);
 						break;
 					case 20:// 20 è„âEç∂
 					case 21:// 21 â∫ç∂âE
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x + SIZE, fuses[i].object.allVec.pos.y), map);
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x - SIZE, fuses[i].object.allVec.pos.y), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x + SIZE, fuses[i].object.game.allVec.pos.y), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x - SIZE, fuses[i].object.game.allVec.pos.y), map);
 						break;
 					case 22:// 22 ç∂è„â∫
 					case 23:// 23 âEâ∫è„
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y + SIZE), map);
-						NextAnimation(Vector2(fuses[i].object.allVec.pos.x, fuses[i].object.allVec.pos.y - SIZE), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y + SIZE), map);
+						NextAnimation(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y - SIZE), map);
 						break;
 					default:
 						break;
@@ -277,7 +277,7 @@ void Fuse::NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& map)
 	{
 		for (int i = 0; i < (int)fuses.size(); ++i)
 		{
-			if (fuses[i].object.allVec.pos == nextPos)
+			if (fuses[i].object.game.allVec.pos == nextPos)
 			{
 				fuses[i].coll = true;
 				fuses[i].anime.counter.flg = false;

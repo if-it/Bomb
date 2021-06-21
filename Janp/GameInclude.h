@@ -5,7 +5,6 @@
 #include"Map.h"
 #include"Player.h"
 #include"Fuse.h"
-#include"ParticleMana.h"
 #include"BombMana.h"
 #include"ExplosionMana.h"
 #include"Enemy1Mana.h"
@@ -35,7 +34,6 @@ protected:
 	Fuse* fuse = new Fuse();
 	//MapExColl* mapExColl = new MapExColl();
 	//MapBombColl* mapBombColl = new MapBombColl();
-	ParticleMana* particleMana = new ParticleMana();
 	BombMana* bombMana = new BombMana();
 	ExplosionMana* exMana = new ExplosionMana();
 	Enemy1Mana* enemy1Mana = new Enemy1Mana();
@@ -82,5 +80,6 @@ protected:
 
 	Vector2 sc;
 	Vector2 shake;
+	std::vector<GameObject*>coll_List;
 };
 

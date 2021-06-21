@@ -1,6 +1,5 @@
 #include "Map.h"
 #include<fstream>
-#include<string>
 #include<sstream>
 
 Map::Map()

@@ -32,7 +32,7 @@ private :
 		int animeEndCount;
 		FUSE()
 		{
-			object = GameObject(false);
+			object = GameObject("fuse",false);
 			anime = ANIMATION();
 			type = 0;
 			coll = false;

@@ -72,7 +72,7 @@ int Enemy1Mana::NowNum()
 	int nowNum = 0;
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
-		if (enemy1[i].game_object.dis)
+		if (enemy1[i].game_object.game.dis)
 		{
 			++nowNum;
 		}

@@ -151,8 +151,6 @@
     <ClCompile Include="MapColl.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Parent.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleMana.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -178,8 +176,6 @@
     <ClInclude Include="MapColl.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Parent.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleMana.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="Vector.h" />

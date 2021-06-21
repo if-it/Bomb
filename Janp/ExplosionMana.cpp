@@ -13,11 +13,11 @@ void ExplosionMana::Init()
 	ex.clear();
 }
 
-void ExplosionMana::Loading(Load* load,const int&box)
+void ExplosionMana::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/ExTex16.png", 12, 12, 1, SIZE, SIZE, exTex);
+	load->LoadTex("Load/Texture/Box.png", boxTex);
 	load->LoadSound("Load/Sound/SE/Explosion01.wav", exSound);
-	boxTex = box;
 }
 
 void ExplosionMana::Update()
@@ -37,9 +37,9 @@ void ExplosionMana::ExSpawn(GameObject& go , const int& damage)
 
 	Explosion InitEx;
 	InitEx.Init();
-	InitEx.game_object.dis = true;
-	InitEx.game_object.allVec.pos = go.allVec.pos;
-	InitEx.game_object.allVec.pos -= SIZE / 2;
+	InitEx.game_object.game.dis = true;
+	InitEx.game_object.game.allVec.pos = go.game.allVec.pos;
+	InitEx.game_object.game.allVec.pos -= SIZE / 2;
 	InitEx.damage = damage;
 	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);
 	//InitEx.game_object.allVec.pos -= SIZE / 2;
@@ -75,7 +75,7 @@ int ExplosionMana::NowExNum()
 	int nuwNum = 0;
 	for (int i = 0; i < (int)ex.size(); ++i)
 	{
-		if (ex[i].game_object.dis)++nuwNum;
+		if (ex[i].game_object.game.dis)++nuwNum;
 	}
 	return nuwNum;
 }

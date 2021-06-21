@@ -22,10 +22,10 @@ bool Collision::Collsion(Vector2 pos, int sizeX, int sizeY, Vector2 poss, int si
 //GameObject”Å–Ê
 bool Collision::CollsionObj(const GameObject& gameobject1, const GameObject& gameobject2)
 {
-	if (gameobject1.dis && gameobject2.dis)
+	if (gameobject1.game.dis && gameobject2.game.dis)
 	{
-		return Collsion(gameobject1.allVec.pos, gameobject1.size.x, gameobject1.size.y,
-			gameobject2.allVec.pos, gameobject2.size.x, gameobject2.size.y);
+		return Collsion(gameobject1.game.allVec.pos, gameobject1.game.size.x, gameobject1.game.size.y,
+			gameobject2.game.allVec.pos, gameobject2.game.size.x, gameobject2.game.size.y);
 	}
 	return false;
 }

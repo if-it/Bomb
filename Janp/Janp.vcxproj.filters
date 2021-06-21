@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -79,13 +71,21 @@
     <Filter Include="GameObjct\Enemy\Enemy0">
       <UniqueIdentifier>{bb24f7f9-f912-4fc7-a0ed-ad72d12ee853}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\Fuse">
+      <UniqueIdentifier>{e380f607-70e8-4535-aa87-6a997f323336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Fuse\ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="GameObjct\Fuse\ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Fuse.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>GameObjct\Fuse\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Map\ソースファイル</Filter>
@@ -135,12 +135,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>GameObjct\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>Effect\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleMana.cpp">
-      <Filter>Effect\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>Effect\ソースファイル</Filter>
     </ClCompile>
@@ -159,10 +153,13 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>GameObjct\Enemy\Enemy0</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fuse.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>GameObjct\Fuse\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Map\ヘッダーファイル</Filter>
@@ -211,12 +208,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>GameObjct\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleMana.h">
-      <Filter>Effect\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Effect\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Explosion.h">
       <Filter>Effect\ヘッダーファイル</Filter>

@@ -14,7 +14,7 @@ void Enemy::DieChack()
 {
 	if (hp <= 0)
 	{
-		game_object.dis = false;
+		game_object.game.dis = false;
 	}
 }
 
