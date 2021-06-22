@@ -61,7 +61,6 @@ void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 	if (game_object.game.dis)Map_Coll(collMap);
 }
 
-
 void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
@@ -77,8 +76,9 @@ void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
 				con->Shake(1000, 300);
 			}
 		}
-		if (nameTag == "Enemy1"||nameTag=="Enemy2")
+		if (nameTag == "Enemy1" || nameTag == "Enemy2")
 		{
+
 			shakeflg = true;
 			game_object.game.dis = false;
 			ex->ExSpawn(game_object, damage);

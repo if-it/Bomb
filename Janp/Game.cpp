@@ -260,7 +260,6 @@ void Game::Obj_Coll_Update()
 	}
 	coll_List.push_back(&enemy2->game_object);
 
-
 	//“–‚½‚è”»’èƒŠƒXƒg‚É“–‚½‚Á‚Ä‚¢‚é•¨‚ð’Ç‰Á
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
@@ -273,12 +272,17 @@ void Game::Obj_Coll_Update()
 
 			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
 			{
+				coll_List[n]->game.nameTag;
 				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
+				/*if (coll_List[i]->coll_Obj_List.size() >= 2)
+				{
+					coll_List[n]->game.nameTag;
+				}*/
 			}
 
 		}
 	}
-
+	enemy1Mana->Chack();
 	//“–‚½‚è”»’è
 	player->Coll();
 	//”š”­‚Æ‚Ð‚à
@@ -287,8 +291,8 @@ void Game::Obj_Coll_Update()
 		fuse->Coll(coll, exMana->ex[i].game_object);
 	}
 	
-	bombMana->Coll(bombShake.flg, con, exMana);
 	enemy1Mana->Coll(exMana->ex);
+	bombMana->Coll(bombShake.flg, con, exMana);
 	enemy2->Coll(exMana->ex);
 }
 
