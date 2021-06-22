@@ -433,11 +433,11 @@ void Player::Coll()
 				--hp;
 				if (!game_object.coll_Obj_List[i]->lr)
 				{
-					fVec += Vector2(50, -5);
+					fVec += Vector2(30, -5);
 				}
 				else
 				{
-					fVec += Vector2(-50, -5);
+					fVec += Vector2(-30, -5);
 				}
 			}
 		}

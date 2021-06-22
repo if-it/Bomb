@@ -95,6 +95,19 @@ int BombMana::NowBombNum()
 	return nowNum;
 }
 
+int BombMana::NowPlayerBombNum()
+{
+	int nowNum = 0;
+	for (int i = 0; i < (int)bomb.size(); ++i)
+	{
+		if (bomb[i].game_object.game.dis&&bomb[i].playerSpawn)
+		{
+			nowNum++;
+		}
+	}
+	return nowNum;
+}
+
 void BombMana::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)

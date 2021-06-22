@@ -19,6 +19,7 @@ public:
 	void Coll(bool& shakeflg, Controller* con, ExplosionMana* ex);
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);
 	int NowBombNum();
+	int NowPlayerBombNum();
 	void Draw(const Vector2& sc, const Vector2& shake);
 	std::vector<Bomb> bomb;
 

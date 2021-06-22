@@ -2,6 +2,7 @@
 #include "Draw.h"
 #include"BombMana.h"
 #include"Collision.h"
+#include"Load.h"
 
 class Fuse :public Draw
 {
@@ -9,12 +10,14 @@ public:
 	Fuse();
 	~Fuse();
 	void Init(std::vector<std::vector<int>>& collMap);
+	void Loading(Load* load);
 	void Update(std::vector<std::vector<int>>& collMap, BombMana* bombMana);
 	void Coll(Collision*coll,const GameObject& obj);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	int lineTex[12];
 	int curveTex[12];
-	int wTex[12];
+	int wTex1[12];
+	int wTex2[12];
 	int cannonTex;
 private :
 	//void BombSpawn(std::vector<Bomb>& bomb,Vector2 set_pos, Vector2 set_vec);

@@ -42,7 +42,7 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 			game_object.game.allVec.vec.x = 0;
 		}
 
-		if (bombAni.OneAnimation(30, 8))
+		if (bombAni.OneAnimation(28, 8))
 		{
 			game_object.game.dis = false;
 			ex->ExSpawn(game_object, damage);

@@ -21,6 +21,7 @@ void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap)
 				collMap[y][x] = 0;
 				Enemy1 InitEnemy1;
 				InitEnemy1.Init(Vector2((float)SIZE * x, (float)SIZE * y));
+				InitEnemy1.game_object.game.num = enemy1.size();
 				enemy1.push_back(InitEnemy1);
 			}
 		}

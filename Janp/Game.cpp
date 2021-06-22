@@ -62,13 +62,15 @@ void Game::Init()
 
 
 	player->Init(map->map);
-	fuse->Init(map->map);
 	enemy1Mana->Init(map->map);
+	enemy2->Init(map->map);
+	fuse->Init(map->map);
+
+
 	bombMana->Init();
 	shake = Vector2();
 	sceneCount = Count();
 	exMana->Init();
-	enemy2->Init(map->map);
 	coll_List.clear();
 }
 
@@ -81,13 +83,11 @@ bool Game::Loading()
 	bombMana->Loading(load);
 	exMana->Loading(load);
 	enemy1Mana->Loading(load);
+	fuse->Loading(load);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
-	load->LoadAnimeTex("Load/Texture/LineFuse.png", 12, 12, 1, SIZE, SIZE, fuse->lineTex);
-	load->LoadAnimeTex("Load/Texture/CurveFuse.png", 12, 12, 1, SIZE, SIZE, fuse->curveTex);
-	load->LoadAnimeTex("Load/Texture/WFuse.png", 12, 12, 1, SIZE, SIZE, fuse->wTex);
-	load->LoadTex("Load/Texture/Cannon.png", fuse->cannonTex);
+	
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
 	load->LoadTex("Load/Texture/BombBombBang.png", title);
@@ -219,7 +219,7 @@ void Game::Play_Scene_Update()
 void Game::Main_Play_Update()
 {
 	map->Update();
-	player->SetNowBombNum(bombMana->NowBombNum());
+	player->SetNowBombNum(bombMana->NowPlayerBombNum());
 	player->Update(key, con, bombShake.flg, bombMana);
 	enemy1Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana);

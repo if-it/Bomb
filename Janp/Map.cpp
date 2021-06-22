@@ -135,7 +135,7 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 
-			if (map[y][x] == 1 || (map[y][x] >= 8 && map[y][x] <= 23))
+			if (map[y][x] == 1 || (map[y][x] >= 8 && map[y][x] <= 23)|| (map[y][x] >= 54 && map[y][x] <= 57))
 			{
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[1], true, true, shake, sc);
 
