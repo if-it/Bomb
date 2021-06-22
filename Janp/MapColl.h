@@ -15,6 +15,7 @@ protected:
 	int MapPointerY( int x, int y, std::vector<std::vector<int>>& collMap, int&xNum, int&yNum);
 	int MapPointer( int x, int y, std::vector<std::vector<int>>& collMap, int&xNum, int&yNum);
 	int MapPointer(Vector2 poss, int x, int y, std::vector<std::vector<int>>& collMap);
-
+	void Map_Coll(std::vector<std::vector<int>>& collMap);
+	void MapJub(const int& mapPoint, const int& pointNum);
 };
 

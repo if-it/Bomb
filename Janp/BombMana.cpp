@@ -47,11 +47,11 @@ void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 	}
 }
 
-void BombMana::PlayerColl(Collision* coll, ALLVECTOR& all, Vector2 size, bool& shakeflg, Controller* con, ExplosionMana* ex)
+void BombMana::Coll( bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		bomb[i].PlayerColl(coll, all, size, shakeflg, con, ex);
+		bomb[i].Coll(shakeflg, con, ex);
 	}
 }
 
@@ -67,6 +67,7 @@ void BombMana::BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const b
 	InitBomb.playerSpawn = playerSp;
 	InitBomb.playerOneColl = playerSp;
 	InitBomb.damage = damage;
+	InitBomb.game_object.game.num =(int)bomb.size();
 	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
 
 	bomb.push_back(InitBomb);

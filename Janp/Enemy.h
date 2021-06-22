@@ -1,16 +1,20 @@
 #pragma once
 #include "MapColl.h"
+#include"Collision.h"
+#include"Explosion.h"
+
 class Enemy :
     public MapColl
 {
 public:
     Enemy();
     ~Enemy();
-    void ExColl(int damage);
+    void Damage(int damage);
 
 protected:
-    void DieChack();
+    bool DieChack();
     Count invincible;//–³“G
     int hp;
+    Vector2 fVec;
 };
 

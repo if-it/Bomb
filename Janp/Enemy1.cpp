@@ -16,13 +16,17 @@ void Enemy1::Init(Vector2 pos)
 	game_object.game.allVec.pos = pos;
 	invincible = Count();
 	hp = 3;
+	fVec = Vector2();
 }
 
 void Enemy1::Update()
 {
-	DieChack();
-	const float ENEMY1_SPEED = 0.3f; //エネミーの速さ
-	const float ENEMY1_MAX_SPEED = 5.0f; //最大の速さ
+	if (DieChack())
+	{
+		game_object.game.dis = false;
+	}
+	const float ENEMY1_SPEED = 0.6f; //エネミーの速さ
+	const float ENEMY1_MAX_SPEED = 3.0f; //最大の速さ
 	if (game_object.game.dis)
 	{
 		game_object.game.allVec.vec.y += 0.2f;
@@ -48,6 +52,8 @@ void Enemy1::Update()
 		{
 			game_object.game.allVec.vec.x = -ENEMY1_MAX_SPEED;
 		}
+		game_object.game.allVec.vec += fVec;
+		fVec = Vector2();
 
 		invincible.Conuter(60);
 	}
@@ -58,85 +64,36 @@ void Enemy1::MapCollUpdate(std::vector<std::vector<int>>& collMap)
 	Map_Coll(collMap);
 }
 
-void Enemy1::Map_Coll(std::vector<std::vector<int>>& collMap)
+
+
+void Enemy1::Coll(std::vector<Explosion>& ex)
 {
-	//上左
-	MapJub(MapPointerY(1, 1, collMap), 0);
-	//上右
-	MapJub(MapPointerY(game_object.game.size.x - 1, 1, collMap), 0);
-
-	//下左
-	MapJub(MapPointerY(1, game_object.game.size.y - 1, collMap), 1);
-	//下右
-	MapJub(MapPointerY(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 1);
-
-	game_object.game.allVec.AddPosY();
-
-	//右上
-	MapJub(MapPointerX(game_object.game.size.x - 1, 1, collMap), 2);
-	//右下
-	MapJub(MapPointerX(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 2);
-
-	//左上
-	MapJub(MapPointerX(1, 1, collMap), 3);
-	//左下
-	MapJub(MapPointerX(1, game_object.game.size.y - 1, collMap), 3);
-
-	game_object.game.allVec.AddPosX();
-}
-
-void Enemy1::MapJub(const int& mapPoint, const int& pointNum)
-{
-	if (pointNum == 0) //Y軸
+	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
-		if (WALL)
+		if (game_object.coll_Obj_List[i]->nameTag == "Player")
 		{
-			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
-			game_object.game.allVec.vec.y = 0;
+			if (!invincible.flg)
+			{
+				invincible.flg = true;
+				//右
+				if (!game_object.game.lr)
+				{
+					fVec += Vector2(-10, -3);
+				}
+				//左
+				else
+				{
+					fVec += Vector2(10, -3);
+				}
+			}
 		}
-	}
-	else if (pointNum == 1) //Y軸
-	{
-		if (WALL)
+		if (game_object.coll_Obj_List[i]->nameTag == "ex")
 		{
-			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
-			game_object.game.allVec.vec.y = 0;
-		}
-	}
-
-	else if (pointNum == 2)//X軸
-	{
-		if (WALL)
-		{
-			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
-			game_object.game.allVec.vec.x = 0;
-		}
-	}
-
-	else if (pointNum == 3)//X軸
-	{
-		if (WALL)
-		{
-			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
-			game_object.game.allVec.vec.x = 0;
-		}
-	}
-}
-
-void Enemy1::PlayerColl()
-{
-	if (!invincible.flg)
-	{
-		invincible.flg = true;
-		//右
-		if (!game_object.game.lr)
-		{
-			game_object.game.allVec.vec += Vector2(-10, -3);
-		}
-		//左
-		else
-		{
-			game_object.game.allVec.vec += Vector2(10, -3);
+			Damage(ex[game_object.coll_Obj_List[i]->num].damage);
+			if (DieChack())
+			{
+				game_object.game.dis = false;
+			}
 		}
 	}
 }
@@ -150,7 +107,7 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 
 	if (coll->Collsion(layer, LAYERSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
-		game_object.game.allVec.vec.x += 0.5f;
+		game_object.game.allVec.vec.x += 0.6f;
 		game_object.game.lr = false;
 	}
 
@@ -160,7 +117,7 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 	layer.x -= LAYERSIZE;
 	if (coll->Collsion(layer, LAYERSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
-		game_object.game.allVec.vec.x -= 0.5f;
+		game_object.game.allVec.vec.x -= 0.6f;
 		game_object.game.lr = true;
 	}
 

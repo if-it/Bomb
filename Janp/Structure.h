@@ -110,7 +110,7 @@ protected:
 			blue = b;
 		}
 	};
-
+	//ゲームに必要な基礎変数
 	struct Game
 	{
 		std::string nameTag;
@@ -122,6 +122,7 @@ protected:
 		bool lr;
 		float rote;
 		float pal;
+		int num;
 		Game(const std::string& NameTag = "noName",
 			const bool& disFlg = true,const Vector2& TexSize = Vector2(32.0f, 32.0f), const Vector2& Scale = Vector2(1.0f, 1.0f))
 		{
@@ -135,14 +136,16 @@ protected:
 			lr = false;
 			rote = 0;
 			pal = 255;
+			num = 0;
 		}
 	};
-
+	//上をもとに当たり判定の簡易化などを加えたもの
 	struct GameObject
 	{
 		
 		Game game;
 		COLOR color;
+		//当たり判定リスト
 		std::vector<Game*>coll_Obj_List;
 		bool same;
 
@@ -153,6 +156,7 @@ protected:
 			game = Game(NameTag,disFlg, TexSize, Scale);
 			color = COLOR();
 			coll_Obj_List.clear();
+			same = Same;
 		}
 	};
 	void SizeChange(Count& count, Vector2& size, Vector2 change, int maxCount);

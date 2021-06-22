@@ -1,7 +1,7 @@
 #pragma once
 #include "MapColl.h"
 #include"Collision.h"
-#define EXNUM 8
+#define EXNUM 9
 
 class Explosion :public MapColl
 {

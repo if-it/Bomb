@@ -3,6 +3,7 @@
 Enemy::Enemy()
 {
 	hp = 0;
+	fVec = Vector2();
 }
 
 Enemy::~Enemy()
@@ -10,15 +11,16 @@ Enemy::~Enemy()
 }
 
 
-void Enemy::DieChack()
+bool Enemy::DieChack()
 {
 	if (hp <= 0)
 	{
-		game_object.game.dis = false;
+		return true;
 	}
+	return false;
 }
 
-void Enemy::ExColl(int damage)
+void Enemy::Damage(int damage)
 {
 	hp -= damage;
 }

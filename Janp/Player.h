@@ -3,10 +3,11 @@
 #include"Load.h"
 #include"BombMana.h"
 #define SPEED 0.2f
-#define JAMP 7.5f
 #define MAXSPEED 4
 #define MAXTEX 6
 #define BOMBVEC 10.0f
+#define EXJUMP 9.0f
+
 class Player :public MapColl
 {
 public:
@@ -27,7 +28,7 @@ public:
 
 private:
 	int tex[MAXTEX];
-
+	Vector2 fVec;//êÅÇ¡îÚÇ—
 	ANIMATION ani;
 	void Input(Key* key, Controller* con);
 	void Move(bool& shakeflg, Controller* con, BombMana* bomb);

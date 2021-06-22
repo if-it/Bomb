@@ -12,7 +12,7 @@ public:
     void Update();
     void MapCollUpdate(std::vector<std::vector<int>>& collMap);
     void MoveChack(const Vector2& pos, Collision* coll);
-    void Coll(GameObject player);
+    void Coll(std::vector<Explosion>& ex);
     int NowNum();
     void Draw(const Vector2& sc, const Vector2& shake);
     std::vector<Enemy1> enemy1;

@@ -4,7 +4,7 @@
 
 Player::Player()
 {
-	game_object = GameObject("Player",true, Vector2(64.0f, 64.0f));
+	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
 	maxBombNum = 10;
 	maxHp = 5;
 	hp = maxHp;
@@ -18,7 +18,8 @@ Player::~Player()
 
 void Player::Init(std::vector<std::vector<int>>& map)
 {
-	game_object = GameObject("Player",true, Vector2(64.0f, 64.0f));
+	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
+	fVec = Vector2();
 	for (int y = 0; y < (int)map.size(); ++y)
 	{
 		for (int x = 0; x < (int)map[y].size(); ++x)
@@ -67,7 +68,6 @@ void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 
 	ani.Animation(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
-
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -116,7 +116,7 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 	{
 		game_object.game.allVec.vec.x += SPEED;
 	}
-	if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) || 
+	if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) ||
 		(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < SPEED))
 	{
 		game_object.game.allVec.vec.x = 0;
@@ -131,7 +131,8 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 	{
 		game_object.game.allVec.vec.x = -MAXSPEED;
 	}
-
+	game_object.game.allVec.vec += fVec;
+	fVec = Vector2();
 	if (shot)
 	{
 
@@ -418,7 +419,13 @@ void Player::Coll()
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
-		if (game_object.coll_Obj_List[i]->nameTag == "Enemy1")
+		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
+		if (nameTag == "ex")
+		{
+			game_object.game.allVec.vec.y = 0;
+			game_object.game.allVec.vec.y -= EXJUMP;
+		}
+		if (nameTag == "Enemy1" || nameTag == "Enemy2")
 		{
 			if (!invincible.flg)
 			{
@@ -426,19 +433,17 @@ void Player::Coll()
 				--hp;
 				if (!game_object.coll_Obj_List[i]->lr)
 				{
-					game_object.game.allVec.vec += Vector2(10, -3);
+					fVec += Vector2(50, -5);
 				}
 				else
 				{
-					game_object.game.allVec.vec += Vector2(-10, -3);
+					fVec += Vector2(-50, -5);
 				}
 			}
 		}
 	}
-	
+
 }
-
-
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
