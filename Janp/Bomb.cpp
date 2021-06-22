@@ -66,7 +66,8 @@ void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
-		if (game_object.coll_Obj_List[i]->nameTag == "Player")
+		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
+		if (nameTag == "Player")
 		{
 			if (!playerOneColl)
 			{
@@ -76,7 +77,7 @@ void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
 				con->Shake(1000, 300);
 			}
 		}
-		else if (game_object.coll_Obj_List[i]->nameTag == "Enemy1")
+		if (nameTag == "Enemy1"||nameTag=="Enemy2")
 		{
 			shakeflg = true;
 			game_object.game.dis = false;

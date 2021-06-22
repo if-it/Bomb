@@ -259,10 +259,13 @@ void Game::Obj_Coll_Update()
 		coll_List.push_back(&enemy1Mana->enemy1[i].game_object);
 	}
 	coll_List.push_back(&enemy2->game_object);
+
+
 	//“–‚½‚è”»’èƒŠƒXƒg‚É“–‚½‚Á‚Ä‚¢‚é•¨‚ð’Ç‰Á
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
 		coll_List[i]->coll_Obj_List.clear();
+		coll_List[i]->game.nameTag;
 		if (coll_List[i]->same) { continue; }
 		for (int n = 0; n < (int)coll_List.size(); ++n)
 		{
@@ -283,9 +286,8 @@ void Game::Obj_Coll_Update()
 	{
 		fuse->Coll(coll, exMana->ex[i].game_object);
 	}
+	
 	bombMana->Coll(bombShake.flg, con, exMana);
-
-
 	enemy1Mana->Coll(exMana->ex);
 	enemy2->Coll(exMana->ex);
 }

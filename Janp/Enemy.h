@@ -12,8 +12,12 @@ public:
     void Damage(int damage);
 
 protected:
+    void AllUpdate();
     bool DieChack();
-    Count invincible;//–³“G
+    //–³“G
+    Count invincible;
+    //”š”j‚Ì–³“G
+    Count exInvincible;
     int hp;
     Vector2 fVec;
 };

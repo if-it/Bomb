@@ -39,7 +39,11 @@ void Enemy2::Loading(Load* load)
 
 void Enemy2::Update()
 {
-	game_object.game.allVec.vec.y += 0.2f;
+	if (game_object.game.dis)
+	{
+		game_object.game.allVec.vec.y += 0.2f;
+		AllUpdate();
+	}
 }
 
 void Enemy2::MapCollUpdate(std::vector<std::vector<int>>& collMap)
@@ -51,6 +55,23 @@ void Enemy2::MapCollUpdate(std::vector<std::vector<int>>& collMap)
 
 void Enemy2::Coll(std::vector<Explosion>& ex)
 {
+	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
+	{
+		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
+
+		if (nameTag == "ex")
+		{
+			if (!exInvincible.flg)
+			{
+				exInvincible.flg = true;
+				Damage(ex[game_object.coll_Obj_List[i]->num].damage);
+				if (DieChack())
+				{
+					game_object.game.dis = false;
+				}
+			}
+		}
+	}
 }
 
 void Enemy2::Draw(const Vector2& sc, const Vector2& shake)

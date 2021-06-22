@@ -62,6 +62,7 @@ void Enemy1Mana::MoveChack(const Vector2& pos, Collision* coll)
 
 void Enemy1Mana::Coll(std::vector<Explosion>& ex)
 {
+	enemy1.size();
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
 		enemy1[i].Coll(ex);
