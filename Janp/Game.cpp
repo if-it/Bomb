@@ -274,10 +274,10 @@ void Game::Obj_Coll_Update()
 			{
 				coll_List[n]->game.nameTag;
 				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
-				/*if (coll_List[i]->coll_Obj_List.size() >= 2)
+				if (coll_List[i]->coll_Obj_List.size() >= 3)
 				{
 					coll_List[n]->game.nameTag;
-				}*/
+				}
 			}
 
 		}
