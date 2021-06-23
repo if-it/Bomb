@@ -87,7 +87,7 @@ bool Game::Loading()
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
-	
+
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
 	load->LoadTex("Load/Texture/BombBombBang.png", title);
@@ -290,10 +290,15 @@ void Game::Obj_Coll_Update()
 	{
 		fuse->Coll(coll, exMana->ex[i].game_object);
 	}
-	
+
 	enemy1Mana->Coll(exMana->ex);
-	bombMana->Coll(bombShake.flg, con, exMana);
+	bombMana->Coll(bombShake.flg, con);
 	enemy2->Coll(exMana->ex);
+
+	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
+
+	bombMana->Coll_End_Set(exMana);
+
 }
 
 void Game::Draw()

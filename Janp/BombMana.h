@@ -16,7 +16,8 @@ public:
 	void Loading(const int& bombSoundC,const int*bombTexC);
 	void Update(bool& shakeflg, Controller* con, ExplosionMana* ex);
 	void BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const bool& playerSp, const int& damage);
-	void Coll(bool& shakeflg, Controller* con, ExplosionMana* ex);
+	void Coll(bool& shakeflg, Controller* con);
+	void Coll_End_Set(ExplosionMana* ex);
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);
 	int NowBombNum();
 	int NowPlayerBombNum();

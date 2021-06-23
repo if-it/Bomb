@@ -47,11 +47,19 @@ void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 	}
 }
 
-void BombMana::Coll( bool& shakeflg, Controller* con, ExplosionMana* ex)
+void BombMana::Coll( bool& shakeflg, Controller* con)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		bomb[i].Coll(shakeflg, con, ex);
+		bomb[i].Coll(shakeflg, con);
+	}
+}
+
+void BombMana::Coll_End_Set(ExplosionMana* ex)
+{
+	for (int i = 0; i < (int)bomb.size(); ++i)
+	{
+		bomb[i].Coll_End_Set(ex);
 	}
 }
 

@@ -12,8 +12,8 @@ public:
 	void Init();
 	void Update(bool& shakeflg, Controller* con,ExplosionMana* ex);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
-	void Coll(bool& shakeflg, Controller* con,  ExplosionMana* ex);
-	void EnemyColl(bool& shakeflg, Controller* con, ExplosionMana* ex);
+	void Coll(bool& shakeflg, Controller* con);
+	void Coll_End_Set(ExplosionMana* ex);
 	void Draw(const Vector2& sc, const Vector2& shakeconst, const int* bombTex);
 
 
@@ -22,6 +22,7 @@ public:
 	int time;
 	bool playerSpawn;
 	bool playerOneColl;
+	bool exSpawn;
 	int damage;
 
 	//void exSpawn(const int& exSound, std::vector<Explosion>& ex);

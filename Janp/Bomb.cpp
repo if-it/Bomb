@@ -19,6 +19,7 @@ void Bomb::Init()
 	playerOneColl = false;
 	playerSpawn = false;
 	damage = 1;
+	exSpawn = false;
 }
 
 void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
@@ -61,7 +62,7 @@ void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 	if (game_object.game.dis)Map_Coll(collMap);
 }
 
-void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
+void Bomb::Coll(bool& shakeflg, Controller* con)
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
@@ -72,7 +73,7 @@ void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
 			{
 				shakeflg = true;
 				game_object.game.dis = false;
-				ex->ExSpawn(game_object, damage);
+				exSpawn = true;
 				con->Shake(1000, 300);
 			}
 		}
@@ -81,11 +82,20 @@ void Bomb::Coll(bool& shakeflg, Controller* con, ExplosionMana* ex)
 
 			shakeflg = true;
 			game_object.game.dis = false;
-			ex->ExSpawn(game_object, damage);
+			exSpawn = true;
 			con->Shake(1000, 300);
 		}
 	}
 
+}
+
+void Bomb::Coll_End_Set(ExplosionMana* ex)
+{
+	if (exSpawn)
+	{
+		exSpawn = false;
+		ex->ExSpawn(game_object, damage);
+	}
 }
 
 
