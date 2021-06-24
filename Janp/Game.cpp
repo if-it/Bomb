@@ -223,7 +223,7 @@ void Game::Main_Play_Update()
 	player->Update(key, con, bombShake.flg, bombMana);
 	enemy1Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana);
-	enemy2->Update();
+	enemy2->Update(player->game_object.game.allVec.pos,coll);
 
 	fuse->Update(map->map, bombMana);
 	exMana->Update();

@@ -2,7 +2,7 @@
 
 Enemy1::Enemy1()
 {
-
+	game_object = GameObject("Enemy1");
 }
 
 Enemy1::~Enemy1()
@@ -11,52 +11,19 @@ Enemy1::~Enemy1()
 
 void Enemy1::Init(Vector2 pos)
 {
-	game_object = GameObject("Enemy1");
 	game_object.color = COLOR(255, 0, 0);
 	game_object.game.allVec.pos = pos;
 	invincible = Count();
 	exInvincible = Count();
-	hp = 3;
+	hp = 4;
 	fVec = Vector2();
 }
 
 void Enemy1::Update()
 {
-
-	const float ENEMY1_SPEED = 0.6f; //エネミーの速さ
-	const float ENEMY1_MAX_SPEED = 3.0f; //最大の速さ
 	if (game_object.game.dis)
 	{
-		if (DieChack())
-		{
-			game_object.game.dis = false;
-		}
-		game_object.game.allVec.vec.y += 0.2f;
-		if (game_object.game.allVec.vec.x > 0)
-		{
-			game_object.game.allVec.vec.x -= ENEMY1_SPEED;
-		}
-		else if (game_object.game.allVec.vec.x < 0)
-		{
-			game_object.game.allVec.vec.x += ENEMY1_SPEED;
-		}
-		if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-ENEMY1_SPEED) ||
-			(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < ENEMY1_SPEED))
-		{
-			game_object.game.allVec.vec.x = 0;
-		}
-
-		if (game_object.game.allVec.vec.x > ENEMY1_MAX_SPEED)
-		{
-			game_object.game.allVec.vec.x = ENEMY1_MAX_SPEED;
-		}
-		if (game_object.game.allVec.vec.x < -ENEMY1_MAX_SPEED)
-		{
-			game_object.game.allVec.vec.x = -ENEMY1_MAX_SPEED;
-		}
-		game_object.game.allVec.vec += fVec;
-		fVec = Vector2();
-		AllUpdate();
+		AllUpdate(0.2f,2.0f);
 	}
 }
 
@@ -69,6 +36,8 @@ void Enemy1::MapCollUpdate(std::vector<std::vector<int>>& collMap)
 
 void Enemy1::Coll(std::vector<Explosion>& ex)
 {
+	const float BLOWX = 5.5f;
+	const float BLOWY = 13.0f;
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
@@ -80,12 +49,12 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 				//右
 				if (!game_object.game.lr)
 				{
-					fVec += Vector2(-10, -3);
+					fVec += Vector2(-BLOWX, -BLOWY);
 				}
 				//左
 				else
 				{
-					fVec += Vector2(10, -3);
+					fVec += Vector2(BLOWX,-BLOWY);
 				}
 			}
 		}
@@ -94,6 +63,16 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 			if (!exInvincible.flg)
 			{
 				exInvincible.flg = true;
+				//右
+				if (!game_object.game.lr)
+				{
+					fVec += Vector2(-BLOWX, -BLOWY);
+				}
+				//左
+				else
+				{
+					fVec += Vector2(BLOWX, -BLOWY);
+				}
 				Damage(ex[game_object.coll_Obj_List[i]->num].damage);
 				if (DieChack())
 				{

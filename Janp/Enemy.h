@@ -12,7 +12,7 @@ public:
     void Damage(int damage);
 
 protected:
-    void AllUpdate();
+    void AllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed);
     bool DieChack();
     //–³“G
     Count invincible;

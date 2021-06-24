@@ -18,10 +18,10 @@ void Draw::Box(Vector2 pos, unsigned int color, bool dis, bool flg, Vector2 shak
 		pos.x - sc.x + shake.x + sizeX + 1, pos.y - sc.y + shake.y + sizeY + 1, color, flg);
 }
 
-void Draw::Box(GameObject chara, bool flg, Vector2 shake, Vector2 sc, float sizeX, float sizeY)
+void Draw::Box(GameObject gameobject, bool flg, Vector2 shake, Vector2 sc)
 {
-	if (chara.game.dis) DrawBoxAA(chara.game.allVec.pos.x - sc.x + shake.x, chara.game.allVec.pos.y - sc.y + shake.y,
-		chara.game.allVec.pos.x - sc.x + shake.x + sizeX + 1, chara.game.allVec.pos.y - sc.y + shake.y + sizeY + 1, MyGetColor(chara.color), flg);
+	if (gameobject.game.dis) DrawBoxAA(gameobject.game.allVec.pos.x - sc.x + shake.x, gameobject.game.allVec.pos.y - sc.y + shake.y,
+		gameobject.game.allVec.pos.x - sc.x + shake.x + gameobject.game.size.x, gameobject.game.allVec.pos.y - sc.y + shake.y + gameobject.game.size.y, MyGetColor(gameobject.color), flg);
 }
 
 void Draw::Circle(Vector2 pos, float r, int posnum, unsigned int color, bool dis, bool flg, Vector2 shake, Vector2 sc)
@@ -60,7 +60,7 @@ void Draw::DrawRotaTex(Vector2 pos, Vector2 texPos, Vector2 up, float ang, int t
 	if (dis)DrawRotaGraph3F(pos.x - sc.x + shake.x, pos.y - sc.y + shake.y, texPos.x, texPos.y, up.x, up.y, PI / 180 * ang, tex, flg, turn);
 }
 
-void Draw::DrawRotaTex(const GameObject& chara,const int& tex, bool flg, const Vector2& shake, const Vector2& sc, bool center)
+void Draw::DrawRotaTex(const GameObject& chara, const int& tex, bool flg, const Vector2& shake, const Vector2& sc, bool center)
 {
 	if (!center)
 	{

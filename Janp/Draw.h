@@ -11,7 +11,7 @@ protected:
 	void Box(Vector2 pos, unsigned int color, bool dis, bool flg = true,
 		Vector2 shake = Vector2(), Vector2 sc = Vector2(), float sizeX = 32, float sizeY = 32);
 
-	void Box(GameObject chara, bool flg = true, Vector2 shake = Vector2(), Vector2 sc = Vector2(), float sizeX = 32, float sizeY = 32);
+	void Box(GameObject chara, bool flg = true, Vector2 shake = Vector2(), Vector2 sc = Vector2());
 
 	void Circle(Vector2 pos, float r, int posnum, unsigned int color, bool dis, bool flg = true,
 		Vector2 shake = Vector2(), Vector2 sc = Vector2());

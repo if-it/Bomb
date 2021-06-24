@@ -99,40 +99,63 @@ void Player::Input(Key* key, Controller* con)
 
 void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 {
-	game_object.game.allVec.vec.y += 0.2f;
-	if (right)
+	//移動
+	if (fVec == Vector2())
 	{
-		game_object.game.allVec.vec.x += SPEED;
-	}
-	else if (left)
-	{
-		game_object.game.allVec.vec.x -= SPEED;
-	}
-	else if (game_object.game.allVec.vec.x > 0)
-	{
-		game_object.game.allVec.vec.x -= SPEED;
-	}
-	else if (game_object.game.allVec.vec.x < 0)
-	{
-		game_object.game.allVec.vec.x += SPEED;
-	}
-	if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) ||
-		(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < SPEED))
-	{
-		game_object.game.allVec.vec.x = 0;
-	}
+		game_object.game.allVec.vec.y += 0.2f;
 
-
-	if (game_object.game.allVec.vec.x > MAXSPEED)
-	{
-		game_object.game.allVec.vec.x = MAXSPEED;
+		if (right)
+		{
+			game_object.game.allVec.vec.x += SPEED;
+		}
+		else if (left)
+		{
+			game_object.game.allVec.vec.x -= SPEED;
+		}
+		else if (game_object.game.allVec.vec.x > 0)//制御
+		{
+			game_object.game.allVec.vec.x -= SPEED;
+		}
+		else if (game_object.game.allVec.vec.x < 0)
+		{
+			game_object.game.allVec.vec.x += SPEED;
+		}
+		if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) ||
+			(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < SPEED))
+		{
+			game_object.game.allVec.vec.x = 0;
+		}
+		//最大スピード
+		if (game_object.game.allVec.vec.x > MAXSPEED)
+		{
+			game_object.game.allVec.vec.x = MAXSPEED;
+		}
+		if (game_object.game.allVec.vec.x < -MAXSPEED)
+		{
+			game_object.game.allVec.vec.x = -MAXSPEED;
+		}
 	}
-	if (game_object.game.allVec.vec.x < -MAXSPEED)
+	if (fVec.y < 0)
 	{
-		game_object.game.allVec.vec.x = -MAXSPEED;
+		fVec.y += 2.0f;
+	}
+	if (fVec.y >= 0)
+	{
+		fVec.y = 0;
+	}
+	if (fVec.x > 0)
+	{
+		fVec.x -= SPEED;
+	}
+	else if (fVec.x < 0)
+	{
+		fVec.x += SPEED;
+	}
+	if ((fVec.x < 0 && fVec.x>-SPEED) || (fVec.x > 0 && fVec.x < SPEED))
+	{
+		fVec.x = 0;
 	}
 	game_object.game.allVec.vec += fVec;
-	fVec = Vector2();
 	if (shot)
 	{
 
@@ -433,11 +456,11 @@ void Player::Coll()
 				--hp;
 				if (!game_object.coll_Obj_List[i]->lr)
 				{
-					fVec += Vector2(30, -5);
+					fVec += Vector2(1.8f, -3.5f);
 				}
 				else
 				{
-					fVec += Vector2(-30, -5);
+					fVec += Vector2(-1.8f, -3.5f);
 				}
 			}
 		}
