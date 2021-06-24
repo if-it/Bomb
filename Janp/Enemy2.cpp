@@ -88,7 +88,7 @@ void Enemy2::Coll(std::vector<Explosion>& ex)
 {
 	const float BLOWX = 5.5f;
 	const float BLOWY = 13.0f;
-	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
+	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)                
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
 

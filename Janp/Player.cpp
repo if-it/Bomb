@@ -6,7 +6,7 @@ Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
 	maxBombNum = 1;
-	maxHp = 5;
+	maxHp = 200;
 	hp = maxHp;
 	damage = 1;
 }
@@ -155,7 +155,7 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 	{
 		fVec.x = 0;
 	}
-	game_object.game.allVec.vec += fVec;
+	if(fVec!=Vector2()) game_object.game.allVec.vec = fVec;
 	if (shot)
 	{
 
@@ -169,6 +169,8 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 		}
 	}
 }
+
+
 
 bool Player::Die()
 {
@@ -440,6 +442,8 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 
 void Player::Coll()
 {
+	float blowX = 0.0f;
+	float blowY = 0.0f;
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
@@ -448,24 +452,39 @@ void Player::Coll()
 			game_object.game.allVec.vec.y = 0;
 			game_object.game.allVec.vec.y -= EXJUMP;
 		}
-		if (nameTag == "Enemy1" || nameTag == "Enemy2")
+
+		if (nameTag == "Enemy1")
 		{
-			if (!invincible.flg)
-			{
-				invincible.flg = true;
-				--hp;
-				if (!game_object.coll_Obj_List[i]->lr)
-				{
-					fVec += Vector2(1.8f, -3.5f);
-				}
-				else
-				{
-					fVec += Vector2(-1.8f, -3.5f);
-				}
-			}
+			blowX = 3.0f;
+			blowY = 9.0f;
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
 		}
+		if (nameTag == "Enemy2")
+		{
+			blowX = 5.8f;
+			blowY = 9.5f;
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
+		}
+
 	}
 
+}
+
+void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
+{
+	if (!invincible.flg)
+	{
+		invincible.flg = true;
+		--hp;
+		if (!lr)
+		{
+			fVec += Vector2(blowX, -blowY);
+		}
+		else
+		{
+			fVec += Vector2(-blowX, -blowY);
+		}
+	}
 }
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)

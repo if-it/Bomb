@@ -32,6 +32,7 @@ private:
 	ANIMATION ani;
 	void Input(Key* key, Controller* con);
 	void Move(bool& shakeflg, Controller* con, BombMana* bomb);
+	void Blow(const float &blowX, const float& blowY, const bool& lr);
 	bool left;
 	bool right;
 	bool shot;
