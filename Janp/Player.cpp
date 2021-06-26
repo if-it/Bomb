@@ -5,10 +5,11 @@
 Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
-	maxBombNum = 1;
+	maxBombNum = 2;
 	maxHp = 200;
 	hp = maxHp;
 	damage = 1;
+	blow = Count();
 }
 
 
@@ -28,19 +29,19 @@ void Player::Init(std::vector<std::vector<int>>& map)
 			{
 				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				sc2 = Vector2(((float)(-WIDTH / 2) + SIZE * x), (float)((-HEIGHT / 2) + SIZE * y + SIZE / 2));
-				if (game_object.game.allVec.pos.x < WIDTH / 2 - SIZE / 2)
+				if (game_object.GetPos().x < WIDTH / 2 - SIZE / 2)
 				{
 					sc2.x = 0;
 				}
-				if (game_object.game.allVec.pos.x > (SIZE * (int)map[y].size()) - WIDTH / 2 + SIZE / 2)
+				if (game_object.GetPos().x > (SIZE * (int)map[y].size()) - WIDTH / 2 + SIZE / 2)
 				{
 					sc2.x = (SIZE * (int)map[y].size()) - WIDTH;
 				}
-				if (game_object.game.allVec.pos.y < HEIGHT / 2 + SIZE / 2)
+				if (game_object.GetPos().y < HEIGHT / 2 + SIZE / 2)
 				{
 					sc2.y = 0;
 				}
-				if (game_object.game.allVec.pos.y > (SIZE * (int)map.size()) - HEIGHT / 2 - SIZE / 2)
+				if (game_object.GetPos().y > (SIZE * (int)map.size()) - HEIGHT / 2 - SIZE / 2)
 				{
 					sc2.y = (SIZE * (int)map.size()) - HEIGHT;
 				}
@@ -50,6 +51,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	right = false;
 	left = false;
 	shot = false;
+	blow = Count();
 	nowBombNum = maxBombNum;
 	ani = ANIMATION();
 
@@ -100,62 +102,40 @@ void Player::Input(Key* key, Controller* con)
 void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 {
 	//移動
-	if (fVec == Vector2())
-	{
-		game_object.game.allVec.vec.y += 0.2f;
+	game_object.game.allVec.vec.y += 0.2f;
 
-		if (right)
-		{
-			game_object.game.allVec.vec.x += SPEED;
-		}
-		else if (left)
-		{
-			game_object.game.allVec.vec.x -= SPEED;
-		}
-		else if (game_object.game.allVec.vec.x > 0)//制御
-		{
-			game_object.game.allVec.vec.x -= SPEED;
-		}
-		else if (game_object.game.allVec.vec.x < 0)
-		{
-			game_object.game.allVec.vec.x += SPEED;
-		}
-		if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) ||
-			(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < SPEED))
-		{
-			game_object.game.allVec.vec.x = 0;
-		}
-		//最大スピード
-		if (game_object.game.allVec.vec.x > MAXSPEED)
-		{
-			game_object.game.allVec.vec.x = MAXSPEED;
-		}
-		if (game_object.game.allVec.vec.x < -MAXSPEED)
-		{
-			game_object.game.allVec.vec.x = -MAXSPEED;
-		}
-	}
-	if (fVec.y < 0)
+	if (right)
 	{
-		fVec.y += 2.0f;
+		game_object.game.allVec.vec.x += SPEED;
 	}
-	if (fVec.y >= 0)
+	else if (left)
 	{
-		fVec.y = 0;
+		game_object.game.allVec.vec.x -= SPEED;
 	}
-	if (fVec.x > 0)
+	else if (game_object.game.allVec.vec.x > 0)//制御
 	{
-		fVec.x -= SPEED;
+		game_object.game.allVec.vec.x -= SPEED;
 	}
-	else if (fVec.x < 0)
+	else if (game_object.game.allVec.vec.x < 0)
 	{
-		fVec.x += SPEED;
+		game_object.game.allVec.vec.x += SPEED;
 	}
-	if ((fVec.x < 0 && fVec.x>-SPEED) || (fVec.x > 0 && fVec.x < SPEED))
+	if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-SPEED) ||
+		(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < SPEED))
 	{
-		fVec.x = 0;
+		game_object.game.allVec.vec.x = 0;
 	}
-	if(fVec!=Vector2()) game_object.game.allVec.vec = fVec;
+	//最大スピード
+	if (game_object.game.allVec.vec.x > MAXSPEED)
+	{
+		game_object.game.allVec.vec.x = MAXSPEED;
+	}
+	if (game_object.game.allVec.vec.x < -MAXSPEED)
+	{
+		game_object.game.allVec.vec.x = -MAXSPEED;
+	}
+	if (blow.flg)game_object.game.allVec.vec = fVec;
+	blow.Conuter(10);
 	if (shot)
 	{
 
@@ -455,14 +435,14 @@ void Player::Coll()
 
 		if (nameTag == "Enemy1")
 		{
-			blowX = 3.0f;
-			blowY = 9.0f;
+			blowX = 10.0f;
+			blowY = 4.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
 		}
 		if (nameTag == "Enemy2")
 		{
-			blowX = 5.8f;
-			blowY = 9.5f;
+			blowX = 15.0f;
+			blowY = 5.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
 		}
 
@@ -475,14 +455,15 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
 	if (!invincible.flg)
 	{
 		invincible.flg = true;
+		blow.flg = true;
 		--hp;
 		if (!lr)
 		{
-			fVec += Vector2(blowX, -blowY);
+			fVec = Vector2(blowX, -blowY);
 		}
 		else
 		{
-			fVec += Vector2(-blowX, -blowY);
+			fVec = Vector2(-blowX, -blowY);
 		}
 	}
 }

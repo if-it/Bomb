@@ -41,7 +41,7 @@ protected:
 			count = 0;
 			flg = flgSet;
 		}
-		void Conuter(int maxCount)
+		bool Conuter(int maxCount)
 		{
 			if (flg)
 			{
@@ -50,8 +50,10 @@ protected:
 				{
 					flg = false;
 					count = 0;
+					return true;
 				}
 			}
+			return false;
 		}
 	};
 	struct ANIMATION
@@ -124,9 +126,9 @@ protected:
 		float pal;
 		int num;
 		Game(const std::string& NameTag = "noName",
-			const bool& disFlg = true,const Vector2& TexSize = Vector2(32.0f, 32.0f), const Vector2& Scale = Vector2(1.0f, 1.0f))
+			const bool& disFlg = true, const Vector2& TexSize = Vector2(32.0f, 32.0f), const Vector2& Scale = Vector2(1.0f, 1.0f))
 		{
-			
+
 			nameTag = NameTag;
 			allVec = ALLVECTOR();
 			scale = Scale;
@@ -142,7 +144,7 @@ protected:
 	//è„ÇÇ‡Ç∆Ç…ìñÇΩÇËîªíËÇÃä»à’âªÇ»Ç«Çâ¡Ç¶ÇΩÇ‡ÇÃ
 	struct GameObject
 	{
-		
+
 		Game game;
 		COLOR color;
 		//ìñÇΩÇËîªíËÉäÉXÉg
@@ -150,14 +152,17 @@ protected:
 		bool same;
 
 		GameObject(const std::string& NameTag = "noName", const bool& disFlg = true,
-			const Vector2& TexSize = Vector2(32.0f, 32.0f),const Vector2& Scale = Vector2(1.0f, 1.0f),const bool& Same = false)
+			const Vector2& TexSize = Vector2(32.0f, 32.0f), const Vector2& Scale = Vector2(1.0f, 1.0f), const bool& Same = false)
 		{
-			
-			game = Game(NameTag,disFlg, TexSize, Scale);
+
+			game = Game(NameTag, disFlg, TexSize, Scale);
 			color = COLOR();
 			coll_Obj_List.clear();
 			same = Same;
 		}
+
+		Vector2 GetPos() { return game.allVec.pos; }
+		void SetPos(Vector2 pos) { game.allVec.pos = pos; }
 	};
 	void SizeChange(Count& count, Vector2& size, Vector2 change, int maxCount);
 	void AnimeEnd(Count& ani, int maxCount, Vector2& size, Vector2 sizeNum);

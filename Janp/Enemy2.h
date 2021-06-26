@@ -16,11 +16,15 @@ public:
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);
 	void Coll(std::vector<Explosion>& ex);
 	void Draw(const Vector2& sc, const Vector2& shake);
+
+	GameObject arm;
+	GameObject body;
 private:
 
 	int  enemy2Tex;
 	bool spawn;
 	bool die;
 	bool move;
+	Count attack;
 };
 

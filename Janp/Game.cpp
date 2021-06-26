@@ -245,20 +245,29 @@ void Game::Obj_Coll_Update()
 	//GameObjectリストの初期化
 	coll_List.clear();
 	//GameObjectリストにGameObjectの追加
+
+	//player
 	coll_List.push_back(&player->game_object);
+
+	//爆発
 	for (int i = 0; i < exMana->ex.size(); ++i)
 	{
 		coll_List.push_back(&exMana->ex[i].game_object);
 	}
+	//爆弾
 	for (int i = 0; i < (int)bombMana->bomb.size(); ++i)
 	{
 		coll_List.push_back(&bombMana->bomb[i].game_object);
 	}
+	//Enemy1
 	for (int i = 0; i < (int)enemy1Mana->enemy1.size(); ++i)
 	{
 		coll_List.push_back(&enemy1Mana->enemy1[i].game_object);
 	}
+	//Enemy2
 	coll_List.push_back(&enemy2->game_object);
+	coll_List.push_back(&enemy2->body);
+	coll_List.push_back(&enemy2->arm);
 
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)

@@ -36,6 +36,7 @@ private:
 	bool left;
 	bool right;
 	bool shot;
+	Count blow;
 	Count invincible;//–³“G
 	int hp;
 	int maxHp;
