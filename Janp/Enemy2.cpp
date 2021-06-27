@@ -64,6 +64,8 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 			bool lr = game_object.game.lr;
 			AllUpdate(0.2f, 2.5f);
 			PlayerCahck(pos, coll);
+			body.game.lr = lr;
+			arm.game.lr = lr;
 
 			if (lr)body.SetPos(Vector2(game_object.GetPos().x + 32, game_object.GetPos().y));
 
@@ -166,7 +168,7 @@ void Enemy2::Coll(std::vector<Explosion>& ex)
 void Enemy2::Draw(const Vector2& sc, const Vector2& shake)
 {
 	Box(game_object, true, shake, sc);
-	Box(arm, true, shake, sc);
-	Box(body, true, shake, sc);
+	Box(arm, false, shake, sc);
+	Box(body, false, shake, sc);
 
 }
