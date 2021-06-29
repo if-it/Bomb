@@ -22,7 +22,7 @@ void Explosion::Init()
 	boxTime.clear();
 	boxFlg.clear();
 	game_object = GameObject("ex",false, Vector2(64.0f, 64.0f));
-	exAni = ANIMATION();
+	exAni = Animation();
 	spawn = false;
 	time = 0;
 	//game_object.allVec.pos = go.allVec.pos;

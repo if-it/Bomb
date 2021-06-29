@@ -18,7 +18,7 @@ public:
 
 
 	//GameObject ex;
-	ANIMATION bombAni;
+	Animation bombAni;
 	int time;
 	bool playerSpawn;
 	bool playerOneColl;

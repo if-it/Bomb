@@ -14,7 +14,7 @@ Bomb::~Bomb()
 void Bomb::Init()
 {
 	game_object = GameObject("Bomb", false);
-	bombAni = ANIMATION();
+	bombAni = Animation();
 	time = 0;
 	playerOneColl = false;
 	playerSpawn = false;

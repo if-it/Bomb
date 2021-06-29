@@ -21,10 +21,11 @@ public:
 	GameObject body;
 private:
 
-	int  enemy2Tex;
+	int  enemy2Tex[21];
 	bool spawn;
 	bool die;
 	bool move;
 	Count attack;
+	Animation ani;
 };
 

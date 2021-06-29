@@ -53,7 +53,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	shot = false;
 	blow = Count();
 	nowBombNum = maxBombNum;
-	ani = ANIMATION();
+	ani = Animation();
 
 	invincible = Count();
 }
@@ -68,7 +68,7 @@ void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 	Input(key, con);
 	Move(shakeflg, con, bomb);
 
-	ani.Animation(GetRand(300), MAXTEX);
+	ani.AnimationOn(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
 }
 

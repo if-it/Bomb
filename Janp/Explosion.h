@@ -17,7 +17,7 @@ public:
 	int damage;
 private:
 
-	ANIMATION exAni;
+	Animation exAni;
 	void Map_Coll(std::vector<std::vector<int>>& collMap);
 	void MapJub(const int& mapPoint, const int& pointNum, std::vector<std::vector<int>>& collMap);
 

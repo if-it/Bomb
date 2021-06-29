@@ -25,7 +25,7 @@ private :
 	struct FUSE
 	{
 		GameObject object;
-		ANIMATION anime;
+		Animation anime;
 		int type;
 		bool coll;
 		bool animeEnd;
@@ -36,7 +36,7 @@ private :
 		FUSE()
 		{
 			object = GameObject("fuse",false);
-			anime = ANIMATION();
+			anime = Animation();
 			type = 0;
 			coll = false;
 			animeEnd = false;

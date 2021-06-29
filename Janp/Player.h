@@ -6,7 +6,7 @@
 #define MAXSPEED 4
 #define MAXTEX 6
 #define BOMBVEC 10.0f
-#define EXJUMP 10.0f
+#define EXJUMP 12.0f
 
 class Player :public MapColl
 {
@@ -29,7 +29,7 @@ public:
 private:
 	int tex[MAXTEX];
 	Vector2 fVec;//êÅÇ¡îÚÇ—
-	ANIMATION ani;
+	Animation ani;
 	void Input(Key* key, Controller* con);
 	void Move(bool& shakeflg, Controller* con, BombMana* bomb);
 	void Blow(const float &blowX, const float& blowY, const bool& lr);

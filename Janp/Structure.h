@@ -56,18 +56,18 @@ protected:
 			return false;
 		}
 	};
-	struct ANIMATION
+	struct Animation
 	{
 		Count counter;
 		int num;
 		bool oneAnimeFlg;
-		ANIMATION()
+		Animation()
 		{
 			counter = Count(true);
 			num = 0;
 			oneAnimeFlg = false;
 		}
-		void Animation(int maxCount, int maxNum)
+		void AnimationOn(int maxCount, int maxNum)
 		{
 			if (!counter.flg)
 			{

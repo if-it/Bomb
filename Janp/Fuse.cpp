@@ -266,7 +266,7 @@ void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
 					{
 						fuses[i].animeEndCount = 0;
 						fuses[i].animeEnd = false;
-						fuses[i].anime = ANIMATION();
+						fuses[i].anime = Animation();
 						fuses[i].coll = false;
 					}
 				}

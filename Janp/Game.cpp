@@ -84,6 +84,7 @@ bool Game::Loading()
 	exMana->Loading(load);
 	enemy1Mana->Loading(load);
 	fuse->Loading(load);
+	enemy2->Loading(load);
 
 	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
 	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
