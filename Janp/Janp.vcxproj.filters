@@ -147,14 +147,14 @@
     <ClCompile Include="Enemy1Mana.cpp">
       <Filter>GameObjct\Enemy\Enemy1\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy2.cpp">
-      <Filter>GameObjct\Enemy\Enemy2\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>GameObjct\Enemy\Enemy0</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>アプリケーション\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy2.cpp">
+      <Filter>GameObjct\Enemy\Enemy2\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,11 +221,11 @@
     <ClInclude Include="Enemy1Mana.h">
       <Filter>GameObjct\Enemy\Enemy1\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy2.h">
-      <Filter>GameObjct\Enemy\Enemy2\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>GameObjct\Enemy\Enemy0</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy2.h">
+      <Filter>GameObjct\Enemy\Enemy2\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

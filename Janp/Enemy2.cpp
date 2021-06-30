@@ -15,6 +15,7 @@ Enemy2::Enemy2()
 	body = GameObject("Enemy2", false, Vector2(120, 192));
 	body.color = COLOR(255, 150, 50);
 	ani = Animation();
+
 }
 
 Enemy2::~Enemy2()
@@ -54,6 +55,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap)
 void Enemy2::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
+	load->LoadAnimeTex("Load/Texture/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
 }
 
 void Enemy2::Update(const Vector2& pos, Collision* coll)
@@ -68,25 +70,35 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 			body.game.lr = lr;
 			arm.game.lr = lr;
 
-			if (lr)body.SetPos(Vector2(game_object.GetPos().x +64, game_object.GetPos().y));
+			if (lr)body.SetPos(Vector2(game_object.GetPos().x + 64, game_object.GetPos().y));
 
 			else body.SetPos(Vector2(game_object.GetPos().x + 64, game_object.GetPos().y));
 
-			if (attack.Conuter(10))
+			if (attack.flg)
 			{
+				arm.game.dis = true;
+				tex = attackTex[attackAni.num];
+				int attackAniNum[7] = { 3,3,3,3,30,2,2 };
+				if (attackAni.OneAnimation(attackAniNum[attackAni.num], 7))
+				{
+					attackAni.num = 0;
+				}
 				if (lr)
 				{
-					arm.game.allVec.vec.x -= 10.0f;
+
 				}
 				else
 				{
-					arm.game.allVec.vec.x += 10.0f;
-				}
 
+				}
 				arm.game.allVec.AddPos();
 			}
 			else
 			{
+				arm.game.dis = false;
+				tex = enemy2Tex[ani.num];
+				attackAni = Animation();
+				ani.AnimationOn(4, 21);
 				if (lr)arm.SetPos(Vector2(game_object.GetPos().x - 64, game_object.GetPos().y + 32));
 				else arm.SetPos(Vector2(game_object.GetPos().x + 64, game_object.GetPos().y + 32));
 			}
@@ -98,16 +110,17 @@ void Enemy2::PlayerCahck(const Vector2& pos, Collision* coll)
 {
 	Vector2 layer = game_object.GetPos();
 	const int LAYERSIZE = 128 * 4;
+	const int ATAACKSIZE = 32;
 	float distanceL = Vector2::Distance(Vector2(pos.x + SIZE * 2, pos.y), game_object.GetPos());
 	float distanceR = Vector2::Distance(pos, Vector2(game_object.GetPos().x + game_object.game.size.x, game_object.GetPos().y));
 
-	if (distanceL <= 140)
+	if (coll->Collsion(layer, ATAACKSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
 		attack.flg = true;
 		game_object.game.lr = true;
 		ani.num = 0;
 	}
-	else if (distanceR <= 140)
+	else if (coll->Collsion(layer, ATAACKSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
 		attack.flg = true;
 		game_object.game.lr = false;
@@ -122,7 +135,6 @@ void Enemy2::PlayerCahck(const Vector2& pos, Collision* coll)
 		{
 			game_object.game.allVec.vec.x += 0.4f;
 			game_object.game.lr = false;
-			ani.AnimationOn(4, 21);
 		}
 
 
@@ -133,7 +145,6 @@ void Enemy2::PlayerCahck(const Vector2& pos, Collision* coll)
 		{
 			game_object.game.allVec.vec.x -= 0.4f;
 			game_object.game.lr = true;
-			ani.AnimationOn(4, 21);
 		}
 	}
 
@@ -173,7 +184,7 @@ void Enemy2::Coll(std::vector<Explosion>& ex)
 void Enemy2::Draw(const Vector2& sc, const Vector2& shake)
 {
 
-	DrawRotaTex(game_object, enemy2Tex[ani.num], true, shake, sc);
+	DrawRotaTex(game_object, tex, true, shake, sc);
 
 	Box(arm, false, shake, sc);
 	Box(body, false, shake, sc);
