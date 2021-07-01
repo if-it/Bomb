@@ -14,7 +14,7 @@ Enemy2::Enemy2()
 	arm = GameObject("Enemy2", false, Vector2(32, 128));
 	arm.color = COLOR(255, 0, 0);
 	attack_Animetion_flg = 0;
-	body = GameObject("Enemy2", false, Vector2(120, 160));
+	body = GameObject("Enemy2", false, Vector2(160, 160));
 	body.color = COLOR(255, 150, 50);
 	ani = Animation();
 	uturn[0] = false;
@@ -46,7 +46,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap)
 					arm.SetPos(Vector2(game_object.GetPos().x - 32, game_object.GetPos().y + 32));
 
 					body.game.dis = true;
-					body.SetPos(Vector2(game_object.GetPos().x + 32, game_object.GetPos().y));
+					body.SetPos(Vector2(game_object.GetPos().x + 32, game_object.GetPos().y+32));
 					ani = Animation();
 					break;
 				}
@@ -75,14 +75,17 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 			body.game.lr = lr;
 			arm.game.lr = lr;
 
-			max_speed = 4.8f;
+			max_speed = 4.4f;
 			flame_speed = 0.2f;
 
-			if (lr)body.SetPos(Vector2(game_object.GetPos().x + 64, game_object.GetPos().y));
+			if (lr)body.SetPos(Vector2(game_object.GetPos().x + 64, game_object.GetPos().y+32));
 
-			else body.SetPos(Vector2(game_object.GetPos().x + 64, game_object.GetPos().y));
+			else body.SetPos(Vector2(game_object.GetPos().x + 8, game_object.GetPos().y+32));
 
-			if (attack_Time.Conuter(30))
+			if (lr)arm.SetPos(Vector2(game_object.GetPos().x + 32, game_object.GetPos().y + 64));
+			else arm.SetPos(Vector2(game_object.GetPos().x + game_object.game.size.x - 32, game_object.GetPos().y + 64));
+
+			if (attack_Time.Conuter(32))
 			{
 				attack_Animetion_flg = 1;
 				attack_Time = Count();
@@ -91,7 +94,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 			{
 				arm.game.dis = true;
 				tex = attackTex[attackAni.num];
-				int attackAniNum[7] = { 3,3,3,3,30,5,7 };
+				int attackAniNum[7] = { 2,2,2,2,30,5,7 };
 				if (attackAni.OneAnimation(attackAniNum[attackAni.num], 7))
 				{
 					attackAni.num = 0;
@@ -116,7 +119,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 				if (attack_End_Time.Conuter(10))
 				{
 					attack_Animetion_flg = 3;
-					if (true)
+					if (GetRand(10)==0)
 					{
 						attack_Animetion_flg = 4;
 						rush_Time.flg = true;
@@ -131,12 +134,12 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 				max_speed = 10.8f;
 				flame_speed = 0.2f;
 
+				if (uturn[0])lr = false;
+				if (uturn[1])lr = true;
 
 				if (lr)game_object.game.allVec.vec.x -= 6.0f;
 				else game_object.game.allVec.vec.x += 6.0f;
 
-				if (uturn[0])lr = false;
-				if (uturn[1])lr = true;
 				if (rush_Time.Conuter(180))
 				{
 					attack_Animetion_flg = 3;
@@ -168,7 +171,7 @@ void Enemy2::PlayerCahck(const Vector2& pos, Collision* coll)
 				ani.num = 0;
 			}
 		}
-		else if (coll->Collsion(Vector2(layer.x + game_object.game.size.x, layer.y), ATAACKSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
+		else if (coll->Collsion(Vector2(layer.x + game_object.game.size.x, layer.y), ATAACKSIZE+16, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 		{
 			//右
 			if (attack_Animetion_flg == 0)
@@ -220,24 +223,24 @@ void Enemy2::Map_Coll(std::vector<std::vector<int>>& collMap)
 	//上左
 	MapJub(MapPointerY(1, 1, collMap), 0);
 	//上右
-	MapJub(MapPointerY(body.game.size.x - 1, 1, collMap), 0);
+	MapJub(MapPointerY(game_object.game.size.x - 1, 1, collMap), 0);
 
 	//下左
-	MapJub(MapPointerY(1, body.game.size.y - 1, collMap), 1);
+	MapJub(MapPointerY(1, game_object.game.size.y - 1, collMap), 1);
 	//下右
-	MapJub(MapPointerY(body.game.size.x - 1, body.game.size.y - 1, collMap), 1);
+	MapJub(MapPointerY(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 1);
 
 	game_object.game.allVec.AddPosY();
 
 	//右上
-	MapJub(MapPointerX(body.game.size.x - 1, 1, collMap), 2);
+	MapJub(MapPointerX(game_object.game.size.x - 1, 1, collMap), 2);
 	//右下
-	MapJub(MapPointerX(body.game.size.x - 1, body.game.size.y - 1, collMap), 2);
+	MapJub(MapPointerX(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 2);
 
 	//左上
 	MapJub(MapPointerX(1, 1, collMap), 3);
 	//左下
-	MapJub(MapPointerX(1, body.game.size.y - 1, collMap), 3);
+	MapJub(MapPointerX(1, game_object.game.size.y - 1, collMap), 3);
 
 	game_object.game.allVec.AddPosX();
 }
