@@ -82,6 +82,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 				if (attackAni.OneAnimation(attackAniNum[attackAni.num], 7))
 				{
 					attackAni.num = 0;
+					attack.flg = false;
 				}
 				if (lr)
 				{
