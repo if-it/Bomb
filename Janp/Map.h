@@ -1,5 +1,6 @@
 #pragma once
 #include"Draw.h"
+#include "Load.h"
 #define B_MAX_COUNT 5
 
 
@@ -10,16 +11,19 @@ public:
 	~Map();
 	void Init(int stage);
 	void StageSet(int stage);
+	void Loading(Load* load);
 	void FleMapInput();
 	void Update();
 	void Draw(const Vector2& sc, const Vector2& shake);
 	//int map[MAPY][MAPX];
-	int tex[10];
 	std::vector<std::vector<int>> map;
-	int Btex[10];
 private:
 	std::vector<std::vector<int>> bBlockCount;
 	std::vector<std::vector<int>> fleMap;
+
+	int tex[10];
+	int Btex[10];
+
 
 	// 0 空気
 	// 1 ブロック

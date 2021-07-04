@@ -15,7 +15,7 @@ void ExplosionMana::Init()
 
 void ExplosionMana::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/ExTex16.png", 12, 12, 1, SIZE, SIZE, exTex);
+	load->LoadAnimeTex("Load/Texture/Ex/ExTex16.png", 12, 12, 1, SIZE, SIZE, exTex);
 	load->LoadTex("Load/Texture/Box.png", boxTex);
 	load->LoadSound("Load/Sound/SE/Explosion01.wav", exSound);
 }

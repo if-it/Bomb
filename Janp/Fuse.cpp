@@ -172,11 +172,11 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 
 void Fuse::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/LineFuse.png", 12, 12, 1, SIZE, SIZE, lineTex);
-	load->LoadAnimeTex("Load/Texture/CurveFuse.png", 12, 12, 1, SIZE, SIZE, curveTex);
-	load->LoadAnimeTex("Load/Texture/WFuse.png", 12, 12, 1, SIZE, SIZE, wTex1);
-	load->LoadAnimeTex("Load/Texture/WFuse2.png", 12, 12, 1, SIZE, SIZE, wTex2);
-	load->LoadTex("Load/Texture/Cannon.png", cannonTex);
+	load->LoadAnimeTex("Load/Texture/Fuse/LineFuse.png", 12, 12, 1, SIZE, SIZE, lineTex);
+	load->LoadAnimeTex("Load/Texture/Fuse/CurveFuse.png", 12, 12, 1, SIZE, SIZE, curveTex);
+	load->LoadAnimeTex("Load/Texture/Fuse/WFuse.png", 12, 12, 1, SIZE, SIZE, wTex1);
+	load->LoadAnimeTex("Load/Texture/Fuse/WFuse2.png", 12, 12, 1, SIZE, SIZE, wTex2);
+	load->LoadTex("Load/Texture/Fuse/Cannon.png", cannonTex);
 }
 
 void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)

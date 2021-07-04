@@ -24,7 +24,10 @@ public:
 
 	int player_mapset;
 
-	void SetNowBombNum(const int& num) { nowBombNum = num; }
+	void Set_Now_Bomb_Num(const int& num) { now_Bomb_Num = num; }
+	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
+	int Get_Now_Hp() { return hp;}
+
 
 private:
 	int tex[MAXTEX];
@@ -35,13 +38,13 @@ private:
 	void Blow(const float &blowX, const float& blowY, const bool& lr);
 	bool left;
 	bool right;
-	bool shot;
+	bool bomb_Spawn;
 	Count blow;
 	Count invincible;//–³“G
 	int hp;
-	int maxHp;
-	int maxBombNum;
-	int nowBombNum;
+	int max_Hp;
+	int max_Bomb_Num;
+	int now_Bomb_Num;
 	int damage;
 private:
 	//MapŠÖ˜A

@@ -57,8 +57,8 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap)
 
 void Enemy2::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
-	load->LoadAnimeTex("Load/Texture/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
+	load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
+	load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
 }
 
 void Enemy2::Update(const Vector2& pos, Collision* coll)

@@ -22,6 +22,7 @@ Game::~Game()
 	delete exMana;
 	delete enemy1Mana;
 	delete enemy2;
+	delete ui;
 	coll_List.clear();
 	InitGraph();
 	InitSoundMem();
@@ -65,7 +66,7 @@ void Game::Init()
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
-
+	ui->Init();
 
 	bombMana->Init();
 	shake = Vector2();
@@ -85,9 +86,9 @@ bool Game::Loading()
 	enemy1Mana->Loading(load);
 	fuse->Loading(load);
 	enemy2->Loading(load);
-
-	load->LoadAnimeTex("Load/Texture/Map.png", 10, 10, 1, SIZE, SIZE, map->tex);
-	load->LoadAnimeTex("Load/Texture/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, map->Btex);
+	map->Loading(load);
+	ui->Loading(load);
+	
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -150,7 +151,7 @@ void Game::Update()
 		}
 		break;
 	case PLAY:
-		Play_Scene_Update();
+		Play_Scene();
 		break;
 	case MAPSET:
 		if (SceneChangeAdd(5))
@@ -187,10 +188,10 @@ void Game::Update()
 	}
 }
 
-void Game::Play_Scene_Update()
+void Game::Play_Scene()
 {
 	//Update
-	Main_Play_Update();
+	Play_Scene_Update();
 
 	//layerチェック
 
@@ -214,13 +215,13 @@ void Game::Play_Scene_Update()
 	//	scene = GAMECLEAR;
 	//}
 	Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
-
+	ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num());
 }
 
-void Game::Main_Play_Update()
+void Game::Play_Scene_Update()
 {
 	map->Update();
-	player->SetNowBombNum(bombMana->NowPlayerBombNum());
+	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(key, con, bombShake.flg, bombMana);
 	enemy1Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana);
@@ -361,4 +362,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 
 	//エフェクト関連
 	exMana->Draw(sc2, shake2);
+
+	//UI関連
+	ui->Draw();
 }

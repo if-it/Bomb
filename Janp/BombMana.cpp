@@ -19,7 +19,7 @@ void BombMana::Init()
 
 void BombMana::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Bomb.png", 8, 8, 1, SIZE, SIZE, bombTex);
+	load->LoadAnimeTex("Load/Texture/Bomb/Bomb.png", 8, 8, 1, SIZE, SIZE, bombTex);
 	load->LoadSound("Load/Sound/SE/shoot.wav", bombSound);
 
 }

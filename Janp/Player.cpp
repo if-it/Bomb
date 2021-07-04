@@ -5,9 +5,9 @@
 Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
-	maxBombNum = 2;
-	maxHp = 200;
-	hp = maxHp;
+	max_Bomb_Num = 2;
+	max_Hp = 10;
+	hp = max_Hp;
 	damage = 1;
 	blow = Count();
 }
@@ -50,9 +50,9 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	}
 	right = false;
 	left = false;
-	shot = false;
+	bomb_Spawn = false;
 	blow = Count();
-	nowBombNum = maxBombNum;
+	now_Bomb_Num = max_Bomb_Num;
 	ani = Animation();
 
 	invincible = Count();
@@ -60,7 +60,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 
 void Player::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
+	load->LoadAnimeTex("Load/Texture/Player/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
 }
 
 void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
@@ -81,7 +81,7 @@ void Player::Input(Key* key, Controller* con)
 {
 	right = false;
 	left = false;
-	shot = false;
+	bomb_Spawn = false;
 	Vector2 stickL = con->StickL();
 	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 	{
@@ -95,7 +95,7 @@ void Player::Input(Key* key, Controller* con)
 	}
 	if (key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP) || key->KeyTrigger(KEY_INPUT_W) || con->TrlggerBotton(con->A))
 	{
-		shot = true;
+		bomb_Spawn = true;
 	}
 }
 
@@ -136,14 +136,15 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 	}
 	if (blow.flg)game_object.game.allVec.vec = fVec;
 	blow.Conuter(10);
-	if (shot)
+	now_Bomb_Num = max_Bomb_Num - now_Bomb_Num;
+	if (bomb_Spawn)
 	{
 
 		Vector2 bombPos = game_object.game.allVec.pos;
 		bombPos += SIZE / 2;
 		Vector2 bombVec = Vector2();
-		nowBombNum = maxBombNum - nowBombNum;
-		if (nowBombNum > 0)
+		
+		if (now_Bomb_Num > 0)
 		{
 			bomb->BombSpawn(bombPos, bombVec, true, damage);
 		}

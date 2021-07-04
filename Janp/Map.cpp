@@ -69,6 +69,12 @@ void Map::StageSet(int stage)
 	ifs.close();
 }
 
+void Map::Loading(Load* load)
+{
+	load->LoadAnimeTex("Load/Texture/Map/Map.png", 10, 10, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
+}
+
 void Map::FleMapInput()
 {
 	for (int y = 0; y < (int)map.size(); ++y)

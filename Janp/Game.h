@@ -17,8 +17,8 @@ public:
 	bool debug_mode_flg = false;
 
 private:
+	void Play_Scene();
 	void Play_Scene_Update();
-	void Main_Play_Update();
 	void Map_Coll_Update();
 	void Obj_Coll_Update();
 	void PlayDraw(const Vector2& sc2, const Vector2& shake2);
