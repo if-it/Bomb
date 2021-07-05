@@ -6,7 +6,7 @@
 #define MAXSPEED 4
 #define MAXTEX 6
 #define BOMBVEC 10.0f
-#define EXJUMP 12.0f
+#define EXJUMP 10.0f
 
 class Player :public MapColl
 {

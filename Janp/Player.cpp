@@ -5,8 +5,8 @@
 Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
-	max_Bomb_Num = 2;
-	max_Hp = 10;
+	max_Bomb_Num = 1;
+	max_Hp = 3;
 	hp = max_Hp;
 	damage = 1;
 	blow = Count();
