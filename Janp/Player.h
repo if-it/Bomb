@@ -38,6 +38,7 @@ private:
 	void Blow(const float &blowX, const float& blowY, const bool& lr);
 	bool left;
 	bool right;
+	bool ability;
 	bool bomb_Spawn;
 	Count blow;
 	Count invincible;//–³“G

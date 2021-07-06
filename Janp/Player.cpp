@@ -10,6 +10,7 @@ Player::Player()
 	hp = max_Hp;
 	damage = 1;
 	blow = Count();
+	ability = false;
 }
 
 
@@ -82,6 +83,7 @@ void Player::Input(Key* key, Controller* con)
 	right = false;
 	left = false;
 	bomb_Spawn = false;
+	ability = false;
 	Vector2 stickL = con->StickL();
 	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 	{
@@ -96,6 +98,10 @@ void Player::Input(Key* key, Controller* con)
 	if (key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP) || key->KeyTrigger(KEY_INPUT_W) || con->TrlggerBotton(con->A))
 	{
 		bomb_Spawn = true;
+	}
+	if (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0)
+	{
+		ability = true;
 	}
 }
 
@@ -143,7 +149,7 @@ void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
 		Vector2 bombPos = game_object.game.allVec.pos;
 		bombPos += SIZE / 2;
 		Vector2 bombVec = Vector2();
-		
+
 		if (now_Bomb_Num > 0)
 		{
 			bomb->BombSpawn(bombPos, bombVec, true, damage);
@@ -411,7 +417,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		case 40:
 			back_flg[4] = true;
 			break;
-		case 65:
+		case 66:
 			//clear = true;
 			break;
 		default:
