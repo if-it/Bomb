@@ -28,7 +28,7 @@ public:
 	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
 	int Get_Now_Hp() { return hp;}
 
-
+	GameObject ability1;
 private:
 	int tex[MAXTEX];
 	Vector2 fVec;//‚Á”ò‚Ñ

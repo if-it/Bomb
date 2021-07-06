@@ -20,6 +20,7 @@ void Bomb::Init()
 	playerSpawn = false;
 	damage = 1;
 	exSpawn = false;
+	stopMove = false;
 }
 
 void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
@@ -27,32 +28,41 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 	time++;
 	if (game_object.game.dis)
 	{
-		game_object.game.allVec.vec.y += 0.1f;
+		if (stopMove)
+		{
 
-		if (game_object.game.allVec.vec.x > 0)
-		{
-			game_object.game.allVec.vec.x -= 0.1f;
 		}
-		else if (game_object.game.allVec.vec.x < 0)
+		else
 		{
-			game_object.game.allVec.vec.x += 0.1f;
-		}
-		if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-0.1f) ||
-			(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.1f))
-		{
-			game_object.game.allVec.vec.x = 0;
-		}
 
-		if (bombAni.OneAnimation(28, 8))
-		{
-			game_object.game.dis = false;
-			ex->ExSpawn(game_object, damage);
-			shakeflg = true;
-			con->Shake(1000, 200);
-		}
-		if (time == 60)
-		{
-			playerOneColl = false;
+
+			game_object.game.allVec.vec.y += 0.1f;
+
+			if (game_object.game.allVec.vec.x > 0)
+			{
+				game_object.game.allVec.vec.x -= 0.1f;
+			}
+			else if (game_object.game.allVec.vec.x < 0)
+			{
+				game_object.game.allVec.vec.x += 0.1f;
+			}
+			if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-0.1f) ||
+				(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.1f))
+			{
+				game_object.game.allVec.vec.x = 0;
+			}
+
+			if (bombAni.OneAnimation(28, 8))
+			{
+				game_object.game.dis = false;
+				ex->ExSpawn(game_object, damage);
+				shakeflg = true;
+				con->Shake(1000, 200);
+			}
+			if (time == 60)
+			{
+				playerOneColl = false;
+			}
 		}
 	}
 }
@@ -84,6 +94,13 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 			game_object.game.dis = false;
 			exSpawn = true;
 			con->Shake(1000, 300);
+		}
+		if (nameTag == "Ability")
+		{
+			stopMove = true;
+			game_object.game.allVec.vec = Vector2();
+			playerSpawn = false;
+			playerOneColl = false;
 		}
 	}
 

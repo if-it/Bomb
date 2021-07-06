@@ -5,6 +5,8 @@
 Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
+	ability1 = GameObject("Ability", false, Vector2(128.0f, 128.0f));
+	ability1.color = COLOR(0, 168, 108);
 	max_Bomb_Num = 1;
 	max_Hp = 3;
 	hp = max_Hp;
@@ -21,6 +23,11 @@ Player::~Player()
 void Player::Init(std::vector<std::vector<int>>& map)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
+	ability1 = GameObject("Ability", false, Vector2(256.0f, 256.0f));
+	ability1.color = COLOR(120, 166, 58);
+
+	ability1.SetPos(Vector2(game_object.GetPos().x - 128, game_object.GetPos().y - 128));
+
 	fVec = Vector2();
 	for (int y = 0; y < (int)map.size(); ++y)
 	{
@@ -71,11 +78,13 @@ void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
 
 	ani.AnimationOn(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
+	ability1.game.dis = ability;
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
 {
 	Map_Coll(collMap, sc, stageChange, stage);
+	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 }
 
 void Player::Input(Key* key, Controller* con)
@@ -477,5 +486,9 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
+	Box(ability1, false, shake, sc);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+	Circle(Vector2(ability1.GetPos().x+128,ability1.GetPos().y+128), 128, 30,MyGetColor(ability1.color), ability1.game.dis,true, shake, sc);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
 }

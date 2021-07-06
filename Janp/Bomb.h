@@ -23,6 +23,7 @@ public:
 	bool playerSpawn;
 	bool playerOneColl;
 	bool exSpawn;
+	bool stopMove;
 	int damage;
 
 	//void exSpawn(const int& exSound, std::vector<Explosion>& ex);
