@@ -13,6 +13,12 @@ Player::Player()
 	damage = 1;
 	blow = Count();
 	ability = false;
+	up = false;
+	down = false;
+	left = false;
+	right = false;
+
+	bomb_Vec = Vector2();
 }
 
 
@@ -71,10 +77,60 @@ void Player::Loading(Load* load)
 	load->LoadAnimeTex("Load/Texture/Player/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
 }
 
-void Player::Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb)
+void Player::Input(Key* key, Controller* con, bool& time)
 {
-	Input(key, con);
-	Move(shakeflg, con, bomb);
+
+	up = false;
+	down = false;
+	right = false;
+	left = false;
+	bomb_Spawn = false;
+	ability = false;
+	Vector2 stickL = con->StickL();
+	if (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0)
+	{
+		ability = true;
+	}
+	if (key->keyFlame(KEY_INPUT_UP) > 0 || key->keyFlame(KEY_INPUT_W) > 0 || stickL.y > 10000)
+	{
+		up = true;
+
+		bomb_Vec = Vector2(0.0f, -1.0f);
+
+	}
+	if (key->keyFlame(KEY_INPUT_DOWN) > 0 || key->keyFlame(KEY_INPUT_S) > 0 || stickL.y < -10000)
+	{
+		down = true;
+		bomb_Vec = Vector2(0.0f, 1.0f);
+	}
+	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
+	{
+		right = true;
+		game_object.game.lr = false;
+		bomb_Vec = Vector2(1.0f, -0.2f);
+	}
+	if (key->keyFlame(KEY_INPUT_A) > 0 || key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
+	{
+		left = true;
+		game_object.game.lr = true;
+		bomb_Vec = Vector2(-1.0f, -0.2f);
+	}
+	if (key->KeyTrigger(KEY_INPUT_SPACE) || con->TrlggerBotton(con->A))
+	{
+		bomb_Spawn = true;
+	}
+	bomb_Vec.Normalize();
+
+	bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
+	time = ability;
+	ability1.game.dis = ability;
+	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
+
+}
+
+void Player::Update(bool& shakeflg, BombMana* bomb)
+{
+	Move(shakeflg, bomb);
 
 	ani.AnimationOn(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
@@ -85,36 +141,12 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 {
 	Map_Coll(collMap, sc, stageChange, stage);
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
+	bomb_Vec = Vector2();
 }
 
-void Player::Input(Key* key, Controller* con)
-{
-	right = false;
-	left = false;
-	bomb_Spawn = false;
-	ability = false;
-	Vector2 stickL = con->StickL();
-	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
-	{
-		right = true;
-		game_object.game.lr = false;
-	}
-	if (key->keyFlame(KEY_INPUT_A) > 0 || key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
-	{
-		left = true;
-		game_object.game.lr = true;
-	}
-	if (key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP) || key->KeyTrigger(KEY_INPUT_W) || con->TrlggerBotton(con->A))
-	{
-		bomb_Spawn = true;
-	}
-	if (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0)
-	{
-		ability = true;
-	}
-}
 
-void Player::Move(bool& shakeflg, Controller* con, BombMana* bomb)
+
+void Player::Move(bool& shakeflg, BombMana* bomb)
 {
 	//ˆÚ“®
 	game_object.game.allVec.vec.y += 0.2f;
@@ -488,7 +520,7 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
 	Box(ability1, false, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	Circle(Vector2(ability1.GetPos().x+128,ability1.GetPos().y+128), 128, 30,MyGetColor(ability1.color), ability1.game.dis,true, shake, sc);
+	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
 }

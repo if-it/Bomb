@@ -23,14 +23,15 @@ void Bomb::Init()
 	stopMove = false;
 }
 
-void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
+void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
 {
 	time++;
 	if (game_object.game.dis)
 	{
-		if (stopMove)
+		if (stopMove && !world_Time && flame_time)
 		{
-
+			stopMove = false;
+			game_object.game.allVec.vec = ability_Vec;
 		}
 		else
 		{
@@ -59,10 +60,10 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex)
 				shakeflg = true;
 				con->Shake(1000, 200);
 			}
-			if (time == 60)
-			{
-				playerOneColl = false;
-			}
+		}
+		if (time == 60)
+		{
+			playerOneColl = false;
 		}
 	}
 }
@@ -99,8 +100,6 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 		{
 			stopMove = true;
 			game_object.game.allVec.vec = Vector2();
-			playerSpawn = false;
-			playerOneColl = false;
 		}
 	}
 

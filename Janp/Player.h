@@ -7,6 +7,7 @@
 #define MAXTEX 6
 #define BOMBVEC 10.0f
 #define EXJUMP 10.0f
+#define ABILITY_BOMB_SPEED 8.0f
 
 class Player :public MapColl
 {
@@ -16,7 +17,8 @@ public:
 
 	void Init(std::vector<std::vector<int>>& collMap);
 	void Loading(Load* load);
-	void Update(Key* key, Controller* con, bool& shakeflg, BombMana* bomb);
+	void Input(Key* key, Controller* con, bool& time);
+	void Update(bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
@@ -27,15 +29,18 @@ public:
 	void Set_Now_Bomb_Num(const int& num) { now_Bomb_Num = num; }
 	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
 	int Get_Now_Hp() { return hp;}
+	Vector2 Get_Bomb_Vec(){ return bomb_Vec; }
 
 	GameObject ability1;
 private:
 	int tex[MAXTEX];
-	Vector2 fVec;//êÅÇ¡îÚÇ—
+	Vector2 fVec;//êÅÇ¡îÚÇ—[
+	Vector2 bomb_Vec;
 	Animation ani;
-	void Input(Key* key, Controller* con);
-	void Move(bool& shakeflg, Controller* con, BombMana* bomb);
+	void Move(bool& shakeflg, BombMana* bomb);
 	void Blow(const float &blowX, const float& blowY, const bool& lr);
+	bool up;
+	bool down;
 	bool left;
 	bool right;
 	bool ability;

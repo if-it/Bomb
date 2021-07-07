@@ -14,7 +14,7 @@ public:
 	void Init();
 	void Loading(Load* load);
 	void Loading(const int& bombSoundC,const int*bombTexC);
-	void Update(bool& shakeflg, Controller* con, ExplosionMana* ex);
+	void Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec);
 	void BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const bool& playerSp, const int& damage);
 	void Coll(bool& shakeflg, Controller* con);
 	void Coll_End_Set(ExplosionMana* ex);

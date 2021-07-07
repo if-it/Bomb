@@ -51,10 +51,12 @@ void Game::FirstInit()
 	stage = 1;
 	player->player_mapset = 50;
 	Init();
+	time = false;
 }
 
 void Game::Init()
 {
+	time = false;
 	stageChange = false;
 	titleFlg = false;
 	title_To_Play = false;
@@ -88,7 +90,7 @@ bool Game::Loading()
 	enemy2->Loading(load);
 	map->Loading(load);
 	ui->Loading(load);
-	
+
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -190,16 +192,24 @@ void Game::Update()
 
 void Game::Play_Scene()
 {
-	//Update
-	Play_Scene_Update();
+	flame_time = time;
+	//入力
+	player->Input(key, con, time);
 
-	//layerチェック
+	if (!time)
+	{
 
-	enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
+		//Update
+		Play_Scene_Update();
 
-	//Map当たり判定
-	Map_Coll_Update();
+		//layerチェック
 
+		enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
+
+		//Map当たり判定
+		Map_Coll_Update();
+
+	}
 	//オブジェクト当たり判定
 	Obj_Coll_Update();
 	if (player->Die())
@@ -214,18 +224,21 @@ void Game::Play_Scene()
 	//{
 	//	scene = GAMECLEAR;
 	//}
-	Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
-	ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num());
+	if (!time)
+	{
+		Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
+		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num());
+	}
 }
 
 void Game::Play_Scene_Update()
 {
 	map->Update();
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
-	player->Update(key, con, bombShake.flg, bombMana);
+	player->Update(bombShake.flg, bombMana);
 	enemy1Mana->Update();
-	bombMana->Update(bombShake.flg, con, exMana);
-	enemy2->Update(player->game_object.game.allVec.pos,coll);
+	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
+	enemy2->Update(player->game_object.game.allVec.pos, coll);
 
 	fuse->Update(map->map, bombMana);
 	exMana->Update();
