@@ -95,7 +95,7 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 			exSpawn = true;
 			con->Shake(1000, 300);
 		}
-		if (nameTag == "Ability")
+		if (nameTag == "Ability"&&!playerSpawn)
 		{
 			stopMove = true;
 			game_object.game.allVec.vec = Vector2();
