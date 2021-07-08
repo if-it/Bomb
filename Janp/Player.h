@@ -31,6 +31,7 @@ public:
 	int Get_Now_Hp() { return hp;}
 	Vector2 Get_Bomb_Vec(){ return bomb_Vec; }
 
+	int ability;
 	GameObject ability1;
 private:
 	int tex[MAXTEX];
@@ -43,10 +44,10 @@ private:
 	bool down;
 	bool left;
 	bool right;
-	bool ability;
 	bool bomb_Spawn;
 	Count blow;
 	Count invincible;//–³“G
+	Count ability_stop;
 	int hp;
 	int max_Hp;
 	int max_Bomb_Num;

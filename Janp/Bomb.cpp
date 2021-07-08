@@ -20,20 +20,27 @@ void Bomb::Init()
 	playerSpawn = false;
 	damage = 1;
 	exSpawn = false;
-	stopMove = false;
+	stop_Move = false;
+	ability_Pos = Vector2();
+	ability = 0;
 }
 
-void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
+void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time,
+	const bool& flame_time, Vector2 ability_Vec, const int& abi)
 {
+	ability = abi;
 	time++;
-	if (game_object.game.dis)
+	if (game_object.game.dis || stop_Move)
 	{
-		if (stopMove && !world_Time && flame_time)
+		if (stop_Move && abi == 7)
 		{
-			stopMove = false;
-			game_object.game.allVec.vec = ability_Vec;
+			game_object.SetPos(ability_Vec + ability_Pos);
+			stop_Move = false;
+			game_object.game.dis = true;
+			/*stopMove = false;
+			game_object.game.allVec.vec = ability_Vec;*/
 		}
-		else
+		else if (!stop_Move)
 		{
 
 
@@ -73,7 +80,7 @@ void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 	if (game_object.game.dis)Map_Coll(collMap);
 }
 
-void Bomb::Coll(bool& shakeflg, Controller* con)
+void Bomb::Coll(bool& shakeflg, Controller* con, const Vector2& playerVec)
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
@@ -98,8 +105,12 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 		}
 		if (nameTag == "Ability")
 		{
-			stopMove = true;
-			game_object.game.allVec.vec = Vector2();
+			if (ability >= 1 && ability <= 3)
+			{
+				stop_Move = true;
+				game_object.game.dis = false;
+				ability_Pos = game_object.GetPos() - playerVec;
+			}
 		}
 	}
 

@@ -237,7 +237,7 @@ void Game::Play_Scene_Update()
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(bombShake.flg, bombMana);
 	enemy1Mana->Update();
-	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
+	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->game_object.GetPos(),player->ability);
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
 
 	fuse->Update(map->map, bombMana);
@@ -319,7 +319,7 @@ void Game::Obj_Coll_Update()
 	}
 
 	enemy1Mana->Coll(exMana->ex);
-	bombMana->Coll(bombShake.flg, con);
+	bombMana->Coll(bombShake.flg, con,player->game_object.GetPos());
 	enemy2->Coll(exMana->ex);
 
 	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成

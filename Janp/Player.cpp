@@ -12,11 +12,12 @@ Player::Player()
 	hp = max_Hp;
 	damage = 1;
 	blow = Count();
-	ability = false;
+	ability = 0;
 	up = false;
 	down = false;
 	left = false;
 	right = false;
+	ability_stop = Count();
 
 	bomb_Vec = Vector2();
 }
@@ -29,7 +30,7 @@ Player::~Player()
 void Player::Init(std::vector<std::vector<int>>& map)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
-	ability1 = GameObject("Ability", false, Vector2(256.0f, 256.0f));
+	ability1 = GameObject("Ability", false, Vector2(256.0f, 256.0f), Vector2());
 	ability1.color = COLOR(120, 166, 58);
 
 	ability1.SetPos(Vector2(game_object.GetPos().x - 128, game_object.GetPos().y - 128));
@@ -68,6 +69,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	blow = Count();
 	now_Bomb_Num = max_Bomb_Num;
 	ani = Animation();
+	ability_stop = Count();
 
 	invincible = Count();
 }
@@ -85,11 +87,21 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	right = false;
 	left = false;
 	bomb_Spawn = false;
-	ability = false;
 	Vector2 stickL = con->StickL();
-	if (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0)
+	if (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB))
 	{
-		ability = true;
+		if (ability == 0)
+		{
+			ability = 1;
+		}
+
+	}
+	if (key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->RB))
+	{
+		if (ability == 0)
+		{
+			ability = 6;
+		}
 	}
 	if (key->keyFlame(KEY_INPUT_UP) > 0 || key->keyFlame(KEY_INPUT_W) > 0 || stickL.y > 10000)
 	{
@@ -122,10 +134,9 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	bomb_Vec.Normalize();
 
 	bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
-	time = ability;
-	ability1.game.dis = ability;
+	// time = ability;
+	if (ability == 1 || ability == 3)ability1.game.dis = true;
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
-
 }
 
 void Player::Update(bool& shakeflg, BombMana* bomb)
@@ -135,6 +146,65 @@ void Player::Update(bool& shakeflg, BombMana* bomb)
 	ani.AnimationOn(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
 	ability1.game.dis = ability;
+	if (ability1.game.dis)
+	{
+		switch (ability)
+		{
+		case 0:
+			break;
+		case 1:
+			ability1.game.scale.x += 0.05;
+			ability1.game.scale.y += 0.05;
+			if (ability1.game.scale >= Vector2(1.0f, 1.0f))
+			{
+				ability = 2;
+				ability_stop.flg = true;
+			}
+			break;
+		case 2:
+			if (ability_stop.Conuter(10))
+			{
+				ability = 3;
+				ability_stop = Count();
+			}
+			break;
+		case 3:
+			ability1.game.scale.x -= 0.05;
+			ability1.game.scale.y -= 0.05;
+			if (ability1.game.scale <= Vector2())
+			{
+				ability = 4;
+				ability_stop.flg = true;
+			}
+			break;
+		case 4:
+			if (ability_stop.Conuter(1))
+			{
+				ability = 0;
+				ability_stop = Count();
+			}
+			break;
+		case 6:
+			ability1.game.scale = Vector2(1.0f, 1.0f);
+			ability_stop.flg = true;
+			ability = 7;
+			break;
+		case 7:
+			if (ability_stop.Conuter(30))
+			{
+				ability = 0;
+				ability1.game.scale = Vector2();
+			}
+			break;
+		default:
+			break;
+		}
+
+	}
+	ability1.game.dis = false;
+	if ((ability >= 1 && ability <= 4) || (ability >= 6))ability1.game.dis = true;
+	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
+	ability1.Size_Update();
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -520,7 +590,8 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
 	//Box(ability1, false, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
+	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128),
+		ability1.GetSize().x / 2, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
 }

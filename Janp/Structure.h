@@ -163,6 +163,8 @@ protected:
 
 		Vector2 GetPos() { return game.allVec.pos; }
 		void SetPos(Vector2 pos) { game.allVec.pos = pos; }
+		Vector2 GetSize() { return game.size; }
+		void Size_Update() { game.size = game.texSize * game.scale; }
 	};
 	void SizeChange(Count& count, Vector2& size, Vector2 change, int maxCount);
 	void AnimeEnd(Count& ani, int maxCount, Vector2& size, Vector2 sizeNum);

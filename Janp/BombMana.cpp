@@ -4,7 +4,6 @@
 
 BombMana::BombMana()
 {
-
 }
 
 BombMana::~BombMana()
@@ -35,11 +34,12 @@ void BombMana::Loading(const int& bombSoundC, const int* bombTexC)
 
 
 
-void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
+void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, 
+	const bool& flame_time,  Vector2 ability_Vec, const int& abi)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		bomb[i].Update(shakeflg, con, ex, world_Time, flame_time, ability_Vec);
+		bomb[i].Update(shakeflg, con, ex, world_Time, flame_time, ability_Vec,abi);
 	}
 	if (NowBombNum() == 0)
 	{
@@ -47,11 +47,11 @@ void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const 
 	}
 }
 
-void BombMana::Coll( bool& shakeflg, Controller* con)
+void BombMana::Coll( bool& shakeflg, Controller* con, const Vector2& playerVec)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		bomb[i].Coll(shakeflg, con);
+		bomb[i].Coll(shakeflg, con,playerVec);
 	}
 }
 
@@ -95,7 +95,7 @@ int BombMana::NowBombNum()
 	int nowNum = 0;
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
-		if (bomb[i].game_object.game.dis)
+		if (bomb[i].game_object.game.dis||bomb[i].stop_Move)
 		{
 			nowNum++;
 		}
