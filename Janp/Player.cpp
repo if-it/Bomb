@@ -518,7 +518,7 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
-	Box(ability1, false, shake, sc);
+	//Box(ability1, false, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
