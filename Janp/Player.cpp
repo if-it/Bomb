@@ -190,7 +190,7 @@ void Player::Update(bool& shakeflg, BombMana* bomb)
 			ability = 7;
 			break;
 		case 7:
-			if (ability_stop.Conuter(30))
+			if (ability_stop.Conuter(10))
 			{
 				ability = 0;
 				ability1.game.scale = Vector2();
