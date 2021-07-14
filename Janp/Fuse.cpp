@@ -170,13 +170,14 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 	}
 }
 
-void Fuse::Loading(Load* load)
+void Fuse::Loading(Load* load,int*mapTexC)
 {
 	load->LoadAnimeTex("Load/Texture/Fuse/LineFuse.png", 12, 12, 1, SIZE, SIZE, lineTex);
 	load->LoadAnimeTex("Load/Texture/Fuse/CurveFuse.png", 12, 12, 1, SIZE, SIZE, curveTex);
 	load->LoadAnimeTex("Load/Texture/Fuse/WFuse.png", 12, 12, 1, SIZE, SIZE, wTex1);
 	load->LoadAnimeTex("Load/Texture/Fuse/WFuse2.png", 12, 12, 1, SIZE, SIZE, wTex2);
 	load->LoadTex("Load/Texture/Fuse/Cannon.png", cannonTex);
+	mapTex = mapTexC;
 }
 
 void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
@@ -348,6 +349,10 @@ void Fuse::Draw(const Vector2& sc, const Vector2& shake)
 		}
 		else if (fuses[i].type >= 8 && fuses[i].type <= 11)
 		{
+			if (fuses[i].ignitionFlg)
+			{
+				DrawTex(fuses[i].object, mapTex[1], true, shake, sc);
+			}
 			DrawRotaTex(fuses[i].object, lineTex[fuses[i].anime.num], true, shake, sc);
 		}
 		else if (fuses[i].type >= 12 && fuses[i].type <= 19)

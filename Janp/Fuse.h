@@ -10,7 +10,7 @@ public:
 	Fuse();
 	~Fuse();
 	void Init(std::vector<std::vector<int>>& collMap);
-	void Loading(Load* load);
+	void Loading(Load* load, int* mapTexC);
 	void Update(std::vector<std::vector<int>>& collMap, BombMana* bombMana);
 	void Coll(Collision*coll,const GameObject& obj);
 	void Draw(const Vector2& sc, const Vector2& shake);
@@ -19,6 +19,7 @@ public:
 	int wTex1[12];
 	int wTex2[12];
 	int cannonTex;
+	int* mapTex;
 private :
 	//void BombSpawn(std::vector<Bomb>& bomb,Vector2 set_pos, Vector2 set_vec);
 	void NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& collMap);
@@ -29,7 +30,7 @@ private :
 		int type;
 		bool coll;
 		bool animeEnd;
-		bool ignitionFlg;
+		bool ignitionFlg;//ãÛãCÇ∆êGÇÍçáÇ¡ÇƒÇ¢ÇÈÇ©
 		int maxAnime;
 		int animeFrame;
 		int animeEndCount;

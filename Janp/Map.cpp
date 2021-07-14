@@ -29,10 +29,10 @@ void Map::StageSet(int stage)
 	switch (stage)
 	{
 	case 0:
-		fileNama = "Load/Data/Map/DemoMap.dat";
+		fileNama = "Load/Data/Map/DemoMap.csv";
 		break;
 	default:
-		fileNama = "Load/Data/Map/DemoMap.dat";
+		fileNama = "Load/Data/Map/DemoMap.csv";
 		break;
 	}
 
@@ -71,7 +71,7 @@ void Map::StageSet(int stage)
 
 void Map::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Map.png", 10, 10, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, 4, 1, SIZE, SIZE, tex);
 	load->LoadAnimeTex("Load/Texture/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
 }
 
@@ -143,7 +143,7 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 
 			if (map[y][x] == 1 || (map[y][x] >= 8 && map[y][x] <= 23)|| (map[y][x] >= 54 && map[y][x] <= 57))
 			{
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[1], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[0], true, true, shake, sc);
 
 			}
 			switch (map[y][x])
@@ -166,41 +166,16 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 			case 49:
 				DrawTex(Vector2((float)(SIZE * x - SIZE / 2), (float)(SIZE * y - SIZE / 2)), Btex[map[y][x] - 40], true, true, shake, sc);
 				break;
+			case 50:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[1], true, true, shake, sc);
+				break;
 			case 65:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[4], true, true, shake, sc);
+				//DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[4], true, true, shake, sc);
 				break;
 			default:
 				break;
 			}
-			/*if (map[y][x] == 2)
-			{
-
-			}
-			if (map[y][x] == 3)
-			{
-
-			}
-			if (map[y][x] == 48)
-			{
-
-			}
-			if (map[y][x] == 60)
-			{
-
-			}
-			if (map[y][x] == 61)
-			{
-
-			}
-			if (map[y][x] == 62)
-			{
-
-			}
-			if (map[y][x] == 63)
-			{
-
-			}
-			*/
+			
 		}
 	}
 }

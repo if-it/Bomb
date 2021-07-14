@@ -82,13 +82,13 @@ bool Game::Loading()
 	if (loadCount > 0)return true;
 	loadCount++;
 
+	map->Loading(load);
 	player->Loading(load);
 	bombMana->Loading(load);
 	exMana->Loading(load);
 	enemy1Mana->Loading(load);
-	fuse->Loading(load);
+	fuse->Loading(load,map->Get_Map_Tex());
 	enemy2->Loading(load);
-	map->Loading(load);
 	ui->Loading(load);
 
 
