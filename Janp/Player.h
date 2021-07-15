@@ -52,6 +52,11 @@ private:
 	int max_Bomb_Num;
 	int now_Bomb_Num;
 	int damage;
+	int air_Count;
+	bool bomb_Janp;
+	bool air_Array[3];
+	bool air;
+	float rota_Vec;
 private:
 	//MapŠÖ˜A
 	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);

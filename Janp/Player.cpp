@@ -17,8 +17,14 @@ Player::Player()
 	down = false;
 	left = false;
 	right = false;
-
+	bomb_Janp = false;
 	bomb_Vec = Vector2();
+	air_Array[0] = false;
+	air_Array[1] = false;
+	air_Array[2] = false;
+	air_Count = 0;
+	air = false;
+	rota_Vec = 0.0f;
 }
 
 
@@ -70,6 +76,13 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	ani = Animation();
 
 	invincible = Count();
+
+	for (int i = 0; i < 3; ++i)
+	{
+		air_Array[i] = false;
+	}
+	air_Count = 0;
+	air = false;
 }
 
 void Player::Loading(Load* load)
@@ -196,6 +209,11 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 			bomb->BombSpawn(bombPos, bombVec, true, damage);
 		}
 	}
+	if (rota_Vec>=0)
+	{
+		game_object.game.rote += rota_Vec;
+	}
+	rota_Vec -= 0.1f;
 }
 
 
@@ -207,6 +225,8 @@ bool Player::Die()
 	return false;
 }
 
+
+//MapîªíË
 void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
 {
 	for (int i = 0; i < 5; ++i)
@@ -214,7 +234,13 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		back_flg[i] = false;
 		collFlg[i] = false;
 	}
+	for (int i = 0; i < 3; ++i)
+	{
+		air_Array[i] = false;
+	}
+	air = false;
 	vec = game_object.game.allVec.vec;
+	air_Count = 0;
 
 	int SizeCut = 0;
 
@@ -263,6 +289,12 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		}
 	}
 
+	if (air_Array[0] && air_Array[1] && air_Array[2])
+	{
+		air = true;
+	}
+
+
 	if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
 		sc2.x += vec.x;
@@ -294,6 +326,8 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	sc = Vector2::Lerp(sc, sc2, 0.05f);
 }
 
+
+//Mapèàóù
 void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage)
 {
 	if (pointNum == 0) //Yé≤
@@ -313,6 +347,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 	else if (pointNum == 1) //Yé≤
 	{
+		if (mapPoint == 0)
+		{
+			air_Array[air_Count] = true;
+			air_Count++;
+		}
 		if (mapPoint == 40)
 		{
 			if (!collFlg[1] && vec.y == 0)
@@ -324,6 +363,12 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			vec.y = 0;
 			collFlg[1] = true;
+		}
+		if (mapPoint == 50)
+		{
+			bomb_Janp = false;
+			game_object.game.rote = 0;
+			rota_Vec = 0;
 		}
 	}
 
@@ -479,6 +524,8 @@ void Player::Coll()
 		{
 			game_object.game.allVec.vec.y = 0;
 			game_object.game.allVec.vec.y -= EXJUMP;
+			bomb_Janp = true;
+			rota_Vec = 10.0f;
 		}
 
 		if (nameTag == "Enemy1")
