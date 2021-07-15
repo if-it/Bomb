@@ -71,7 +71,7 @@ void Map::StageSet(int stage)
 
 void Map::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, 8, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, 12, 1, SIZE, SIZE, tex);
 	load->LoadAnimeTex("Load/Texture/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
 }
 
@@ -178,8 +178,17 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 			case 53:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[7], true, true, shake, sc);
 				break;
-			case 65:
-				//DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[4], true, true, shake, sc);
+			case 58:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[8], true, true, shake, sc);
+				break;
+			case 59:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[9], true, true, shake, sc);
+				break;
+			case 60:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[10], true, true, shake, sc);
+				break;
+			case 61:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[11], true, true, shake, sc);
 				break;
 			default:
 				break;
