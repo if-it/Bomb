@@ -102,7 +102,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	Vector2 stickL = con->StickL();
 	if (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0)
 	{
-		ability = true;
+		//ability = true;
 	}
 	if (key->keyFlame(KEY_INPUT_UP) > 0 || key->keyFlame(KEY_INPUT_W) > 0 || stickL.y > 10000)
 	{
