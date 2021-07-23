@@ -2,7 +2,7 @@
 #include"Draw.h"
 #include "Load.h"
 #define B_MAX_COUNT 5
-#define MAP_TEX_NUM 16
+#define MAP_TEX_NUM 22
 
 class Map :public Draw
 {

@@ -123,7 +123,7 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 				{
 					if (map[map_num[0]][x] == 0)
 					{
-						InitFuse.ignitionFlg = true;
+						fuses[i].ignitionFlg = true;
 					}
 
 				}
@@ -133,7 +133,7 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 
 					if (map[map_num[2]][x] == 0)
 					{
-						InitFuse.ignitionFlg = true;
+						fuses[i].ignitionFlg = true;
 					}
 
 
@@ -143,7 +143,7 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 				{
 					if (map[y][map_num[3]] == 0)
 					{
-						InitFuse.ignitionFlg = true;
+						fuses[i].ignitionFlg = true;
 					}
 
 				}
@@ -153,7 +153,7 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 
 					if (map[y][map_num[5]] == 0)
 					{
-						InitFuse.ignitionFlg = true;
+						fuses[i].ignitionFlg = true;
 					}
 				}
 
@@ -185,29 +185,382 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 			{
 				for (int j = 0; j < 3; ++j)
 				{
-					if (map_over[n] && map_over[3+j] && map[map_num[n]][map_num[3+j]] != 0)
+					if (map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 0)
 					{
 						map_check[n][j] = true;
 					}
 				}
 			}
 
-		/*	if (map_over[0]&& map_over[2]&&map[map_num[0]][map_num[2]]!=0)
+			fuses[i].map_num = 101010;
+			for (int n = 0; n < 3; ++n)
 			{
-				map_check[0][0] = true;
+				for (int j = 0; j < 3; ++j)
+				{
+					if (map_check[n][j])
+					{
+						if (n == 1 && j == 1)
+						{
+							continue;
+						}
+						if (n == 0)
+						{
+							fuses[i].map_num += (j + 2) * 10000;
+						}
+						else if (n == 1)
+						{
+							fuses[i].map_num += (j + 2) * 100;
+						}
+						else
+						{
+							fuses[i].map_num += j + 2;
+						}
+					}
+				}
 			}
-			if (map_over[0] && map[map_num[0]][x] != 0)
+
+			switch (fuses[i].map_num)
 			{
-				map_check[0][1] = true;
+			case 101010:
+			case 101012:
+			case 101014:
+			case 101016:
+			case 121014:
+			case 121016:
+			case 121010:
+			case 121012:
+			case 141010:
+			case 141012:
+			case 141014:
+			case 141016:
+			case 161010:
+			case 161012:
+			case 161014:
+			case 161016:
+				//ŒÇ—§
+				fuses[i].map_num = 21;
+				break;
+			case 101213:
+			case 101217:
+			case 101413:
+			case 101415:
+			case 101615:
+			case 101617:
+			case 101613:
+			case 121213:
+			case 121413:
+			case 121415:
+			case 131617:
+			case 131410:
+			case 131412:
+			case 131414:
+			case 131210:
+			case 131212:
+			case 131213:
+			case 131214:
+			case 131215:
+			case 131216:
+			case 131217:
+			case 131219:
+			case 131610:
+			case 131612:
+			case 131619:
+			case 131413:
+			case 131415:
+			case 131614:
+			case 131615:
+			case 131416:
+			case 131417:
+			case 131613:
+			case 131616:
+			case 141213:
+			case 141217:
+			case 141413:
+			case 141415:
+			case 141613:
+			case 151010:
+			case 151213:
+			case 151410:
+			case 151412:
+			case 151413:
+			case 151415:
+			case 151610:
+			case 151612:
+			case 151613:
+			case 151615:
+			case 161213:
+			case 161217:
+			case 161413:
+			case 161415:
+			case 161613:
+			case 161615:
+			case 161617:
+			case 171210:
+			case 171212:
+			case 171213:
+			case 171214:
+			case 171215:
+			case 171216:
+			case 171217:
+			case 171219:
+			case 171413:
+			case 171415:
+			case 171610:
+			case 171612:
+			case 171613:
+			case 171614:
+			case 171615:
+			case 171616:
+			case 171617:
+			case 191213:
+			case 191413:
+			case 191415:
+			case 191613:
+			case 191619:
+				//–„‚Ü‚Á‚Ä‚é
+				fuses[i].map_num = 0;
+				break;
+			case 101210:
+			case 101212:
+			case 101214:
+			case 101216:
+			case 121210:
+			case 121212:
+			case 121214:
+			case 121216:
+			case 141210:
+			case 141212:
+			case 141214:
+			case 141216:
+			case 161210:
+			case 161212:
+			case 161214:
+			case 161216:
+				//1ƒ}ƒX‰E
+				fuses[i].map_num = 19;
+				break;
+			case 101410:
+			case 101412:
+			case 101414:
+			case 101416:
+			case 121410:
+			case 121412:
+			case 121414:
+			case 121416:
+			case 141410:
+			case 141412:
+			case 141414:
+			case 141416:
+			case 161410:
+			case 161412:
+			case 161414:
+			case 161416:
+				//1ƒ}ƒX¶
+				fuses[i].map_num = 20;
+				break;
+			case 101619:
+			case 121613:
+			case 121615:
+			case 121617:
+			case 121619:
+			case 141615:
+			case 141617:
+			case 141619:
+			case 161619:
+				//ã
+				fuses[i].map_num = 1;
+				break;
+			case 101013:
+			case 101015:
+			case 101017:
+			case 101019:
+			case 121013:
+			case 121015:
+			case 121017:
+			case 121019:
+			case 141013:
+			case 141015:
+			case 141017:
+			case 141019:
+			case 161013:
+			case 161015:
+			case 161017:
+			case 161019:
+				//1ƒ}ƒXcã
+				fuses[i].map_num = 17;
+				break;
+			case 101610:
+			case 101612:
+			case 101614:
+			case 101616:
+			case 121610:
+			case 121612:
+			case 121614:
+			case 121616:
+			case 141610:
+			case 141612:
+			case 141614:
+			case 141616:
+			case 161610:
+			case 161612:
+			case 161614:
+			case 161616:
+				//1ƒ}ƒX^‚ñ’†‰¡
+				fuses[i].map_num = 16;
+				break;
+			case 131013:
+			case 131015:
+			case 131017:
+			case 131019:
+			case 151013:
+			case 151015:
+			case 171013:
+			case 171015:
+			case 171017:
+			case 171019:
+			case 191013:
+			case 191015:
+			case 191017:
+			case 191019:
+				//1ƒ}ƒX^‚ñ’†c
+				fuses[i].map_num = 15;
+				break;
+			case 131010:
+			case 131012:
+			case 131014:
+			case 131016:
+			case 151012:
+			case 151014:
+			case 151016:
+			case 151017:
+			case 151019:
+			case 171010:
+			case 171012:
+			case 171014:
+			case 171016:
+			case 191010:
+			case 191012:
+			case 191014:
+			case 191016:
+				//1ƒ}ƒXc‰º
+				fuses[i].map_num = 18;
+				break;
+			case 101215:
+			case 101219:
+			case 121215:
+			case 121217:
+			case 121219:
+			case 141215:
+			case 141219:
+			case 161215:
+			case 161219:
+				//‰EãŠp1
+				fuses[i].map_num = 7;
+				break;
+			case 151210:
+			case 151212:
+			case 151214:
+			case 151216:
+			case 191210:
+			case 191212:
+			case 191214:
+			case 191216:
+			case 151614:
+				//‰E‰ºŠp1
+				fuses[i].map_num = 9;
+				break;
+			case 101417:
+			case 101419:
+			case 121417:
+			case 121419:
+			case 131419:
+			case 141417:
+			case 141419:
+			case 151414:
+			case 151416:
+			case 161417:
+			case 161419:
+				//¶ãŠp1
+				fuses[i].map_num = 8;
+				break;
+
+			case 151215:
+			case 151217:
+			case 151219:
+			case 191215:
+			case 191217:
+			case 191219:
+				//‰E
+				fuses[i].map_num = 5;
+				break;
+			case 151617:
+			case 151619:
+				//¶ãŠp2
+				fuses[i].map_num = 12;
+				break;
+			case 151417:
+			case 151419:
+			case 171417:
+			case 171419:
+			case 191417:
+			case 191419:
+				//¶
+				fuses[i].map_num = 6;
+				break;
+			case 171410:
+			case 171412:
+			case 171414:
+			case 171416:
+			case 191410:
+			case 191412:
+			case 191414:
+			case 191416:
+				//¶‰ºŠp1
+				fuses[i].map_num = 10;
+				break;
+			case 151616:
+			case 191610:
+			case 191612:
+			case 191614:
+			case 191616:
+				//‰º
+				fuses[i].map_num = 4;
+				break;
+			case 171619:
+				//‰EãŠp2
+				fuses[i].map_num = 11;
+				break;
+			case 191615:
+				//‰E‰ºŠp2
+				fuses[i].map_num = 13;
+				break;
+			case 191617:
+				//¶‰ºŠp2
+				fuses[i].map_num = 14;
+				break;
+			default:
+				fuses[i].map_num = 0;
+				break;
 			}
-			if (map_over[0]&&map_over[3] && map[map_num[0]][map_num[3]] != 0)
-			{
-				map_check[0][2] = true;
-			}
-			if ( map_over[2] && map[map_num[0]][map_num[2]] != 0)
-			{
-				map_check[0][0] = true;
-			}*/
+
+
+
+			/*	if (map_over[0]&& map_over[2]&&map[map_num[0]][map_num[2]]!=0)
+				{
+					map_check[0][0] = true;
+				}
+				if (map_over[0] && map[map_num[0]][x] != 0)
+				{
+					map_check[0][1] = true;
+				}
+				if (map_over[0]&&map_over[3] && map[map_num[0]][map_num[3]] != 0)
+				{
+					map_check[0][2] = true;
+				}
+				if ( map_over[2] && map[map_num[0]][map_num[2]] != 0)
+				{
+					map_check[0][0] = true;
+				}*/
 
 		}
 	}
@@ -365,12 +718,13 @@ void Fuse::NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& map)
 
 void Fuse::Coll(Collision* coll, const GameObject& obj)
 {
+
 	for (int i = 0; i < (int)fuses.size(); ++i)
 	{
 		if ((fuses[i].type >= 8 && fuses[i].type <= 23) || (fuses[i].type >= 54 && fuses[i].type <= 57))
 		{
 
-			if (InitFuse.ignitionFlg && !fuses[i].coll &&
+			if (fuses[i].ignitionFlg && !fuses[i].coll &&
 				coll->CollsionObj(fuses[i].object, obj))
 			{
 				fuses[i].coll = true;

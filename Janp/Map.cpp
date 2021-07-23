@@ -71,7 +71,7 @@ void Map::StageSet(int stage)
 
 void Map::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, 16, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
 	load->LoadAnimeTex("Load/Texture/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
 }
 
@@ -141,7 +141,7 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 
-			if (map[y][x] == 1 ||  (map[y][x] >= 54 && map[y][x] <= 57))
+			if (map[y][x] == 1 || (map[y][x] >= 54 && map[y][x] <= 57))
 			{
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[0], true, true, shake, sc);
 
@@ -170,42 +170,63 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[1], true, true, shake, sc);
 				break;
 			case 51:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[5], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[4], true, true, shake, sc);
 				break;
 			case 52:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[6], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[5], true, true, shake, sc);
 				break;
 			case 53:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[7], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[6], true, true, shake, sc);
 				break;
 			case 58:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[8], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[7], true, true, shake, sc);
 				break;
 			case 59:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[9], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[8], true, true, shake, sc);
 				break;
 			case 60:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[10], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[9], true, true, shake, sc);
 				break;
 			case 61:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[11], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[10], true, true, shake, sc);
 				break;
 			case 62:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[12], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[11], true, true, shake, sc);
 				break;
 			case 63:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[13], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[12], true, true, shake, sc);
 				break;
 			case 64:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[14], true, true, shake, sc);
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[13], true, true, shake, sc);
 				break;
 			case 65:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[14], true, true, shake, sc);
+				break;
+			case 66:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[15], true, true, shake, sc);
+				break;
+			case 67:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[16], true, true, shake, sc);
+				break;
+			case 68:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[17], true, true, shake, sc);
+				break;
+			case 69:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[18], true, true, shake, sc);
+				break;
+			case 70:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[19], true, true, shake, sc);
+				break;
+			case 71:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[20], true, true, shake, sc);
+				break;
+			case 72:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[21], true, true, shake, sc);
 				break;
 			default:
 				break;
 			}
-			
+
 		}
 	}
 }
