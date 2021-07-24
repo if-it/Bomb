@@ -33,12 +33,18 @@ public:
 
 	GameObject ability1;
 private:
+	void Move(bool& shakeflg, BombMana* bomb);
+	void Blow(const float &blowX, const float& blowY, const bool& lr);
+
 	int tex[MAXTEX];
+	
+
 	Vector2 fVec;//êÅÇ¡îÚÇ—[
 	Vector2 bomb_Vec;
 	Animation ani;
-	void Move(bool& shakeflg, BombMana* bomb);
-	void Blow(const float &blowX, const float& blowY, const bool& lr);
+
+
+
 	bool up;
 	bool down;
 	bool left;

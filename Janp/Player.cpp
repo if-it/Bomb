@@ -5,6 +5,7 @@
 Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
+
 	ability1 = GameObject("Ability", false, Vector2(128.0f, 128.0f));
 	ability1.color = COLOR(0, 168, 108);
 	max_Bomb_Num = 1;
@@ -35,10 +36,13 @@ Player::~Player()
 void Player::Init(std::vector<std::vector<int>>& map)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
+
+	
+
 	ability1 = GameObject("Ability", false, Vector2(256.0f, 256.0f));
 	ability1.color = COLOR(120, 166, 58);
 
-	ability1.SetPos(Vector2(game_object.GetPos().x - 128, game_object.GetPos().y - 128));
+	ability1.SetPos(Vector2(game_object.GetPos().x - 128, game_object.GetPos().y));
 
 	fVec = Vector2();
 	for (int y = 0; y < (int)map.size(); ++y)
@@ -47,7 +51,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 		{
 			if (map[y][x] == player_mapset)
 			{
-				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
+				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y)-64.0f);
 				sc2 = Vector2(((float)(-WIDTH / 2) + SIZE * x), (float)((-HEIGHT / 2) + SIZE * y + SIZE / 2));
 				if (game_object.GetPos().x < WIDTH / 2 - SIZE / 2)
 				{
@@ -83,11 +87,17 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	}
 	air_Count = 0;
 	air = false;
+
+	
+
 }
 
 void Player::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Player/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
+
+
+	
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -120,12 +130,19 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	{
 		right = true;
 		game_object.game.lr = false;
+
+		
 		bomb_Vec = Vector2(1.0f, -0.2f);
 	}
 	if (key->keyFlame(KEY_INPUT_A) > 0 || key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
 	{
 		left = true;
 		game_object.game.lr = true;
+
+		
+
+
+
 		bomb_Vec = Vector2(-1.0f, -0.2f);
 	}
 	if (key->KeyTrigger(KEY_INPUT_SPACE) || con->TrlggerBotton(con->A))
@@ -155,6 +172,8 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 	Map_Coll(collMap, sc, stageChange, stage);
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 	bomb_Vec = Vector2();
+
+	
 }
 
 
@@ -197,11 +216,11 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	if (blow.flg)game_object.game.allVec.vec = fVec;
 	blow.Conuter(10);
 	now_Bomb_Num = max_Bomb_Num - now_Bomb_Num;
-	if (bomb_Spawn)
+	if (bomb_Spawn)//”š’e¶¬
 	{
 
 		Vector2 bombPos = game_object.game.allVec.pos;
-		bombPos += SIZE / 2;
+		bombPos.y += SIZE / 2;
 		Vector2 bombVec = Vector2();
 
 		if (now_Bomb_Num > 0)
@@ -209,7 +228,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 			bomb->BombSpawn(bombPos, bombVec, true, damage);
 		}
 	}
-	if (rota_Vec>=0)
+	if (rota_Vec >= 0)
 	{
 		game_object.game.rote += rota_Vec;
 	}
