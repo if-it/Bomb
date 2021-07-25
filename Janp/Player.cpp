@@ -96,7 +96,7 @@ void Player::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Player/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
 
-
+	load->LoadTex("Load/Texture/Player/Player.png", player_Tex);
 	
 }
 
@@ -220,7 +220,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	{
 
 		Vector2 bombPos = game_object.game.allVec.pos;
-		bombPos.y += SIZE / 2;
+		bombPos += SIZE / 2;
 		Vector2 bombVec = Vector2();
 
 		if (now_Bomb_Num > 0)
@@ -588,5 +588,5 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawRotaTex(game_object, tex[ani.num], true, shake, sc);
+	DrawRotaTex(game_object, player_Tex, true, shake, sc);
 }

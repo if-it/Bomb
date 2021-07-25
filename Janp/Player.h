@@ -37,6 +37,7 @@ private:
 	void Blow(const float &blowX, const float& blowY, const bool& lr);
 
 	int tex[MAXTEX];
+	int player_Tex;
 	
 
 	Vector2 fVec;//êÅÇ¡îÚÇ—[
