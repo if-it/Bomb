@@ -26,6 +26,12 @@ Player::Player()
 	air_Count = 0;
 	air = false;
 	rota_Vec = 0.0f;
+	move = false;
+	one_move_flg = false;
+
+	animation_count_num = 10;
+	one_stop_flg = 0;
+
 }
 
 
@@ -37,8 +43,8 @@ void Player::Init(std::vector<std::vector<int>>& map)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
 
-	
 
+	move = false;
 	ability1 = GameObject("Ability", false, Vector2(256.0f, 256.0f));
 	ability1.color = COLOR(120, 166, 58);
 
@@ -51,7 +57,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 		{
 			if (map[y][x] == player_mapset)
 			{
-				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y)-64.0f);
+				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y) - 64.0f);
 				sc2 = Vector2(((float)(-WIDTH / 2) + SIZE * x), (float)((-HEIGHT / 2) + SIZE * y + SIZE / 2));
 				if (game_object.GetPos().x < WIDTH / 2 - SIZE / 2)
 				{
@@ -77,7 +83,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	bomb_Spawn = false;
 	blow = Count();
 	now_Bomb_Num = max_Bomb_Num;
-	ani = Animation();
+	animation = Animation();
 
 	invincible = Count();
 
@@ -87,17 +93,14 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	}
 	air_Count = 0;
 	air = false;
-
-	
+	one_stop_flg = 0;
 
 }
 
 void Player::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Player/PlayerDebug.png", MAXTEX, MAXTEX, 1, (int)game_object.game.texSize.x, (int)game_object.game.texSize.y, tex);
-
-	load->LoadTex("Load/Texture/Player/Player.png", player_Tex);
-	
+	load->LoadAnimeTex("Load/Texture/Player/Player.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
+		64, 64, player_Tex);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -131,18 +134,13 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		right = true;
 		game_object.game.lr = false;
 
-		
+
 		bomb_Vec = Vector2(1.0f, -0.2f);
 	}
 	if (key->keyFlame(KEY_INPUT_A) > 0 || key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
 	{
 		left = true;
 		game_object.game.lr = true;
-
-		
-
-
-
 		bomb_Vec = Vector2(-1.0f, -0.2f);
 	}
 	if (key->KeyTrigger(KEY_INPUT_SPACE) || con->TrlggerBotton(con->A))
@@ -161,10 +159,9 @@ void Player::Input(Key* key, Controller* con, bool& time)
 void Player::Update(bool& shakeflg, BombMana* bomb)
 {
 	Move(shakeflg, bomb);
-
-	ani.AnimationOn(GetRand(300), MAXTEX);
 	invincible.Conuter(60);
 	ability1.game.dis = ability;
+	Animation_Update();
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -173,7 +170,7 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 	bomb_Vec = Vector2();
 
-	
+
 }
 
 
@@ -233,6 +230,32 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		game_object.game.rote += rota_Vec;
 	}
 	rota_Vec -= 0.1f;
+	if (game_object.game.allVec.vec.x != 0.0f)
+	{
+		move = true;
+		if (!one_move_flg)
+		{
+			one_move_flg = true;
+			animation.num = 7;
+		}
+	}
+	else
+	{
+		move = false;
+		if (!one_move_flg2)
+		{
+			one_move_flg2 = true;
+			animation.num = 0;
+		}
+	}
+	if (air)
+	{
+		animation.num = 0;
+		one_move_flg = false;
+		one_move_flg2 = false;
+		one_stop_flg = false;
+		animation.oneAnimeFlg = false;
+	}
 }
 
 
@@ -244,6 +267,44 @@ bool Player::Die()
 	return false;
 }
 
+void Player::Animation_Update()
+{
+	if (move)
+	{
+		one_stop_flg = false;
+		animation_count_num = 10;
+		animation.oneAnimeFlg = false;
+		one_move_flg2 = false;
+		animation.AnimationOn(animation_count_num, 12, 7);
+	}
+	else
+	{
+		if (!one_stop_flg)
+		{
+			animation_count_num = 25;
+			one_move_flg = false;
+		}
+		
+		if (animation.OneAnimation(animation_count_num, 3))
+		{
+			if (!one_stop_flg)
+			{
+				one_stop_flg = true;
+				animation_count_num = GetRand(250);
+			}
+			if (animation.num == 4)
+			{
+				animation_count_num = 5;
+			}
+			if (animation.num == 5)
+			{
+				animation_count_num = 3;
+				one_stop_flg = false;
+			}
+			animation.AnimationOn(animation_count_num, 6, 3);
+		}
+	}
+}
 
 //Map”»’è
 void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
@@ -532,6 +593,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 }
 
 
+
 void Player::Coll()
 {
 	float blowX = 0.0f;
@@ -588,5 +650,5 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawRotaTex(game_object, player_Tex, true, shake, sc);
+	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
 }

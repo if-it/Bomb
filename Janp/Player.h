@@ -4,7 +4,8 @@
 #include"BombMana.h"
 #define SPEED 0.2f
 #define MAXSPEED 4
-#define MAXTEX 6
+#define MAXTEX_X 6
+#define MAXTEX_Y 2
 #define BOMBVEC 10.0f
 #define EXJUMP 10.0f
 #define ABILITY_BOMB_SPEED 8.0f
@@ -36,24 +37,30 @@ private:
 	void Move(bool& shakeflg, BombMana* bomb);
 	void Blow(const float &blowX, const float& blowY, const bool& lr);
 
-	int tex[MAXTEX];
-	int player_Tex;
+	int player_Tex[MAXTEX_X*MAXTEX_Y];
 	
 
-	Vector2 fVec;//êÅÇ¡îÚÇ—[
+	Vector2 fVec;//êÅÇ¡îÚÇ—
 	Vector2 bomb_Vec;
-	Animation ani;
+
+	Animation animation;
+
+	Count blow;
+	Count invincible;//ñ≥ìG
 
 
-
+	bool bomb_Spawn;
+	bool move;
+	bool one_move_flg;
+	bool one_move_flg2;
+	bool one_stop_flg;
 	bool up;
 	bool down;
 	bool left;
 	bool right;
 	bool ability;
-	bool bomb_Spawn;
-	Count blow;
-	Count invincible;//ñ≥ìG
+
+	int animation_count_num;
 	int hp;
 	int max_Hp;
 	int max_Bomb_Num;
@@ -68,6 +75,7 @@ private:
 	//Mapä÷òA
 	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
 	void MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage);
+	void Animation_Update();
 	Vector2 sc2;
 	Vector2 vec;
 	bool back_flg[5];

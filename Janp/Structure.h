@@ -67,18 +67,18 @@ protected:
 			num = 0;
 			oneAnimeFlg = false;
 		}
-		void AnimationOn(int maxCount, int maxNum)
+		void AnimationOn(int maxCount, int maxNum,int lowNum = 0)
 		{
-			if (!counter.flg)
+			if (counter.Conuter(maxCount))
 			{
 				counter.flg = true;
 				num++;
-				if (num == maxNum)
+				if (num >= maxNum)
 				{
-					num = 0;
+					num = lowNum;
 				}
 			}
-			counter.Conuter(maxCount);
+			
 		}
 		bool OneAnimation(int maxCount, int maxNum)
 		{
