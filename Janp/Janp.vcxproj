@@ -152,6 +152,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Vector.h" />

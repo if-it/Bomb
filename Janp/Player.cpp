@@ -31,7 +31,9 @@ Player::Player()
 
 	animation_count_num = 10;
 	one_stop_flg = 0;
-
+	save_Coll = false;
+	save_On = false;
+	ability1_flg = false;
 }
 
 
@@ -57,7 +59,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 		{
 			if (map[y][x] == player_mapset)
 			{
-				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y) - 64.0f);
+				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
 				sc2 = Vector2(((float)(-WIDTH / 2) + SIZE * x), (float)((-HEIGHT / 2) + SIZE * y + SIZE / 2));
 				if (game_object.GetPos().x < WIDTH / 2 - SIZE / 2)
 				{
@@ -78,11 +80,11 @@ void Player::Init(std::vector<std::vector<int>>& map)
 			}
 		}
 	}
+
 	right = false;
 	left = false;
 	bomb_Spawn = false;
 	blow = Count();
-	now_Bomb_Num = max_Bomb_Num;
 	animation = Animation();
 
 	invincible = Count();
@@ -94,6 +96,10 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	air_Count = 0;
 	air = false;
 	one_stop_flg = 0;
+	save_Coll = false;
+	save_On = false;
+
+	
 
 }
 
@@ -101,6 +107,18 @@ void Player::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Player/Player.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
 		64, 64, player_Tex);
+}
+
+void Player::Save_Load()
+{
+	max_Hp = save_Date.max_Hp;
+	max_Bomb_Num = save_Date.max_Bomb_Num;
+	game_object.SetPos(Vector2(save_Date.x, save_Date.y));
+	ability1_flg = save_Date.ability1_flg;
+
+
+	hp = max_Hp;
+	now_Bomb_Num = max_Bomb_Num;
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -113,9 +131,9 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	bomb_Spawn = false;
 	ability = false;
 	Vector2 stickL = con->StickL();
-	if (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0)
+	if (ability1_flg && (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0))
 	{
-		//ability = true;
+		ability = true;
 	}
 	if (key->keyFlame(KEY_INPUT_UP) > 0 || key->keyFlame(KEY_INPUT_W) > 0 || stickL.y > 10000)
 	{
@@ -147,6 +165,10 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	{
 		bomb_Spawn = true;
 	}
+	if (save_Coll && (key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->X)))
+	{
+		save_On = true;
+	}
 	bomb_Vec.Normalize();
 
 	bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
@@ -171,6 +193,11 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 	bomb_Vec = Vector2();
 
 
+}
+
+void Player::Save()
+{
+	save_Date = { max_Hp,max_Bomb_Num,game_object.GetPos().x,game_object.GetPos().y,(int)ability1_flg };
 }
 
 
@@ -284,7 +311,7 @@ void Player::Animation_Update()
 			animation_count_num = 25;
 			one_move_flg = false;
 		}
-		
+
 		if (animation.OneAnimation(animation_count_num, 3))
 		{
 			if (!one_stop_flg)
@@ -596,6 +623,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 
 void Player::Coll()
 {
+	save_Coll = false;
 	float blowX = 0.0f;
 	float blowY = 0.0f;
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
@@ -620,6 +648,10 @@ void Player::Coll()
 			blowX = 15.0f;
 			blowY = 5.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
+		}
+		if (nameTag == "Save")
+		{
+			save_Coll = true;
 		}
 
 	}

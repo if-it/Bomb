@@ -22,6 +22,7 @@ private:
 	void Map_Coll_Update();
 	void Obj_Coll_Update();
 	void PlayDraw(const Vector2& sc2, const Vector2& shake2);
+	void Save();
 	Count sceneCount;
 	bool time;
 	bool flame_time;

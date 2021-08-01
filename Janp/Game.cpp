@@ -23,6 +23,7 @@ Game::~Game()
 	delete enemy1Mana;
 	delete enemy2;
 	delete ui;
+	delete save;
 	coll_List.clear();
 	InitGraph();
 	InitSoundMem();
@@ -61,6 +62,7 @@ void Game::Init()
 	titleFlg = false;
 	title_To_Play = false;
 	bombShake = Count();
+
 	map->Init(stage);
 
 
@@ -68,6 +70,7 @@ void Game::Init()
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
+	save->Init(map->map);
 	ui->Init();
 
 	bombMana->Init();
@@ -87,10 +90,10 @@ bool Game::Loading()
 	bombMana->Loading(load);
 	exMana->Loading(load);
 	enemy1Mana->Loading(load);
-	fuse->Loading(load,map->Get_Map_Tex());
+	fuse->Loading(load, map->Get_Map_Tex());
 	enemy2->Loading(load);
 	ui->Loading(load);
-
+	save->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -193,41 +196,46 @@ void Game::Update()
 void Game::Play_Scene()
 {
 	flame_time = time;
-	//入力
-	player->Input(key, con, time);
-
-	if (!time)
+	if (!player->Get_Save_On())
 	{
 
-		//Update
-		Play_Scene_Update();
+		//入力
+		player->Input(key, con, time);
 
-		//layerチェック
+		if (!time)
+		{
 
-		enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
+			//Update
+			Play_Scene_Update();
 
-		//Map当たり判定
-		Map_Coll_Update();
+			//layerチェック
 
+			enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
+
+			//Map当たり判定
+			Map_Coll_Update();
+
+		}
+		//オブジェクト当たり判定
+		Obj_Coll_Update();
+		if (player->Die())
+		{
+			titleFlg = true;
+		}
+		if (stageChange)
+		{
+			scene = MAPSET;
+		}
+
+		if (!time)
+		{
+			Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
+			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num());
+		}
 	}
-	//オブジェクト当たり判定
-	Obj_Coll_Update();
-	if (player->Die())
+	else
 	{
-		titleFlg = true;
-	}
-	if (stageChange)
-	{
-		scene = MAPSET;
-	}
-	//if (mapPlayerColl->clear)
-	//{
-	//	scene = GAMECLEAR;
-	//}
-	if (!time)
-	{
-		Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
-		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num());
+		Save();
 	}
 }
 
@@ -239,6 +247,7 @@ void Game::Play_Scene_Update()
 	enemy1Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
+	save->Update();
 
 	fuse->Update(map->map, bombMana);
 	exMana->Update();
@@ -287,6 +296,9 @@ void Game::Obj_Coll_Update()
 	coll_List.push_back(&enemy2->body);
 	coll_List.push_back(&enemy2->arm);
 
+	//Saveポイント
+	coll_List.push_back(&save->game_object);
+
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
@@ -326,6 +338,12 @@ void Game::Obj_Coll_Update()
 
 	bombMana->Coll_End_Set(exMana);
 
+}
+
+
+void Game::Save()
+{
+	player->Save();
 }
 
 void Game::Draw()
@@ -369,6 +387,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//Map関連
 	map->Draw(sc2, shake2);
 	fuse->Draw(sc2, shake2);
+	save->Draw(sc2, shake2);
 
 	//オブジェクト関連
 	enemy1Mana->Draw(sc2, shake2);

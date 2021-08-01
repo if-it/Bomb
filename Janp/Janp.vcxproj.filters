@@ -159,6 +159,9 @@
     <ClCompile Include="Fuse.cpp">
       <Filter>GameObjct\Fuse</Filter>
     </ClCompile>
+    <ClCompile Include="Save.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Fuse.h">
       <Filter>GameObjct\Fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="Save.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

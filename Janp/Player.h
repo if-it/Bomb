@@ -16,11 +16,13 @@ public:
 	Player();
 	~Player();
 
-	void Init(std::vector<std::vector<int>>& collMap);
+	void Init(std::vector<std::vector<int>>& map);
 	void Loading(Load* load);
+	void Save_Load();
 	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
+	void Save();
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
 	void Coll();
@@ -31,7 +33,7 @@ public:
 	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
 	int Get_Now_Hp() { return hp;}
 	Vector2 Get_Bomb_Vec(){ return bomb_Vec; }
-
+	bool Get_Save_On() { return save_On; }
 	GameObject ability1;
 private:
 	void Move(bool& shakeflg, BombMana* bomb);
@@ -59,6 +61,7 @@ private:
 	bool left;
 	bool right;
 	bool ability;
+	bool ability1_flg;
 
 	int animation_count_num;
 	int hp;
@@ -71,6 +74,20 @@ private:
 	bool air_Array[3];
 	bool air;
 	float rota_Vec;
+	bool save_Coll;
+	bool save_On;
+
+	struct Save_Date
+	{
+		int max_Hp;
+		int max_Bomb_Num;
+		float x;
+		float y;
+		int ability1_flg;
+	};
+
+	Save_Date save_Date;
+
 private:
 	//MapŠÖ˜A
 	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
