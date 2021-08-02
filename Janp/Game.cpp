@@ -53,14 +53,16 @@ void Game::FirstInit()
 	player->player_mapset = 35;
 	Init();
 	time = false;
-	data_num = 0;
+	data_Num = 0;
+
+	option_Data = { 0,0 };
+	meta_Data = { 0,0 };
 }
 
 void Game::Init()
 {
 	time = false;
 	stageChange = false;
-	titleFlg = false;
 	title_To_Play = false;
 	bombShake = Count();
 
@@ -105,9 +107,26 @@ bool Game::Loading()
 
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
 
+	FILE* fp;
+
+	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "r") == 0)
+	{
+		fread_s(&option_Data, sizeof(option_Data), sizeof(option_Data), 1, fp);
+		fclose(fp);
+	}
+	else
+	{
+		option_Data = { 100,100 };
+	}
+
+
 	if (loadCount >= 0)return true;
 	return false;
 }
+
+
+
+
 
 void Game::Update()
 {
@@ -123,12 +142,17 @@ void Game::Update()
 		if (Loading())
 		{
 			titleFlg = true;
-			if (!debug_mode_flg)PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
-			scene = PLAYINIT;
-			stage = 0;
-			player->player_mapset = 35;
 			Init();
-			player->SaveData_Load(map->map,data_num);//デバック用
+			if (!debug_mode_flg)
+			{
+				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				titleFlg = true;
+			}
+			else
+			{
+				scene = PLAYINIT;
+				Data_Load();//デバック用
+			}
 		}
 		break;
 	case TITLE:
@@ -136,19 +160,18 @@ void Game::Update()
 		{
 			titleFlg = false;
 		}
-		if (!titleFlg && !title_To_Play && (con->TrlggerBotton(con->A) || key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP)))
+		if (!titleFlg && !title_To_Play)
 		{
-			title_To_Play = true;
+			if ((con->TrlggerBotton(con->A) || key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_UP)))title_To_Play = true;
+
+			if (key->KeyTrigger(KEY_INPUT_A))Delete_Data();
 		}
 		if (title_To_Play)
 		{
 			if (SceneChangeAdd(5))
 			{
 				scene = PLAYINIT;
-				stage = 1;
-				player->player_mapset = 50;
-				Init();
-				player->SaveData_Load(map->map,data_num);
+				Data_Load();
 			}
 		}
 		break;
@@ -165,13 +188,7 @@ void Game::Update()
 		if (SceneChangeAdd(5))
 		{
 			Init();
-			scene = MAPSET2;
-		}
-		break;
-	case MAPSET2:
-		if (SceneChangeSeb(8))
-		{
-			titleFlg = true;
+			scene = PLAYINIT;
 		}
 		break;
 	case GAMECLEAR:
@@ -185,15 +202,114 @@ void Game::Update()
 	}
 	if (debug_mode_flg && key->KeyTrigger(KEY_INPUT_1))
 	{
-		scene = PLAYINIT;
+		scene = MAPSET;
+	}
+	if (debug_mode_flg && key->KeyTrigger(KEY_INPUT_2))
+	{
+		titleFlg = true;
 	}
 	if (titleFlg)
 	{
 		if (SceneChangeAdd(5))
 		{
 			scene = TITLE;
+			Init();
 		}
 	}
+}
+
+void Game::Data_Load()
+{
+
+	FILE* fp;
+
+	std::string fileNama;
+	switch (data_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
+		break;
+	}
+
+	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	{
+		fread_s(&meta_Data, sizeof(meta_Data), sizeof(meta_Data), 1, fp);
+		fclose(fp);
+	}
+	else
+	{
+		Meta_Data_Init();
+	}
+
+	map->Save_Date_Load(data_Num, stage);
+
+	player->SaveData_Load(map->map, data_Num);
+}
+
+void Game::Meta_Data_Init()
+{
+	if (debug_mode_flg) stage = 0;
+	else stage = 1;
+
+	meta_Data = { stage,0 };
+}
+
+void Game::Delete_Data()
+{
+	Meta_Data_Init();
+
+	map->Save_Data_Init(stage);
+	player->Player_Save_Date_Init(map->map);
+
+	Save();
+}
+
+void Game::Option_Data_Save()
+{
+	FILE* fp;
+	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "w") == 0)
+	{
+		fwrite(&option_Data, sizeof(option_Data), 1, fp);
+		fclose(fp);
+	}
+	else
+	{
+		MessageBox(NULL, "Option", "SaveDataのエラー", MB_OK);
+	}
+}
+
+void Game::Save()
+{
+
+	Option_Data_Save();
+	std::string fileNama;
+	switch (data_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
+		break;
+	}
+	FILE* fp;
+	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	{
+		meta_Data.save_Count++;
+		fwrite(&meta_Data, sizeof(meta_Data), 1, fp);
+		fclose(fp);
+	}
+	else
+	{
+		MessageBox(NULL, "Meta", "SaveDataのエラー", MB_OK);
+	}
+
+	map->Save(data_Num);
+
+	player->Save(data_Num);
 }
 
 void Game::Play_Scene()
@@ -344,10 +460,6 @@ void Game::Obj_Coll_Update()
 }
 
 
-void Game::Save()
-{
-	player->Save(data_num);
-}
 
 void Game::Draw()
 {
@@ -366,7 +478,6 @@ void Game::Draw()
 	case PLAYINIT:
 	case PLAY:
 	case MAPSET:
-	case MAPSET2:
 		PlayDraw(sc, shake);
 		break;
 	case GAMECLEAR:
@@ -404,3 +515,5 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//UI関連
 	ui->Draw();
 }
+
+

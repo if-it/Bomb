@@ -55,39 +55,65 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
 		break;
 	}
-	if (fopen_s(&fp,fileNama.c_str(), "r") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
 	{
 		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
-		if (save_Data.save_flg)
-		{
-			Init(map);
-			max_Hp = save_Data.max_Hp;
-			max_Bomb_Num = save_Data.max_Bomb_Num;
-			game_object.SetPos(Vector2(save_Data.x, save_Data.y));
-			ability1_flg = save_Data.ability1_flg;
-		}
-		else
-		{
-			Init(map);
-			max_Hp = 3;
-			max_Bomb_Num = 1;
-			ability1_flg = false;
-		}
+
+		Init(map);
+		max_Hp = save_Data.max_Hp;
+		max_Bomb_Num = save_Data.max_Bomb_Num;
+		game_object.SetPos(Vector2(save_Data.x, save_Data.y));
+		ability1_flg = save_Data.ability1_flg;
+
 		fclose(fp);
 	}
 	else
-
 	{
-		Init(map);
-		max_Hp = 3;
-		max_Bomb_Num = 1;
-		ability1_flg = false;
+		Player_Save_Date_Init(map);
 	}
 
 
 
 	hp = max_Hp;
 	now_Bomb_Num = max_Bomb_Num;
+}
+
+void Player::Save(const int& data_Num)
+{
+	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos().x,game_object.GetPos().y,ability1_flg };
+	std::string fileNama;
+	switch (data_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
+		break;
+	}
+
+	FILE* fp;
+	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	{
+		fwrite(&save_Data, sizeof(save_Data), 1, fp);
+		fclose(fp);
+
+		save_On = false;
+	}
+	else
+	{
+		MessageBox(NULL, "Player", "SaveDataのエラー", MB_OK);
+		return;
+	}
+}
+
+void Player::Player_Save_Date_Init(std::vector<std::vector<int>>& map)
+{
+	player_mapset = 35;
+	Init(map);
+	max_Hp = 3;
+	max_Bomb_Num = 1;
+	ability1_flg = false;
 }
 
 void Player::Init(std::vector<std::vector<int>>& map)
@@ -157,8 +183,6 @@ void Player::Loading(Load* load)
 	load->LoadAnimeTex("Load/Texture/Player/Player.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
 		64, 64, player_Tex);
 }
-
-
 
 void Player::Input(Key* key, Controller* con, bool& time)
 {
@@ -232,35 +256,6 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 	bomb_Vec = Vector2();
 
 
-}
-
-void Player::Save(const int& date_Num)
-{
-	save_Data = { max_Hp,max_Bomb_Num,(int)game_object.GetPos().x,(int)game_object.GetPos().y,(int)ability1_flg,1 };
-	std::string fileNama;
-	switch (date_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
-		break;
-	}
-
-	FILE* fp;
-	errno_t error;
-	error = fopen_s(&fp, fileNama.c_str(), "w");
-	if (fp == NULL)
-	{
-		MessageBox(NULL, "Player", "SaveDataのエラー", MB_OK);
-		return;
-	}
-
-	fwrite(&save_Data, sizeof(save_Data), 1, fp);
-	fclose(fp);
-
-	save_On = false;
 }
 
 

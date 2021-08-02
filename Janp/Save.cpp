@@ -19,6 +19,7 @@ void Save::Init(std::vector<std::vector<int>>& map)
 			if (map[y][x] == 73)
 			{
 				game_object.SetPos(Vector2((float)(SIZE * x), (float)(SIZE * y)));
+				map[y][x] = 0;
 				break;
 			}
 		}

@@ -11,12 +11,78 @@ Map::~Map()
 {
 }
 
-void Map::Init(int stage)
+void Map::Save_Date_Load(const int& date_Num, const int& stage)
+{
+	Init(stage);
+
+	FILE* fp;
+
+	std::string fileNama;
+	switch (date_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		break;
+	}
+	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	{
+		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
+
+		Init(stage);
+
+
+		fclose(fp);
+	}
+	else
+	{
+		save_Data = { 1,1 };
+
+		Init(stage);
+	}
+
+}
+
+void Map::Init(const int& stage)
 {
 	StageSet(stage);
 }
 
-void Map::StageSet(int stage)
+void Map::Save_Data_Init(const int& stage)
+{
+	Init(stage);
+}
+
+void Map::Save(const int& date_Num)
+{
+	save_Data = { 2,2 };
+	FILE* fp;
+
+	std::string fileNama;
+	switch (date_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		break;
+	}
+	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	{
+		fwrite(&save_Data, sizeof(save_Data), 1, fp);
+		fclose(fp);
+	}
+	else
+	{
+		MessageBox(NULL, "Map", "SaveData‚ÌƒGƒ‰[", MB_OK);
+		return;
+	}
+}
+
+void Map::StageSet(const int& stage)
 {
 	using namespace std;
 

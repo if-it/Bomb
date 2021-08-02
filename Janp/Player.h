@@ -19,9 +19,10 @@ public:
 	Player();
 	~Player();
 
+	void SaveData_Load(std::vector<std::vector<int>>& map, const int& data_Num);
+	void Player_Save_Date_Init(std::vector<std::vector<int>>& map);
 	void Init(std::vector<std::vector<int>>& map);
 	void Loading(Load* load);
-	void SaveData_Load(std::vector<std::vector<int>>& map, const int& date_Num);
 	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
@@ -84,10 +85,9 @@ private:
 	{
 		int max_Hp;
 		int max_Bomb_Num;
-		int x;
-		int y;
-		int ability1_flg;
-		int save_flg;
+		float x;
+		float y;
+		bool ability1_flg;
 	};
 
 	Save_Date save_Data;

@@ -1,7 +1,6 @@
 #pragma once
 #include"Controller.h"
 #include"Draw.h"
-#include"Load.h"
 #include"Map.h"
 #include"Player.h"
 #include"Fuse.h"
@@ -71,7 +70,6 @@ protected:
 		DEMOINIT,
 		SELECT,
 		MAPSET,
-		MAPSET2,
 		PLAYINIT,
 
 	};
