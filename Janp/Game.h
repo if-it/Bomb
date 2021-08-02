@@ -26,5 +26,6 @@ private:
 	Count sceneCount;
 	bool time;
 	bool flame_time;
+	int data_num;
 };
 

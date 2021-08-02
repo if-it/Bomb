@@ -2,6 +2,9 @@
 #include "MapColl.h"
 #include"Load.h"
 #include"BombMana.h"
+#include <stdio.h>
+
+
 #define SPEED 0.2f
 #define MAXSPEED 4
 #define MAXTEX_X 6
@@ -18,11 +21,11 @@ public:
 
 	void Init(std::vector<std::vector<int>>& map);
 	void Loading(Load* load);
-	void Save_Load();
+	void SaveData_Load(std::vector<std::vector<int>>& map, const int& date_Num);
 	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
-	void Save();
+	void Save(const int& date_Num);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
 	void Coll();
@@ -81,12 +84,13 @@ private:
 	{
 		int max_Hp;
 		int max_Bomb_Num;
-		float x;
-		float y;
+		int x;
+		int y;
 		int ability1_flg;
+		int save_flg;
 	};
 
-	Save_Date save_Date;
+	Save_Date save_Data;
 
 private:
 	//MapŠÖ˜A

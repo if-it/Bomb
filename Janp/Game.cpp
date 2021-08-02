@@ -50,9 +50,10 @@ void Game::FirstInit()
 	debug_mode_flg = true;
 	scene = OPENING;
 	stage = 1;
-	player->player_mapset = 50;
+	player->player_mapset = 35;
 	Init();
 	time = false;
+	data_num = 0;
 }
 
 void Game::Init()
@@ -127,6 +128,7 @@ void Game::Update()
 			stage = 0;
 			player->player_mapset = 35;
 			Init();
+			player->SaveData_Load(map->map,data_num);//デバック用
 		}
 		break;
 	case TITLE:
@@ -146,6 +148,7 @@ void Game::Update()
 				stage = 1;
 				player->player_mapset = 50;
 				Init();
+				player->SaveData_Load(map->map,data_num);
 			}
 		}
 		break;
@@ -343,7 +346,7 @@ void Game::Obj_Coll_Update()
 
 void Game::Save()
 {
-	player->Save();
+	player->Save(data_num);
 }
 
 void Game::Draw()
