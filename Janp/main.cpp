@@ -28,7 +28,9 @@ int WINAPI WinMain(
 	//コントローラーが接続されているか？
 	if (game->ConCheck() == -1)
 	{
+		MessageBox(NULL, "Controllerを接続してください", "Controllerのエラー", MB_OK);
 		//されてないなら終了
+		delete game;
 		//Dxライブラリ終了処理
 		DxLib_End();
 		return 0;

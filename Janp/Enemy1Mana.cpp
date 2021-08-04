@@ -16,7 +16,7 @@ void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap)
 	{
 		for (int x = 0; x < (int)collMap[y].size(); ++x)
 		{
-			if (collMap[y][x] == 70)
+			if (collMap[y][x] == 100)
 			{
 				collMap[y][x] = 0;
 				Enemy1 InitEnemy1;

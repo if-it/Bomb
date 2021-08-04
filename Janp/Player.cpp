@@ -28,7 +28,7 @@ Player::Player()
 	move = false;
 	one_move_flg = false;
 
-	animation_count_num = 10;
+	animation_Count_Num = 10;
 	one_stop_flg = false;
 	save_Coll = false;
 	save_On = false;
@@ -116,6 +116,8 @@ void Player::Player_Save_Date_Init(std::vector<std::vector<int>>& map)
 	ability1_flg = false;
 }
 
+
+//èâä˙âª
 void Player::Init(std::vector<std::vector<int>>& map)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
@@ -168,13 +170,20 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	{
 		air_Array[i] = false;
 	}
+	for (int i = 0; i < 5; ++i)
+	{
+		back_flg[i] = false;
+		coll_flg[i] = false;
+		toge_flg[i] = false;
+	}
 	air_Count = 0;
 	air = false;
 	one_stop_flg = 0;
 	save_Coll = false;
 	save_On = false;
 
-
+	air_Pos = Vector2();
+	air_Sc = Vector2();
 
 }
 
@@ -341,6 +350,12 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		one_stop_flg = false;
 		animation.oneAnimeFlg = false;
 	}
+	else
+	{
+		air_Pos = game_object.GetPos();
+		air_Sc = sc2;
+	}
+	
 }
 
 
@@ -357,36 +372,36 @@ void Player::Animation_Update()
 	if (move)
 	{
 		one_stop_flg = false;
-		animation_count_num = 10;
+		animation_Count_Num = 10;
 		animation.oneAnimeFlg = false;
 		one_move_flg2 = false;
-		animation.AnimationOn(animation_count_num, 12, 7);
+		animation.AnimationOn(animation_Count_Num, 12, 7);
 	}
 	else
 	{
 		if (!one_stop_flg)
 		{
-			animation_count_num = 25;
+			animation_Count_Num = 25;
 			one_move_flg = false;
 		}
 
-		if (animation.OneAnimation(animation_count_num, 3))
+		if (animation.OneAnimation(animation_Count_Num, 3))
 		{
 			if (!one_stop_flg)
 			{
 				one_stop_flg = true;
-				animation_count_num = GetRand(250);
+				animation_Count_Num = GetRand(250);
 			}
 			if (animation.num == 4)
 			{
-				animation_count_num = 5;
+				animation_Count_Num = 5;
 			}
 			if (animation.num == 5)
 			{
-				animation_count_num = 3;
+				animation_Count_Num = 3;
 				one_stop_flg = false;
 			}
-			animation.AnimationOn(animation_count_num, 6, 3);
+			animation.AnimationOn(animation_Count_Num, 6, 3);
 		}
 	}
 }
@@ -397,7 +412,8 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	for (int i = 0; i < 5; ++i)
 	{
 		back_flg[i] = false;
-		collFlg[i] = false;
+		coll_flg[i] = false;
+		toge_flg[i] = false;
 	}
 	for (int i = 0; i < 3; ++i)
 	{
@@ -459,6 +475,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		air = true;
 	}
 
+	
 
 	if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
@@ -488,6 +505,15 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
 	}
 
+	for (int i = 0; i < 5; ++i)
+	{
+		if (toge_flg[i])
+		{
+			Spine();
+			break;
+		}
+	}
+
 	sc = Vector2::Lerp(sc, sc2, 0.05f);
 }
 
@@ -499,7 +525,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	{
 		if (mapPoint == 40)
 		{
-			if (!collFlg[0] && vec.y == 0)
+			if (!coll_flg[0] && vec.y == 0)
 			{
 				back_flg[0] = true;
 			}
@@ -507,7 +533,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (WALL)
 		{
 			vec.y = 0;
-			collFlg[0] = true;
+			coll_flg[0] = true;
+		}
+		if (TOGE)
+		{
+			toge_flg[0] = true;
 		}
 	}
 	else if (pointNum == 1) //Yé≤
@@ -519,7 +549,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		}
 		if (mapPoint == 40)
 		{
-			if (!collFlg[1] && vec.y == 0)
+			if (!coll_flg[1] && vec.y == 0)
 			{
 				back_flg[1] = true;
 			}
@@ -527,9 +557,13 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (WALL)
 		{
 			vec.y = 0;
-			collFlg[1] = true;
+			coll_flg[1] = true;
 		}
-		if (mapPoint == 50)
+		if (TOGE)
+		{
+			toge_flg[1] = true;
+		}
+		if (mapPoint == 50|| mapPoint==58|| mapPoint==59||(mapPoint>=66&& mapPoint<=72))
 		{
 			bomb_Janp = false;
 			game_object.game.rote = 0;
@@ -541,7 +575,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	{
 		if (mapPoint == 40)
 		{
-			if (!collFlg[2] && vec.x == 0)
+			if (!coll_flg[2] && vec.x == 0)
 			{
 				back_flg[2] = true;
 			}
@@ -549,7 +583,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (WALL)
 		{
 			vec.x = 0;
-			collFlg[2] = true;
+			coll_flg[2] = true;
+		}
+		if (TOGE)
+		{
+			toge_flg[2] = true;
 		}
 	}
 
@@ -557,7 +595,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	{
 		if (mapPoint == 40)
 		{
-			if (!collFlg[3] && vec.x == 0)
+			if (!coll_flg[3] && vec.x == 0)
 			{
 				back_flg[3] = true;
 			}
@@ -565,7 +603,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (WALL)
 		{
 			vec.x = 0;
-			collFlg[3] = true;
+			coll_flg[3] = true;
+		}
+		if (TOGE)
+		{
+			toge_flg[3] = true;
 		}
 	}
 	else if (pointNum == 4)//íÜêS
@@ -677,7 +719,20 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 }
 
-
+void Player::Spine()
+{
+	if (!invincible.flg)
+	{
+		toge_flg[4] = true;
+		invincible.flg = true;
+		game_object.SetPos(air_Pos);
+		game_object.game.allVec.vec = Vector2();
+		sc2 = air_Sc;
+		animation.num = 0;
+		game_object.game.rote = 0;
+		hp--;
+	}
+}
 
 void Player::Coll()
 {
@@ -716,6 +771,8 @@ void Player::Coll()
 
 }
 
+
+
 void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
 {
 	if (!invincible.flg)
@@ -733,6 +790,7 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
 		}
 	}
 }
+
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)
 {

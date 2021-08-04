@@ -49,7 +49,7 @@ void Game::FirstInit()
 	game_end_flg = false;
 	debug_mode_flg = true;
 	scene = OPENING;
-	stage = 1;
+	stage = 0;
 	player->player_mapset = 35;
 	Init();
 	time = false;
@@ -141,7 +141,6 @@ void Game::Update()
 	case LOAD:
 		if (Loading())
 		{
-			titleFlg = true;
 			Init();
 			if (!debug_mode_flg)
 			{
@@ -150,6 +149,7 @@ void Game::Update()
 			}
 			else
 			{
+				titleFlg = false;
 				scene = PLAYINIT;
 				Data_Load();//デバック用
 			}
@@ -181,6 +181,12 @@ void Game::Update()
 			scene = PLAY;
 		}
 		break;
+	case PLAYINIT2:
+		if (SceneChangeAdd(5))
+		{
+			scene = PLAYINIT;
+		}
+		break;
 	case PLAY:
 		Play_Scene();
 		break;
@@ -200,13 +206,16 @@ void Game::Update()
 	default:
 		break;
 	}
-	if (debug_mode_flg && key->KeyTrigger(KEY_INPUT_1))
+	if (debug_mode_flg)
 	{
-		scene = MAPSET;
-	}
-	if (debug_mode_flg && key->KeyTrigger(KEY_INPUT_2))
-	{
-		titleFlg = true;
+		if (key->KeyTrigger(KEY_INPUT_1))
+		{
+			scene = MAPSET;
+		}
+		if (key->KeyTrigger(KEY_INPUT_2))
+		{
+			titleFlg = true;
+		}
 	}
 	if (titleFlg)
 	{
@@ -345,6 +354,10 @@ void Game::Play_Scene()
 		{
 			scene = MAPSET;
 		}
+		if (player->Get_Toge_Flg())
+		{
+			scene = PLAYINIT2;
+		}
 
 		if (!time)
 		{
@@ -476,6 +489,7 @@ void Game::Draw()
 		DrawGraph(WIDTH / 2, HEIGHT - SIZE * 3, button, true);
 		break;
 	case PLAYINIT:
+	case PLAYINIT2:
 	case PLAY:
 	case MAPSET:
 		PlayDraw(sc, shake);

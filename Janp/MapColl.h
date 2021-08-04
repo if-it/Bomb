@@ -1,6 +1,7 @@
 #pragma once
 #include"Draw.h"
-#define WALL mapPoint == 1 || (mapPoint >= 3 && mapPoint <= 23) || mapPoint == 40||(mapPoint >= 50 && mapPoint <= 61)
+#define WALL mapPoint == 1 || (mapPoint >= 3 && mapPoint <= 23) || mapPoint == 40||(mapPoint >= 50 && mapPoint <= 72)
+#define TOGE mapPoint>=74&&mapPoint<=77
 class MapColl :public Draw
 {
 public:

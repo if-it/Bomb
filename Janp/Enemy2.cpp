@@ -34,7 +34,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap)
 		{
 			for (int x = 0; x < (int)collMap[y].size(); ++x)
 			{
-				if (collMap[y][x] == 71)
+				if (collMap[y][x] == 101)
 				{
 					hp = 40;
 					spawn = true;
