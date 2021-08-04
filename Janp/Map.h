@@ -28,6 +28,7 @@ private:
 
 	int tex[MAP_TEX_NUM];
 	int Btex[10];
+	int togeTex[4];
 
 	struct Save_Date
 	{

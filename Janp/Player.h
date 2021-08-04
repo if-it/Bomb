@@ -38,16 +38,21 @@ public:
 	int Get_Now_Hp() { return hp;}
 	Vector2 Get_Bomb_Vec(){ return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
+	bool Get_Toge_Flg(){ return toge_flg[4]; }
+	
 	GameObject ability1;
 private:
 	void Move(bool& shakeflg, BombMana* bomb);
 	void Blow(const float &blowX, const float& blowY, const bool& lr);
+	void Spine();
 
 	int player_Tex[MAXTEX_X*MAXTEX_Y];
 	
 
 	Vector2 fVec;//êÅÇ¡îÚÇ—
 	Vector2 bomb_Vec;
+	Vector2 air_Pos;
+	Vector2 air_Sc;
 
 	Animation animation;
 
@@ -67,7 +72,7 @@ private:
 	bool ability;
 	bool ability1_flg;
 
-	int animation_count_num;
+	int animation_Count_Num;
 	int hp;
 	int max_Hp;
 	int max_Bomb_Num;
@@ -100,7 +105,8 @@ private:
 	Vector2 sc2;
 	Vector2 vec;
 	bool back_flg[5];
-	bool collFlg[5];
+	bool coll_flg[5];
+	bool toge_flg[5];
 	int bxNum[5];
 	int byNum[5];
 };

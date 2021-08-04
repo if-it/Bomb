@@ -71,6 +71,7 @@ protected:
 		SELECT,
 		MAPSET,
 		PLAYINIT,
+		PLAYINIT2,
 
 	};
 	int scene;
