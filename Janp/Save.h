@@ -8,9 +8,14 @@ public:
     Save();
     ~Save();
 
-    void Init(std::vector<std::vector<int>>& map);
-    void Loading(Load* load);
+    void Init(Vector2 pos);
     void Update();
-    void Draw(const Vector2& sc, const Vector2& shake);
+    void Save_Mode();
+    void Coll();
+    void Draw(const Vector2& sc, const Vector2& shake, const int* tex);
+
+private:
+    bool save_On_Mode;
+    bool player_Coll;
 };
 

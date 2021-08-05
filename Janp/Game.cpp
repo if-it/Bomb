@@ -23,7 +23,8 @@ Game::~Game()
 	delete enemy1Mana;
 	delete enemy2;
 	delete ui;
-	delete save;
+	delete saveMana;
+
 	coll_List.clear();
 	InitGraph();
 	InitSoundMem();
@@ -68,12 +69,11 @@ void Game::Init()
 
 	map->Init(stage);
 
-
+	saveMana->Init(map->map);
 	player->Init(map->map);
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
-	save->Init(map->map);
 	ui->Init();
 
 	bombMana->Init();
@@ -96,7 +96,7 @@ bool Game::Loading()
 	fuse->Loading(load, map->Get_Map_Tex());
 	enemy2->Loading(load);
 	ui->Loading(load);
-	save->Loading(load);
+	saveMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -293,6 +293,7 @@ void Game::Option_Data_Save()
 
 void Game::Save()
 {
+	saveMana->Save_Mode();
 
 	Option_Data_Save();
 	std::string fileNama;
@@ -375,14 +376,16 @@ void Game::Play_Scene()
 void Game::Play_Scene_Update()
 {
 	map->Update();
+
+
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(bombShake.flg, bombMana);
 	enemy1Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
-	save->Update();
 
 	fuse->Update(map->map, bombMana);
+	saveMana->Update();
 	exMana->Update();
 
 }
@@ -430,13 +433,15 @@ void Game::Obj_Coll_Update()
 	coll_List.push_back(&enemy2->arm);
 
 	//Saveポイント
-	coll_List.push_back(&save->game_object);
+	for (int i = 0; i < (int)saveMana->save.size(); ++i)
+	{
+		coll_List.push_back(&saveMana->save[i].game_object);
+	}
 
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
 		coll_List[i]->coll_Obj_List.clear();
-		coll_List[i]->game.nameTag;
 		if (coll_List[i]->same) { continue; }
 		for (int n = 0; n < (int)coll_List.size(); ++n)
 		{
@@ -446,15 +451,12 @@ void Game::Obj_Coll_Update()
 			{
 				coll_List[n]->game.nameTag;
 				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
-				if (coll_List[i]->coll_Obj_List.size() >= 3)
-				{
-					coll_List[n]->game.nameTag;
-				}
 			}
 
 		}
 	}
-	enemy1Mana->Chack();
+
+
 	//当たり判定
 	player->Coll();
 	//爆発とひも
@@ -466,6 +468,7 @@ void Game::Obj_Coll_Update()
 	enemy1Mana->Coll(exMana->ex);
 	bombMana->Coll(bombShake.flg, con);
 	enemy2->Coll(exMana->ex);
+	saveMana->Coll();
 
 	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
 
@@ -516,7 +519,8 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//Map関連
 	map->Draw(sc2, shake2);
 	fuse->Draw(sc2, shake2);
-	save->Draw(sc2, shake2);
+	saveMana->Draw(sc2, shake2);
+
 
 	//オブジェクト関連
 	enemy1Mana->Draw(sc2, shake2);

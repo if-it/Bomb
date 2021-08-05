@@ -93,9 +93,9 @@ private:
 	{
 		int max_Hp;
 		int max_Bomb_Num;
-		float x;
-		float y;
+		Vector2 pos;
 		bool ability1_flg;
+		Vector2 sc;
 	};
 
 	Save_Date save_Data;

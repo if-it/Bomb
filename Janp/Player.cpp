@@ -62,9 +62,9 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 		Init(map);
 		max_Hp = save_Data.max_Hp;
 		max_Bomb_Num = save_Data.max_Bomb_Num;
-		game_object.SetPos(Vector2(save_Data.x, save_Data.y));
+		game_object.SetPos(save_Data.pos);
 		ability1_flg = save_Data.ability1_flg;
-
+		sc2 = save_Data.sc;
 		fclose(fp);
 	}
 	else
@@ -81,7 +81,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 void Player::Save(const int& data_Num)
 {
 	hp = max_Hp;
-	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos().x,game_object.GetPos().y,ability1_flg };
+	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),ability1_flg,sc2 };
 	std::string fileNama;
 	switch (data_Num)
 	{
@@ -353,8 +353,8 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		air_Back_Count = Count();
 	}
 
-	
-	
+
+
 }
 
 
@@ -479,7 +479,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		air_Sc = sc2;
 	}
 
-	
+
 
 	if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
@@ -546,7 +546,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 	else if (pointNum == 1) //YŽ²
 	{
-		if (mapPoint == 0||TOGE)
+		if (mapPoint == 0 || TOGE)
 		{
 			air_Array[air_Count] = true;
 			air_Count++;
@@ -567,7 +567,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			toge_flg[1] = true;
 		}
-		if (mapPoint == 50|| mapPoint==58|| mapPoint==59||(mapPoint>=66&& mapPoint<=72))
+		if (mapPoint == 50 || mapPoint == 58 || mapPoint == 59 || (mapPoint >= 66 && mapPoint <= 72))
 		{
 			bomb_Janp = false;
 			game_object.game.rota = 0;
@@ -780,6 +780,7 @@ void Player::TogeInit()
 		animation.num = 0;
 		game_object.game.rota = 0;
 		rota_Vec = 0;
+		invincible = Count();
 	}
 }
 

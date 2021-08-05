@@ -2,39 +2,46 @@
 
 Save::Save()
 {
-	game_object = GameObject("Save",true,Vector2(128.0f, 128.0f));
-	game_object.color = COLOR(0, 120, 0);
+	game_object = GameObject("Save",true,Vector2(128.0f, 64.0f));
 }
 
 Save::~Save()
 {
 }
 
-void Save::Init(std::vector<std::vector<int>>& map)
+void Save::Init(Vector2 pos)
 {
-	for (int y = 0; y < (int)map.size(); ++y)
-	{
-		for (int x = 0; x < (int)map[y].size(); ++x)
-		{
-			if (map[y][x] == 73)
-			{
-				game_object.SetPos(Vector2((float)(SIZE * x), (float)(SIZE * y)));
-				map[y][x] = 0;
-				break;
-			}
-		}
-	}
+	game_object.SetPos(pos);
+	save_On_Mode = false;
+	player_Coll = false;
 }
 
-void Save::Loading(Load* load)
-{
-}
+
 
 void Save::Update()
 {
 }
 
-void Save::Draw(const Vector2& sc, const Vector2& shake)
+void Save::Save_Mode()
 {
-	Box(game_object, true,shake,sc);
+	save_On_Mode = false;
+	if (player_Coll)save_On_Mode = true;
+}
+
+void Save::Coll()
+{
+	player_Coll = false;
+	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
+	{
+		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
+		if (nameTag == "Player")
+		{
+			player_Coll = true;
+		}
+	}
+}
+
+void Save::Draw(const Vector2& sc, const Vector2& shake, const int* tex)
+{
+	DrawTex(game_object, tex[(int)save_On_Mode], true, shake, sc);
 }

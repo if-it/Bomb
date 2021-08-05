@@ -60,10 +60,6 @@ void Enemy1Mana::MoveChack(const Vector2& pos, Collision* coll)
 	}
 }
 
-void Enemy1Mana::Chack()
-{
-	enemy1.size();
-}
 
 void Enemy1Mana::Coll(std::vector<Explosion>& ex)
 {
