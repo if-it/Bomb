@@ -122,7 +122,7 @@ protected:
 		Vector2 size;
 		bool dis;
 		bool lr;
-		float rote;
+		float rota;
 		float pal;
 		int num;
 		Game(const std::string& NameTag = "noName",
@@ -136,7 +136,7 @@ protected:
 			size = texSize * scale;
 			dis = disFlg;
 			lr = false;
-			rote = 0;
+			rota = 0;
 			pal = 255;
 			num = 0;
 		}

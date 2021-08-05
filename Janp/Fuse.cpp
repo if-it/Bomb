@@ -32,16 +32,16 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 				switch (InitFuse.type)
 				{
 				case 4:
-					InitFuse.object.game.rote = 0;
+					InitFuse.object.game.rota = 0;
 					break;
 				case 5:
-					InitFuse.object.game.rote = 180;
+					InitFuse.object.game.rota = 180;
 					break;
 				case 6:
-					InitFuse.object.game.rote = 270;
+					InitFuse.object.game.rota = 270;
 					break;
 				case 7:
-					InitFuse.object.game.rote = 90;
+					InitFuse.object.game.rota = 90;
 					break;
 				default:
 					break;
@@ -64,23 +64,23 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 				case 12:
 				case 20:
 				case 54:
-					InitFuse.object.game.rote = 0;
+					InitFuse.object.game.rota = 0;
 					break;
 				case 9:
 				case 15:
 				case 21:
 				case 57:
-					InitFuse.object.game.rote = 180;
+					InitFuse.object.game.rota = 180;
 					break;
 				case 10:
 				case 18:
 				case 22:
-					InitFuse.object.game.rote = 270;
+					InitFuse.object.game.rota = 270;
 					break;
 				case 11:
 				case 17:
 				case 23:
-					InitFuse.object.game.rote = 90;
+					InitFuse.object.game.rota = 90;
 					break;
 				case 13:
 				case 56:
@@ -89,14 +89,14 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 				case 14:
 				case 55:
 					InitFuse.object.game.lr = true;
-					InitFuse.object.game.rote = 180;
+					InitFuse.object.game.rota = 180;
 					break;
 				case 16:
 					InitFuse.object.game.lr = true;
-					InitFuse.object.game.rote = 270;
+					InitFuse.object.game.rota = 270;
 					break;
 				case 19:
-					InitFuse.object.game.rote = 90;
+					InitFuse.object.game.rota = 90;
 					InitFuse.object.game.lr = true;
 					break;
 				default:

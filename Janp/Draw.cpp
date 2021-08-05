@@ -66,12 +66,12 @@ void Draw::DrawRotaTex(const GameObject& chara, const int& tex, bool flg, const 
 	{
 		if (chara.game.dis)DrawRotaGraph3F(chara.game.allVec.pos.x + chara.game.size.x / 2 - sc.x + shake.x,
 			chara.game.allVec.pos.y + chara.game.size.y / 2 - sc.y + shake.y,
-			chara.game.size.x / 2, chara.game.size.y / 2, chara.game.scale.x, chara.game.scale.y, PI / 180 * chara.game.rote, tex, flg, chara.game.lr);
+			chara.game.size.x / 2, chara.game.size.y / 2, chara.game.scale.x, chara.game.scale.y, PI / 180 * chara.game.rota, tex, flg, chara.game.lr);
 	}
 	else
 	{
 		if (chara.game.dis)DrawRotaGraph3F(chara.game.allVec.pos.x - sc.x + shake.x, chara.game.allVec.pos.y - sc.y + shake.y,
-			chara.game.size.x / 2, chara.game.size.y / 2, chara.game.scale.x, chara.game.scale.y, PI / 180 * chara.game.rote, tex, flg, chara.game.lr);
+			chara.game.size.x / 2, chara.game.size.y / 2, chara.game.scale.x, chara.game.scale.y, PI / 180 * chara.game.rota, tex, flg, chara.game.lr);
 	}
 
 }

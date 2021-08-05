@@ -362,8 +362,8 @@ void Game::Play_Scene()
 
 		if (!time)
 		{
-			Shake(bombShake, 4, Vector2((float)(GetRand(10) - GetRand(10)), (float)(GetRand(8) - GetRand(8))));
-			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num());
+			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
+			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(),player->Get_Max_Hp(),player->Get_Max_Bomb_Num());
 		}
 	}
 	else

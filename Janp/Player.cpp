@@ -80,6 +80,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 
 void Player::Save(const int& data_Num)
 {
+	hp = max_Hp;
 	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos().x,game_object.GetPos().y,ability1_flg };
 	std::string fileNama;
 	switch (data_Num)
@@ -186,7 +187,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 
 	air_Pos = Vector2();
 	air_Sc = Vector2();
-
+	rota_Vec = 0;
 }
 
 void Player::Loading(Load* load)
@@ -321,7 +322,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	}
 	if (rota_Vec >= 0)
 	{
-		game_object.game.rote += rota_Vec;
+		game_object.game.rota += rota_Vec;
 	}
 	rota_Vec -= 0.1f;
 	if (game_object.game.allVec.vec.x != 0.0f)
@@ -569,7 +570,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (mapPoint == 50|| mapPoint==58|| mapPoint==59||(mapPoint>=66&& mapPoint<=72))
 		{
 			bomb_Janp = false;
-			game_object.game.rote = 0;
+			game_object.game.rota = 0;
 			rota_Vec = 0;
 		}
 	}
@@ -777,7 +778,8 @@ void Player::TogeInit()
 		game_object.game.allVec.vec = Vector2();
 		sc2 = air_Sc;
 		animation.num = 0;
-		game_object.game.rote = 0;
+		game_object.game.rota = 0;
+		rota_Vec = 0;
 	}
 }
 

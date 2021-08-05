@@ -36,7 +36,9 @@ public:
 
 	void Set_Now_Bomb_Num(const int& num) { now_Bomb_Num = num; }
 	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
+	int Get_Max_Bomb_Num() { return max_Bomb_Num; }
 	int Get_Now_Hp() { return hp;}
+	int Get_Max_Hp() { return max_Hp; }
 	Vector2 Get_Bomb_Vec(){ return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg(){ return toge_flg[4]; }
