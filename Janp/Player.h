@@ -30,6 +30,7 @@ public:
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
 	void Coll();
+	void TogeInit();
 
 	int player_mapset;
 
@@ -58,7 +59,7 @@ private:
 
 	Count blow;
 	Count invincible;//–³“G
-
+	Count air_Back_Count;
 
 	bool bomb_Spawn;
 	bool move;

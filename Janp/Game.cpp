@@ -185,6 +185,7 @@ void Game::Update()
 		if (SceneChangeAdd(5))
 		{
 			scene = PLAYINIT;
+			player->TogeInit();
 		}
 		break;
 	case PLAY:

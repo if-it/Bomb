@@ -162,9 +162,11 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	left = false;
 	bomb_Spawn = false;
 	blow = Count();
+	invincible = Count();
+	air_Back_Count = Count();
+
 	animation = Animation();
 
-	invincible = Count();
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -263,8 +265,6 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 	Map_Coll(collMap, sc, stageChange, stage);
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 	bomb_Vec = Vector2();
-
-
 }
 
 
@@ -349,12 +349,10 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		one_move_flg2 = false;
 		one_stop_flg = false;
 		animation.oneAnimeFlg = false;
+		air_Back_Count = Count();
 	}
-	else
-	{
-		air_Pos = game_object.GetPos();
-		air_Sc = sc2;
-	}
+
+	
 	
 }
 
@@ -474,6 +472,11 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	{
 		air = true;
 	}
+	if (!air_Array[0] && !air_Array[1] && !air_Array[2])
+	{
+		air_Pos = game_object.GetPos();
+		air_Sc = sc2;
+	}
 
 	
 
@@ -542,7 +545,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 	else if (pointNum == 1) //YŽ²
 	{
-		if (mapPoint == 0)
+		if (mapPoint == 0||TOGE)
 		{
 			air_Array[air_Count] = true;
 			air_Count++;
@@ -725,11 +728,6 @@ void Player::Spine()
 	{
 		toge_flg[4] = true;
 		invincible.flg = true;
-		game_object.SetPos(air_Pos);
-		game_object.game.allVec.vec = Vector2();
-		sc2 = air_Sc;
-		animation.num = 0;
-		game_object.game.rote = 0;
 		hp--;
 	}
 }
@@ -769,6 +767,18 @@ void Player::Coll()
 
 	}
 
+}
+
+void Player::TogeInit()
+{
+	if (toge_flg[4])
+	{
+		game_object.SetPos(air_Pos);
+		game_object.game.allVec.vec = Vector2();
+		sc2 = air_Sc;
+		animation.num = 0;
+		game_object.game.rote = 0;
+	}
 }
 
 
