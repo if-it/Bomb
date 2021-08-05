@@ -173,7 +173,8 @@ void Map::StageSet(const int& stage)
 					for (int j = 0; j < 3; ++j)
 					{
 						if (map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 0&&
-							!(map[map_num[n]][map_num[3 + j]]>=73&& map[map_num[n]][map_num[3 + j]]<=77))
+							!(map[map_num[n]][map_num[3 + j]]>=73&& map[map_num[n]][map_num[3 + j]]<=77)&&
+							!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <=7))
 						{
 							map_check[n][j] = true;
 						}

@@ -185,7 +185,9 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 			{
 				for (int j = 0; j < 3; ++j)
 				{
-					if (map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 0)
+					if (map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 0 &&
+						!(map[map_num[n]][map_num[3 + j]] >= 73 && map[map_num[n]][map_num[3 + j]] <= 77) &&
+						!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <= 7))
 					{
 						map_check[n][j] = true;
 					}
@@ -544,24 +546,6 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 			}
 
 
-
-			/*	if (map_over[0]&& map_over[2]&&map[map_num[0]][map_num[2]]!=0)
-				{
-					map_check[0][0] = true;
-				}
-				if (map_over[0] && map[map_num[0]][x] != 0)
-				{
-					map_check[0][1] = true;
-				}
-				if (map_over[0]&&map_over[3] && map[map_num[0]][map_num[3]] != 0)
-				{
-					map_check[0][2] = true;
-				}
-				if ( map_over[2] && map[map_num[0]][map_num[2]] != 0)
-				{
-					map_check[0][0] = true;
-				}*/
-
 		}
 	}
 }
@@ -671,32 +655,6 @@ void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
 		}
 	}
 }
-
-//void Fuse::BombSpawn(std::vector<Bomb>& bomb, Vector2 set_pos, Vector2 set_vec)
-//{
-//	static Bomb InitBomb;
-//
-//	InitBomb.Init();
-//	InitBomb.game_object.dis = true;
-//	InitBomb.game_object.allVec.pos = set_pos;
-//	InitBomb.game_object.allVec.vec = set_vec;
-//	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
-//
-//	bomb.push_back(InitBomb);
-//
-//	/*for (int i = 0;i < (int)bomb.size();++i)
-//	{
-//		if (!bomb[i].game_object.dis)
-//		{
-//			bomb[i].Init();
-//			bomb[i].game_object.dis = true;
-//			bomb[i].game_object.allVec.pos = set_pos;
-//			bomb[i].game_object.allVec.vec = set_vec;
-//			PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
-//			break;
-//		}
-//	}*/
-//}
 
 void Fuse::NextAnimation(Vector2 nextPos, std::vector<std::vector<int>>& map)
 {
