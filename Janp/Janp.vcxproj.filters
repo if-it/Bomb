@@ -85,6 +85,18 @@
     <Filter Include="UI">
       <UniqueIdentifier>{ff4d80f3-b6c8-4606-9fd2-6d13657ce2de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\Item">
+      <UniqueIdentifier>{fe26d9e9-09b2-4e13-b483-56c42d57f73e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\SaveObj">
+      <UniqueIdentifier>{fb2b7147-15c3-4330-957a-a79f77cf2f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\SaveObj\ヘッターファイル">
+      <UniqueIdentifier>{bc233f66-99b8-432d-bd75-de18b7972604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\SaveObj\ソースファイル">
+      <UniqueIdentifier>{a4f38028-2c0d-4926-81b5-3b55e0e8fa6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -159,13 +171,19 @@
     <ClCompile Include="Fuse.cpp">
       <Filter>GameObjct\Fuse</Filter>
     </ClCompile>
-    <ClCompile Include="Save.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>GameObjct\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Save.cpp">
+      <Filter>GameObjct\SaveObj\ソースファイル</Filter>
+    </ClCompile>
     <ClCompile Include="SaveMana.cpp">
+      <Filter>GameObjct\SaveObj\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemMana.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,13 +257,19 @@
     <ClInclude Include="Fuse.h">
       <Filter>GameObjct\Fuse</Filter>
     </ClInclude>
-    <ClInclude Include="Save.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>GameObjct\Item</Filter>
+    </ClInclude>
     <ClInclude Include="SaveMana.h">
+      <Filter>GameObjct\SaveObj\ヘッターファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Save.h">
+      <Filter>GameObjct\SaveObj\ヘッターファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemMana.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

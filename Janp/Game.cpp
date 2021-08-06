@@ -24,6 +24,7 @@ Game::~Game()
 	delete enemy2;
 	delete ui;
 	delete saveMana;
+	delete itemMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -70,16 +71,18 @@ void Game::Init()
 	map->Init(stage);
 
 	saveMana->Init(map->map);
+
+
 	player->Init(map->map);
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
 	ui->Init();
-
 	bombMana->Init();
+	exMana->Init();
+
 	shake = Vector2();
 	sceneCount = Count();
-	exMana->Init();
 	coll_List.clear();
 }
 
@@ -97,6 +100,7 @@ bool Game::Loading()
 	enemy2->Loading(load);
 	ui->Loading(load);
 	saveMana->Loading(load);
+	itemMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -254,9 +258,23 @@ void Game::Data_Load()
 		Meta_Data_Init();
 	}
 
+	stage = meta_Data.stage;
+
+
 	map->Save_Date_Load(data_Num, stage);
 
 	player->SaveData_Load(map->map, data_Num);
+
+	itemMana->SaveData_Load(map->map, data_Num,stage);
+
+	Stage_Init();
+}
+
+void Game::Stage_Init()
+{
+	enemy1Mana->Init(map->map);
+	enemy2->Init(map->map);
+	fuse->Init(map->map);
 }
 
 void Game::Meta_Data_Init()
@@ -272,7 +290,8 @@ void Game::Delete_Data()
 	Meta_Data_Init();
 
 	map->Save_Data_Init(stage);
-	player->Player_Save_Date_Init(map->map);
+	player->Save_Data_Init(map->map);
+	itemMana->Save_Data_Init();
 
 	Save();
 }
@@ -321,6 +340,7 @@ void Game::Save()
 	map->Save(data_Num);
 
 	player->Save(data_Num);
+	itemMana->Save(data_Num);
 }
 
 void Game::Play_Scene()
@@ -364,7 +384,7 @@ void Game::Play_Scene()
 		if (!time)
 		{
 			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
-			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(),player->Get_Max_Hp(),player->Get_Max_Bomb_Num());
+			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(), player->Get_Max_Bomb_Num());
 		}
 	}
 	else
@@ -386,6 +406,8 @@ void Game::Play_Scene_Update()
 
 	fuse->Update(map->map, bombMana);
 	saveMana->Update();
+	itemMana->Update();
+
 	exMana->Update();
 
 }
@@ -438,6 +460,12 @@ void Game::Obj_Coll_Update()
 		coll_List.push_back(&saveMana->save[i].game_object);
 	}
 
+	//itme
+	for (int i = 0; i < (int)itemMana->item.size(); ++i)
+	{
+		coll_List.push_back(&itemMana->item[i].game_object);
+	}
+
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
@@ -469,6 +497,7 @@ void Game::Obj_Coll_Update()
 	bombMana->Coll(bombShake.flg, con);
 	enemy2->Coll(exMana->ex);
 	saveMana->Coll();
+	itemMana->Coll(player->Get_Get_Item());
 
 	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
 
@@ -520,7 +549,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	map->Draw(sc2, shake2);
 	fuse->Draw(sc2, shake2);
 	saveMana->Draw(sc2, shake2);
-
+	itemMana->Draw(sc2, shake2);
 
 	//オブジェクト関連
 	enemy1Mana->Draw(sc2, shake2);

@@ -69,7 +69,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 	}
 	else
 	{
-		Player_Save_Date_Init(map);
+		Save_Data_Init(map);
 	}
 
 
@@ -108,7 +108,7 @@ void Player::Save(const int& data_Num)
 	}
 }
 
-void Player::Player_Save_Date_Init(std::vector<std::vector<int>>& map)
+void Player::Save_Data_Init(std::vector<std::vector<int>>& map)
 {
 	player_mapset = 35;
 	Init(map);
@@ -188,6 +188,8 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	air_Pos = Vector2();
 	air_Sc = Vector2();
 	rota_Vec = 0;
+	item_flg = 0;
+	get_Item = 0;
 }
 
 void Player::Loading(Load* load)
@@ -240,9 +242,16 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	{
 		bomb_Spawn = true;
 	}
-	if (save_Coll && (key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->X)))
+	if ((key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->X)))
 	{
-		save_On = true;
+		if (save_Coll)
+		{
+			save_On = true;
+		}
+		if (get_Item==0&&(item_flg == 1 || item_flg == 2))
+		{
+			get_Item = 1;
+		}
 	}
 	bomb_Vec.Normalize();
 
@@ -311,7 +320,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	if (bomb_Spawn)//îöíeê∂ê¨
 	{
 
-		Vector2 bombPos = game_object.game.allVec.pos;
+		Vector2 bombPos = game_object.GetPos();
 		bombPos += SIZE / 2;
 		Vector2 bombVec = Vector2();
 
@@ -352,7 +361,19 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		animation.oneAnimeFlg = false;
 		air_Back_Count = Count();
 	}
-
+	if (get_Item==1)
+	{
+		get_Item = 2;
+		if (item_flg == 1)
+		{
+			max_Hp++;
+			hp++;
+		}
+		else if (item_flg == 2)
+		{
+			max_Bomb_Num++;
+		}
+	}
 
 
 }
@@ -517,7 +538,6 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 			break;
 		}
 	}
-
 	sc = Vector2::Lerp(sc, sc2, 0.05f);
 }
 
@@ -735,6 +755,7 @@ void Player::Spine()
 
 void Player::Coll()
 {
+	item_flg = 0;
 	save_Coll = false;
 	float blowX = 0.0f;
 	float blowY = 0.0f;
@@ -765,7 +786,14 @@ void Player::Coll()
 		{
 			save_Coll = true;
 		}
-
+		if (nameTag == "Item1")
+		{
+			item_flg = 1;
+		}
+		if (nameTag == "Item2")
+		{
+			item_flg = 2;
+		}
 	}
 
 }

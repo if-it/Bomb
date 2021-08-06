@@ -643,7 +643,7 @@ void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
 				else
 				{
 					fuses[i].animeEndCount++;
-					if (fuses[i].animeEndCount == 60 * 6)
+					if (fuses[i].animeEndCount == 60 * 5)
 					{
 						fuses[i].animeEndCount = 0;
 						fuses[i].animeEnd = false;

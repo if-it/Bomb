@@ -20,13 +20,13 @@ public:
 	~Player();
 
 	void SaveData_Load(std::vector<std::vector<int>>& map, const int& data_Num);
-	void Player_Save_Date_Init(std::vector<std::vector<int>>& map);
+	void Save_Data_Init(std::vector<std::vector<int>>& map);
 	void Init(std::vector<std::vector<int>>& map);
 	void Loading(Load* load);
 	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
-	void Save(const int& date_Num);
+	void Save(const int& data_Num);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
 	void Coll();
@@ -37,20 +37,21 @@ public:
 	void Set_Now_Bomb_Num(const int& num) { now_Bomb_Num = num; }
 	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
 	int Get_Max_Bomb_Num() { return max_Bomb_Num; }
-	int Get_Now_Hp() { return hp;}
+	int Get_Now_Hp() { return hp; }
 	int Get_Max_Hp() { return max_Hp; }
-	Vector2 Get_Bomb_Vec(){ return bomb_Vec; }
+	int& Get_Get_Item() { return get_Item; }
+	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
-	bool Get_Toge_Flg(){ return toge_flg[4]; }
-	
+	bool Get_Toge_Flg() { return toge_flg[4]; }
+
 	GameObject ability1;
 private:
 	void Move(bool& shakeflg, BombMana* bomb);
-	void Blow(const float &blowX, const float& blowY, const bool& lr);
+	void Blow(const float& blowX, const float& blowY, const bool& lr);
 	void Spine();
 
-	int player_Tex[MAXTEX_X*MAXTEX_Y];
-	
+	int player_Tex[MAXTEX_X * MAXTEX_Y];
+
 
 	Vector2 fVec;//êÅÇ¡îÚÇ—
 	Vector2 bomb_Vec;
@@ -88,8 +89,9 @@ private:
 	float rota_Vec;
 	bool save_Coll;
 	bool save_On;
+	int get_Item;
 
-	struct Save_Date
+	struct Save_Data
 	{
 		int max_Hp;
 		int max_Bomb_Num;
@@ -98,7 +100,7 @@ private:
 		Vector2 sc;
 	};
 
-	Save_Date save_Data;
+	Save_Data save_Data;
 
 private:
 	//Mapä÷òA
@@ -112,5 +114,6 @@ private:
 	bool toge_flg[5];
 	int bxNum[5];
 	int byNum[5];
+	int item_flg;
 };
 

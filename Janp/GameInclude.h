@@ -10,6 +10,7 @@
 #include "Enemy2.h"
 #include"UI.h"
 #include"SaveMana.h"
+#include"ItemMana.h"
 
 class GameInclude :public Draw
 {
@@ -40,6 +41,7 @@ protected:
 	Enemy2* enemy2 = new Enemy2();
 	UI* ui = new UI();
 	SaveMana* saveMana = new SaveMana();
+	ItemMana* itemMana = new ItemMana();
 
 	bool controllerOnly;
 	bool drawScene;

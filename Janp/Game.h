@@ -10,8 +10,6 @@ public:
 	void FirstInit();
 	void Init();
 	bool Loading();
-	void Delete_Data();
-	void Option_Data_Save();
 	void Update();
 	void Draw();
 
@@ -19,12 +17,15 @@ public:
 	bool debug_mode_flg = false;
 
 private:
+	void Stage_Init();
 	void Meta_Data_Init();
 	void Play_Scene();
 	void Play_Scene_Update();
 	void Map_Coll_Update();
 	void Obj_Coll_Update();
 	void PlayDraw(const Vector2& sc2, const Vector2& shake2);
+	void Delete_Data();
+	void Option_Data_Save();
 	void Data_Load();
 	void Save();
 	Count sceneCount;

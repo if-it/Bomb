@@ -61,13 +61,15 @@ protected:
 		Count counter;
 		int num;
 		bool oneAnimeFlg;
+		bool round;
 		Animation()
 		{
 			counter = Count(true);
 			num = 0;
 			oneAnimeFlg = false;
+			round = false;
 		}
-		void AnimationOn(int maxCount, int maxNum,int lowNum = 0)
+		void AnimationOn(int maxCount, int maxNum, int lowNum = 0)
 		{
 			if (counter.Conuter(maxCount))
 			{
@@ -78,7 +80,7 @@ protected:
 					num = lowNum;
 				}
 			}
-			
+
 		}
 		bool OneAnimation(int maxCount, int maxNum)
 		{
@@ -98,6 +100,31 @@ protected:
 				counter.Conuter(maxCount);
 			}
 			return oneAnimeFlg;
+		}
+		void Round_Trip_Animation(int maxCount, int maxNum, int lowNum = 0)
+		{
+			if (counter.Conuter(maxCount))
+			{
+				counter.flg = true;
+				if (!round)
+				{
+					num++;
+					if (num >= maxNum)
+					{
+						num--;
+						round = true;
+					}
+				}
+				else
+				{
+					num--;
+					if (num < lowNum)
+					{
+						num++;
+						round = false;
+					}
+				}
+			}
 		}
 	};
 	struct COLOR

@@ -144,6 +144,8 @@
     <ClCompile Include="Fuse.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameInclude.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemMana.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="main.cpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="Fuse.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameInclude.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemMana.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Load.h" />
     <ClInclude Include="Map.h" />

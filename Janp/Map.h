@@ -18,7 +18,7 @@ public:
 	void FleMapInput();
 	void Update();
 	void Draw(const Vector2& sc, const Vector2& shake);
-	//int map[MAPY][MAPX];
+
 	std::vector<std::vector<int>> map;
 
 	int* Get_Map_Tex() { return tex; }
