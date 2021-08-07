@@ -91,6 +91,10 @@ private:
 	bool save_On;
 	int get_Item;
 
+	//“_–Å
+	bool blinking;
+	Count blinking_Count;
+
 	struct Save_Data
 	{
 		int max_Hp;

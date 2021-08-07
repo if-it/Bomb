@@ -190,6 +190,9 @@ void Player::Init(std::vector<std::vector<int>>& map)
 	rota_Vec = 0;
 	item_flg = 0;
 	get_Item = 0;
+
+	blinking = true;
+	blinking_Count = Count();
 }
 
 void Player::Loading(Load* load)
@@ -248,7 +251,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		{
 			save_On = true;
 		}
-		if (get_Item==0&&(item_flg == 1 || item_flg == 2))
+		if (get_Item == 0 && (item_flg == 1 || item_flg == 2))
 		{
 			get_Item = 1;
 		}
@@ -265,7 +268,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 void Player::Update(bool& shakeflg, BombMana* bomb)
 {
 	Move(shakeflg, bomb);
-	invincible.Conuter(60);
+	invincible.Conuter(80);
 	ability1.game.dis = ability;
 	Animation_Update();
 }
@@ -361,7 +364,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		animation.oneAnimeFlg = false;
 		air_Back_Count = Count();
 	}
-	if (get_Item==1)
+	if (get_Item == 1)
 	{
 		get_Item = 2;
 		if (item_flg == 1)
@@ -424,6 +427,22 @@ void Player::Animation_Update()
 			animation.AnimationOn(animation_Count_Num, 6, 3);
 		}
 	}
+
+
+	if (invincible.flg)
+	{
+		blinking_Count.flg = true;
+	}
+	else
+	{
+		blinking = true;
+	}
+	if (blinking_Count.Conuter(8))
+	{
+		if (blinking)	blinking = false;
+		else blinking = true;
+	}
+
 }
 
 //Map”»’è
@@ -839,5 +858,5 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
+	if (blinking) DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
 }
