@@ -103,6 +103,7 @@ private:
 		Vector2 pos;
 		bool ability1_flg;
 		Vector2 sc;
+		int die_Count;
 	};
 
 	Save_Data save_Data;

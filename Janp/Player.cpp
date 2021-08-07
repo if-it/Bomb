@@ -81,7 +81,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 void Player::Save(const int& data_Num)
 {
 	hp = max_Hp;
-	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),ability1_flg,sc2 };
+	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),ability1_flg,sc2,save_Data.die_Count};
 	std::string fileNama;
 	switch (data_Num)
 	{
@@ -115,6 +115,7 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map)
 	max_Hp = 3;
 	max_Bomb_Num = 1;
 	ability1_flg = false;
+	save_Data.die_Count = 0;
 }
 
 
