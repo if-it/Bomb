@@ -609,7 +609,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			toge_flg[1] = true;
 		}
-		if (mapPoint == 50 || mapPoint == 58 || mapPoint == 59 || (mapPoint >= 66 && mapPoint <= 72))
+		if (mapPoint == 3 || mapPoint == 50 || mapPoint == 58 || mapPoint == 59 || (mapPoint >= 66 && mapPoint <= 72))
 		{
 			bomb_Janp = false;
 			game_object.game.rota = 0;
@@ -784,10 +784,6 @@ void Player::SubHp(int subHp, bool& hetstop)
 		//Ž€–S‰‰o
 
 	}
-	else
-	{
-	}
-
 }
 
 void Player::Coll(bool& hetstop)
