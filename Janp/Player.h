@@ -51,6 +51,7 @@ private:
 	void Spine();
 
 	int player_Tex[MAXTEX_X * MAXTEX_Y];
+	int player_Black_Tex[MAXTEX_X * MAXTEX_Y];
 
 
 	Vector2 fVec;//êÅÇ¡îÚÇ—

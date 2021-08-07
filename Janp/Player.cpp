@@ -199,6 +199,8 @@ void Player::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Player/Player.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
 		64, 64, player_Tex);
+	load->LoadAnimeTex("Load/Texture/Player/Player_Black.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
+		64, 64, player_Black_Tex);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -268,7 +270,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 void Player::Update(bool& shakeflg, BombMana* bomb)
 {
 	Move(shakeflg, bomb);
-	invincible.Conuter(80);
+	invincible.Conuter(90);
 	ability1.game.dis = ability;
 	Animation_Update();
 }
@@ -429,7 +431,7 @@ void Player::Animation_Update()
 	}
 
 
-	if (invincible.flg)
+	if (invincible.flg )
 	{
 		blinking_Count.flg = true;
 	}
@@ -437,7 +439,7 @@ void Player::Animation_Update()
 	{
 		blinking = true;
 	}
-	if (blinking_Count.Conuter(8))
+	if (blinking_Count.Conuter(9))
 	{
 		if (blinking)	blinking = false;
 		else blinking = true;
@@ -858,5 +860,11 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	if (blinking) DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
+	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
+	if (!blinking)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+		DrawRotaTex(game_object, player_Black_Tex[animation.num], true, shake, sc);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
