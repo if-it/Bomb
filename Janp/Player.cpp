@@ -81,7 +81,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 void Player::Save(const int& data_Num)
 {
 	hp = max_Hp;
-	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),ability1_flg,sc2,save_Data.die_Count};
+	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),ability1_flg,sc2,save_Data.die_Count };
 	std::string fileNama;
 	switch (data_Num)
 	{
@@ -276,9 +276,9 @@ void Player::Update(bool& shakeflg, BombMana* bomb)
 	Animation_Update();
 }
 
-void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
+void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop)
 {
-	Map_Coll(collMap, sc, stageChange, stage);
+	Map_Coll(collMap, sc, stageChange, stage, hetstop);
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 	bomb_Vec = Vector2();
 }
@@ -432,7 +432,7 @@ void Player::Animation_Update()
 	}
 
 
-	if (invincible.flg )
+	if (invincible.flg)
 	{
 		blinking_Count.flg = true;
 	}
@@ -449,7 +449,7 @@ void Player::Animation_Update()
 }
 
 //Map”»’è
-void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage)
+void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop)
 {
 	for (int i = 0; i < 5; ++i)
 	{
@@ -556,7 +556,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	{
 		if (toge_flg[i])
 		{
-			Spine();
+			Spine(hetstop);
 			break;
 		}
 	}
@@ -765,17 +765,32 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 }
 
-void Player::Spine()
+void Player::Spine(bool& hetstop)
 {
 	if (!invincible.flg)
 	{
 		toge_flg[4] = true;
 		invincible.flg = true;
-		hp--;
+		SubHp(1, hetstop);
 	}
 }
 
-void Player::Coll()
+void Player::SubHp(int subHp, bool& hetstop)
+{
+	hp -= subHp;
+	hetstop = true;
+	if (Die())
+	{
+		//Ž€–S‰‰o
+
+	}
+	else
+	{
+	}
+
+}
+
+void Player::Coll(bool& hetstop)
 {
 	item_flg = 0;
 	save_Coll = false;
@@ -796,13 +811,13 @@ void Player::Coll()
 		{
 			blowX = 10.0f;
 			blowY = 4.0f;
-			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
 		}
 		if (nameTag == "Enemy2")
 		{
 			blowX = 15.0f;
 			blowY = 5.0f;
-			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr);
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
 		}
 		if (nameTag == "Save")
 		{
@@ -836,13 +851,13 @@ void Player::TogeInit()
 
 
 
-void Player::Blow(const float& blowX, const float& blowY, const bool& lr)
+void Player::Blow(const float& blowX, const float& blowY, const bool& lr, bool& hetstop, int subHp)
 {
 	if (!invincible.flg)
 	{
 		invincible.flg = true;
 		blow.flg = true;
-		--hp;
+		SubHp(subHp, hetstop);
 		if (!lr)
 		{
 			fVec = Vector2(blowX, -blowY);

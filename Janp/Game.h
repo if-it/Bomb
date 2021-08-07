@@ -45,5 +45,7 @@ private:
 		int save_Count;
 	};
 	Meta_Data meta_Data;
+	Count hetStop;
+
 };
 

@@ -25,11 +25,11 @@ public:
 	void Loading(Load* load);
 	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb);
-	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
+	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void Save(const int& data_Num);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
-	void Coll();
+	void Coll(bool &hetstop);
 	void TogeInit();
 
 	int player_mapset;
@@ -47,8 +47,9 @@ public:
 	GameObject ability1;
 private:
 	void Move(bool& shakeflg, BombMana* bomb);
-	void Blow(const float& blowX, const float& blowY, const bool& lr);
-	void Spine();
+	void Blow(const float& blowX, const float& blowY, const bool& lr,bool& hetstop, int subHp);
+	void Spine(bool& hetstop);
+	void SubHp(int subHp,bool& hetstop);
 
 	int player_Tex[MAXTEX_X * MAXTEX_Y];
 	int player_Black_Tex[MAXTEX_X * MAXTEX_Y];
@@ -64,6 +65,7 @@ private:
 	Count blow;
 	Count invincible;//–³“G
 	Count air_Back_Count;
+
 
 	bool bomb_Spawn;
 	bool move;
@@ -110,7 +112,7 @@ private:
 
 private:
 	//MapŠÖ˜A
-	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage);
+	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage,bool& hetstop);
 	void MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage);
 	void Animation_Update();
 	Vector2 sc2;

@@ -84,6 +84,8 @@ void Game::Init()
 	shake = Vector2();
 	sceneCount = Count();
 	coll_List.clear();
+
+	hetStop = Count();
 }
 
 bool Game::Loading()
@@ -186,11 +188,12 @@ void Game::Update()
 		}
 		break;
 	case PLAYINIT2:
-		if (SceneChangeAdd(5))
+		if (!hetStop.flg&&SceneChangeAdd(5))
 		{
 			scene = PLAYINIT;
 			player->TogeInit();
 		}
+		hetStop.Conuter(10);
 		break;
 	case PLAY:
 		Play_Scene();
@@ -265,7 +268,7 @@ void Game::Data_Load()
 
 	player->SaveData_Load(map->map, data_Num);
 
-	itemMana->SaveData_Load(map->map, data_Num,stage);
+	itemMana->SaveData_Load(map->map, data_Num, stage);
 
 	Stage_Init();
 }
@@ -351,41 +354,40 @@ void Game::Play_Scene()
 
 		//入力
 		player->Input(key, con, time);
-
-		if (!time)
+		if (!hetStop.flg)
 		{
 
-			//Update
-			Play_Scene_Update();
+			if (!time)
+			{
 
-			//layerチェック
+				//Update
+				Play_Scene_Update();
 
-			enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
+				//layerチェック
 
-			//Map当たり判定
-			Map_Coll_Update();
+				enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
 
+				//Map当たり判定
+				Map_Coll_Update();
+
+			}
+			//オブジェクト当たり判定
+			Obj_Coll_Update();
+			if (stageChange)
+			{
+				scene = MAPSET;
+			}
+			if (player->Get_Toge_Flg())
+			{
+				scene = PLAYINIT2;
+			}
 		}
-		//オブジェクト当たり判定
-		Obj_Coll_Update();
-		if (player->Die())
-		{
-			titleFlg = true;
-		}
-		if (stageChange)
-		{
-			scene = MAPSET;
-		}
-		if (player->Get_Toge_Flg())
-		{
-			scene = PLAYINIT2;
-		}
-
 		if (!time)
 		{
 			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
 			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(), player->Get_Max_Bomb_Num());
 		}
+		hetStop.Conuter(8);
 	}
 	else
 	{
@@ -414,7 +416,7 @@ void Game::Play_Scene_Update()
 
 void Game::Map_Coll_Update()
 {
-	player->Map_Coll_Update(map->map, sc, stageChange, stage);
+	player->Map_Coll_Update(map->map, sc, stageChange, stage, hetStop.flg);
 	bombMana->MapCollUpdate(map->map);
 	enemy1Mana->MapCollUpdate(map->map);
 	enemy2->MapCollUpdate(map->map);
@@ -486,7 +488,7 @@ void Game::Obj_Coll_Update()
 
 
 	//当たり判定
-	player->Coll();
+	player->Coll(hetStop.flg);
 	//爆発とひも
 	for (int i = 0; i < exMana->ex.size(); ++i)
 	{
