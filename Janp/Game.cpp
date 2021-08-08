@@ -25,6 +25,7 @@ Game::~Game()
 	delete ui;
 	delete saveMana;
 	delete itemMana;
+	delete backMap;
 
 	coll_List.clear();
 	InitGraph();
@@ -69,6 +70,7 @@ void Game::Init()
 	bombShake = Count();
 
 	map->Init(stage);
+	backMap->Init(stage);
 
 	saveMana->Init(map->map);
 
@@ -103,6 +105,7 @@ bool Game::Loading()
 	ui->Loading(load);
 	saveMana->Loading(load);
 	itemMana->Loading(load);
+	backMap->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -548,6 +551,7 @@ void Game::Draw()
 void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 {
 	//MapŠÖ˜A
+	backMap->Draw(sc2, shake2);
 	map->Draw(sc2, shake2);
 	fuse->Draw(sc2, shake2);
 	saveMana->Draw(sc2, shake2);

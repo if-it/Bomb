@@ -97,6 +97,15 @@
     <Filter Include="GameObjct\SaveObj\ソースファイル">
       <UniqueIdentifier>{a4f38028-2c0d-4926-81b5-3b55e0e8fa6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BackMap">
+      <UniqueIdentifier>{50f34911-aef0-4b05-8eec-e8a60d871965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BackMap\ソースファイル">
+      <UniqueIdentifier>{8f81097d-30fe-4383-ac98-126efbbb6f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BackMap\ヘッターファイル">
+      <UniqueIdentifier>{3ae0001c-3d7e-4916-b07e-84983d5b0f0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -184,6 +193,9 @@
       <Filter>GameObjct\SaveObj\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="ItemMana.cpp">
+      <Filter>GameObjct\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BackMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -270,6 +282,9 @@
       <Filter>GameObjct\SaveObj\ヘッターファイル</Filter>
     </ClInclude>
     <ClInclude Include="ItemMana.h">
+      <Filter>GameObjct\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BackMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

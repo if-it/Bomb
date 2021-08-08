@@ -16,7 +16,7 @@ void Map::Save_Date_Load(const int& date_Num, const int& stage)
 	Init(stage);
 
 	FILE* fp;
-
+	//ロード
 	std::string fileNama;
 	switch (date_Num)
 	{
@@ -61,6 +61,7 @@ void Map::Save(const int& date_Num)
 	FILE* fp;
 
 	std::string fileNama;
+	//セーブ
 	switch (date_Num)
 	{
 	case 0:
@@ -92,16 +93,17 @@ void Map::StageSet(const int& stage)
 	ifstream ifs;
 	string fileNama;
 
+	//マップチップデータ
 	switch (stage)
 	{
 	case 0:
-		fileNama = "Load/Data/Map/BombMap - demo.csv";
+		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
 		break;
 	case 1:
-		fileNama = "Load/Data/Map/BombMap - Stage01.csv";
+		fileNama = "Load/Data/Map/Map/BombMap - Stage01.csv";
 		break;
 	default:
-		fileNama = "Load/Data/Map/BombMap - demo.csv";
+		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
 		break;
 	}
 
@@ -175,7 +177,7 @@ void Map::StageSet(const int& stage)
 						if (map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 0 &&
 							map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 3 &&
 							!(map[map_num[n]][map_num[3 + j]] >= 73 && map[map_num[n]][map_num[3 + j]] <= 77) &&
-							!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <= 7)&&
+							!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <= 7) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 80 && map[map_num[n]][map_num[3 + j]] <= 82))
 						{
 							map_check[n][j] = true;
@@ -711,7 +713,7 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 
 		}
 	}
-	
+
 }
 
 
