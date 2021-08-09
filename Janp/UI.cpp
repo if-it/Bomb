@@ -26,10 +26,13 @@ void UI::Loading(Load* load)
 	load->LoadAnimeTex("Load/Texture/UI/HeartUI.png", 4, 4, 1, SIZE, SIZE, heartTex);
 	load->LoadAnimeTex("Load/Texture/UI/BombUI.png", 5, 5, 1, SIZE, SIZE, bombTex);
 	load->LoadTex("Load/Texture/UI/UI_Background.png", backgroundTex);
+	load->LoadTex("Load/Texture/UI/text_backUI.png", text_BackTex);
 }
 
-void UI::Update(const int& hp, const int& playerBomb, const int& maxHp, const int& maxBomb)
+void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
+	const int& maxBomb, const bool& get_guide, const Vector2& playerPos)
 {
+	text_Back_Pos = Vector2(playerPos.x, playerPos.y - SIZE - 10);
 	max_Heart_Num = maxHp;
 	heart_Num = hp;
 	bomb_Num = playerBomb;
@@ -39,7 +42,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp, const in
 		bomb_Ani_Num = 6;
 		bomb_One_Ani = false;
 	}
-	else if(!bomb_One_Ani)
+	else if (!bomb_One_Ani)
 	{
 		bomb_Ani_Num = GetRand(400);
 		bomb_One_Ani = true;
@@ -47,10 +50,10 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp, const in
 	heart_Ani.AnimationOn(14, 3);
 	bomb_Ani.AnimationOn(bomb_Ani_Num, 4);
 
-
+	guide = get_guide;
 }
 
-void UI::Draw()
+void UI::Draw(const Vector2& sc, const Vector2& shake)
 {
 
 
@@ -70,4 +73,9 @@ void UI::Draw()
 		if (i < bomb_Num)DrawTex(pos, bombTex[bomb_Ani.num], true);
 		else DrawTex(pos, bombTex[4], true);
 	}
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 90);
+	Box(text_Back_Pos, GetColor(0, 0, 0), guide, true, shake, sc, 62,30);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+	DrawTex(text_Back_Pos, text_BackTex, guide, true, shake, sc);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

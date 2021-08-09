@@ -33,6 +33,7 @@ Player::Player()
 	save_Coll = false;
 	save_On = false;
 	ability1_flg = false;
+	get_guide = false;
 }
 
 
@@ -213,6 +214,8 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	left = false;
 	bomb_Spawn = false;
 	ability = false;
+	get_guide = false;
+
 	Vector2 stickL = con->StickL();
 	if (ability1_flg && (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0))
 	{
@@ -381,7 +384,10 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		}
 	}
 
-
+	if (save_Coll || item_flg > 0)
+	{
+		get_guide = true;
+	}
 }
 
 

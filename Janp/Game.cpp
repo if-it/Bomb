@@ -388,7 +388,8 @@ void Game::Play_Scene()
 		if (!time)
 		{
 			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
-			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(), player->Get_Max_Bomb_Num());
+			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(), 
+				player->Get_Max_Bomb_Num(),player->Get_Get_Guide(),player->game_object.GetPos());
 		}
 		hetStop.Conuter(8);
 	}
@@ -567,7 +568,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	exMana->Draw(sc2, shake2);
 
 	//UIŠÖ˜A
-	ui->Draw();
+	ui->Draw(sc2, shake2);
 }
 
 

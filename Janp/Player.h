@@ -43,6 +43,7 @@ public:
 	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
+	bool& Get_Get_Guide() { return get_guide; }
 
 	GameObject ability1;
 private:
@@ -93,6 +94,7 @@ private:
 	bool save_Coll;
 	bool save_On;
 	int get_Item;
+	bool get_guide;
 
 	//“_–Å
 	bool blinking;
