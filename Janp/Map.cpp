@@ -13,11 +13,30 @@ Map::~Map()
 
 void Map::Save_Date_Load(const int& date_Num, const int& stage)
 {
-	Init(stage);
-
-	FILE* fp;
+	save_Data_Ori.clear();
 	//ロード
+	FILE* fp;
 	std::string fileNama;
+	switch (date_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
+		break;
+	}
+	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	{
+		fread_s(&save_Data_Size, sizeof(save_Data_Size), sizeof(save_Data_Size), 1, fp);
+		fclose(fp);
+	}
+	else
+	{
+		save_Data_Size = 0;
+	}
+
+	FILE* fp2;
 	switch (date_Num)
 	{
 	case 0:
@@ -27,59 +46,106 @@ void Map::Save_Date_Load(const int& date_Num, const int& stage)
 		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
 		break;
 	}
-	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	if (save_Data_Size > 0)
 	{
-		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
+		Save_Data* data_array;
 
-		Init(stage);
+		data_array = new Save_Data[save_Data_Size];
+		if (fopen_s(&fp2, fileNama.c_str(), "r") == 0)
+		{
+			fread_s(data_array, sizeof(Save_Data) * save_Data_Size, sizeof(Save_Data), save_Data_Size, fp2);
 
+			fclose(fp2);
 
-		fclose(fp);
+			for (int i = 0; i < save_Data_Size; ++i)
+			{
+				save_Data_Ori.push_back(data_array[i]);
+			}
+		}
+		else
+		{
+			Save_Data_Init();
+		}
+		delete data_array;
 	}
-	else
-	{
-		save_Data = { 1,1 };
-
-		Init(stage);
-	}
-
+	Init(stage);
 }
 
 void Map::Init(const int& stage)
 {
 	StageSet(stage);
+	stage_S = stage;
 }
 
-void Map::Save_Data_Init(const int& stage)
+void Map::Save_Data_Init()
 {
-	Init(stage);
+	save_Data_Size = 0;
+	save_Data_Ori.clear();
 }
 
-void Map::Save(const int& date_Num)
+void Map::Save(const int& data_Num)
 {
-	save_Data = { 2,2 };
-	FILE* fp;
+	save_Data_Size = save_Data_Ori.size();
 
 	std::string fileNama;
+
 	//セーブ
-	switch (date_Num)
+	switch (data_Num)
 	{
 	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
 		break;
 	default:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
 		break;
 	}
+	FILE* fp;
 	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
 	{
-		fwrite(&save_Data, sizeof(save_Data), 1, fp);
+		fwrite(&save_Data_Size, sizeof(save_Data_Size), 1, fp);
 		fclose(fp);
 	}
 	else
 	{
 		MessageBox(NULL, "Map", "SaveDataのエラー", MB_OK);
 		return;
+	}
+
+	FILE* fp2;
+
+	switch (data_Num)
+	{
+	case 0:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		break;
+	default:
+		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
+		break;
+	}
+
+	if (save_Data_Size > 0)
+	{
+
+		Save_Data* data_array;
+
+		data_array = new Save_Data[save_Data_Size];
+
+		for (int i = 0; i < save_Data_Size; ++i)
+		{
+			data_array[i] = save_Data_Ori[i];
+		}
+		if (fopen_s(&fp2, fileNama.c_str(), "w") == 0)
+		{
+			fwrite(data_array, sizeof(Save_Data), save_Data_Size, fp2);
+			fclose(fp2);
+		}
+		else
+		{
+			MessageBox(NULL, "Map", "SaveDataのエラー", MB_OK);
+			return;
+		}
+
+		delete data_array;
 	}
 }
 
@@ -143,6 +209,19 @@ void Map::StageSet(const int& stage)
 	{
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
+			if (map[y][x] == 3)
+			{
+
+				for (int i = 0; i < (int)save_Data_Ori.size(); ++i)
+				{
+					if (save_Data_Ori[i].stage == stage && save_Data_Ori[i].map_num_X == x && save_Data_Ori[i].map_num_Y == y)
+					{
+						map[y][x] = save_Data_Ori[i].map_num;
+						break;
+					}
+				}
+			}
+
 			if (map[y][x] == 1)
 			{
 
@@ -538,7 +617,7 @@ void Map::StageSet(const int& stage)
 			}
 		}
 	}
-
+	FleMapInput();
 }
 
 void Map::Loading(Load* load)
@@ -564,6 +643,19 @@ void Map::FleMapInput()
 
 void Map::Update()
 {
+
+	for (int y = 0; y < (int)map.size(); ++y)
+	{
+		for (int x = 0; x < (int)map[y].size(); ++x)
+		{
+			if (fleMap[y][x] != map[y][x])
+			{
+				if (map[y][x] >= 40 && map[y][x] <= 49)continue;
+				Save_Data Init_SaveData = { stage_S,x,y,map[y][x] };
+				save_Data_Ori.push_back(Init_SaveData);
+			}
+		}
+	}
 	for (int y = 0; y < (int)map.size(); ++y)
 	{
 		for (int x = 0; x < (int)map[y].size(); ++x)

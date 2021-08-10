@@ -566,7 +566,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 			break;
 		}
 	}
-	sc = Vector2::Lerp(sc, sc2, 0.05f);
+	sc = Vector2::Lerp(sc, sc2, 0.08f);
 }
 
 

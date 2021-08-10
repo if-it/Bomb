@@ -11,8 +11,8 @@ public:
 	~Map();
 	void Save_Date_Load(const int& date_Num, const int& stage);
 	void Init(const int& stage);
-	void Save_Data_Init(const int& stage);
-	void Save(const int& date_Num);
+	void Save_Data_Init();
+	void Save(const int& data_Num);
 	void StageSet(const int& stage);
 	void Loading(Load* load);
 	void FleMapInput();
@@ -29,12 +29,15 @@ private:
 	int tex[MAP_TEX_NUM];
 	int Btex[10];
 	int togeTex[4];
-
-	struct Save_Date
+	int save_Data_Size;
+	int stage_S;
+	struct Save_Data
 	{
-		int data;
-		int data2;
+		int stage;
+		int map_num_X;
+		int map_num_Y;
+		int map_num;
 	};
-	Save_Date save_Data;
+	std::vector<Save_Data> save_Data_Ori;
 };
 

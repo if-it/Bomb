@@ -31,12 +31,13 @@ public:
 	int RTriggerF();
 	bool LTriggerT();
 	bool RTriggerT();
-	int CheckHitAllBotton();
+	bool CheckHitAllBotton();
 	void Shake(int power, int time);
 	void StopShake();
 	bool Get_Shake_On() { return shake_On;}
 	void Set_Shake_On(bool shakeon) { shake_On = shakeon;}
-	
+
+	bool All_Het_Controller();
 
 private:
 	bool XorD;

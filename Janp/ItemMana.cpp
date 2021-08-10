@@ -130,7 +130,6 @@ void ItemMana::Save(const int& data_Num)
 		{
 			data_array[i] = save_Data_Ori[i];
 		}
-		int num = sizeof(Save_Data);
 		if (fopen_s(&fp2, fileNama.c_str(), "w") == 0)
 		{
 			fwrite(data_array, sizeof(Save_Data), save_Data_Size, fp2);
@@ -212,7 +211,7 @@ void ItemMana::Coll(int& get_Item)
 	{
 		if (item[i].Coll(get_Item))
 		{
-			save_Data_Ori.push_back(item[i].save_Data);//Ÿ‚Íƒ[ƒh
+			save_Data_Ori.push_back(item[i].save_Data);
 			break;
 		}
 	}

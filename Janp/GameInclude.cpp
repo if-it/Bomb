@@ -8,7 +8,7 @@ GameInclude::~GameInclude()
 {
 }
 
-void GameInclude::ControllerOn(bool on)
+void GameInclude::ControllerOnly(bool on)
 {
 	controllerOnly = on;
 }

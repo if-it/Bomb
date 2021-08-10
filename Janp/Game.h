@@ -1,6 +1,6 @@
 #pragma once
 #include"GameInclude.h"
-class Game:public GameInclude
+class Game :public GameInclude
 {
 	using Vector2 = vector::Vector2;
 public:
@@ -46,6 +46,6 @@ private:
 	};
 	Meta_Data meta_Data;
 	Count hetStop;
-
+	bool controller_on;
 };
 

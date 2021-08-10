@@ -9,6 +9,7 @@ public:
 	void Input();
 	bool KeyTrigger(int keyNum);
 	int keyFlame(int keyNum);
+	bool AllHetKey();
 private:
 	char key[256];
 	bool trigger[256];

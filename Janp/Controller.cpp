@@ -12,7 +12,7 @@ Controller::~Controller()
 void Controller::Init()
 {
 
-	for (int i = 0;i < 15;++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		botton[i] = false;
 		flame[i] = 0;
@@ -225,30 +225,37 @@ bool Controller::RTriggerT()
 	return false;
 }
 
-int Controller::CheckHitAllBotton()
+bool Controller::CheckHitAllBotton()
 {
-	int i;
-	for (i = 0; i < 16; i++)
+	for (int i = 0; i < 16; i++)
 	{
-		if (XInput.Buttons[i] == 0)
+		if (XInput.Buttons[i] == 1)
 		{
-			botton[i] = false;
-		}
-		else if (!botton[i])
-		{
-			botton[i] = true;
 			return true;
 		}
+
 	}
 	return false;
 }
 
 void Controller::Shake(int power, int time)
 {
-	if(shake_On)StartJoypadVibration(DX_INPUT_PAD1, power, time);
+	if (shake_On)StartJoypadVibration(DX_INPUT_PAD1, power, time);
 }
 
 void Controller::StopShake()
 {
 	StopJoypadVibration(DX_INPUT_PAD1);
+}
+
+bool Controller::All_Het_Controller()
+{
+
+	if (CheckHitAllBotton() || LTriggerF() > 0 || RTriggerF() > 0 ||
+		StickL().x < -10000 || StickL().x > 10000 || StickL().y < -10000 || StickL().y > 10000 ||
+		StickR().x < -10000 || StickR().x > 10000 || StickR().y < -10000 || StickR().y > 10000)
+	{
+		return true;
+	}
+	return false;
 }

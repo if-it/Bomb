@@ -12,7 +12,7 @@ Key::~Key()
 
 void Key::Init()
 {
-	for (int i = 0;i < 256;++i)
+	for (int i = 0; i < 256; ++i)
 	{
 		trigger[i] = false;
 		flame[i] = 0;
@@ -49,6 +49,18 @@ int Key::keyFlame(int keyNum)
 		flame[keyNum] = 0;
 	}
 	return flame[keyNum];
+}
+
+bool Key::AllHetKey()
+{
+	for (int i = 0; i < 256; ++i)
+	{
+		if (key[i] == 1)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 

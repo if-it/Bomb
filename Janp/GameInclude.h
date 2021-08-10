@@ -20,7 +20,7 @@ public:
 	~GameInclude();
 	int ConCheck();
 protected:
-	void ControllerOn(bool on);
+	void ControllerOnly(bool on);
 	void ParentInit();
 	bool SceneChangeSeb(int seb);
 	bool SceneChangeAdd(int add);

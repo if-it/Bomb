@@ -38,7 +38,7 @@ void Game::SystemInit()
 	SetMouseDispFlag(TRUE);
 
 	//コントローラーしか使えない？
-	ControllerOn(false);
+	ControllerOnly(false);
 
 }
 
@@ -60,6 +60,7 @@ void Game::FirstInit()
 
 	option_Data = { 0,0 };
 	meta_Data = { 0,0 };
+	controller_on = false;
 }
 
 void Game::Init()
@@ -141,6 +142,18 @@ void Game::Update()
 {
 	key->Input();
 	con->Input();
+
+	if (con->All_Het_Controller())
+	{
+		controller_on = true;
+	}
+	if (key->AllHetKey())
+	{
+		controller_on = false;
+	}
+
+
+
 	switch (scene)
 	{
 	case OPENING:
@@ -295,7 +308,7 @@ void Game::Delete_Data()
 {
 	Meta_Data_Init();
 
-	map->Save_Data_Init(stage);
+	map->Save_Data_Init();
 	player->Save_Data_Init(map->map);
 	itemMana->Save_Data_Init();
 
@@ -389,7 +402,7 @@ void Game::Play_Scene()
 		{
 			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
 			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(), 
-				player->Get_Max_Bomb_Num(),player->Get_Get_Guide(),player->game_object.GetPos());
+				player->Get_Max_Bomb_Num(),player->Get_Get_Guide(),player->game_object.GetPos(),controller_on);
 		}
 		hetStop.Conuter(8);
 	}
