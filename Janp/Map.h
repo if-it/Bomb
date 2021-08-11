@@ -9,11 +9,11 @@ class Map :public Draw
 public:
 	Map();
 	~Map();
-	void Save_Date_Load(const int& date_Num, const int& stage);
-	void Init(const int& stage);
+	void Save_Date_Load(const int& date_Num, const int& stage, Load* load);
+	void Init(const int& stage, Load* load);
 	void Save_Data_Init();
 	void Save(const int& data_Num);
-	void StageSet(const int& stage);
+	void StageSet(const int& stage, Load* load);
 	void Loading(Load* load);
 	void FleMapInput();
 	void Update();

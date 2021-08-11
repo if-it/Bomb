@@ -44,6 +44,7 @@ public:
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
 	bool& Get_Get_Guide() { return get_guide; }
+	bool Get_Die_End() { return die_End; }
 
 	GameObject ability1;
 private:
@@ -95,6 +96,7 @@ private:
 	bool save_On;
 	int get_Item;
 	bool get_guide;
+	bool die_End;
 
 	//“_–Å
 	bool blinking;

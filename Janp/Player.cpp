@@ -195,6 +195,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 
 	blinking = true;
 	blinking_Count = Count();
+	die_End = false;
 }
 
 void Player::Loading(Load* load)
@@ -221,19 +222,19 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	{
 		ability = true;
 	}
-	if (key->keyFlame(KEY_INPUT_UP) > 0 || key->keyFlame(KEY_INPUT_W) > 0 || stickL.y > 10000)
+	if (key->keyFlame(KEY_INPUT_UP) > 0  || stickL.y > 10000)
 	{
 		up = true;
 
 		bomb_Vec = Vector2(0.0f, -1.0f);
 
 	}
-	if (key->keyFlame(KEY_INPUT_DOWN) > 0 || key->keyFlame(KEY_INPUT_S) > 0 || stickL.y < -10000)
+	if (key->keyFlame(KEY_INPUT_DOWN) > 0 || stickL.y < -10000)
 	{
 		down = true;
 		bomb_Vec = Vector2(0.0f, 1.0f);
 	}
-	if (key->keyFlame(KEY_INPUT_D) > 0 || key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
+	if ( key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 	{
 		right = true;
 		game_object.game.lr = false;
@@ -241,7 +242,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 
 		bomb_Vec = Vector2(1.0f, -0.2f);
 	}
-	if (key->keyFlame(KEY_INPUT_A) > 0 || key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
+	if ( key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
 	{
 		left = true;
 		game_object.game.lr = true;
@@ -788,7 +789,7 @@ void Player::SubHp(int subHp, bool& hetstop)
 	if (Die())
 	{
 		//Ž€–S‰‰o
-
+		die_End = true;
 	}
 }
 
@@ -839,7 +840,7 @@ void Player::Coll(bool& hetstop)
 
 void Player::TogeInit()
 {
-	if (toge_flg[4])
+	if (toge_flg[4]&&!Die())
 	{
 		game_object.SetPos(air_Pos);
 		game_object.game.allVec.vec = Vector2();

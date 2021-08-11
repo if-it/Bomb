@@ -11,7 +11,7 @@ Map::~Map()
 {
 }
 
-void Map::Save_Date_Load(const int& date_Num, const int& stage)
+void Map::Save_Date_Load(const int& date_Num, const int& stage, Load* load)
 {
 	save_Data_Ori.clear();
 	//ƒ[ƒh
@@ -68,12 +68,12 @@ void Map::Save_Date_Load(const int& date_Num, const int& stage)
 		}
 		delete data_array;
 	}
-	Init(stage);
+	Init(stage, load);
 }
 
-void Map::Init(const int& stage)
+void Map::Init(const int& stage, Load* load)
 {
-	StageSet(stage);
+	StageSet(stage, load);
 	stage_S = stage;
 }
 
@@ -149,7 +149,7 @@ void Map::Save(const int& data_Num)
 	}
 }
 
-void Map::StageSet(const int& stage)
+void Map::StageSet(const int& stage, Load* load)
 {
 	using namespace std;
 
@@ -165,14 +165,24 @@ void Map::StageSet(const int& stage)
 	case 0:
 		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
 		break;
-	case 1:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage01.csv";
+	case 100:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage100.csv";
 		break;
 	default:
 		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
 		break;
 	}
-
+	int map_type = stage - stage_S;
+	if (map_type < 100 && stage != 0)
+	{
+		for (int i = 0; i < MAP_TEX_NUM; ++i)
+		{
+			DeleteGraph(tex[i]);
+		}
+		map_type = stage;
+		if (map_type >= 100 && map_type < 200)load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+		else if (map_type >= 200 && map_type < 300)load->LoadAnimeTex("Load/Texture/Map/Map2.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+	}
 	ifs.open(fileNama.c_str());
 	if (!ifs)
 	{

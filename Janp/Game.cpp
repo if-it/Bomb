@@ -70,7 +70,7 @@ void Game::Init()
 	title_To_Play = false;
 	bombShake = Count();
 
-	map->Init(stage);
+	map->Init(stage,load);
 	backMap->Init(stage);
 
 	saveMana->Init(map->map);
@@ -204,10 +204,17 @@ void Game::Update()
 		}
 		break;
 	case PLAYINIT2:
-		if (!hetStop.flg&&SceneChangeAdd(5))
+		if (!hetStop.flg && SceneChangeAdd(5))
 		{
 			scene = PLAYINIT;
-			player->TogeInit();
+			if (player->Get_Die_End())
+			{
+				Data_Load();
+			}
+			else
+			{
+				player->TogeInit();
+			}
 		}
 		hetStop.Conuter(10);
 		break;
@@ -280,7 +287,7 @@ void Game::Data_Load()
 	stage = meta_Data.stage;
 
 
-	map->Save_Date_Load(data_Num, stage);
+	map->Save_Date_Load(data_Num, stage,load);
 
 	player->SaveData_Load(map->map, data_Num);
 
@@ -393,16 +400,17 @@ void Game::Play_Scene()
 			{
 				scene = MAPSET;
 			}
-			if (player->Get_Toge_Flg())
+			if (player->Get_Toge_Flg() && !player->Die() || player->Get_Die_End())
 			{
 				scene = PLAYINIT2;
 			}
+
 		}
 		if (!time)
 		{
 			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
-			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(), 
-				player->Get_Max_Bomb_Num(),player->Get_Get_Guide(),player->game_object.GetPos(),controller_on);
+			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
+				player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(), controller_on);
 		}
 		hetStop.Conuter(8);
 	}
