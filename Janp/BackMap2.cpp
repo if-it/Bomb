@@ -10,7 +10,7 @@ BackMap2::~BackMap2()
 {
 }
 
-void BackMap2::Init(const int& stage)
+void BackMap2::Init(const int& stage, Load* load)
 {
 
 	for (int i = 0; i < 5; ++i)
@@ -23,6 +23,48 @@ void BackMap2::Init(const int& stage)
 		back_count2[i] = 0;
 	}
 
+
+	int map_type = stage - stage_S;
+	if (map_type < 0)
+	{
+		map_type *= -1;
+	}
+	if (map_type >= 100 && stage != 0)
+	{
+		for (int i = 0; i < BACKMAP2_TEX_NUM; ++i)
+		{
+			DeleteGraph(tex[i]);
+		}
+		for (int i = 0; i < 5; ++i)
+		{
+			DeleteGraph(stage2_Back_Tex[i]);
+		}
+		map_type = stage;
+		if (map_type >= 100 && map_type < 200)
+		{
+			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", BACKMAP2_TEX_NUM, BACKMAP2_TEX_NUM, 1, SIZE, SIZE, tex);
+		}
+		else if (map_type >= 200 && map_type < 300)
+		{
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back2.png", stage2_Back_Tex[3]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back3.png", stage2_Back_Tex[2]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back4.png", stage2_Back_Tex[1]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back5.png", stage2_Back_Tex[0]);
+		}
+		else if (map_type >= 300 && map_type < 400)
+		{
+			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", BACKMAP2_TEX_NUM, BACKMAP2_TEX_NUM, 1, SIZE, SIZE, tex);
+
+			//‰¼
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back2.png", stage2_Back_Tex[3]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back3.png", stage2_Back_Tex[2]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back4.png", stage2_Back_Tex[1]);
+			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back5.png", stage2_Back_Tex[0]);
+		}
+	}
+	stage_S = stage;
 	using namespace std;
 
 	backMap.clear();
@@ -41,6 +83,9 @@ void BackMap2::Init(const int& stage)
 		break;
 	case 200:
 		//fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage200.csv";
+		break;
+	case 300:
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage300.csv";
 		break;
 	default:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap - demo.csv";
@@ -80,7 +125,7 @@ void BackMap2::Init(const int& stage)
 
 void BackMap2::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", BACKMAP2_TEX_NUM, BACKMAP2_TEX_NUM, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", BACKMAP2_TEX_NUM, BACKMAP2_TEX_NUM, 1, SIZE, SIZE, tex);
 	load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
 	load->LoadTex("Load/Texture/Map/BackObj/Stage200Back2.png", stage2_Back_Tex[3]);
 	load->LoadTex("Load/Texture/Map/BackObj/Stage200Back3.png", stage2_Back_Tex[2]);
@@ -159,6 +204,9 @@ void BackMap2::Draw(const Vector2& sc, const Vector2& shake)
 				break;
 			case 7:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[6], true, true, shake, sc);
+				break;
+			case 8:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[7], true, true, shake, sc);
 				break;
 			default:
 				break;

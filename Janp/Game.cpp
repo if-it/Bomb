@@ -73,7 +73,7 @@ void Game::Init()
 
 	map->Init(stage, load);
 	backMap->Init(stage);
-	backMap2->Init(stage);
+	backMap2->Init(stage,load);
 
 	saveMana->Init(map->map);
 

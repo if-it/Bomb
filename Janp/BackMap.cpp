@@ -33,6 +33,9 @@ void BackMap::Init(const int& stage)
 	case 200:
 		//fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - Stage200.csv";
 		break;
+	case 300:
+		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - Stage300.csv";
+		break;
 	default:
 		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - demo.csv";
 		break;
@@ -71,7 +74,7 @@ void BackMap::Init(const int& stage)
 void BackMap::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap.png", BACKMAP_TEX_NUM, BACKMAP_TEX_NUM, 1, SIZE, SIZE, tex);
-	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap2.png", BACKMAP_TEX_NUM2, BACKMAP_TEX_NUM2, 1, SIZE*2, SIZE*2, tex2);
+	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap2.png", BACKMAP_TEX_NUM2, BACKMAP_TEX_NUM2, 1, SIZE * 2, SIZE * 2, tex2);
 }
 
 void BackMap::Update()
@@ -124,6 +127,15 @@ void BackMap::Draw(const Vector2& sc, const Vector2& shake)
 				break;
 			case 13:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[9], true, true, shake, sc);
+				break;
+			case 14:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[10], true, true, shake, sc);
+				break;
+			case 15:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[11], true, true, shake, sc);
+				break;
+			case 16:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[12], true, true, shake, sc);
 				break;
 			default:
 				break;

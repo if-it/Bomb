@@ -171,12 +171,19 @@ void Map::StageSet(const int& stage, Load* load)
 	case 200:
 		fileNama = "Load/Data/Map/Map/BombMap - Stage200.csv";
 		break;
+	case 300:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage300.csv";
+		break;
 	default:
 		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
 		break;
 	}
 	int map_type = stage - stage_S;
-	if (map_type < 100 && stage != 0)
+	if (map_type < 0)
+	{
+		map_type *= -1;
+	}
+	if (map_type >= 100 && stage != 0)
 	{
 		for (int i = 0; i < MAP_TEX_NUM; ++i)
 		{
@@ -185,6 +192,7 @@ void Map::StageSet(const int& stage, Load* load)
 		map_type = stage;
 		if (map_type >= 100 && map_type < 200)load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
 		else if (map_type >= 200 && map_type < 300)load->LoadAnimeTex("Load/Texture/Map/Map/Map2.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+		else if (map_type >= 300 && map_type < 400)load->LoadAnimeTex("Load/Texture/Map/Map/Map3.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
 	}
 	ifs.open(fileNama.c_str());
 	if (!ifs)
@@ -266,8 +274,12 @@ void Map::StageSet(const int& stage, Load* load)
 				{
 					for (int j = 0; j < 3; ++j)
 					{
-						if (map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 0 &&
-							map_over[n] && map_over[3 + j] && map[map_num[n]][map_num[3 + j]] != 3 &&
+						if (map_over[n] && map_over[3 + j] &&
+							map[map_num[n]][map_num[3 + j]] != 0 &&
+							map[map_num[n]][map_num[3 + j]] != 3 &&
+							map[map_num[n]][map_num[3 + j]] != 78 &&
+							!(map[map_num[n]][map_num[3 + j]] >= 25 && map[map_num[n]][map_num[3 + j]] <= 29) &&
+							!(map[map_num[n]][map_num[3 + j]] >= 35 && map[map_num[n]][map_num[3 + j]] <= 39) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 73 && map[map_num[n]][map_num[3 + j]] <= 77) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <= 7) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 80 && map[map_num[n]][map_num[3 + j]] <= 82))
@@ -635,7 +647,7 @@ void Map::StageSet(const int& stage, Load* load)
 
 void Map::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/Map3.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
 
 	load->LoadAnimeTex("Load/Texture/Map/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
 	load->LoadAnimeTex("Load/Texture/Map/Map/toge.png", 4, 4, 1, SIZE, SIZE, togeTex);

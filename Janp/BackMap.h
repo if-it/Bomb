@@ -1,7 +1,7 @@
 #pragma once
 #include "Draw.h"
 #include"Load.h"
-#define BACKMAP_TEX_NUM 10
+#define BACKMAP_TEX_NUM 13
 #define BACKMAP_TEX_NUM2 3
 
 class BackMap :

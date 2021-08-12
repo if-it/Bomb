@@ -1,7 +1,7 @@
 #pragma once
 #include "Draw.h"
 #include"Load.h"
-#define BACKMAP2_TEX_NUM 7
+#define BACKMAP2_TEX_NUM 8
 
 class BackMap2 :
     public Draw
@@ -9,7 +9,7 @@ class BackMap2 :
 public:
     BackMap2();
     ~BackMap2();
-    void Init(const int& stage);
+    void Init(const int& stage, Load* load);
     void Loading(Load* load);
     void Update(const Vector2& sc);
     void Draw(const Vector2& sc, const Vector2& shake);
@@ -23,5 +23,6 @@ private:
     Vector2 back_Sc2[5];
     int back_count[5];
     int back_count2[5];
+    int stage_S;
 };
 
