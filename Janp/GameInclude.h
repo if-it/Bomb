@@ -12,6 +12,7 @@
 #include"SaveMana.h"
 #include"ItemMana.h"
 #include"BackMap.h"
+#include"BackMap2.h"
 
 class GameInclude :public Draw
 {
@@ -44,6 +45,7 @@ protected:
 	SaveMana* saveMana = new SaveMana();
 	ItemMana* itemMana = new ItemMana();
 	BackMap* backMap = new BackMap();
+	BackMap2* backMap2 = new BackMap2();
 
 	bool controllerOnly;
 	bool drawScene;

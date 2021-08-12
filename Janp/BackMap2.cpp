@@ -1,19 +1,17 @@
-#include "BackMap.h"
+#include "BackMap2.h"
 #include<fstream>
 #include<sstream>
 
-
-BackMap::BackMap()
+BackMap2::BackMap2()
 {
 }
 
-BackMap::~BackMap()
+BackMap2::~BackMap2()
 {
 }
 
-void BackMap::Init(const int& stage)
+void BackMap2::Init(const int& stage)
 {
-
 	using namespace std;
 
 	backMap.clear();
@@ -25,20 +23,20 @@ void BackMap::Init(const int& stage)
 	switch (stage)
 	{
 	case 0:
-		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - demo.csv";
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - demo.csv";
 		break;
 	case 100:
-		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - Stage100.csv";
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage100.csv";
 		break;
 	default:
-		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - demo.csv";
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap - demo.csv";
 		break;
 	}
 
 	ifs.open(fileNama.c_str());
 	if (!ifs)
 	{
-		MessageBox(NULL, "BackMap", "MapDataのエラー", MB_OK);
+		MessageBox(NULL, "BackMap", "MapData2のエラー", MB_OK);
 
 		return;
 	}
@@ -62,20 +60,18 @@ void BackMap::Init(const int& stage)
 	}
 
 	ifs.close();
-
 }
 
-void BackMap::Loading(Load* load)
+void BackMap2::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap.png", BACKMAP_TEX_NUM, BACKMAP_TEX_NUM, 1, SIZE, SIZE, tex);
-	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap2.png", BACKMAP_TEX_NUM2, BACKMAP_TEX_NUM2, 1, SIZE*2, SIZE*2, tex2);
+	load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", BACKMAP2_TEX_NUM, BACKMAP2_TEX_NUM, 1, SIZE, SIZE, tex);
 }
 
-void BackMap::Update()
+void BackMap2::Update()
 {
 }
 
-void BackMap::Draw(const Vector2& sc, const Vector2& shake)
+void BackMap2::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int y = 0; y < (int)backMap.size(); ++y)
 	{
@@ -93,34 +89,16 @@ void BackMap::Draw(const Vector2& sc, const Vector2& shake)
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[2], true, true, shake, sc);
 				break;
 			case 4:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[0], true, true, shake, sc);
-				break;
-			case 5:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[1], true, true, shake, sc);
-				break;
-			case 6:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[2], true, true, shake, sc);
-				break;
-			case 7:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[3], true, true, shake, sc);
 				break;
-			case 8:
+			case 5:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[4], true, true, shake, sc);
 				break;
-			case 9:
+			case 6:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[5], true, true, shake, sc);
 				break;
-			case 10:
+			case 7:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[6], true, true, shake, sc);
-				break;
-			case 11:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[7], true, true, shake, sc);
-				break;
-			case 12:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[8], true, true, shake, sc);
-				break;
-			case 13:
-				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[9], true, true, shake, sc);
 				break;
 			default:
 				break;

@@ -106,6 +106,9 @@
     <Filter Include="BackMap\ヘッターファイル">
       <UniqueIdentifier>{3ae0001c-3d7e-4916-b07e-84983d5b0f0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\BackMap">
+      <UniqueIdentifier>{b7532232-f722-482f-9955-ccf45513b7bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -196,6 +199,9 @@
       <Filter>GameObjct\Item</Filter>
     </ClCompile>
     <ClCompile Include="BackMap.cpp">
+      <Filter>Map\BackMap</Filter>
+    </ClCompile>
+    <ClCompile Include="BackMap2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -285,6 +291,9 @@
       <Filter>GameObjct\Item</Filter>
     </ClInclude>
     <ClInclude Include="BackMap.h">
+      <Filter>Map\BackMap</Filter>
+    </ClInclude>
+    <ClInclude Include="BackMap2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

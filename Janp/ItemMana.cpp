@@ -188,7 +188,7 @@ void ItemMana::Init(std::vector<std::vector<int>>& map, const int& stage)
 
 void ItemMana::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Item.png", 5, 5, 1, SIZE, 40, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/Item.png", 5, 5, 1, SIZE, 40, tex);
 }
 
 void ItemMana::Update()

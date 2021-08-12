@@ -29,7 +29,7 @@ void SaveMana::Init(std::vector<std::vector<int>>& map)
 
 void SaveMana::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Save.png", 2, 2, 1, 128, 64, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/Save.png", 2, 2, 1, 128, 64, tex);
 }
 
 void SaveMana::Update()

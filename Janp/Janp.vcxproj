@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackMap.cpp" />
+    <ClCompile Include="BackMap2.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BombMana.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackMap.h" />
+    <ClInclude Include="BackMap2.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BombMana.h" />
     <ClInclude Include="Collision.h" />

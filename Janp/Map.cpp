@@ -180,8 +180,8 @@ void Map::StageSet(const int& stage, Load* load)
 			DeleteGraph(tex[i]);
 		}
 		map_type = stage;
-		if (map_type >= 100 && map_type < 200)load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
-		else if (map_type >= 200 && map_type < 300)load->LoadAnimeTex("Load/Texture/Map/Map2.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+		if (map_type >= 100 && map_type < 200)load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+		else if (map_type >= 200 && map_type < 300)load->LoadAnimeTex("Load/Texture/Map/Map/Map2.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
 	}
 	ifs.open(fileNama.c_str());
 	if (!ifs)
@@ -632,9 +632,9 @@ void Map::StageSet(const int& stage, Load* load)
 
 void Map::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
-	load->LoadAnimeTex("Load/Texture/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
-	load->LoadAnimeTex("Load/Texture/Map/toge.png", 4, 4, 1, SIZE, SIZE, togeTex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/toge.png", 4, 4, 1, SIZE, SIZE, togeTex);
 }
 
 void Map::FleMapInput()
