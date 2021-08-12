@@ -53,7 +53,7 @@ void Game::FirstInit()
 	game_end_flg = false;
 	debug_mode_flg = true;
 	scene = OPENING;
-	stage = 0;
+	stage = MAP_F;
 	player->player_mapset = 35;
 	Init();
 	time = false;
@@ -71,7 +71,7 @@ void Game::Init()
 	title_To_Play = false;
 	bombShake = Count();
 
-	map->Init(stage,load);
+	map->Init(stage, load);
 	backMap->Init(stage);
 	backMap2->Init(stage);
 
@@ -290,7 +290,7 @@ void Game::Data_Load()
 	stage = meta_Data.stage;
 
 
-	map->Save_Date_Load(data_Num, stage,load);
+	map->Save_Date_Load(data_Num, stage, load);
 
 	player->SaveData_Load(map->map, data_Num);
 
@@ -308,8 +308,7 @@ void Game::Stage_Init()
 
 void Game::Meta_Data_Init()
 {
-	if (debug_mode_flg) stage = 0;
-	else stage = 1;
+	stage = MAP_F;
 
 	meta_Data = { stage,0 };
 }
@@ -426,7 +425,7 @@ void Game::Play_Scene()
 void Game::Play_Scene_Update()
 {
 	map->Update();
-
+	backMap2->Update(sc);
 
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(bombShake.flg, bombMana);

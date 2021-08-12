@@ -168,6 +168,9 @@ void Map::StageSet(const int& stage, Load* load)
 	case 100:
 		fileNama = "Load/Data/Map/Map/BombMap - Stage100.csv";
 		break;
+	case 200:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage200.csv";
+		break;
 	default:
 		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
 		break;
@@ -633,6 +636,7 @@ void Map::StageSet(const int& stage, Load* load)
 void Map::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+
 	load->LoadAnimeTex("Load/Texture/Map/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
 	load->LoadAnimeTex("Load/Texture/Map/Map/toge.png", 4, 4, 1, SIZE, SIZE, togeTex);
 }

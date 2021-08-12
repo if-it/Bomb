@@ -1,5 +1,6 @@
 #pragma once
 #include"GameInclude.h"
+#define MAP_F 200
 class Game :public GameInclude
 {
 	using Vector2 = vector::Vector2;
