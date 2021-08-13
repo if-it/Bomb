@@ -87,6 +87,9 @@ void BackMap2::Init(const int& stage, Load* load)
 	case 300:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage300.csv";
 		break;
+	case 301:
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage301.csv";
+		break;
 	default:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap - demo.csv";
 		break;
@@ -95,7 +98,7 @@ void BackMap2::Init(const int& stage, Load* load)
 	ifs.open(fileNama.c_str());
 	if (!ifs)
 	{
-		MessageBox(NULL, "BackMap", "MapData2のエラー", MB_OK);
+		MessageBox(NULL, "BackMap2", "MapData2のエラー", MB_OK);
 
 		return;
 	}

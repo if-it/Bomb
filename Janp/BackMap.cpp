@@ -36,6 +36,9 @@ void BackMap::Init(const int& stage)
 	case 300:
 		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - Stage300.csv";
 		break;
+	case 301:
+		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - Stage301.csv";
+		break;
 	default:
 		fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - demo.csv";
 		break;

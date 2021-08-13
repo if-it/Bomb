@@ -74,13 +74,14 @@ void Game::Init()
 
 	map->Init(stage, load);
 	backMap->Init(stage);
-	backMap2->Init(stage,load);
+	backMap2->Init(stage, load);
 
 	saveMana->Init(map->map);
+	itemMana->Init(map->map, stage);
 
+	dust->Init(map->map, stage);
 
-	dust->Init(map->map,stage);
-	player->Init(map->map);
+	player->Init(map->map,sc);
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
@@ -296,7 +297,7 @@ void Game::Data_Load()
 
 	map->Save_Date_Load(data_Num, stage, load);
 
-	player->SaveData_Load(map->map, data_Num);
+	player->SaveData_Load(map->map, data_Num,sc);
 
 	itemMana->SaveData_Load(map->map, data_Num, stage);
 
@@ -305,6 +306,9 @@ void Game::Data_Load()
 
 void Game::Stage_Init()
 {
+	backMap->Init(stage);
+	backMap2->Init(stage, load);
+	saveMana->Init(map->map);
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
@@ -322,7 +326,7 @@ void Game::Delete_Data()
 	Meta_Data_Init();
 
 	map->Save_Data_Init();
-	player->Save_Data_Init(map->map);
+	player->Save_Data_Init(map->map,sc);
 	itemMana->Save_Data_Init();
 
 	Save();

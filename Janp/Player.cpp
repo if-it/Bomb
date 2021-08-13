@@ -41,7 +41,7 @@ Player::~Player()
 {
 }
 
-void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_Num)
+void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_Num, Vector2& sc)
 {
 
 	FILE* fp;
@@ -60,7 +60,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 	{
 		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
 
-		Init(map);
+		Init(map,sc);
 		max_Hp = save_Data.max_Hp;
 		max_Bomb_Num = save_Data.max_Bomb_Num;
 		game_object.SetPos(save_Data.pos);
@@ -70,7 +70,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 	}
 	else
 	{
-		Save_Data_Init(map);
+		Save_Data_Init(map,sc);
 	}
 
 
@@ -109,10 +109,10 @@ void Player::Save(const int& data_Num)
 	}
 }
 
-void Player::Save_Data_Init(std::vector<std::vector<int>>& map)
+void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
 	player_mapset = 35;
-	Init(map);
+	Init(map,sc);
 	max_Hp = 3;
 	max_Bomb_Num = 1;
 	ability1_flg = false;
@@ -121,7 +121,7 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map)
 
 
 //èâä˙âª
-void Player::Init(std::vector<std::vector<int>>& map)
+void Player::Init(std::vector<std::vector<int>>& map,Vector2&sc)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
 
@@ -157,6 +157,7 @@ void Player::Init(std::vector<std::vector<int>>& map)
 				{
 					sc2.y = (SIZE * (int)map.size()) - HEIGHT;
 				}
+				sc = sc2;
 			}
 		}
 	}
@@ -693,17 +694,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 2:
-				stage = 3;
+			case 300:
+				stage = 301;
 				break;
-			case 3:
-				stage = 2;
-				break;
-			case 6:
-				stage = 7;
-				break;
-			case 7:
-				stage = 6;
+			case  301:
+				stage = 300;
 				break;
 			default:
 				break;

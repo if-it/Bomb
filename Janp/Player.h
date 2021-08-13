@@ -11,7 +11,7 @@
 #define MAXTEX_Y 2
 #define BOMBVEC 10.0f
 #define EXJUMP 10.0f
-#define ABILITY_BOMB_SPEED 8.0f
+#define ABILITY_BOMB_SPEED 9.0f
 
 class Player :public MapColl
 {
@@ -19,9 +19,9 @@ public:
 	Player();
 	~Player();
 
-	void SaveData_Load(std::vector<std::vector<int>>& map, const int& data_Num);
-	void Save_Data_Init(std::vector<std::vector<int>>& map);
-	void Init(std::vector<std::vector<int>>& map);
+	void SaveData_Load(std::vector<std::vector<int>>& map, const int& data_Num, Vector2& sc);
+	void Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc);
+	void Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Loading(Load* load);
 	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb);
@@ -110,6 +110,7 @@ private:
 		bool ability1_flg;
 		Vector2 sc;
 		int die_Count;
+		bool ability2_flg;
 	};
 
 	Save_Data save_Data;
