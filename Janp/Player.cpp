@@ -60,7 +60,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 	{
 		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
 
-		Init(map,sc);
+		Init(map, sc);
 		max_Hp = save_Data.max_Hp;
 		max_Bomb_Num = save_Data.max_Bomb_Num;
 		game_object.SetPos(save_Data.pos);
@@ -70,7 +70,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 	}
 	else
 	{
-		Save_Data_Init(map,sc);
+		Save_Data_Init(map, sc);
 	}
 
 
@@ -82,7 +82,8 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 void Player::Save(const int& data_Num)
 {
 	hp = max_Hp;
-	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),ability1_flg,sc2,save_Data.die_Count };
+	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),
+		ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg };
 	std::string fileNama;
 	switch (data_Num)
 	{
@@ -112,16 +113,19 @@ void Player::Save(const int& data_Num)
 void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
 	player_mapset = 35;
-	Init(map,sc);
+	Init(map, sc);
 	max_Hp = 3;
 	max_Bomb_Num = 1;
 	ability1_flg = false;
 	save_Data.die_Count = 0;
+	save_Data.ability2_flg = false;
+	save_Data.ability3_flg = false;
+	save_Data.ability4_flg = false;
 }
 
 
 //èâä˙âª
-void Player::Init(std::vector<std::vector<int>>& map,Vector2&sc)
+void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
 
@@ -223,7 +227,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	{
 		ability = true;
 	}
-	if (key->keyFlame(KEY_INPUT_UP) > 0  || stickL.y > 10000)
+	if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
 	{
 		up = true;
 
@@ -235,7 +239,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		down = true;
 		bomb_Vec = Vector2(0.0f, 1.0f);
 	}
-	if ( key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
+	if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 	{
 		right = true;
 		game_object.game.lr = false;
@@ -243,7 +247,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 
 		bomb_Vec = Vector2(1.0f, -0.2f);
 	}
-	if ( key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
+	if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
 	{
 		left = true;
 		game_object.game.lr = true;
@@ -835,7 +839,7 @@ void Player::Coll(bool& hetstop)
 
 void Player::TogeInit()
 {
-	if (toge_flg[4]&&!Die())
+	if (toge_flg[4] && !Die())
 	{
 		game_object.SetPos(air_Pos);
 		game_object.game.allVec.vec = Vector2();

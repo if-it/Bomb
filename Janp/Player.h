@@ -111,6 +111,8 @@ private:
 		Vector2 sc;
 		int die_Count;
 		bool ability2_flg;
+		bool ability3_flg;
+		bool ability4_flg;
 	};
 
 	Save_Data save_Data;
