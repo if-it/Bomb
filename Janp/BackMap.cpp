@@ -137,6 +137,21 @@ void BackMap::Draw(const Vector2& sc, const Vector2& shake)
 			case 16:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[12], true, true, shake, sc);
 				break;
+			case 17:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[6], true, true, shake, sc);
+				break;
+			case 18:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[7], true, true, shake, sc);
+				break;
+			case 19:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[3], true, true, shake, sc);
+				break;
+			case 20:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[4], true, true, shake, sc);
+				break;
+			case 21:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex2[5], true, true, shake, sc);
+				break;
 			default:
 				break;
 			}

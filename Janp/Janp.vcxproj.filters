@@ -8,12 +8,6 @@
     <Filter Include="Map">
       <UniqueIdentifier>{ff4de6eb-8cd7-45e2-a7e7-6bd9e3c35748}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map\ソースファイル">
-      <UniqueIdentifier>{cb166ec9-0202-4714-86b5-dccd69e468a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map\ヘッダーファイル">
-      <UniqueIdentifier>{1fcf1a52-cf78-41f9-85e2-a91f9560ce0a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="アプリケーション">
       <UniqueIdentifier>{0b1678e9-0095-4462-9e13-3fc4c972c049}</UniqueIdentifier>
     </Filter>
@@ -40,12 +34,6 @@
     </Filter>
     <Filter Include="Effect">
       <UniqueIdentifier>{5e167748-70b5-467b-8e35-bc05ba95a223}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Effect\ソースファイル">
-      <UniqueIdentifier>{a9a5ce1b-2331-42b2-adee-d730471003ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Effect\ヘッダーファイル">
-      <UniqueIdentifier>{cc133d39-cf06-4a43-85b8-f626da645947}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameObjct\Enemy">
       <UniqueIdentifier>{90a073dd-b65b-4d0a-a0f2-511c50c9dc08}</UniqueIdentifier>
@@ -109,13 +97,37 @@
     <Filter Include="Map\BackMap">
       <UniqueIdentifier>{b7532232-f722-482f-9955-ccf45513b7bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\Duat">
+      <UniqueIdentifier>{7058bd18-733f-46bc-8cc3-fa1e1f3d67ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\Explosion">
+      <UniqueIdentifier>{602950b9-44c7-48ef-bce2-6e8f167f7390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\Explosion\ソースファイル">
+      <UniqueIdentifier>{a9a5ce1b-2331-42b2-adee-d730471003ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\Explosion\ヘッダーファイル">
+      <UniqueIdentifier>{cc133d39-cf06-4a43-85b8-f626da645947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Map">
+      <UniqueIdentifier>{62890ff0-0bf1-4cc3-a693-f527063f8ba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Map\ソースファイル">
+      <UniqueIdentifier>{cb166ec9-0202-4714-86b5-dccd69e468a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Map\ヘッダーファイル">
+      <UniqueIdentifier>{1fcf1a52-cf78-41f9-85e2-a91f9560ce0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\BackMap2">
+      <UniqueIdentifier>{903b46a9-cb17-4207-87d3-20475f65bea1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
-      <Filter>Map\ソースファイル</Filter>
+      <Filter>Map\Map\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="MapColl.cpp">
-      <Filter>Map\ソースファイル</Filter>
+      <Filter>Map\Map\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>アプリケーション\ソースファイル</Filter>
@@ -160,10 +172,10 @@
       <Filter>GameObjct\Player</Filter>
     </ClCompile>
     <ClCompile Include="Explosion.cpp">
-      <Filter>Effect\ソースファイル</Filter>
+      <Filter>Effect\Explosion\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="ExplosionMana.cpp">
-      <Filter>Effect\ソースファイル</Filter>
+      <Filter>Effect\Explosion\ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Enemy1.cpp">
       <Filter>GameObjct\Enemy\Enemy1\ソースファイル</Filter>
@@ -201,16 +213,19 @@
     <ClCompile Include="BackMap.cpp">
       <Filter>Map\BackMap</Filter>
     </ClCompile>
+    <ClCompile Include="Dust.cpp">
+      <Filter>Effect\Duat</Filter>
+    </ClCompile>
     <ClCompile Include="BackMap2.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Map\BackMap2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
-      <Filter>Map\ヘッダーファイル</Filter>
+      <Filter>Map\Map\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="MapColl.h">
-      <Filter>Map\ヘッダーファイル</Filter>
+      <Filter>Map\Map\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>アプリケーション\ヘッダーファイル</Filter>
@@ -255,10 +270,10 @@
       <Filter>GameObjct\Player</Filter>
     </ClInclude>
     <ClInclude Include="Explosion.h">
-      <Filter>Effect\ヘッダーファイル</Filter>
+      <Filter>Effect\Explosion\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="ExplosionMana.h">
-      <Filter>Effect\ヘッダーファイル</Filter>
+      <Filter>Effect\Explosion\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Enemy1.h">
       <Filter>GameObjct\Enemy\Enemy1\ヘッダーファイル</Filter>
@@ -293,8 +308,11 @@
     <ClInclude Include="BackMap.h">
       <Filter>Map\BackMap</Filter>
     </ClInclude>
+    <ClInclude Include="Dust.h">
+      <Filter>Effect\Duat</Filter>
+    </ClInclude>
     <ClInclude Include="BackMap2.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Map\BackMap2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

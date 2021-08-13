@@ -1,7 +1,8 @@
 #pragma once
 #include "Draw.h"
 #include"Load.h"
-#define BACKMAP2_TEX_NUM 8
+#define MAP1 7
+#define MAP2 12
 
 class BackMap2 :
     public Draw
@@ -15,7 +16,7 @@ public:
     void Draw(const Vector2& sc, const Vector2& shake);
 private:
     std::vector<std::vector<int>> backMap;
-    int tex[BACKMAP2_TEX_NUM];
+    int* tex;
     int stage2_Back_Tex[5];
     Vector2 back_Pos[5];
     Vector2 back_Pos2[5];

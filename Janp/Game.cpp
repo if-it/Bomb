@@ -27,6 +27,7 @@ Game::~Game()
 	delete itemMana;
 	delete backMap;
 	delete backMap2;
+	delete dust;
 
 	coll_List.clear();
 	InitGraph();
@@ -78,10 +79,12 @@ void Game::Init()
 	saveMana->Init(map->map);
 
 
+	dust->Init(map->map,stage);
 	player->Init(map->map);
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
+
 	ui->Init();
 	bombMana->Init();
 	exMana->Init();
@@ -110,6 +113,7 @@ bool Game::Loading()
 	itemMana->Loading(load);
 	backMap->Loading(load);
 	backMap2->Loading(load);
+	dust->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -438,6 +442,7 @@ void Game::Play_Scene_Update()
 	itemMana->Update();
 
 	exMana->Update();
+	dust->Update();
 
 }
 
@@ -590,6 +595,8 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 
 	//エフェクト関連
 	exMana->Draw(sc2, shake2);
+	dust->Draw(sc2, shake2);
+
 
 	//UI関連
 	ui->Draw(sc2, shake2);
