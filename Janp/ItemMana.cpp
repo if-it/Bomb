@@ -68,7 +68,7 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 		{
 			Save_Data_Init();
 		}
-		delete data_array;
+		delete[] data_array;
 	}
 	Init(map, stage);
 
@@ -141,7 +141,7 @@ void ItemMana::Save(const int& data_Num)
 			return;
 		}
 
-		delete data_array;
+		delete[] data_array;
 	}
 }
 

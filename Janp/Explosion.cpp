@@ -94,7 +94,7 @@ void Explosion::Update()
 
 				}
 			}
-			if (exAni.OneAnimation(5, 12))
+			if (exAni.OneAnimation(4, 12))
 			{
 				for (int i = 0; i < EXNUM; ++i)
 				{

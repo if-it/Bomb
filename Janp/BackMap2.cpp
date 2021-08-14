@@ -45,6 +45,7 @@ void BackMap2::Init(const int& stage, Load* load)
 		}
 		else if (map_type >= 200 && map_type < 300)
 		{
+			tex = new int[MAP1];
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back2.png", stage2_Back_Tex[3]);
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back3.png", stage2_Back_Tex[2]);
@@ -82,13 +83,16 @@ void BackMap2::Init(const int& stage, Load* load)
 		//fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage100.csv";
 		break;
 	case 200:
-		//fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage200.csv";
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage200.csv";
 		break;
 	case 300:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage300.csv";
 		break;
 	case 301:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage301.csv";
+		break;
+	case 302:
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage302.csv";
 		break;
 	default:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap - demo.csv";
@@ -223,6 +227,36 @@ void BackMap2::Draw(const Vector2& sc, const Vector2& shake)
 				break;
 			case 12:
 				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[11], true, true, shake, sc);
+				break;
+			case 13:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[12], true, true, shake, sc);
+				break;
+			case 14:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[13], true, true, shake, sc);
+				break;
+			case 15:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[14], true, true, shake, sc);
+				break;
+			case 16:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[15], true, true, shake, sc);
+				break;
+			case 17:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[16], true, true, shake, sc);
+				break;
+			case 18:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[17], true, true, shake, sc);
+				break;
+			case 19:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[18], true, true, shake, sc);
+				break;
+			case 20:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[19], true, true, shake, sc);
+				break;
+			case 21:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[20], true, true, shake, sc);
+				break;
+			case 22:
+				DrawTex(Vector2((float)(SIZE * x), (float)(SIZE * y)), tex[21], true, true, shake, sc);
 				break;
 			default:
 				break;
