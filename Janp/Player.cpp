@@ -74,6 +74,9 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 	}
 
 
+	animation.num = 4;
+	one_move_flg2 = true;
+	move = false;
 
 	hp = max_Hp;
 	now_Bomb_Num = max_Bomb_Num;
@@ -174,7 +177,6 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	air_Back_Count = Count();
 
 	animation = Animation();
-
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -823,7 +825,7 @@ void Player::TogeInit()
 		game_object.SetPos(air_Pos);
 		game_object.game.allVec.vec = Vector2();
 		sc2 = air_Sc;
-		animation.num = 0;
+		animation.num = 4;
 		game_object.game.rota = 0;
 		rota_Vec = 0;
 		invincible = Count();

@@ -90,7 +90,7 @@ protected:
 				{
 					counter.flg = true;
 					num++;
-					if (num == maxNum)
+					if (num >= maxNum)
 					{
 						num--;
 						oneAnimeFlg = true;

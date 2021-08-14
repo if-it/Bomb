@@ -45,6 +45,7 @@ void BackMap2::Init(const int& stage, Load* load)
 		}
 		else if (map_type >= 200 && map_type < 300)
 		{
+			tex = new int[MAP1];
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back2.png", stage2_Back_Tex[3]);
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back3.png", stage2_Back_Tex[2]);
@@ -82,7 +83,7 @@ void BackMap2::Init(const int& stage, Load* load)
 		//fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage100.csv";
 		break;
 	case 200:
-		//fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage200.csv";
+		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage200.csv";
 		break;
 	case 300:
 		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage300.csv";
