@@ -66,7 +66,7 @@ void Map::Save_Date_Load(const int& date_Num, const int& stage, Load* load)
 		{
 			Save_Data_Init();
 		}
-		delete data_array;
+		delete[] data_array;
 	}
 	Init(stage, load);
 }
@@ -145,7 +145,7 @@ void Map::Save(const int& data_Num)
 			return;
 		}
 
-		delete data_array;
+		delete[] data_array;
 	}
 }
 
@@ -176,6 +176,9 @@ void Map::StageSet(const int& stage, Load* load)
 		break;
 	case 301:
 		fileNama = "Load/Data/Map/Map/BombMap - Stage301.csv";
+		break;
+	case 302:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage302.csv";
 		break;
 	default:
 		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";

@@ -55,7 +55,7 @@ void Game::FirstInit()
 	debug_mode_flg = true;
 	scene = OPENING;
 	stage = MAP_F;
-	player->player_mapset = 35;
+	player->player_mapset = MAP_P_F;
 	Init();
 	time = false;
 	data_Num = 0;

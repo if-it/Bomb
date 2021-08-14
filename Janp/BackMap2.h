@@ -2,7 +2,7 @@
 #include "Draw.h"
 #include"Load.h"
 #define MAP1 7
-#define MAP2 12
+#define MAP2 22
 
 class BackMap2 :
     public Draw
