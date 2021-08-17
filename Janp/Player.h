@@ -94,6 +94,7 @@ private:
 	float rota_Vec;
 	bool save_Coll;
 	bool save_On;
+	bool space_On;
 	int get_Item;
 	bool get_guide;
 	bool die_End;

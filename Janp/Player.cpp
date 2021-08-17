@@ -32,6 +32,7 @@ Player::Player()
 	one_stop_flg = false;
 	save_Coll = false;
 	save_On = false;
+	space_On = false;
 	ability1_flg = false;
 	get_guide = false;
 }
