@@ -20,8 +20,11 @@ void UI::Init()
 	bomb_Ani_Num = 0;
 	bomb_One_Ani = false;
 	pal = 0;
-	guide = false;
-	guide_flg = false;
+	choice_guide = false;
+	choice_guide_flg = false;
+	space_guide = false;
+	space_guide_flg = false;
+	ui_on = false;
 }
 
 void UI::Loading(Load* load)
@@ -35,7 +38,8 @@ void UI::Loading(Load* load)
 }
 
 void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
-	const int& maxBomb, const bool& get_guide, const Vector2& playerPos, const bool& get_controller_flg)
+	const int& maxBomb, const bool& get_guide, const Vector2& playerPos,
+	const bool& get_controller_flg, const bool& space_on_flg)
 {
 	text_Back_Pos = Vector2(playerPos.x, playerPos.y - SIZE - 10);
 	max_Heart_Num = maxHp;
@@ -58,13 +62,20 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	heart_Ani.AnimationOn(14, 3);
 	bomb_Ani.AnimationOn(bomb_Ani_Num, 4);
 
-	guide = get_guide;
+	choice_guide = get_guide;
+	space_guide = space_on_flg;
+	ui_on = false;
+	if (choice_guide || space_guide)
+	{
+		ui_on = true;
+	}
 
 	const int PAL = 10;
-	if (guide && pal <= 128)
+	if (ui_on && pal <= 128)
 	{
 		pal += PAL;
-		guide_flg = true;
+		if (choice_guide)choice_guide_flg = true;
+		if (space_guide)space_guide_flg = true;
 		if (pal >= 128)
 		{
 			pal = 128;
@@ -76,7 +87,8 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 		if (pal <= 0)
 		{
 			pal = 0;
-			guide_flg = false;
+			if (choice_guide_flg)choice_guide_flg = false;
+			if (space_guide_flg) space_guide_flg = false;
 		}
 	}
 }
@@ -102,10 +114,18 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 		else DrawTex(pos, bombTex[4], true);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal / 2);
-	Box(text_Back_Pos, GetColor(0, 0, 0), guide_flg, true, shake, sc, 62, 30);
+	Box(text_Back_Pos, GetColor(0, 0, 0), ui_on, true, shake, sc, 62, 30);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-	DrawTex(text_Back_Pos, text_BackTex, guide_flg, true, shake, sc);
-	if(controller_flg) DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_X, guide_flg, true, shake, sc);
-	else DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Z, guide_flg, true, shake, sc);
+	DrawTex(text_Back_Pos, text_BackTex, ui_on, true, shake, sc);
+	if (controller_flg)
+	{
+		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_X, choice_guide_flg, true, shake, sc);
+		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_X, space_guide_flg, true, shake, sc);
+	}
+	else
+	{
+		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Z, choice_guide_flg, true, shake, sc);
+		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Z, space_guide_flg, true, shake, sc);
+	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

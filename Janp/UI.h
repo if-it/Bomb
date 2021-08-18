@@ -9,7 +9,8 @@ public:
 	void Init();
 	void Loading(Load* load);
 	void Update(const int& hp, const int& playerBomb, const int& maxHp, 
-		const int& maxBomb,const bool&get_guide,const Vector2& playerPos, const bool& get_controller_flg);
+		const int& maxBomb,const bool&get_guide,const Vector2& playerPos, 
+		const bool& get_controller_flg,const bool&space_on_flg);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
 private:
@@ -26,8 +27,11 @@ private:
 	int bomb_Num;
 	int max_Bomb_Num;
 	bool bomb_One_Ani;
-	bool guide;
-	bool guide_flg;
+	bool choice_guide;
+	bool choice_guide_flg;
+	bool space_guide;
+	bool space_guide_flg;
+	bool ui_on;
 	int pal;
 	bool controller_flg;
 

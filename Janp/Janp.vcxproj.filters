@@ -219,6 +219,9 @@
     <ClCompile Include="BackMap2.cpp">
       <Filter>Map\BackMap2</Filter>
     </ClCompile>
+    <ClCompile Include="MapBomb.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="BackMap2.h">
       <Filter>Map\BackMap2</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBomb.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

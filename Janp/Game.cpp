@@ -420,7 +420,8 @@ void Game::Play_Scene()
 		{
 			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
 			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
-				player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(), controller_on);
+				player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(), 
+				controller_on,player->Get_Space_On());
 		}
 		hetStop.Conuter(8);
 	}

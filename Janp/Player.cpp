@@ -479,6 +479,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	air = false;
 	vec = game_object.game.allVec.vec;
 	air_Count = 0;
+	space_On = false;
 
 	int SizeCut = 0;
 
@@ -600,6 +601,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			toge_flg[0] = true;
 		}
+		if (mapPoint == 90)
+		{
+			Space_On();
+		}
 	}
 	else if (pointNum == 1) //YŽ²
 	{
@@ -630,6 +635,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			game_object.game.rota = 0;
 			rota_Vec = 0;
 		}
+		if (mapPoint == 90)
+		{
+			Space_On();
+		}
 	}
 
 	else if (pointNum == 2)//XŽ²
@@ -650,6 +659,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			toge_flg[2] = true;
 		}
+		if (mapPoint == 90)
+		{
+			Space_On();
+		}
 	}
 
 	else if (pointNum == 3)//XŽ²
@@ -669,6 +682,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (TOGE)
 		{
 			toge_flg[3] = true;
+		}
+		if (mapPoint == 90)
+		{
+			Space_On();
 		}
 	}
 	else if (pointNum == 4)//’†S
@@ -747,6 +764,9 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		case 66:
 			//clear = true;
 			break;
+		case 90:
+			Space_On();
+			break;
 		default:
 			break;
 		}
@@ -771,6 +791,14 @@ void Player::SubHp(int subHp, bool& hetstop)
 	{
 		//Ž€–S‰‰o
 		die_End = true;
+	}
+}
+
+void Player::Space_On()
+{
+	if (now_Bomb_Num > 0)
+	{
+		space_On = true;
 	}
 }
 
