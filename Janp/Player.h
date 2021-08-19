@@ -46,6 +46,7 @@ public:
 	bool& Get_Get_Guide() { return get_guide; }
 	bool& Get_Space_On() { return space_On; }
 	bool Get_Die_End() { return die_End; }
+	bool& Get_Switch_On() { return save_Data.switch_On; }
 
 	GameObject ability1;
 private:
@@ -100,6 +101,7 @@ private:
 	int get_Item;
 	bool get_guide;
 	bool die_End;
+	bool switch_Coll;
 
 	//“_–Å
 	bool blinking;
@@ -116,6 +118,8 @@ private:
 		bool ability2_flg;
 		bool ability3_flg;
 		bool ability4_flg;
+		bool switch_On;
+
 	};
 
 	Save_Data save_Data;

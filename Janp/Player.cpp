@@ -35,6 +35,7 @@ Player::Player()
 	space_On = false;
 	ability1_flg = false;
 	get_guide = false;
+	switch_Coll = false;
 }
 
 
@@ -87,7 +88,7 @@ void Player::Save(const int& data_Num)
 {
 	hp = max_Hp;
 	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),
-		ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg };
+		ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg,save_Data.switch_On };
 	std::string fileNama;
 	switch (data_Num)
 	{
@@ -125,6 +126,7 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	save_Data.ability2_flg = false;
 	save_Data.ability3_flg = false;
 	save_Data.ability4_flg = false;
+	save_Data.switch_On = false;
 }
 
 
@@ -265,6 +267,11 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		if (save_Coll)
 		{
 			save_On = true;
+		}
+		if (switch_Coll)
+		{
+			if (save_Data.switch_On)save_Data.switch_On = false;
+			else save_Data.switch_On = true;
 		}
 		if (get_Item == 0 && (item_flg == 1 || item_flg == 2))
 		{
@@ -480,6 +487,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	vec = game_object.game.allVec.vec;
 	air_Count = 0;
 	space_On = false;
+	switch_Coll = false;
 
 	int SizeCut = 0;
 
@@ -605,6 +613,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
+		if (mapPoint == 85)
+		{
+			switch_Coll = true;
+		}
 	}
 	else if (pointNum == 1) //Yé≤
 	{
@@ -639,6 +651,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
+		if (mapPoint == 85)
+		{
+			switch_Coll = true;
+		}
 	}
 
 	else if (pointNum == 2)//Xé≤
@@ -663,6 +679,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
+		if (mapPoint == 85)
+		{
+			switch_Coll = true;
+		}
 	}
 
 	else if (pointNum == 3)//Xé≤
@@ -686,6 +706,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (mapPoint == 90)
 		{
 			Space_On();
+		}
+		if (mapPoint == 85)
+		{
+			switch_Coll = true;
 		}
 	}
 	else if (pointNum == 4)//íÜêS
@@ -733,7 +757,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -743,7 +767,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -753,7 +777,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -763,6 +787,9 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			break;
 		case 66:
 			//clear = true;
+			break;
+		case 85:
+			switch_Coll = true;
 			break;
 		case 90:
 			Space_On();
@@ -801,6 +828,7 @@ void Player::Space_On()
 		space_On = true;
 	}
 }
+
 
 void Player::Coll(bool& hetstop)
 {

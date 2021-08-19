@@ -14,6 +14,7 @@
 #include"BackMap.h"
 #include"BackMap2.h"
 #include"Dust.h"
+#include"MapBombMana.h"
 
 class GameInclude :public Draw
 {
@@ -48,6 +49,7 @@ protected:
 	BackMap* backMap = new BackMap();
 	BackMap2* backMap2 = new BackMap2();
 	Dust* dust = new Dust();
+	MapBombMana* mapBombMana = new MapBombMana();
 
 	bool controllerOnly;
 	bool drawScene;

@@ -28,6 +28,7 @@ Game::~Game()
 	delete backMap;
 	delete backMap2;
 	delete dust;
+	delete mapBombMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -85,6 +86,7 @@ void Game::Init()
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
+	mapBombMana->Init(map->map);
 
 	ui->Init();
 	bombMana->Init();
@@ -115,6 +117,7 @@ bool Game::Loading()
 	backMap->Loading(load);
 	backMap2->Loading(load);
 	dust->Loading(load);
+	mapBombMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -312,6 +315,7 @@ void Game::Stage_Init()
 	enemy1Mana->Init(map->map);
 	enemy2->Init(map->map);
 	fuse->Init(map->map);
+	mapBombMana->Init(map->map);
 }
 
 void Game::Meta_Data_Init()
@@ -445,6 +449,7 @@ void Game::Play_Scene_Update()
 	fuse->Update(map->map, bombMana);
 	saveMana->Update();
 	itemMana->Update();
+	mapBombMana->Update();
 
 	exMana->Update();
 	dust->Update();
@@ -505,6 +510,12 @@ void Game::Obj_Coll_Update()
 		coll_List.push_back(&itemMana->item[i].game_object);
 	}
 
+	//MapBomb
+	for (int i = 0; i < (int)mapBombMana->mapBomb.size(); ++i)
+	{
+		coll_List.push_back(&mapBombMana->mapBomb[i].game_object);
+	}
+
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
@@ -537,10 +548,13 @@ void Game::Obj_Coll_Update()
 	enemy2->Coll(exMana->ex);
 	saveMana->Coll();
 	itemMana->Coll(player->Get_Get_Item());
+	mapBombMana->Coll(bombShake.flg, con,player->Get_Switch_On());
+
 
 	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
 
 	bombMana->Coll_End_Set(exMana);
+	mapBombMana->Coll_End_Set(exMana);
 
 }
 
@@ -591,6 +605,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	fuse->Draw(sc2, shake2);
 	saveMana->Draw(sc2, shake2);
 	itemMana->Draw(sc2, shake2);
+	mapBombMana->Draw(sc2, shake2);
 
 	//オブジェクト関連
 	enemy1Mana->Draw(sc2, shake2);
