@@ -1,6 +1,6 @@
 #pragma once
 #include"GameInclude.h"
-#define MAP_F 0
+#define MAP_F 300
 #define MAP_P_F 35
 class Game :public GameInclude
 {

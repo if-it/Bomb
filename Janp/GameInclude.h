@@ -15,6 +15,7 @@
 #include"BackMap2.h"
 #include"Dust.h"
 #include"MapBombMana.h"
+#include"MapSwitch.h"
 
 class GameInclude :public Draw
 {
@@ -50,6 +51,7 @@ protected:
 	BackMap2* backMap2 = new BackMap2();
 	Dust* dust = new Dust();
 	MapBombMana* mapBombMana = new MapBombMana();
+	MapSwitch* mapSwitch = new MapSwitch();
 
 	bool controllerOnly;
 	bool drawScene;

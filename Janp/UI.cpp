@@ -33,8 +33,12 @@ void UI::Loading(Load* load)
 	load->LoadAnimeTex("Load/Texture/UI/BombUI.png", 5, 5, 1, SIZE, SIZE, bombTex);
 	load->LoadTex("Load/Texture/UI/UI_Background.png", backgroundTex);
 	load->LoadTex("Load/Texture/UI/text_backUI.png", text_BackTex);
+
 	load->LoadTex("Load/Texture/UI/Key_Z.png", key_Z);
+	load->LoadTex("Load/Texture/UI/Key_Space.png", key_Space);
+
 	load->LoadTex("Load/Texture/UI/Button_X.png", button_X);
+	load->LoadTex("Load/Texture/UI/Button_A.png", button_A);
 }
 
 void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
@@ -70,7 +74,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 		ui_on = true;
 	}
 
-	const int PAL = 10;
+	const int PAL = 9;
 	if (ui_on && pal <= 128)
 	{
 		pal += PAL;
@@ -83,7 +87,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	}
 	else
 	{
-		pal -= PAL * 2;
+		pal -= PAL;
 		if (pal <= 0)
 		{
 			pal = 0;
@@ -113,19 +117,18 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 		if (i < bomb_Num)DrawTex(pos, bombTex[bomb_Ani.num], true);
 		else DrawTex(pos, bombTex[4], true);
 	}
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal / 2);
-	Box(text_Back_Pos, GetColor(0, 0, 0), ui_on, true, shake, sc, 62, 30);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+	Box(text_Back_Pos, GetColor(0, 0, 0), ui_on, true, shake, sc, 62, 30);
 	DrawTex(text_Back_Pos, text_BackTex, ui_on, true, shake, sc);
 	if (controller_flg)
 	{
 		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_X, choice_guide_flg, true, shake, sc);
-		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_X, space_guide_flg, true, shake, sc);
+		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_A, space_guide_flg, true, shake, sc);
 	}
 	else
 	{
 		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Z, choice_guide_flg, true, shake, sc);
-		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Z, space_guide_flg, true, shake, sc);
+		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Space, space_guide_flg, true, shake, sc);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

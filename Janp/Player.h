@@ -101,7 +101,6 @@ private:
 	int get_Item;
 	bool get_guide;
 	bool die_End;
-	bool switch_Coll;
 
 	//“_–Å
 	bool blinking;

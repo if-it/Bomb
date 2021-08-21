@@ -189,6 +189,7 @@ void Fuse::Init(std::vector<std::vector<int>>& map)
 						map[map_num[n]][map_num[3 + j]] != 0 &&
 						map[map_num[n]][map_num[3 + j]] != 3 &&
 						map[map_num[n]][map_num[3 + j]] != 78 &&
+						map[map_num[n]][map_num[3 + j]] != 85 &&
 						!(map[map_num[n]][map_num[3 + j]] >= 25 && map[map_num[n]][map_num[3 + j]] <= 29) &&
 						!(map[map_num[n]][map_num[3 + j]] >= 35 && map[map_num[n]][map_num[3 + j]] <= 39) &&
 						!(map[map_num[n]][map_num[3 + j]] >= 73 && map[map_num[n]][map_num[3 + j]] <= 77) &&

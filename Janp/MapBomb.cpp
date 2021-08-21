@@ -17,16 +17,17 @@ void MapBomb::Init(const Vector2& pos)
 }
 
 
-void MapBomb::Update()
+void MapBomb::Update(const bool& switch_on)
 {
 	bomb_count.Conuter(60 * 3);
-	if (bomb_count.flg)
+
+	if (!switch_on)
 	{
-		//アニメーション
+		ani.num = 4;
 	}
-	else
+	else if (!bomb_count.flg)
 	{
-		//アニメーション
+		ani.AnimationOn(10, 4);
 	}
 }
 
@@ -41,6 +42,7 @@ void MapBomb::Coll(bool& shakeflg, Controller* con, const bool& switch_on)
 			bomb_count.flg = true;
 			exSpawn = true;
 			con->Shake(1000, 300);
+			ani.num = 4;
 		}
 	}
 }
@@ -56,5 +58,5 @@ void MapBomb::Coll_End_Set(ExplosionMana* ex)
 
 void MapBomb::Draw(const Vector2& sc, const Vector2& shake, int* tex)
 {
-	DrawTex(game_object, tex[0], true, shake, sc);
+	DrawTex(game_object, tex[ani.num], true, shake, sc);
 }

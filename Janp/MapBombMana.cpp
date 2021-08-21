@@ -27,14 +27,14 @@ void MapBombMana::Init(std::vector<std::vector<int>>& map)
 
 void MapBombMana::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Bomb/Bomb.png", 8, 8, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/MapBomb.png", MAPBOMBTEX, MAPBOMBTEX, 1, SIZE, SIZE, tex);
 }
 
-void MapBombMana::Update()
+void MapBombMana::Update(const bool& switch_on)
 {
 	for (int i = 0; i < (int)mapBomb.size(); ++i)
 	{
-		mapBomb[i].Update();
+		mapBomb[i].Update(switch_on);
 	}
 }
 

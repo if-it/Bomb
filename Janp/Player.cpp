@@ -35,7 +35,6 @@ Player::Player()
 	space_On = false;
 	ability1_flg = false;
 	get_guide = false;
-	switch_Coll = false;
 }
 
 
@@ -268,11 +267,6 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		{
 			save_On = true;
 		}
-		if (switch_Coll)
-		{
-			if (save_Data.switch_On)save_Data.switch_On = false;
-			else save_Data.switch_On = true;
-		}
 		if (get_Item == 0 && (item_flg == 1 || item_flg == 2))
 		{
 			get_Item = 1;
@@ -391,12 +385,12 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		get_Item = 2;
 		if (item_flg == 1)
 		{
-			max_Hp++;
-			hp++;
+			max_Bomb_Num++;
 		}
 		else if (item_flg == 2)
 		{
-			max_Bomb_Num++;
+			max_Hp++;
+			hp++;
 		}
 	}
 
@@ -487,7 +481,6 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	vec = game_object.game.allVec.vec;
 	air_Count = 0;
 	space_On = false;
-	switch_Coll = false;
 
 	int SizeCut = 0;
 
@@ -613,10 +606,6 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
-		if (mapPoint == 85)
-		{
-			switch_Coll = true;
-		}
 	}
 	else if (pointNum == 1) //Yé≤
 	{
@@ -651,10 +640,6 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
-		if (mapPoint == 85)
-		{
-			switch_Coll = true;
-		}
 	}
 
 	else if (pointNum == 2)//Xé≤
@@ -679,10 +664,6 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
-		if (mapPoint == 85)
-		{
-			switch_Coll = true;
-		}
 	}
 
 	else if (pointNum == 3)//Xé≤
@@ -706,10 +687,6 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (mapPoint == 90)
 		{
 			Space_On();
-		}
-		if (mapPoint == 85)
-		{
-			switch_Coll = true;
 		}
 	}
 	else if (pointNum == 4)//íÜêS
@@ -787,9 +764,6 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			break;
 		case 66:
 			//clear = true;
-			break;
-		case 85:
-			switch_Coll = true;
 			break;
 		case 90:
 			Space_On();

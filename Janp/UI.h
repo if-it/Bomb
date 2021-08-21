@@ -18,7 +18,10 @@ private:
 	int bombTex[5];
 	int text_BackTex;
 	int key_Z;
+	int key_Space;
 	int button_X;
+	int button_A;
+
 
 	int backgroundTex;
 	int bomb_Ani_Num;

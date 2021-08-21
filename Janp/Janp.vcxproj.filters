@@ -121,6 +121,12 @@
     <Filter Include="Map\BackMap2">
       <UniqueIdentifier>{903b46a9-cb17-4207-87d3-20475f65bea1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\MapBomb">
+      <UniqueIdentifier>{cbf22e25-4890-4022-a0c9-7448da21d7c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Switch">
+      <UniqueIdentifier>{086ce63a-8fcf-4d6a-80ac-2c6a2e77ef1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -220,10 +226,13 @@
       <Filter>Map\BackMap2</Filter>
     </ClCompile>
     <ClCompile Include="MapBomb.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Map\MapBomb</Filter>
     </ClCompile>
     <ClCompile Include="MapBombMana.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Map\MapBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSwitch.cpp">
+      <Filter>Map\Switch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,10 +330,13 @@
       <Filter>Map\BackMap2</Filter>
     </ClInclude>
     <ClInclude Include="MapBomb.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Map\MapBomb</Filter>
     </ClInclude>
     <ClInclude Include="MapBombMana.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Map\MapBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSwitch.h">
+      <Filter>Map\Switch</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
