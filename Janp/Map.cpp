@@ -171,6 +171,27 @@ void Map::StageSet(const int& stage, Load* load)
 	case 200:
 		fileNama = "Load/Data/Map/Map/BombMap - Stage200.csv";
 		break;
+	case 201:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage201.csv";
+		break;
+	case 202:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage202.csv";
+		break;
+	case 203:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage203.csv";
+		break;
+	case 204:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage204.csv";
+		break;
+	case 205:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage205.csv";
+		break;
+	case 206:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage206.csv";
+		break;
+	case 207:
+		fileNama = "Load/Data/Map/Map/BombMap - Stage207.csv";
+		break;
 	case 300:
 		fileNama = "Load/Data/Map/Map/BombMap - Stage300.csv";
 		break;

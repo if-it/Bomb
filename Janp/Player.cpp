@@ -693,6 +693,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	{
 		switch (mapPoint)
 		{
+		case 24:
+			player_mapset = 34;
+			stageChange = true;
+
+			break;
 		case 25:
 			player_mapset = 35;
 			stageChange = true;
