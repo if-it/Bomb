@@ -16,8 +16,8 @@ void BackMap2::Init(const int& stage, Load* load)
 
 	for (int i = 0; i < 5; ++i)
 	{
-		back_Pos[i] = Vector2(0, -HEIGHT);
-		back_Pos2[i] = Vector2(WIDTH * 2, -HEIGHT);
+		back_Pos[i] = Vector2(0, -726);
+		back_Pos2[i] = Vector2(1280 * 2, -726);
 		back_Sc[i] = Vector2();
 		back_Sc2[i] = Vector2();
 		back_count[i] = 0;
@@ -25,12 +25,12 @@ void BackMap2::Init(const int& stage, Load* load)
 	}
 
 
-	int map_type = stage - stage_S;
+	int map_type = (int)(stage / 100) - (int)(stage_S / 100);
 	if (map_type < 0)
 	{
 		map_type *= -1;
 	}
-	if (map_type >= 100 && stage != 0)
+	if (map_type >= 1 && stage != 0)
 	{
 		delete[] tex;
 		for (int i = 0; i < 5; ++i)
@@ -73,57 +73,15 @@ void BackMap2::Init(const int& stage, Load* load)
 	ifstream ifs;
 	string fileNama;
 
+	fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage";
+	fileNama += to_string(stage);
+	fileNama += ".csv";
 
-	switch (stage)
-	{
-	case 0:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - demo.csv";
-		break;
-	case 100:
-		//fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage100.csv";
-		break;
-	case 200:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage200.csv";
-		break;
-	case 201:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage201.csv";
-		break;
-	case 202:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage202.csv";
-		break;
-	case 203:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage203.csv";
-		break;
-	case 204:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage204.csv";
-		break;
-	case 205:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage205.csv";
-		break;
-	case 206:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage206.csv";
-		break;
-	case 207:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage207.csv";
-		break;
-	case 300:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage300.csv";
-		break;
-	case 301:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage301.csv";
-		break;
-	case 302:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap2 - Stage302.csv";
-		break;
-	default:
-		fileNama = "Load/Data/Map/BackMap2/Bomb_BackMap - demo.csv";
-		break;
-	}
 
 	ifs.open(fileNama.c_str());
 	if (!ifs)
 	{
-		MessageBox(NULL, "BackMap2", "MapData2のエラー", MB_OK);
+		//MessageBox(NULL, "BackMap2", "MapData2のエラー", MB_OK);
 
 		return;
 	}
@@ -169,28 +127,29 @@ void BackMap2::Update(const Vector2& sc)
 		back_Sc[i] = Vector2(sc.x / (2 * (6 - (i + 1))), 0);
 		back_Sc2[i] = Vector2(sc.x / (2 * (6 - (i + 1))), 0);
 
-		if (back_Sc[i].x >= WIDTH * 2 * (back_count[i] + 1))
+
+		if (back_Sc[i].x >= 1280 * 2 * (back_count[i] + 1))
 		{
-			back_Pos[i].x += WIDTH * 4 * (back_count[i] + 1);
+			back_Pos[i].x += 1280 * 4 * (back_count[i] + 1);
 			++back_count[i];
 		}
-		if (back_Sc[i].x <= -WIDTH * 2 * (back_count[i] + 1))
+		if (back_Sc[i].x <= -1280 * 2 * (back_count[i] + 1))
 		{
-			back_Pos[i].x += -WIDTH * 4 * (back_count[i] + 1);
+			back_Pos[i].x += -1280 * 4 * (back_count[i] + 1);
 			--back_count[i];
 			if (back_count[i] <= 0)
 			{
 				back_count[i] = 0;
 			}
 		}
-		if (back_Sc2[i].x >= WIDTH * 4 * (back_count2[i] + 1))
+		if (back_Sc2[i].x >= 1280 * 4 * (back_count2[i] + 1))
 		{
-			back_Pos2[i].x += WIDTH * 8 * (back_count2[i] + 1);
+			back_Pos2[i].x += 1280 * 8 * (back_count2[i] + 1);
 			++back_count2[i];
 		}
-		if (back_Sc2[i].x <= -WIDTH * 4 * (back_count2[i] + 1))
+		if (back_Sc2[i].x <= -1280 * 4 * (back_count2[i] + 1))
 		{
-			back_Pos2[i].x += -WIDTH * 8 * (back_count2[i] + 1);
+			back_Pos2[i].x += -1280 * 8 * (back_count2[i] + 1);
 			--back_count2[i];
 			if (back_count2[i] <= 0)
 			{

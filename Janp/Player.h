@@ -11,7 +11,7 @@
 #define MAXTEX_Y 2
 #define BOMBVEC 10.0f
 #define EXJUMP 10.0f
-#define ABILITY_BOMB_SPEED 9.0f
+#define ABILITY_BOMB_SPEED 10.0f
 
 class Player :public MapColl
 {
@@ -51,6 +51,7 @@ public:
 	GameObject ability1;
 private:
 	void Move(bool& shakeflg, BombMana* bomb);
+	void Bomb_Spawn(BombMana* bomb);
 	void Blow(const float& blowX, const float& blowY, const bool& lr,bool& hetstop, int subHp);
 	void Spine(bool& hetstop);
 	void SubHp(int subHp,bool& hetstop);
@@ -81,15 +82,13 @@ private:
 	bool down;
 	bool left;
 	bool right;
-	bool ability;
-	bool ability1_flg;
+	bool ability1_on;
 
 	int animation_Count_Num;
 	int hp;
 	int max_Hp;
 	int max_Bomb_Num;
 	int now_Bomb_Num;
-	int damage;
 	int air_Count;
 	bool bomb_Janp;
 	bool air_Array[3];
@@ -110,6 +109,7 @@ private:
 	{
 		int max_Hp;
 		int max_Bomb_Num;
+		int damage;
 		Vector2 pos;
 		bool ability1_flg;
 		Vector2 sc;

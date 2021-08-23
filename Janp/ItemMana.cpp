@@ -155,7 +155,7 @@ void ItemMana::Init(std::vector<std::vector<int>>& map, const int& stage)
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 			bool same = false;
-			if (map[y][x] == 80 || map[y][x] == 81)
+			if ((map[y][x] >= 80 && map[y][x] <= 83)||(map[y][x] >= 92 && map[y][x] <= 93))
 			{
 				for (int i = 0; i < save_Data_Ori.size(); ++i)
 				{
@@ -170,11 +170,37 @@ void ItemMana::Init(std::vector<std::vector<int>>& map, const int& stage)
 					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Item1");
 					item.push_back(InitItem);
 				}
-				if (map[y][x] == 81 && !same)
+				else if (map[y][x] == 81 && !same)
 				{
 					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Item2");
 					item.push_back(InitItem);
 				}
+				else if (map[y][x] == 82 && !same)
+				{
+					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Item3");
+					item.push_back(InitItem);
+				}
+				else if (map[y][x] == 83 && !same)
+				{
+					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Item4");
+					item.push_back(InitItem);
+				}
+				else if (map[y][x] == 92 && !same)
+				{
+					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Ability1");
+					item.push_back(InitItem);
+				}
+				else if (map[y][x] == 93 && !same)
+				{
+					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Ability2");
+					item.push_back(InitItem);
+				}
+				else if (map[y][x] == 94 && !same)
+				{
+					InitItem.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)), stage, x, y, "Ability3");
+					item.push_back(InitItem);
+				}
+
 			}
 		}
 	}

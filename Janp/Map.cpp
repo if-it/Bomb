@@ -160,57 +160,18 @@ void Map::StageSet(const int& stage, Load* load)
 	string fileNama;
 
 	//マップチップデータ
-	switch (stage)
-	{
-	case 0:
-		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
-		break;
-	case 100:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage100.csv";
-		break;
-	case 200:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage200.csv";
-		break;
-	case 201:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage201.csv";
-		break;
-	case 202:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage202.csv";
-		break;
-	case 203:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage203.csv";
-		break;
-	case 204:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage204.csv";
-		break;
-	case 205:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage205.csv";
-		break;
-	case 206:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage206.csv";
-		break;
-	case 207:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage207.csv";
-		break;
-	case 300:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage300.csv";
-		break;
-	case 301:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage301.csv";
-		break;
-	case 302:
-		fileNama = "Load/Data/Map/Map/BombMap - Stage302.csv";
-		break;
-	default:
-		fileNama = "Load/Data/Map/Map/BombMap - demo.csv";
-		break;
-	}
-	int map_type = stage - stage_S;
+
+	fileNama = "Load/Data/Map/Map/BombMap - Stage";
+	fileNama += to_string(stage);
+	fileNama += ".csv";
+
+
+	int map_type = (int)(stage/100) - (int)(stage_S/100);
 	if (map_type < 0)
 	{
 		map_type *= -1;
 	}
-	if (map_type >= 100 && stage != 0)
+	if (map_type >= 1 && stage != 0)
 	{
 		for (int i = 0; i < MAP_TEX_NUM; ++i)
 		{
@@ -306,11 +267,13 @@ void Map::StageSet(const int& stage, Load* load)
 							map[map_num[n]][map_num[3 + j]] != 3 &&
 							map[map_num[n]][map_num[3 + j]] != 78 &&
 							map[map_num[n]][map_num[3 + j]] != 85 &&
-							!(map[map_num[n]][map_num[3 + j]] >= 25 && map[map_num[n]][map_num[3 + j]] <= 29) &&
+							!(map[map_num[n]][map_num[3 + j]] >= 24 && map[map_num[n]][map_num[3 + j]] <= 29) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 35 && map[map_num[n]][map_num[3 + j]] <= 39) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 73 && map[map_num[n]][map_num[3 + j]] <= 77) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <= 7) &&
-							!(map[map_num[n]][map_num[3 + j]] >= 80 && map[map_num[n]][map_num[3 + j]] <= 82))
+							!(map[map_num[n]][map_num[3 + j]] >= 80 && map[map_num[n]][map_num[3 + j]] <= 85)&&
+							!(map[map_num[n]][map_num[3 + j]] >= 90 && map[map_num[n]][map_num[3 + j]] <= 94)&&
+							map[map_num[n]][map_num[3 + j]] < 100)
 						{
 							map_check[n][j] = true;
 						}

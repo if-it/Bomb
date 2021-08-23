@@ -216,6 +216,9 @@ void Game::Update()
 			scene = PLAYINIT;
 			if (player->Get_Die_End())
 			{
+				bombMana->Init();
+				exMana->Init();
+
 				Data_Load();
 			}
 			else

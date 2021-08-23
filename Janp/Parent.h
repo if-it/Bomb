@@ -6,8 +6,8 @@
 #include"Key.h"
 #include<vector>
 
-#define WIDTH 1280
-#define HEIGHT 768
+#define WIDTH 1440
+#define HEIGHT 810
 
 #define SIZE 32
 

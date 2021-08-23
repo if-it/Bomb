@@ -10,9 +10,8 @@ Player::Player()
 	max_Bomb_Num = 1;
 	max_Hp = 3;
 	hp = max_Hp;
-	damage = 1;
 	blow = Count();
-	ability = false;
+	ability1_on = false;
 	up = false;
 	down = false;
 	left = false;
@@ -33,7 +32,6 @@ Player::Player()
 	save_Coll = false;
 	save_On = false;
 	space_On = false;
-	ability1_flg = false;
 	get_guide = false;
 }
 
@@ -65,7 +63,6 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 		max_Hp = save_Data.max_Hp;
 		max_Bomb_Num = save_Data.max_Bomb_Num;
 		game_object.SetPos(save_Data.pos);
-		ability1_flg = save_Data.ability1_flg;
 		sc2 = save_Data.sc;
 		fclose(fp);
 	}
@@ -86,8 +83,8 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 void Player::Save(const int& data_Num)
 {
 	hp = max_Hp;
-	save_Data = { max_Hp,max_Bomb_Num,game_object.GetPos(),
-		ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg,save_Data.switch_On };
+	save_Data = { max_Hp,max_Bomb_Num,save_Data.damage,game_object.GetPos(),
+		save_Data.ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg,save_Data.switch_On };
 	std::string fileNama;
 	switch (data_Num)
 	{
@@ -116,11 +113,12 @@ void Player::Save(const int& data_Num)
 
 void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
-	player_mapset = 35;
+	//player_mapset = 35;
 	Init(map, sc);
 	max_Hp = 3;
 	max_Bomb_Num = 1;
-	ability1_flg = false;
+	save_Data.ability1_flg = false;
+	save_Data.damage = 1;
 	save_Data.die_Count = 0;
 	save_Data.ability2_flg = false;
 	save_Data.ability3_flg = false;
@@ -223,13 +221,13 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	right = false;
 	left = false;
 	bomb_Spawn = false;
-	ability = false;
+	ability1_on = false;
 	get_guide = false;
 
 	Vector2 stickL = con->StickL();
-	if (ability1_flg && (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0))
+	if (save_Data.ability1_flg && (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0))
 	{
-		ability = true;
+		ability1_on = true;
 	}
 	if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
 	{
@@ -267,7 +265,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		{
 			save_On = true;
 		}
-		if (get_Item == 0 && (item_flg == 1 || item_flg == 2))
+		if (get_Item == 0 && (item_flg > 0))
 		{
 			get_Item = 1;
 		}
@@ -275,8 +273,8 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	bomb_Vec.Normalize();
 
 	bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
-	time = ability;
-	ability1.game.dis = ability;
+	time = ability1_on;
+	ability1.game.dis = ability1_on;
 	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 
 }
@@ -285,7 +283,7 @@ void Player::Update(bool& shakeflg, BombMana* bomb)
 {
 	Move(shakeflg, bomb);
 	invincible.Conuter(90);
-	ability1.game.dis = ability;
+	ability1.game.dis = ability1_on;
 	Animation_Update();
 }
 
@@ -339,14 +337,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	if (bomb_Spawn)//”š’e¶¬
 	{
 
-		Vector2 bombPos = game_object.GetPos();
-		bombPos += SIZE / 2;
-		Vector2 bombVec = Vector2();
-
-		if (now_Bomb_Num > 0)
-		{
-			bomb->BombSpawn(bombPos, bombVec, true, damage);
-		}
+		Bomb_Spawn(bomb);
 	}
 	if (rota_Vec >= 0)
 	{
@@ -389,14 +380,46 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		}
 		else if (item_flg == 2)
 		{
-			max_Hp++;
-			hp++;
+			++max_Hp;
+			++hp;
+		}
+		else if (item_flg == 3)
+		{
+			++hp;
+		}
+		else if (item_flg == 4)
+		{
+			++save_Data.damage;
+		}
+		else if (item_flg == 5)
+		{
+			save_Data.ability1_flg = true;
+		}
+		else if (item_flg == 6)
+		{
+			save_Data.ability2_flg = true;
+		}
+		else if (item_flg == 7)
+		{
+			save_Data.ability3_flg = true;
 		}
 	}
 
 	if (save_Coll || item_flg > 0)
 	{
 		get_guide = true;
+	}
+}
+
+void Player::Bomb_Spawn( BombMana* bomb)
+{
+	Vector2 bombPos = game_object.GetPos();
+	bombPos += SIZE / 2;
+	Vector2 bombVec = Vector2();
+
+	if (now_Bomb_Num > 0)
+	{
+		bomb->BombSpawn(bombPos, bombVec, true, save_Data.damage);
 	}
 }
 
@@ -577,7 +600,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 			break;
 		}
 	}
-	sc = Vector2::Lerp(sc, sc2, 0.08f);
+	sc = Vector2::Lerp(sc, sc2, 0.07f);
 }
 
 
@@ -696,13 +719,35 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		case 24:
 			player_mapset = 34;
 			stageChange = true;
-
+			switch (stage)
+			{
+			case 204:
+				stage = 201;
+				break;
+			default:
+				break;
+			}
 			break;
 		case 25:
 			player_mapset = 35;
 			stageChange = true;
 			switch (stage)
 			{
+			case 200:
+				stage = 201;
+				break;
+			case 201:
+				stage = 200;
+				break;
+			case 202:
+				stage = 203;
+				break;
+			case 203:
+				stage = 202;
+				break;
+			case 205:
+				stage = 305;
+				break;
 			case 301:
 				stage = 302;
 				break;
@@ -720,6 +765,18 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			{
 			case 200:
 				stage = 302;
+				break;
+			case 201:
+				stage = 205;
+				break;
+			case 202:
+				stage = 203;
+				break;
+			case 203:
+				stage = 202;
+				break;
+			case 205:
+				stage = 201;
 				break;
 			case 300:
 				stage = 301;
@@ -739,7 +796,33 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-
+			case 200:
+				stage = 201;
+				break;
+			case 201:
+				stage = 200;
+				break;
+			case 205:
+				stage = 305;
+				break;
+			case 300:
+				stage = 305;
+				break;
+			case 301:
+				stage = 306;
+				break;
+			case 302:
+				stage = 304;
+				break;
+			case 304:
+				stage = 302;
+				break;
+			case 305:
+				stage = 300;
+				break;
+			case 306:
+				stage = 301;
+				break;
 			default:
 				break;
 			}
@@ -749,7 +832,24 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-
+			case 200:
+				stage = 206;
+				break;
+			case 201:
+				stage = 202;
+				break;
+			case 202:
+				stage = 201;
+				break;
+			case 206:
+				stage = 200;
+				break;
+			case 300:
+				stage = 305;
+				break;
+			case 305:
+				stage = 300;
+				break;
 			default:
 				break;
 			}
@@ -759,7 +859,18 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-
+			case 201:
+				stage = 202;
+				break;
+			case 202:
+				stage = 201;
+				break;
+			case 300:
+				stage = 301;
+				break;
+			case 301:
+				stage = 300;
+				break;
 			default:
 				break;
 			}
@@ -849,6 +960,26 @@ void Player::Coll(bool& hetstop)
 		if (nameTag == "Item2")
 		{
 			item_flg = 2;
+		}
+		if (nameTag == "Item3")
+		{
+			item_flg = 3;
+		}
+		if (nameTag == "Item4")
+		{
+			item_flg = 4;
+		}
+		if (nameTag == "Ability1")
+		{
+			item_flg = 5;
+		}
+		if (nameTag == "Ability2")
+		{
+			item_flg = 6;
+		}
+		if (nameTag == "Ability3")
+		{
+			item_flg = 7;
 		}
 	}
 
