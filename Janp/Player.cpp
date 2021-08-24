@@ -627,7 +627,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 	else if (pointNum == 1) //YŽ²
 	{
-		if (mapPoint == 0 || TOGE)
+		if (mapPoint == 0 || TOGE|| mapPoint == 84)
 		{
 			air_Array[air_Count] = true;
 			air_Count++;
@@ -717,8 +717,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
+			case 203:
+				stage = 204;
+				break;
 			case 204:
-				stage = 201;
+				stage = 203;
 				break;
 			default:
 				break;

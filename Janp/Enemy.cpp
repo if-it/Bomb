@@ -13,7 +13,7 @@ Enemy::~Enemy()
 }
 
 
-void Enemy::AllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
+void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
 {
 	const int INVEICIBLE_TIME = 60;
 	const int EX_INVEICIBLE_TIME = 30;

@@ -232,7 +232,7 @@ void Game::Update()
 		Play_Scene();
 		break;
 	case MAPSET:
-		if (SceneChangeAdd(5))
+		if (SceneChangeAdd(15))
 		{
 			Init();
 			scene = PLAYINIT;

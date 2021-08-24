@@ -127,6 +127,9 @@
     <Filter Include="Map\Switch">
       <UniqueIdentifier>{086ce63a-8fcf-4d6a-80ac-2c6a2e77ef1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy3">
+      <UniqueIdentifier>{ab149e5d-128a-4df7-83c9-699203ef91b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -234,6 +237,9 @@
     <ClCompile Include="MapSwitch.cpp">
       <Filter>Map\Switch</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy3.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -337,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="MapSwitch.h">
       <Filter>Map\Switch</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy3.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

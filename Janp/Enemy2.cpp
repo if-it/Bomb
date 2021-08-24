@@ -146,7 +146,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 				}
 			}
 
-			AllUpdate(flame_speed, max_speed);
+			EnemyAllUpdate(flame_speed, max_speed);
 			PlayerCahck(pos, coll);
 		}
 	}

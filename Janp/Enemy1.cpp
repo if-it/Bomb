@@ -23,7 +23,7 @@ void Enemy1::Update()
 {
 	if (game_object.game.dis)
 	{
-		AllUpdate(0.2f,2.0f);
+		EnemyAllUpdate(0.2f,2.0f);
 	}
 }
 
@@ -86,12 +86,13 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 {
 	Vector2 layer = game_object.game.allVec.pos;
-	const int LAYERSIZE = SIZE * 5;
+	const int LAYERSIZE = SIZE * 10;
 	//‰E
 
 
 	if (coll->Collsion(layer, LAYERSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
+
 		game_object.game.allVec.vec.x += 0.6f;
 		game_object.game.lr = false;
 	}
