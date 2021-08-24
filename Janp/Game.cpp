@@ -478,7 +478,6 @@ void Game::Obj_Coll_Update()
 	coll_List.push_back(&player->game_object);
 
 	//アビリティ
-	coll_List.push_back(&player->ability1);
 
 	//爆発
 	for (int i = 0; i < exMana->ex.size(); ++i)

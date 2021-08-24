@@ -5,8 +5,6 @@ Player::Player()
 {
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
 
-	ability1 = GameObject("Ability", false, Vector2(128.0f, 128.0f));
-	ability1.color = COLOR(0, 168, 108);
 	max_Bomb_Num = 1;
 	max_Hp = 3;
 	hp = max_Hp;
@@ -134,10 +132,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 
 
 	move = false;
-	ability1 = GameObject("Ability", false, Vector2(256.0f, 256.0f));
-	ability1.color = COLOR(120, 166, 58);
 
-	ability1.SetPos(Vector2(game_object.GetPos().x - 128, game_object.GetPos().y));
 
 	fVec = Vector2();
 	for (int y = 0; y < (int)map.size(); ++y)
@@ -175,7 +170,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	blow = Count();
 	invincible = Count();
 	air_Back_Count = Count();
-
+	bomb_Shot = Count();
 	animation = Animation();
 
 	for (int i = 0; i < 3; ++i)
@@ -225,10 +220,6 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	get_guide = false;
 
 	Vector2 stickL = con->StickL();
-	if (save_Data.ability1_flg && (key->keyFlame(KEY_INPUT_X) > 0 || con->FlameBotton(con->LB) > 0))
-	{
-		ability1_on = true;
-	}
 	if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
 	{
 		up = true;
@@ -247,15 +238,15 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		game_object.game.lr = false;
 
 
-		bomb_Vec = Vector2(1.0f, -0.2f);
+		bomb_Vec = Vector2(1.0f, -0.15f);
 	}
 	if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
 	{
 		left = true;
 		game_object.game.lr = true;
-		bomb_Vec = Vector2(-1.0f, -0.2f);
+		bomb_Vec = Vector2(-1.0f, -0.15f);
 	}
-	if (key->KeyTrigger(KEY_INPUT_SPACE) || con->TrlggerBotton(con->A))
+	if (key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A))
 	{
 		bomb_Spawn = true;
 	}
@@ -270,12 +261,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 			get_Item = 1;
 		}
 	}
-	bomb_Vec.Normalize();
 
-	bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
-	time = ability1_on;
-	ability1.game.dis = ability1_on;
-	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
 
 }
 
@@ -283,15 +269,13 @@ void Player::Update(bool& shakeflg, BombMana* bomb)
 {
 	Move(shakeflg, bomb);
 	invincible.Conuter(90);
-	ability1.game.dis = ability1_on;
+	bomb_Shot.Conuter(30);
 	Animation_Update();
 }
 
 void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop)
 {
 	Map_Coll(collMap, sc, stageChange, stage, hetstop);
-	ability1.SetPos(Vector2(game_object.GetPos().x - 96, game_object.GetPos().y - 96));
-	bomb_Vec = Vector2();
 }
 
 
@@ -334,10 +318,22 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	if (blow.flg)game_object.game.allVec.vec = fVec;
 	blow.Conuter(10);
 	now_Bomb_Num = max_Bomb_Num - now_Bomb_Num;
+
+	if (save_Data.ability1_flg)
+	{
+		bomb_Vec.Normalize();
+
+		bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
+	}
+	else
+	{
+		bomb_Vec = Vector2();
+	}
+
 	if (bomb_Spawn)//”š’e¶¬
 	{
-
-		Bomb_Spawn(bomb);
+		if(!bomb_Shot.flg)Bomb_Spawn(bomb);
+		bomb_Shot.flg = true;
 	}
 	if (rota_Vec >= 0)
 	{
@@ -411,15 +407,14 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	}
 }
 
-void Player::Bomb_Spawn( BombMana* bomb)
+void Player::Bomb_Spawn(BombMana* bomb)
 {
 	Vector2 bombPos = game_object.GetPos();
 	bombPos += SIZE / 2;
-	Vector2 bombVec = Vector2();
 
 	if (now_Bomb_Num > 0)
 	{
-		bomb->BombSpawn(bombPos, bombVec, true, save_Data.damage);
+		bomb->BombSpawn(bombPos, bomb_Vec, true, save_Data.damage);
 	}
 }
 
@@ -653,7 +648,8 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			toge_flg[1] = true;
 		}
-		if (mapPoint == 3 || mapPoint == 50 || mapPoint == 58 || mapPoint == 59 || (mapPoint >= 66 && mapPoint <= 72))
+		if (mapPoint == 3 || mapPoint == 50 || mapPoint == 58 || mapPoint == 59 ||
+			(mapPoint >= 4 && mapPoint <= 23)|| (mapPoint >= 54 && mapPoint <= 56) || (mapPoint >= 66 && mapPoint <= 72))
 		{
 			bomb_Janp = false;
 			game_object.game.rota = 0;
@@ -747,6 +743,9 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 				break;
 			case 205:
 				stage = 305;
+				break;
+			case 206:
+				stage = 304;
 				break;
 			case 301:
 				stage = 302;
@@ -1022,10 +1021,6 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr, bool& 
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
-	//Box(ability1, false, shake, sc);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	Circle(Vector2(ability1.GetPos().x + 128, ability1.GetPos().y + 128), 128, 30, MyGetColor(ability1.color), ability1.game.dis, true, shake, sc);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
 	if (!blinking)
 	{

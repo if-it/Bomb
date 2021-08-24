@@ -11,7 +11,7 @@
 #define MAXTEX_Y 2
 #define BOMBVEC 10.0f
 #define EXJUMP 10.0f
-#define ABILITY_BOMB_SPEED 10.0f
+#define ABILITY_BOMB_SPEED 12.0f
 
 class Player :public MapColl
 {
@@ -48,7 +48,6 @@ public:
 	bool Get_Die_End() { return die_End; }
 	bool& Get_Switch_On() { return save_Data.switch_On; }
 
-	GameObject ability1;
 private:
 	void Move(bool& shakeflg, BombMana* bomb);
 	void Bomb_Spawn(BombMana* bomb);
@@ -71,7 +70,7 @@ private:
 	Count blow;
 	Count invincible;//–³“G
 	Count air_Back_Count;
-
+	Count bomb_Shot;
 
 	bool bomb_Spawn;
 	bool move;
