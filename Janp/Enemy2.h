@@ -9,8 +9,7 @@ public:
 	Enemy2();
 	~Enemy2();
 
-	void Init(std::vector<std::vector<int>>& collMap);
-	void Loading(Load* load);
+	void Init(std::vector<std::vector<int>>& collMap, Load* load);
 	void Update(const Vector2& pos, Collision* coll);
 	void PlayerCahck(const Vector2& pos, Collision* coll);
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);

@@ -172,6 +172,8 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	air_Back_Count = Count();
 	bomb_Shot = Count();
 	animation = Animation();
+	ability2 = Count();
+	ability2_on = Count();
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -191,6 +193,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 
 	air_Pos = Vector2();
 	air_Sc = Vector2();
+	ability2_Vec = Vector2();
 	rota_Vec = 0;
 	item_flg = 0;
 	get_Item = 0;
@@ -198,6 +201,9 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	blinking = true;
 	blinking_Count = Count();
 	die_End = false;
+	ground_ability2_on = false;
+	ability2_Activate = false;
+	ability2_lr = false;
 }
 
 void Player::Loading(Load* load)
@@ -261,6 +267,12 @@ void Player::Input(Key* key, Controller* con, bool& time)
 			get_Item = 1;
 		}
 	}
+	if (!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
+	{
+		ability2.flg = true;
+		ability2_on.flg = true;
+		ground_ability2_on = true;
+	}
 
 
 }
@@ -315,8 +327,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	{
 		game_object.game.allVec.vec.x = -MAXSPEED;
 	}
-	if (blow.flg)game_object.game.allVec.vec = fVec;
-	blow.Conuter(10);
+
 	now_Bomb_Num = max_Bomb_Num - now_Bomb_Num;
 
 	if (save_Data.ability1_flg)
@@ -332,41 +343,57 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 
 	if (bomb_Spawn)//爆弾生成
 	{
-		if(!bomb_Shot.flg)Bomb_Spawn(bomb);
+		if (!bomb_Shot.flg)Bomb_Spawn(bomb);
 		bomb_Shot.flg = true;
 	}
-	if (rota_Vec >= 0)
+
+	//ダッシュ
+	if (ability2.flg)
 	{
-		game_object.game.rota += rota_Vec;
-	}
-	rota_Vec -= 0.1f;
-	if (game_object.game.allVec.vec.x != 0.0f)
-	{
-		move = true;
-		if (!one_move_flg)
+		const float ABILITY2_SPEED = 1.5f;
+		if (!ability2_Activate)
 		{
-			one_move_flg = true;
-			animation.num = 7;
+			ability2_Activate = true;
+			ability2_lr = game_object.game.lr;
+			if (ability2_lr)
+			{
+				ability2_Vec.x = -8;
+			}
+			else
+			{
+				ability2_Vec.x = 8;
+			}
 		}
-	}
-	else
-	{
-		move = false;
-		if (!one_move_flg2)
-		{
-			one_move_flg2 = true;
-			animation.num = 0;
-		}
-	}
-	if (air)
-	{
+
+		game_object.game.rota = 0;
+		rota_Vec = 0;
 		animation.num = 0;
-		one_move_flg = false;
-		one_move_flg2 = false;
-		one_stop_flg = false;
-		animation.oneAnimeFlg = false;
-		air_Back_Count = Count();
+		if (ability2_lr)
+		{
+			//左
+			ability2_Vec.x += -ABILITY2_SPEED;
+		}
+		else
+		{
+			//右
+			ability2_Vec.x += ABILITY2_SPEED;
+		}
+		game_object.game.allVec.vec = ability2_Vec;
 	}
+	if (ability2.Conuter(12))
+	{
+		ability2_Activate = false;
+		ability2_Vec = Vector2();
+	}
+	ability2_on.Conuter(25);
+
+
+	//吹っ飛び
+	if (blow.flg)game_object.game.allVec.vec = fVec;
+	blow.Conuter(2);
+
+
+
 	if (get_Item == 1)
 	{
 		get_Item = 2;
@@ -429,6 +456,40 @@ bool Player::Die()
 
 void Player::Animation_Update()
 {
+
+	if (rota_Vec >= 0)
+	{
+		game_object.game.rota += rota_Vec;
+	}
+	rota_Vec -= 0.1f;
+	if (game_object.game.allVec.vec.x != 0.0f)
+	{
+		move = true;
+		if (!one_move_flg)
+		{
+			one_move_flg = true;
+			animation.num = 7;
+		}
+	}
+	else
+	{
+		move = false;
+		if (!one_move_flg2)
+		{
+			one_move_flg2 = true;
+			animation.num = 0;
+		}
+	}
+	if (air)
+	{
+		animation.num = 0;
+		one_move_flg = false;
+		one_move_flg2 = false;
+		one_stop_flg = false;
+		animation.oneAnimeFlg = false;
+		air_Back_Count = Count();
+	}
+
 	if (move)
 	{
 		one_stop_flg = false;
@@ -627,7 +688,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 	else if (pointNum == 1) //Y軸
 	{
-		if (mapPoint == 0 || TOGE|| mapPoint == 84)
+		if (mapPoint == 0 || TOGE || mapPoint == 84)
 		{
 			air_Array[air_Count] = true;
 			air_Count++;
@@ -649,11 +710,13 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			toge_flg[1] = true;
 		}
 		if (mapPoint == 3 || mapPoint == 50 || mapPoint == 58 || mapPoint == 59 ||
-			(mapPoint >= 4 && mapPoint <= 23)|| (mapPoint >= 54 && mapPoint <= 56) || (mapPoint >= 66 && mapPoint <= 72))
+			(mapPoint >= 4 && mapPoint <= 23) || (mapPoint >= 54 && mapPoint <= 56) || (mapPoint >= 66 && mapPoint <= 72))
 		{
 			bomb_Janp = false;
 			game_object.game.rota = 0;
 			rota_Vec = 0;
+			ground_ability2_on = false;
+
 		}
 		if (mapPoint == 90)
 		{
@@ -939,10 +1002,10 @@ void Player::Coll(bool& hetstop)
 			rota_Vec = 10.0f;
 		}
 
-		if (nameTag == "Enemy1")
+		if (nameTag == "Enemy1" || nameTag == "Enemy3")
 		{
-			blowX = 10.0f;
-			blowY = 4.0f;
+			blowX = 9.0f;
+			blowY = 3.7f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
 		}
 		if (nameTag == "Enemy2")

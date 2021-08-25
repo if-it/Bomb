@@ -16,6 +16,7 @@
 #include"Dust.h"
 #include"MapBombMana.h"
 #include"MapSwitch.h"
+#include"Enemy3Mana.h"
 
 class GameInclude :public Draw
 {
@@ -52,6 +53,7 @@ protected:
 	Dust* dust = new Dust();
 	MapBombMana* mapBombMana = new MapBombMana();
 	MapSwitch* mapSwitch = new MapSwitch();
+	Enemy3Mana* enemy3Mana = new Enemy3Mana();
 
 	bool controllerOnly;
 	bool drawScene;

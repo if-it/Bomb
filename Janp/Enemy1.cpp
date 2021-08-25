@@ -112,6 +112,6 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 
 void Enemy1::Draw(const Vector2& sc, const Vector2& shake)
 {
-	Box(game_object, true, shake, sc);;
+	Box(game_object, true, shake, sc);
 }
 

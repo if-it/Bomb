@@ -11,8 +11,8 @@ public:
     void Update();
     void MapCollUpdate(std::vector<std::vector<int>>& collMap);
     void Coll(std::vector<Explosion>& ex);
-    void MoveChack(const Vector2& pos, Collision* coll);
     void Draw(const Vector2& sc, const Vector2& shake);
-
+private:
+    void Map_Jub(const int& mapPoint, const int& pointNum);
 };
 

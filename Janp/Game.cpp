@@ -30,6 +30,7 @@ Game::~Game()
 	delete dust;
 	delete mapBombMana;
 	delete mapSwitch;
+	delete enemy3Mana;
 
 	coll_List.clear();
 	InitGraph();
@@ -104,8 +105,8 @@ bool Game::Loading()
 	bombMana->Loading(load);
 	exMana->Loading(load);
 	enemy1Mana->Loading(load);
+	enemy3Mana->Loading(load);
 	fuse->Loading(load, map->Get_Map_Tex());
-	enemy2->Loading(load);
 	ui->Loading(load);
 	saveMana->Loading(load);
 	itemMana->Loading(load);
@@ -312,7 +313,8 @@ void Game::Stage_Init()
 	backMap2->Init(stage, load);
 	saveMana->Init(map->map);
 	enemy1Mana->Init(map->map);
-	enemy2->Init(map->map);
+	enemy2->Init(map->map,load);
+	enemy3Mana->Init(map->map);
 	fuse->Init(map->map);
 	dust->Init(map->map, stage);
 	mapBombMana->Init(map->map);
@@ -444,6 +446,7 @@ void Game::Play_Scene_Update()
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(bombShake.flg, bombMana);
 	enemy1Mana->Update();
+	enemy3Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
 
@@ -463,6 +466,7 @@ void Game::Map_Coll_Update()
 	player->Map_Coll_Update(map->map, sc, stageChange, stage, hetStop.flg);
 	bombMana->MapCollUpdate(map->map);
 	enemy1Mana->MapCollUpdate(map->map);
+	enemy3Mana->MapCollUpdate(map->map);
 	enemy2->MapCollUpdate(map->map);
 
 	exMana->Map_Coll_Update(map->map);
@@ -498,6 +502,13 @@ void Game::Obj_Coll_Update()
 	coll_List.push_back(&enemy2->game_object);
 	coll_List.push_back(&enemy2->body);
 	coll_List.push_back(&enemy2->arm);
+
+	//Enemy3
+
+	for (int i = 0; i < (int)enemy3Mana->enemy3.size(); ++i)
+	{
+		coll_List.push_back(&enemy3Mana->enemy3[i].game_object);
+	}
 
 	//Saveポイント
 	for (int i = 0; i < (int)saveMana->save.size(); ++i)
@@ -552,6 +563,7 @@ void Game::Obj_Coll_Update()
 	}
 
 	enemy1Mana->Coll(exMana->ex);
+	enemy3Mana->Coll(exMana->ex);
 	bombMana->Coll(bombShake.flg, con);
 	enemy2->Coll(exMana->ex);
 	saveMana->Coll();
@@ -620,6 +632,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//オブジェクト関連
 	enemy1Mana->Draw(sc2, shake2);
 	enemy2->Draw(sc2, shake2);
+	enemy3Mana->Draw(sc2, shake2);
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
 

@@ -64,6 +64,7 @@ private:
 	Vector2 bomb_Vec;
 	Vector2 air_Pos;
 	Vector2 air_Sc;
+	Vector2 ability2_Vec;
 
 	Animation animation;
 
@@ -71,6 +72,8 @@ private:
 	Count invincible;//–³“G
 	Count air_Back_Count;
 	Count bomb_Shot;
+	Count ability2;
+	Count ability2_on;
 
 	bool bomb_Spawn;
 	bool move;
@@ -82,6 +85,10 @@ private:
 	bool left;
 	bool right;
 	bool ability1_on;
+	bool ground_ability2_on;
+	bool ability2_Activate;
+	bool ability2_lr;
+
 
 	int animation_Count_Num;
 	int hp;

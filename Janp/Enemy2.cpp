@@ -25,7 +25,7 @@ Enemy2::~Enemy2()
 {
 }
 
-void Enemy2::Init(std::vector<std::vector<int>>& collMap)
+void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 {
 	spawn = die;
 	if (!spawn)
@@ -36,6 +36,8 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap)
 			{
 				if (collMap[y][x] == 101)
 				{
+					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
+					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
 					hp = 40;
 					spawn = true;
 					game_object.game.allVec.pos = Vector2(SIZE * x, SIZE * y);
@@ -53,12 +55,6 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap)
 			}
 		}
 	}
-}
-
-void Enemy2::Loading(Load* load)
-{
-	load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
-	load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
 }
 
 void Enemy2::Update(const Vector2& pos, Collision* coll)
