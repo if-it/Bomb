@@ -2,22 +2,29 @@
 
 Enemy1Mana::Enemy1Mana()
 {
-	enemy1Tex = 0;
+	enemy_Spawn = false;
+	one_Load_Tex = false;
 }
 
 Enemy1Mana::~Enemy1Mana()
 {
 }
 
-void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap, const int& stage)
+void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap, Load* load, const int& stage)
 {
 	enemy1.clear();
+	ani = Animation();
 	for (int y = 0; y < (int)collMap.size(); ++y)
 	{
 		for (int x = 0; x < (int)collMap[y].size(); ++x)
 		{
 			if (collMap[y][x] == 100)
 			{
+				if (!one_Load_Tex)
+				{
+					one_Load_Tex = true;
+					load->LoadAnimeTex("Load/Texture/Enemy/Enemy1/Enemy1.png", 2, 2, 1, SIZE, SIZE, enemy1Tex);
+				}
 				bool die_on = false;
 				for (int i = 0; i < die_List.size(); ++i)
 				{
@@ -34,8 +41,17 @@ void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap, const int& stage)
 					InitEnemy1.game_object.game.num = enemy1.size();
 					InitEnemy1.AllInit(stage, x, y);
 					enemy1.push_back(InitEnemy1);
+					enemy_Spawn = true;
 				}
 			}
+		}
+	}
+	if (one_Load_Tex && !enemy_Spawn)
+	{
+		one_Load_Tex = false;
+		for (int i = 0; i < 2; ++i)
+		{
+			DeleteGraph(enemy1Tex[i]);
 		}
 	}
 }
@@ -47,6 +63,7 @@ void Enemy1Mana::Save()
 
 void Enemy1Mana::Update()
 {
+	ani.AnimationOn(10, 2);
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
 		enemy1[i].Update();
@@ -104,6 +121,6 @@ void Enemy1Mana::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
-		enemy1[i].Draw(sc, shake);
+		enemy1[i].Draw(sc, shake,enemy1Tex[ani.num]);
 	}
 }

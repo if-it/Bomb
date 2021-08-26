@@ -11,7 +11,10 @@ public:
     void MapCollUpdate(std::vector<std::vector<int>>& collMap);
     void Coll(std::vector<Explosion>& ex);
     void MoveChack(const Vector2&pos,Collision*coll);
-    void Draw(const Vector2& sc, const Vector2& shake);
-  
+    void Draw(const Vector2& sc, const Vector2& shake, const int& tex);
+private:
+    Count move;
+    Count move_End;
+    int move_lr;
 };
 

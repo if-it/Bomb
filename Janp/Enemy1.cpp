@@ -17,13 +17,47 @@ void Enemy1::Init(Vector2 pos)
 	exInvincible = Count();
 	hp = 4;
 	fVec = Vector2();
+	move = Count();
+	move_End = Count();
+	move_lr = 0;
 }
 
 void Enemy1::Update()
 {
 	if (game_object.game.dis)
 	{
-		EnemyAllUpdate(0.2f,3.0f);
+		EnemyAllUpdate(0.2f, 4.0f);
+
+		if (move.Conuter(40))
+		{
+			game_object.game.rota = 0;
+			if (move_lr == 1)
+			{
+				move_lr = 3;
+			}
+			else if (move_lr == 2)
+			{
+				move_lr = 4;
+			}
+		}
+		if (move_lr==3)
+		{
+			game_object.game.allVec.vec.x += 0.6f;
+			
+			move_End.flg = true;
+		}
+		else if (move_lr == 4)
+		{
+			game_object.game.allVec.vec.x -= 0.6f;
+			
+			move_End.flg = true;
+		}
+		if (move_End.Conuter(120))
+		{
+			move = Count();
+			move_End = Count();
+			move_lr = 0;
+		}
 	}
 }
 
@@ -54,7 +88,7 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 				//ç∂
 				else
 				{
-					fVec += Vector2(BLOWX,-BLOWY);
+					fVec += Vector2(BLOWX, -BLOWY);
 				}
 			}
 		}
@@ -74,7 +108,7 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 					fVec += Vector2(BLOWX, -BLOWY);
 				}
 				Damage(ex[game_object.coll_Obj_List[i]->num].damage);
-				
+
 			}
 		}
 	}
@@ -89,9 +123,13 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 
 	if (coll->Collsion(layer, LAYERSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
-
-		game_object.game.allVec.vec.x += 0.6f;
-		game_object.game.lr = false;
+		if (move_lr == 0)
+		{
+			game_object.game.rota = 315;
+			game_object.game.lr = false;
+			move.flg = true;
+			move_lr = 1;
+		}
 	}
 
 
@@ -100,15 +138,21 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 	layer.x -= LAYERSIZE;
 	if (coll->Collsion(layer, LAYERSIZE, game_object.game.size.y, pos, SIZE * 2, SIZE * 2))
 	{
-		game_object.game.allVec.vec.x -= 0.6f;
-		game_object.game.lr = true;
+		if (move_lr == 0)
+		{
+			game_object.game.rota = 45;
+			move.flg = true;
+			game_object.game.lr = true;
+			move_lr = 2;
+		}
+		
 	}
 
 
 }
 
-void Enemy1::Draw(const Vector2& sc, const Vector2& shake)
+void Enemy1::Draw(const Vector2& sc, const Vector2& shake, const int& tex)
 {
-	Box(game_object, true, shake, sc);
+	DrawRotaTex(game_object, tex, true, shake, sc);
 }
 

@@ -14,7 +14,7 @@ public:
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
 	void Coll(bool& shakeflg, Controller* con);
 	void Coll_End_Set(ExplosionMana* ex);
-	void Draw(const Vector2& sc, const Vector2& shakeconst, const int* bombTex);
+	void Draw(const Vector2& sc, const Vector2& shake, const int* bombTex);
 
 
 	//GameObject ex;

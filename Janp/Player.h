@@ -2,6 +2,7 @@
 #include "MapColl.h"
 #include"Load.h"
 #include"BombMana.h"
+#include"SideBomb.h"
 #include <stdio.h>
 
 
@@ -24,7 +25,7 @@ public:
 	void Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Loading(Load* load);
 	void Input(Key* key, Controller* con, bool& time);
-	void Update(bool& shakeflg, BombMana* bomb);
+	void Update(bool& shakeflg, BombMana* bomb,SideBomb*sideBomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void Save(const int& data_Num);
 	void Draw(const Vector2& sc, const Vector2& shake);
@@ -49,7 +50,7 @@ public:
 	bool& Get_Switch_On() { return save_Data.switch_On; }
 
 private:
-	void Move(bool& shakeflg, BombMana* bomb);
+	void Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
 	void Bomb_Spawn(BombMana* bomb);
 	void Blow(const float& blowX, const float& blowY, const bool& lr,bool& hetstop, int subHp);
 	void Spine(bool& hetstop);
@@ -91,6 +92,7 @@ private:
 	bool ability2_Activate;
 	bool ability2_lr;
 
+	int ability3_on;
 
 	int animation_Count_Num;
 	int hp;

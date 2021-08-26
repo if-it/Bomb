@@ -31,6 +31,8 @@ Game::~Game()
 	delete mapBombMana;
 	delete mapSwitch;
 	delete enemy3Mana;
+	delete sideBomb;
+	delete sideExMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -87,6 +89,8 @@ void Game::Init()
 	ui->Init();
 	bombMana->Init();
 	exMana->Init();
+	sideBomb->Init();
+	sideExMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -132,7 +136,7 @@ bool Game::Loading()
 	}
 	else
 	{
-		option_Data = { 100,100,true };
+		option_Data = { 100,100,false };
 	}
 
 
@@ -311,9 +315,9 @@ void Game::Stage_Init()
 	backMap->Init(stage);
 	backMap2->Init(stage, load);
 	saveMana->Init(map->map);
-	enemy1Mana->Init(map->map,stage);
-	enemy2->Init(map->map,load);
-	enemy3Mana->Init(map->map,load,stage);
+	enemy1Mana->Init(map->map, load, stage);
+	enemy2->Init(map->map, load);
+	enemy3Mana->Init(map->map, load, stage);
 	fuse->Init(map->map);
 	dust->Init(map->map, stage);
 	mapBombMana->Init(map->map);
@@ -427,7 +431,7 @@ void Game::Play_Scene()
 		}
 		if (!time)
 		{
-			Shake(bombShake, 4, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
+			Shake(bombShake, 6, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
 			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 				player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
 				controller_on, player->Get_Space_On());
@@ -446,11 +450,13 @@ void Game::Play_Scene_Update()
 	backMap2->Update(sc);
 
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
-	player->Update(bombShake.flg, bombMana);
+	player->Update(bombShake.flg, bombMana, sideBomb);
 	enemy1Mana->Update();
 	enemy3Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
+	sideBomb->Update(con);
+	sideExMana->Update(sideBomb->Get_Explosion_On(), sideBomb->game_object.GetPos(), map->map, bombShake.flg);
 
 	fuse->Update(map->map, bombMana);
 	saveMana->Update();
@@ -637,6 +643,8 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	enemy3Mana->Draw(sc2, shake2);
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
+	sideBomb->Draw(sc2, shake2);
+	sideExMana->Draw(sc2, shake2);
 
 	//エフェクト関連
 	exMana->Draw(sc2, shake2);

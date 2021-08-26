@@ -28,10 +28,7 @@ public:
 	int GetBombSound() { return bombSound; }
 private:
 
-
-
 	int bombTex[BOMBTEX];
 	int bombSound;
 
 };
-

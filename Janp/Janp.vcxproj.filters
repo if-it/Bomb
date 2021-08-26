@@ -130,6 +130,9 @@
     <Filter Include="GameObjct\Enemy\Enemy3">
       <UniqueIdentifier>{ab149e5d-128a-4df7-83c9-699203ef91b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\SideBomb">
+      <UniqueIdentifier>{530c3d3a-d964-44d8-bc7b-8762a4c2af08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -241,6 +244,15 @@
       <Filter>GameObjct\Enemy\Enemy3</Filter>
     </ClCompile>
     <ClCompile Include="Enemy3Mana.cpp">
+      <Filter>GameObjct\Enemy\Enemy3</Filter>
+    </ClCompile>
+    <ClCompile Include="SideBomb.cpp">
+      <Filter>GameObjct\SideBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="SideExplosion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SideExplosionMana.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -351,6 +363,15 @@
       <Filter>GameObjct\Enemy\Enemy3</Filter>
     </ClInclude>
     <ClInclude Include="Enemy3Mana.h">
+      <Filter>GameObjct\Enemy\Enemy3</Filter>
+    </ClInclude>
+    <ClInclude Include="SideBomb.h">
+      <Filter>GameObjct\SideBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="SideExplosion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SideExplosionMana.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

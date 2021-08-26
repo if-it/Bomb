@@ -9,7 +9,7 @@ class Enemy1Mana :
 public:
     Enemy1Mana();
     ~Enemy1Mana();
-    void Init(std::vector<std::vector<int>>& collMap, const int& stage);
+    void Init(std::vector<std::vector<int>>& collMap, Load* load, const int& stage);
     void Save();
     void Update();
     void MapCollUpdate(std::vector<std::vector<int>>& collMap);
@@ -19,8 +19,10 @@ public:
     void Draw(const Vector2& sc, const Vector2& shake);
     std::vector<Enemy1> enemy1;
 private:
-    int enemy1Tex;
+    int enemy1Tex[2];
+    bool enemy_Spawn;
+    bool one_Load_Tex;
     std::vector<Die_Data> die_List;
-
+    Animation ani;
 };
 

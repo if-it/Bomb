@@ -208,6 +208,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	ability2_lr = false;
 	shadow.clear();
 	shadow_on = Count();
+	ability3_on = 0;
 }
 
 void Player::Loading(Load* load)
@@ -277,13 +278,16 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		ability2_on.flg = true;
 		ground_ability2_on = true;
 	}
-
+	if (ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->RB)))
+	{
+		ability3_on = 1;
+	}
 
 }
 
-void Player::Update(bool& shakeflg, BombMana* bomb)
+void Player::Update(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 {
-	Move(shakeflg, bomb);
+	Move(shakeflg, bomb, sideBomb);
 	invincible.Conuter(90);
 	bomb_Shot.Conuter(30);
 	Animation_Update();
@@ -296,7 +300,7 @@ void Player::Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc
 
 
 
-void Player::Move(bool& shakeflg, BombMana* bomb)
+void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 {
 	//à⁄ìÆ
 	game_object.game.allVec.vec.y += 0.2f;
@@ -352,8 +356,9 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	}
 
 	//É_ÉbÉVÉÖ
-	if (ability2.flg)
+	if (ability2.flg && now_Bomb_Num > 0)
 	{
+		--now_Bomb_Num;
 		const float ABILITY2_SPEED = 1.5f;
 		if (!ability2_Activate)
 		{
@@ -419,6 +424,16 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 	if (shadow_Num == (int)shadow.size())
 	{
 		shadow.clear();
+	}
+
+	if (ability3_on == 1)
+	{
+		ability3_on = 2;
+		sideBomb->Spawn(game_object.GetPos());
+	}
+	if (!sideBomb->Get_live_Count_Flg())
+	{
+		ability3_on = 0;
 	}
 
 	//êÅÇ¡îÚÇ—
@@ -1125,7 +1140,7 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, shadow[i].game.pal);
 		DrawRotaTex(shadow[i], player_Tex[animation.num], true, shake, sc);
 	}
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
 	if (!blinking)
