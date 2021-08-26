@@ -12,6 +12,12 @@ Enemy::~Enemy()
 {
 }
 
+void Enemy::AllInit(const int& stage, const int& mapX, const int& mapY)
+{
+	die_Data.die_stage = stage;
+	die_Data.map_x = mapX;
+	die_Data.map_y = mapY;
+}
 
 void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
 {
@@ -22,10 +28,6 @@ void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
 	if (fVec != Vector2())
 	{
 		game_object.game.allVec.vec = Vector2();
-	}
-	if (DieChack())
-	{
-		game_object.game.dis = false;
 	}
 	game_object.game.allVec.vec.y += 0.2f;
 	if (game_object.game.allVec.vec.x > 0)
@@ -71,7 +73,7 @@ void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
 	{
 		fVec.x = 0;
 	}
-	
+
 	game_object.game.allVec.vec += fVec;
 }
 
@@ -87,5 +89,15 @@ bool Enemy::DieChack()
 void Enemy::Damage(int damage)
 {
 	hp -= damage;
+}
+
+bool Enemy::Die()
+{
+	if (DieChack() && game_object.game.dis)
+	{
+		game_object.game.dis = false;
+		return true;
+	}
+	return false;
 }
 

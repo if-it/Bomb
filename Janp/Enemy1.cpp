@@ -23,7 +23,7 @@ void Enemy1::Update()
 {
 	if (game_object.game.dis)
 	{
-		EnemyAllUpdate(0.2f,2.0f);
+		EnemyAllUpdate(0.2f,3.0f);
 	}
 }
 
@@ -74,10 +74,7 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 					fVec += Vector2(BLOWX, -BLOWY);
 				}
 				Damage(ex[game_object.coll_Obj_List[i]->num].damage);
-				if (DieChack())
-				{
-					game_object.game.dis = false;
-				}
+				
 			}
 		}
 	}

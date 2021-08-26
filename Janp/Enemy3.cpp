@@ -129,17 +129,13 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 					fVec += Vector2(BLOWX, -BLOWY);
 				}
 				Damage(ex[game_object.coll_Obj_List[i]->num].damage);
-				if (DieChack())
-				{
-					game_object.game.dis = false;
-				}
 			}
 		}
 	}
 }
 
 
-void Enemy3::Draw(const Vector2& sc, const Vector2& shake)
+void Enemy3::Draw(const Vector2& sc, const Vector2& shake , const int& tex)
 {
-	Box(game_object, true, shake, sc);;
+	DrawRotaTex(game_object, tex, true, shake, sc);
 }

@@ -62,6 +62,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 		max_Bomb_Num = save_Data.max_Bomb_Num;
 		game_object.SetPos(save_Data.pos);
 		sc2 = save_Data.sc;
+		sc = sc2;
 		fclose(fp);
 	}
 	else
@@ -128,8 +129,9 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 //èâä˙âª
 void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
+	bool lr_f = game_object.game.lr;
 	game_object = GameObject("Player", true, Vector2(64.0f, 64.0f));
-
+	game_object.game.lr = lr_f;
 
 	move = false;
 
@@ -204,6 +206,8 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	ground_ability2_on = false;
 	ability2_Activate = false;
 	ability2_lr = false;
+	shadow.clear();
+	shadow_on = Count();
 }
 
 void Player::Loading(Load* load)
@@ -353,6 +357,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 		const float ABILITY2_SPEED = 1.5f;
 		if (!ability2_Activate)
 		{
+			shadow_on.flg = true;
 			ability2_Activate = true;
 			ability2_lr = game_object.game.lr;
 			if (ability2_lr)
@@ -379,14 +384,42 @@ void Player::Move(bool& shakeflg, BombMana* bomb)
 			ability2_Vec.x += ABILITY2_SPEED;
 		}
 		game_object.game.allVec.vec = ability2_Vec;
+
+		if (shadow_on.Conuter(2))
+		{
+			shadow_on.flg = true;
+			shadow.push_back(game_object);
+		}
 	}
 	if (ability2.Conuter(12))
 	{
 		ability2_Activate = false;
 		ability2_Vec = Vector2();
+		shadow_on = Count();
 	}
 	ability2_on.Conuter(25);
 
+	int shadow_Num = 0;
+	for (int i = 0; i < (int)shadow.size(); ++i)
+	{
+		if (shadow[i].game.dis)
+		{
+			shadow[i].game.pal -= 30.0f;
+			if (shadow[i].game.pal <= 0)
+			{
+				shadow[i].game.dis = false;
+			}
+		}
+		else
+		{
+			++shadow_Num;
+		}
+	}
+
+	if (shadow_Num == (int)shadow.size())
+	{
+		shadow.clear();
+	}
 
 	//êÅÇ¡îÚÇ—
 	if (blow.flg)game_object.game.allVec.vec = fVec;
@@ -1087,6 +1120,13 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr, bool& 
 
 void Player::Draw(const Vector2& sc, const Vector2& shake)
 {
+	for (int i = 0; i < (int)shadow.size(); ++i)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, shadow[i].game.pal);
+		DrawRotaTex(shadow[i], player_Tex[animation.num], true, shake, sc);
+	}
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
 	if (!blinking)
 	{

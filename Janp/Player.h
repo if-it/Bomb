@@ -59,6 +59,7 @@ private:
 	int player_Tex[MAXTEX_X * MAXTEX_Y];
 	int player_Black_Tex[MAXTEX_X * MAXTEX_Y];
 
+	std::vector<GameObject> shadow;
 
 	Vector2 fVec;//êÅÇ¡îÚÇ—
 	Vector2 bomb_Vec;
@@ -74,6 +75,7 @@ private:
 	Count bomb_Shot;
 	Count ability2;
 	Count ability2_on;
+	Count shadow_on;
 
 	bool bomb_Spawn;
 	bool move;

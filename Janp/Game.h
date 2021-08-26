@@ -39,6 +39,7 @@ private:
 	{
 		int BGM_Volume;
 		int SE_Volume;
+		bool con_shake;
 	};
 	Option_Data option_Data;
 	struct Meta_Data

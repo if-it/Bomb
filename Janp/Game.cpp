@@ -63,7 +63,7 @@ void Game::FirstInit()
 	time = false;
 	data_Num = 0;
 
-	option_Data = { 0,0 };
+	option_Data = { 0,0,false };
 	meta_Data = { 0,0 };
 	controller_on = false;
 }
@@ -104,8 +104,6 @@ bool Game::Loading()
 	player->Loading(load);
 	bombMana->Loading(load);
 	exMana->Loading(load);
-	enemy1Mana->Loading(load);
-	enemy3Mana->Loading(load);
 	fuse->Loading(load, map->Get_Map_Tex());
 	ui->Loading(load);
 	saveMana->Loading(load);
@@ -134,7 +132,7 @@ bool Game::Loading()
 	}
 	else
 	{
-		option_Data = { 100,100 };
+		option_Data = { 100,100,true };
 	}
 
 
@@ -150,6 +148,7 @@ void Game::Update()
 {
 	key->Input();
 	con->Input();
+	con->Set_Shake_On(option_Data.con_shake);
 
 	if (con->All_Het_Controller())
 	{
@@ -312,9 +311,9 @@ void Game::Stage_Init()
 	backMap->Init(stage);
 	backMap2->Init(stage, load);
 	saveMana->Init(map->map);
-	enemy1Mana->Init(map->map);
+	enemy1Mana->Init(map->map,stage);
 	enemy2->Init(map->map,load);
-	enemy3Mana->Init(map->map);
+	enemy3Mana->Init(map->map,load,stage);
 	fuse->Init(map->map);
 	dust->Init(map->map, stage);
 	mapBombMana->Init(map->map);
@@ -356,7 +355,7 @@ void Game::Option_Data_Save()
 void Game::Save()
 {
 	saveMana->Save_Mode();
-
+	meta_Data.stage = stage;
 	Option_Data_Save();
 	std::string fileNama;
 	switch (data_Num)
@@ -384,6 +383,9 @@ void Game::Save()
 
 	player->Save(data_Num);
 	itemMana->Save(data_Num);
+
+	enemy1Mana->Save();
+	enemy3Mana->Save();
 }
 
 void Game::Play_Scene()

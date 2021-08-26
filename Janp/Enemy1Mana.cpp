@@ -9,7 +9,7 @@ Enemy1Mana::~Enemy1Mana()
 {
 }
 
-void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap)
+void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap, const int& stage)
 {
 	enemy1.clear();
 	for (int y = 0; y < (int)collMap.size(); ++y)
@@ -18,17 +18,31 @@ void Enemy1Mana::Init(std::vector<std::vector<int>>& collMap)
 		{
 			if (collMap[y][x] == 100)
 			{
-				Enemy1 InitEnemy1;
-				InitEnemy1.Init(Vector2((float)SIZE * x, (float)SIZE * y));
-				InitEnemy1.game_object.game.num = enemy1.size();
-				enemy1.push_back(InitEnemy1);
+				bool die_on = false;
+				for (int i = 0; i < die_List.size(); ++i)
+				{
+					if (die_List[i].die_stage == stage && die_List[i].map_x == x && die_List[i].map_y == y)
+					{
+						die_on = true;
+						break;
+					}
+				}
+				if (!die_on)
+				{
+					Enemy1 InitEnemy1;
+					InitEnemy1.Init(Vector2((float)SIZE * x, (float)SIZE * y));
+					InitEnemy1.game_object.game.num = enemy1.size();
+					InitEnemy1.AllInit(stage, x, y);
+					enemy1.push_back(InitEnemy1);
+				}
 			}
 		}
 	}
 }
 
-void Enemy1Mana::Loading(Load* load)
+void Enemy1Mana::Save()
 {
+	die_List.clear();
 }
 
 void Enemy1Mana::Update()
@@ -36,6 +50,11 @@ void Enemy1Mana::Update()
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
 		enemy1[i].Update();
+		if (enemy1[i].Die())
+		{
+			die_List.push_back(enemy1[i].die_Data);
+		}
+		
 	}
 	if (NowNum() == 0)
 	{

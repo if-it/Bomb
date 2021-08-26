@@ -1,14 +1,16 @@
 #pragma once
 #include"Enemy1.h"
 #include"Load.h"
+using Die_Data = Enemy::Die_Data;
+
 class Enemy1Mana :
     public MapColl
 {
 public:
     Enemy1Mana();
     ~Enemy1Mana();
-    void Init(std::vector<std::vector<int>>& collMap);
-    void Loading(Load* load);
+    void Init(std::vector<std::vector<int>>& collMap, const int& stage);
+    void Save();
     void Update();
     void MapCollUpdate(std::vector<std::vector<int>>& collMap);
     void MoveChack(const Vector2& pos, Collision* coll);
@@ -18,5 +20,7 @@ public:
     std::vector<Enemy1> enemy1;
 private:
     int enemy1Tex;
+    std::vector<Die_Data> die_List;
+
 };
 
