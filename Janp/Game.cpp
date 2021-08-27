@@ -224,6 +224,10 @@ void Game::Update()
 			{
 				bombMana->Init();
 				exMana->Init();
+				sideBomb->Init();
+				sideExMana->Init();
+				enemy1Mana->Save();
+				enemy3Mana->Save();
 
 				Data_Load();
 			}
