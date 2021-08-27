@@ -131,6 +131,14 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 				Damage(ex[game_object.coll_Obj_List[i]->num].damage);
 			}
 		}
+		if (nameTag == "RSideEx" || nameTag == "LSideEx")
+		{
+			if (!exInvincible.flg)
+			{
+				exInvincible.flg = true;
+				Damage(SIDE_EX_DAMAGE);
+			}
+		}
 	}
 }
 

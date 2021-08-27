@@ -7,6 +7,7 @@ int WINAPI WinMain(
 )
 {
 	const char WINDOW_NAME[] = "ボンボンバーン";
+	SetOutApplicationLogValidFlag(FALSE);
 	//ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 	//ウィンドウサイズを手動では変更できず、

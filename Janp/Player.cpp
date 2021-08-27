@@ -196,6 +196,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	air_Pos = Vector2();
 	air_Sc = Vector2();
 	ability2_Vec = Vector2();
+	sideBomb_Vec = Vector2();
 	rota_Vec = 0;
 	item_flg = 0;
 	get_Item = 0;
@@ -209,6 +210,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	shadow.clear();
 	shadow_on = Count();
 	ability3_on = 0;
+	side_Ex_Coll = 0;
 }
 
 void Player::Loading(Load* load)
@@ -426,6 +428,8 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 		shadow.clear();
 	}
 
+
+	//SideBomb¶¬
 	if (ability3_on == 1)
 	{
 		ability3_on = 2;
@@ -434,6 +438,32 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	if (!sideBomb->Get_live_Count_Flg())
 	{
 		ability3_on = 0;
+	}
+
+	//SideBomb”»’è
+	if (side_Ex_Coll >= 1)
+	{
+		if (side_Ex_Coll == 1)
+		{
+			sideBomb_Vec.x += 0.5f;
+		}
+		else if (side_Ex_Coll == 2)
+		{
+			sideBomb_Vec.x -= 0.5f;
+		}
+		if (sideBomb_Vec.x>= SIDE_EX_MAX_SPEED)
+		{
+			sideBomb_Vec.x = SIDE_EX_MAX_SPEED;
+		}
+		else if (sideBomb_Vec.x <= -SIDE_EX_MAX_SPEED)
+		{
+			sideBomb_Vec.x = -SIDE_EX_MAX_SPEED;
+		}
+		game_object.game.allVec.vec = sideBomb_Vec;
+	}
+	else
+	{
+		sideBomb_Vec = Vector2();
 	}
 
 	//‚Á”ò‚Ñ
@@ -1036,6 +1066,7 @@ void Player::Space_On()
 void Player::Coll(bool& hetstop)
 {
 	item_flg = 0;
+	side_Ex_Coll = 0;
 	save_Coll = false;
 	float blowX = 0.0f;
 	float blowY = 0.0f;
@@ -1049,7 +1080,16 @@ void Player::Coll(bool& hetstop)
 			bomb_Janp = true;
 			rota_Vec = 10.0f;
 		}
-
+		if (nameTag == "RSideEx")
+		{
+			side_Ex_Coll = 1;
+			rota_Vec = 10.0f;
+		}
+		if (nameTag == "LSideEx")
+		{
+			side_Ex_Coll = 2;
+			rota_Vec = 10.0f;
+		}
 		if (nameTag == "Enemy1" || nameTag == "Enemy3")
 		{
 			blowX = 9.0f;

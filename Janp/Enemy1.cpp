@@ -40,16 +40,16 @@ void Enemy1::Update()
 				move_lr = 4;
 			}
 		}
-		if (move_lr==3)
+		if (move_lr == 3)
 		{
 			game_object.game.allVec.vec.x += 0.6f;
-			
+
 			move_End.flg = true;
 		}
 		else if (move_lr == 4)
 		{
 			game_object.game.allVec.vec.x -= 0.6f;
-			
+
 			move_End.flg = true;
 		}
 		if (move_End.Conuter(120))
@@ -111,6 +111,14 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 
 			}
 		}
+		if (nameTag == "RSideEx" || nameTag == "LSideEx")
+		{
+			if (!exInvincible.flg)
+			{
+				exInvincible.flg = true;
+				Damage(SIDE_EX_DAMAGE);
+			}
+		}
 	}
 }
 
@@ -145,7 +153,7 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 			game_object.game.lr = true;
 			move_lr = 2;
 		}
-		
+
 	}
 
 

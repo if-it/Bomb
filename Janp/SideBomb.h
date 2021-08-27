@@ -11,6 +11,7 @@ public:
     void Init();
     void Loading(Load* load);
     void Update(Controller* con);
+    void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
     void Spawn(const Vector2 set_pos);
     void Draw(const Vector2& sc, const Vector2& shake);
 
@@ -19,5 +20,7 @@ public:
 private:
     Count live_Count;
     bool explosion_on;
+    int tex[6];
+    Animation ani;
 };
 

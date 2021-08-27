@@ -13,9 +13,10 @@ public:
     void Draw(const Vector2& sc, const Vector2& shake);
 
     std::vector<SideExplosion> sideEx;
-    Animation ani;
-    int tex;
 private:
+    int tex[16];
+    Animation ani;
     bool spawn;
+    Count end;
 };
 

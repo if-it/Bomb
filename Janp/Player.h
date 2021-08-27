@@ -13,6 +13,7 @@
 #define BOMBVEC 10.0f
 #define EXJUMP 10.0f
 #define ABILITY_BOMB_SPEED 12.0f
+#define SIDE_EX_MAX_SPEED 20.0f
 
 class Player :public MapColl
 {
@@ -67,6 +68,7 @@ private:
 	Vector2 air_Pos;
 	Vector2 air_Sc;
 	Vector2 ability2_Vec;
+	Vector2 sideBomb_Vec;
 
 	Animation animation;
 
@@ -93,6 +95,7 @@ private:
 	bool ability2_lr;
 
 	int ability3_on;
+	int side_Ex_Coll;
 
 	int animation_Count_Num;
 	int hp;

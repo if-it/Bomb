@@ -117,6 +117,8 @@ bool Game::Loading()
 	dust->Loading(load);
 	mapBombMana->Loading(load);
 	mapSwitch->Loading(load);
+	sideBomb->Loading(load);
+	sideExMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/clear.png", clear);
@@ -478,6 +480,7 @@ void Game::Map_Coll_Update()
 	enemy2->MapCollUpdate(map->map);
 
 	exMana->Map_Coll_Update(map->map);
+	sideBomb->Map_Coll_Update(map->map);
 }
 
 void Game::Obj_Coll_Update()
@@ -490,6 +493,12 @@ void Game::Obj_Coll_Update()
 	coll_List.push_back(&player->game_object);
 
 	//アビリティ
+
+	//SideBomb
+	for (int i = 0; i < (int)sideExMana->sideEx.size();++i)
+	{
+		coll_List.push_back(&sideExMana->sideEx[i].game_object);
+	}
 
 	//爆発
 	for (int i = 0; i < exMana->ex.size(); ++i)
@@ -637,6 +646,9 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	mapBombMana->Draw(sc2, shake2);
 	mapSwitch->Draw(sc2, shake2);
 
+	//エフェクト関連1
+	sideExMana->Draw(sc2, shake2);
+
 	//オブジェクト関連
 	enemy1Mana->Draw(sc2, shake2);
 	enemy2->Draw(sc2, shake2);
@@ -644,9 +656,8 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
 	sideBomb->Draw(sc2, shake2);
-	sideExMana->Draw(sc2, shake2);
 
-	//エフェクト関連
+	//エフェクト関連2
 	exMana->Draw(sc2, shake2);
 	dust->Draw(sc2, shake2);
 
