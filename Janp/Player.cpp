@@ -211,6 +211,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	shadow_on = Count();
 	ability3_on = 0;
 	side_Ex_Coll = 0;
+	tutorial_flg = 0;
 }
 
 void Player::Loading(Load* load)
@@ -273,6 +274,10 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		{
 			get_Item = 1;
 		}
+		if (tutorial_flg == 10)
+		{
+			tutorial_flg = -1;
+		}
 	}
 	if (!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
 	{
@@ -284,7 +289,14 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	{
 		ability3_on = 1;
 	}
-
+	if (tutorial_flg > 0)
+	{
+		time = true;
+	}
+	if (tutorial_flg == 0)
+	{
+		time = false;
+	}
 }
 
 void Player::Update(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
@@ -495,14 +507,17 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 		else if (item_flg == 5)
 		{
 			save_Data.ability1_flg = true;
+			tutorial_flg = 1;
 		}
 		else if (item_flg == 6)
 		{
 			save_Data.ability2_flg = true;
+			tutorial_flg = 2;
 		}
 		else if (item_flg == 7)
 		{
 			save_Data.ability3_flg = true;
+			tutorial_flg = 3;
 		}
 	}
 

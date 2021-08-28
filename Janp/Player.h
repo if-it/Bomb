@@ -42,6 +42,7 @@ public:
 	int Get_Now_Hp() { return hp; }
 	int Get_Max_Hp() { return max_Hp; }
 	int& Get_Get_Item() { return get_Item; }
+	int& Get_Tutorial_Flg() { return tutorial_flg; }
 	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
@@ -113,6 +114,7 @@ private:
 	int get_Item;
 	bool get_guide;
 	bool die_End;
+	int tutorial_flg;
 
 	//“_–Å
 	bool blinking;

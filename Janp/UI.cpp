@@ -25,6 +25,10 @@ void UI::Init()
 	space_guide = false;
 	space_guide_flg = false;
 	ui_on = false;
+	ui_on2 = false;
+	tutorial_on = false;
+	tutorial_flg = 0;
+	tutorial_Size = Vector2(0.0f, 0.0f);
 }
 
 void UI::Loading(Load* load)
@@ -39,11 +43,14 @@ void UI::Loading(Load* load)
 
 	load->LoadTex("Load/Texture/UI/Button_X.png", button_X);
 	load->LoadTex("Load/Texture/UI/Button_A.png", button_A);
+
+
+	load->LoadTex("Load/Texture/UI/Tutorial1.png", tutorial1);
 }
 
 void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	const int& maxBomb, const bool& get_guide, const Vector2& playerPos,
-	const bool& get_controller_flg, const bool& space_on_flg)
+	const bool& get_controller_flg, const bool& space_on_flg, int& Get_Tutorial_Flg)
 {
 	text_Back_Pos = Vector2(playerPos.x, playerPos.y - SIZE - 10);
 	max_Heart_Num = maxHp;
@@ -51,6 +58,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	bomb_Num = playerBomb;
 	max_Bomb_Num = maxBomb;
 	controller_flg = get_controller_flg;
+	tutorial_flg = Get_Tutorial_Flg;
 
 
 	if (bomb_Ani.num != 0)
@@ -72,8 +80,14 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	if (choice_guide || space_guide)
 	{
 		ui_on = true;
+		ui_on2 = true;
 	}
 
+	tutorial_on = false;
+	if (tutorial_flg > 0)
+	{
+		tutorial_on = true;
+	}
 	const int PAL = 9;
 	if (ui_on && pal <= 128)
 	{
@@ -84,8 +98,9 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 		{
 			pal = 128;
 		}
+
 	}
-	else
+	/*else
 	{
 		pal -= PAL;
 		if (pal <= 0)
@@ -94,7 +109,45 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 			if (choice_guide_flg)choice_guide_flg = false;
 			if (space_guide_flg) space_guide_flg = false;
 		}
+	}*/
+
+
+
+	if (tutorial_on && pal <= 228)
+	{
+		tutorial_Size.x += 0.13f;
+		tutorial_Size.y += 0.01f;
+		pal += PAL;
+
+		if (pal >= 228)
+		{
+			pal = 228;
+			tutorial_flg = 10;
+		}
+		if (tutorial_Size.x >= 1.0f)
+		{
+			tutorial_Size.x = 1.0f;
+			tutorial_Size.y += 0.1f;
+			if (tutorial_Size.y >= 1.0f)
+			{
+				tutorial_Size.y = 1.0f;
+			}
+		}
 	}
+	if (!ui_on && !tutorial_on)
+	{
+		pal -= PAL;
+		if (pal <= 0)
+		{
+			ui_on2 = false;
+			if (choice_guide_flg)choice_guide_flg = false;
+			if (space_guide_flg) space_guide_flg = false;
+			tutorial_flg = 0;
+			pal = 0;
+		}
+	}
+
+	Get_Tutorial_Flg = tutorial_flg;
 }
 
 void UI::Draw(const Vector2& sc, const Vector2& shake)
@@ -118,8 +171,8 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 		else DrawTex(pos, bombTex[4], true);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-	Box(text_Back_Pos, GetColor(0, 0, 0), ui_on, true, shake, sc, 62, 30);
-	DrawTex(text_Back_Pos, text_BackTex, ui_on, true, shake, sc);
+	Box(text_Back_Pos, GetColor(0, 0, 0), ui_on2, true, shake, sc, 62, 30);
+	DrawTex(text_Back_Pos, text_BackTex, ui_on2, true, shake, sc);
 	if (controller_flg)
 	{
 		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), button_X, choice_guide_flg, true, shake, sc);
@@ -130,5 +183,8 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Z, choice_guide_flg, true, shake, sc);
 		DrawTex(Vector2(text_Back_Pos.x + 16, text_Back_Pos.y), key_Space, space_guide_flg, true, shake, sc);
 	}
+
+	if (tutorial_on == 1)DrawRotaTex(Vector2(WIDTH / 2, HEIGHT / 2), Vector2(256, 318), tutorial_Size, 0.0f, tutorial1, tutorial_on);
+
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

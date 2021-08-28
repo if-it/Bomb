@@ -133,6 +133,9 @@
     <Filter Include="GameObjct\SideBomb">
       <UniqueIdentifier>{530c3d3a-d964-44d8-bc7b-8762a4c2af08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\SideExplosion">
+      <UniqueIdentifier>{d0c50519-d032-41d7-a5b5-45138549a156}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -250,10 +253,10 @@
       <Filter>GameObjct\SideBomb</Filter>
     </ClCompile>
     <ClCompile Include="SideExplosion.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Effect\SideExplosion</Filter>
     </ClCompile>
     <ClCompile Include="SideExplosionMana.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Effect\SideExplosion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,10 +372,10 @@
       <Filter>GameObjct\SideBomb</Filter>
     </ClInclude>
     <ClInclude Include="SideExplosion.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Effect\SideExplosion</Filter>
     </ClInclude>
     <ClInclude Include="SideExplosionMana.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Effect\SideExplosion</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

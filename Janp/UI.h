@@ -8,9 +8,9 @@ public:
 	~UI();
 	void Init();
 	void Loading(Load* load);
-	void Update(const int& hp, const int& playerBomb, const int& maxHp, 
-		const int& maxBomb,const bool&get_guide,const Vector2& playerPos, 
-		const bool& get_controller_flg,const bool&space_on_flg);
+	void Update(const int& hp, const int& playerBomb, const int& maxHp,
+		const int& maxBomb, const bool& get_guide, const Vector2& playerPos,
+		const bool& get_controller_flg, const bool& space_on_flg, int& tutorial_Flg);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
 private:
@@ -21,7 +21,7 @@ private:
 	int key_Space;
 	int button_X;
 	int button_A;
-
+	int tutorial1;
 
 	int backgroundTex;
 	int bomb_Ani_Num;
@@ -35,11 +35,15 @@ private:
 	bool space_guide;
 	bool space_guide_flg;
 	bool ui_on;
+	bool ui_on2;
 	int pal;
 	bool controller_flg;
+	bool tutorial_on;
+	int tutorial_flg;
 
 	Animation heart_Ani;
 	Animation bomb_Ani;
 	Vector2 text_Back_Pos;
+	Vector2 tutorial_Size;
 };
 

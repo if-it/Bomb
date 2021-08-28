@@ -438,10 +438,10 @@ void Game::Play_Scene()
 		if (!time)
 		{
 			Shake(bombShake, 6, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
-			ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
-				player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
-				controller_on, player->Get_Space_On());
 		}
+		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
+			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
+			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg());
 		hetStop.Conuter(8);
 	}
 	else
@@ -499,7 +499,7 @@ void Game::Obj_Coll_Update()
 	//アビリティ
 
 	//SideBomb
-	for (int i = 0; i < (int)sideExMana->sideEx.size();++i)
+	for (int i = 0; i < (int)sideExMana->sideEx.size(); ++i)
 	{
 		coll_List.push_back(&sideExMana->sideEx[i].game_object);
 	}
