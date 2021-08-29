@@ -43,13 +43,14 @@ public:
 	int Get_Max_Hp() { return max_Hp; }
 	int& Get_Get_Item() { return get_Item; }
 	int& Get_Tutorial_Flg() { return tutorial_flg; }
+	int& Get_Get_Guide() { return get_guide; }
 	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
-	bool& Get_Get_Guide() { return get_guide; }
 	bool& Get_Space_On() { return space_On; }
 	bool Get_Die_End() { return die_End; }
 	bool& Get_Switch_On() { return save_Data.switch_On; }
+	bool& Get_Move_Guide_On() { return move_guide_on; }
 
 private:
 	void Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
@@ -111,8 +112,9 @@ private:
 	bool save_Coll;
 	bool save_On;
 	bool space_On;
+	bool move_guide_on;
 	int get_Item;
-	bool get_guide;
+	int get_guide;
 	bool die_End;
 	int tutorial_flg;
 

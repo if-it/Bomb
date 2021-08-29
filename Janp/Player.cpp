@@ -30,7 +30,7 @@ Player::Player()
 	save_Coll = false;
 	save_On = false;
 	space_On = false;
-	get_guide = false;
+	get_guide = -1;
 }
 
 
@@ -212,6 +212,8 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	ability3_on = 0;
 	side_Ex_Coll = 0;
 	tutorial_flg = 0;
+	move_guide_on = false;
+	get_guide = -1;
 }
 
 void Player::Loading(Load* load)
@@ -231,7 +233,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	left = false;
 	bomb_Spawn = false;
 	ability1_on = false;
-	get_guide = false;
+	get_guide = -1;
 
 	Vector2 stickL = con->StickL();
 	if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
@@ -285,7 +287,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		ability2_on.flg = true;
 		ground_ability2_on = true;
 	}
-	if (ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->RB)))
+	if (ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
 	{
 		ability3_on = 1;
 	}
@@ -463,7 +465,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 		{
 			sideBomb_Vec.x -= 0.5f;
 		}
-		if (sideBomb_Vec.x>= SIDE_EX_MAX_SPEED)
+		if (sideBomb_Vec.x >= SIDE_EX_MAX_SPEED)
 		{
 			sideBomb_Vec.x = SIDE_EX_MAX_SPEED;
 		}
@@ -483,6 +485,11 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	blow.Conuter(2);
 
 
+
+	if (save_Coll || item_flg > 0)
+	{
+		get_guide = 0;
+	}
 
 	if (get_Item == 1)
 	{
@@ -519,12 +526,10 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 			save_Data.ability3_flg = true;
 			tutorial_flg = 3;
 		}
+		get_guide = item_flg;
 	}
 
-	if (save_Coll || item_flg > 0)
-	{
-		get_guide = true;
-	}
+
 }
 
 void Player::Bomb_Spawn(BombMana* bomb)
@@ -653,6 +658,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	vec = game_object.game.allVec.vec;
 	air_Count = 0;
 	space_On = false;
+	move_guide_on = false;
 
 	int SizeCut = 0;
 
@@ -815,6 +821,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
+		if (mapPoint == 91)
+		{
+			move_guide_on = true;
+		}
 	}
 
 	else if (pointNum == 2)//Xé≤
@@ -839,6 +849,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		{
 			Space_On();
 		}
+		if (mapPoint == 91)
+		{
+			move_guide_on = true;
+		}
 	}
 
 	else if (pointNum == 3)//Xé≤
@@ -862,6 +876,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		if (mapPoint == 90)
 		{
 			Space_On();
+		}
+		if (mapPoint == 91)
+		{
+			move_guide_on = true;
 		}
 	}
 	else if (pointNum == 4)//íÜêS
@@ -1041,6 +1059,9 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			break;
 		case 90:
 			Space_On();
+			break;
+		case 91:
+			move_guide_on = true;
 			break;
 		default:
 			break;
