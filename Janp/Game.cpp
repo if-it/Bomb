@@ -286,7 +286,7 @@ void Game::Update()
 	if (game_end_set == 0 && (key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK)))
 	{
 		game_end_set = 1;
-		if (debug_mode_flg)game_end_flg = true;
+		//if (debug_mode_flg)game_end_flg = true;
 	}
 	if (game_end_set == 2)
 	{
