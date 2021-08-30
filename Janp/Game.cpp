@@ -97,6 +97,10 @@ void Game::Init()
 	coll_List.clear();
 
 	hetStop = Count();
+	game_end_set = 0;
+	game_end_pos = Vector2();
+	game_end_lerp = Vector2();
+	game_end_on = false;
 }
 
 bool Game::Loading()
@@ -155,15 +159,6 @@ void Game::Update()
 	key->Input();
 	con->Input();
 	con->Set_Shake_On(option_Data.con_shake);
-
-	if (con->All_Het_Controller())
-	{
-		controller_on = true;
-	}
-	if (key->AllHetKey())
-	{
-		controller_on = false;
-	}
 
 
 
@@ -276,6 +271,50 @@ void Game::Update()
 			Init();
 		}
 	}
+	if (con->All_Het_Controller())
+	{
+		controller_on = true;
+	}
+	if (key->AllHetKey())
+	{
+		controller_on = false;
+	}
+	if (game_end_set > 0)
+	{
+		time = true;
+	}
+	if (game_end_set == 0 && (key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK)))
+	{
+		game_end_set = 1;
+		if (debug_mode_flg)game_end_flg = true;
+	}
+	if (game_end_set == 2)
+	{
+		game_end_pos = Vector2(752, 440);
+		game_end_lerp = Vector2(752, 440);
+		game_end_on = true;
+		game_end_set = 3;
+	}
+	if (game_end_set == 3)
+	{
+		if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || con->StickL().x > 10000)
+		{
+			game_end_lerp = Vector2(752, 440);
+			game_end_on = true;
+		}
+		if (key->keyFlame(KEY_INPUT_LEFT) > 0 || con->StickL().x < -10000)
+		{
+			game_end_lerp = Vector2(552, 440);
+			game_end_on = false;
+		}
+		if (key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->X))
+		{
+			if (!game_end_on)game_end_flg = true;
+			else game_end_set = 4;
+		}
+		game_end_pos = Vector2::Lerp(game_end_pos, game_end_lerp, 0.25f);
+	}
+
 }
 
 void Game::Data_Load()
@@ -405,7 +444,7 @@ void Game::Play_Scene()
 	{
 
 		//“ü—Í
-		player->Input(key, con, time);
+		player->Input(key, con, time, game_end_set);
 		if (!hetStop.flg)
 		{
 
@@ -441,7 +480,8 @@ void Game::Play_Scene()
 		}
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
-			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(),player->Get_Move_Guide_On());
+			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(), player->Get_Move_Guide_On(),
+			player->Get_Save_On(), game_end_set);
 		hetStop.Conuter(8);
 	}
 	else
@@ -629,6 +669,13 @@ void Game::Draw()
 	default:
 		break;
 	}
+
+	if (game_end_set >= 1)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+		Box(game_end_pos, GetColor(255, 255, 255), true, false, Vector2(), Vector2(), 130, 48);
+	}
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	Box(Vector2(), GetColor(0, 0, 0), drawScene, true, Vector2(), Vector2(), WIDTH, HEIGHT);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

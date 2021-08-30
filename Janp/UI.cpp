@@ -43,6 +43,8 @@ void UI::Init()
 	get_Item_Rand = 0;
 	move_guide_on = false;
 	move_guide = false;
+	save_flg = 0;
+	exit_Size = Vector2(0.0f, 0.01f);
 }
 
 void UI::Loading(Load* load)
@@ -69,11 +71,15 @@ void UI::Loading(Load* load)
 	load->LoadTex("Load/Texture/UI/GetBomb.png", get_Item_Tex[0]);
 	load->LoadTex("Load/Texture/UI/HpUP.png", get_Item_Tex[1]);
 	load->LoadTex("Load/Texture/UI/AttackUP.png", get_Item_Tex[2]);
+	load->LoadTex("Load/Texture/UI/Save.png", get_Item_Tex[3]);
+
+	load->LoadTex("Load/Texture/UI/Exit.png", exitTex);
 }
 
 void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	const int& maxBomb, const int& get_guide, const Vector2& playerPos,
-	const bool& get_controller_flg, const bool& space_on_flg, int& Get_Tutorial_Flg, const bool& get_move_guide_on)
+	const bool& get_controller_flg, const bool& space_on_flg, int& Get_Tutorial_Flg,
+	const bool& get_move_guide_on, const bool& get_save, int& game_end_set)
 {
 	text_Back_Pos = Vector2(playerPos.x, playerPos.y - SIZE - 10);
 	max_Heart_Num = maxHp;
@@ -96,11 +102,22 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 		bomb_Ani_Num = GetRand(400);
 		bomb_One_Ani = true;
 	}
+
+	//SaveUI
+	if (get_save)
+	{
+		save_flg = 1;
+	}
+	else if (save_flg == 1)
+	{
+		save_flg = 2;
+	}
+
 	heart_Ani.AnimationOn(14, 3);
 	bomb_Ani.AnimationOn(bomb_Ani_Num, 4);
 
 	ui_on = false;
-	if (choice_guide == 0 || space_guide||move_guide_on)
+	if (choice_guide == 0 || space_guide || move_guide_on)
 	{
 		ui_on = true;
 		ui_on2 = true;
@@ -163,13 +180,13 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 		}
 	}
 	//ƒAƒCƒeƒ€GetUI
-	if (choice_guide > 0 || get_Item_on)
+	if (choice_guide > 0 || get_Item_on || save_flg == 2)
 	{
 		if (!get_Item_on)
 		{
 			get_Item_on = true;
 			blinking_Count.flg = true;
-			get_Item_guide = choice_guide;
+			if (save_flg != 2)get_Item_guide = choice_guide;
 			get_Item_Rand = GetRand(3) + 2;
 		}
 		if (!get_Item_end)
@@ -231,6 +248,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 				get_Item_guide = -1;
 				blinking_Count = Count();
 				get_item_Size = Vector2();
+				save_flg = 0;
 			}
 		}
 
@@ -278,13 +296,45 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	}
 
 
+	//ExitUI
+
+	if (game_end_set == 1)
+	{
+		end_on = true;
+		exit_Size.x += 0.07f;
+		if (exit_Size.x >= 1.0f)
+		{
+			exit_Size.x = 1.0f;
+			exit_Size.y += 0.06f;
+			if (exit_Size.y)
+			{
+				exit_Size.y = 1.0f;
+				game_end_set = 2;
+			}
+		}
+	}
+	if (game_end_set == 4)
+	{
+		exit_Size.y -= 0.1f;
+		if (exit_Size.y <= 0.01f)
+		{
+			exit_Size.y = 0.01f;
+			exit_Size.x -= 0.1f;
+			if (exit_Size.x <= 0)
+			{
+				exit_Size.x = 0;
+				game_end_set = 0;
+			}
+		}
+	}
+
+
+
 	Get_Tutorial_Flg = tutorial_flg;
 }
 
 void UI::Draw(const Vector2& sc, const Vector2& shake)
 {
-
-
 	DrawTex(Vector2(16, 16), backgroundTex, true);
 	Vector2 pos;
 	for (int i = 0; i < max_Heart_Num; ++i)
@@ -338,7 +388,13 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 		{
 			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[2], get_Item_on, false, true, shake, sc);
 		}
+		if (save_flg == 2)
+		{
+			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[3], get_Item_on, false, true, shake, sc);
+		}
 	}
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 228);
+	DrawRotaTex(Vector2(WIDTH / 2, HEIGHT / 2), Vector2(256, 128), exit_Size, 0.0f, exitTex, end_on);
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

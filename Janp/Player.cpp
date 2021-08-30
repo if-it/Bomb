@@ -224,7 +224,7 @@ void Player::Loading(Load* load)
 		64, 64, player_Black_Tex);
 }
 
-void Player::Input(Key* key, Controller* con, bool& time)
+void Player::Input(Key* key, Controller* con, bool& time, const int& get_game_end_set)
 {
 
 	up = false;
@@ -236,68 +236,72 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	get_guide = -1;
 
 	Vector2 stickL = con->StickL();
-	if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
+	if (get_game_end_set == 0)
 	{
-		up = true;
 
-		bomb_Vec = Vector2(0.0f, -1.0f);
-
-	}
-	if (key->keyFlame(KEY_INPUT_DOWN) > 0 || stickL.y < -10000)
-	{
-		down = true;
-		bomb_Vec = Vector2(0.0f, 1.0f);
-	}
-	if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
-	{
-		right = true;
-		game_object.game.lr = false;
-
-
-		bomb_Vec = Vector2(1.0f, -0.15f);
-	}
-	if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
-	{
-		left = true;
-		game_object.game.lr = true;
-		bomb_Vec = Vector2(-1.0f, -0.15f);
-	}
-	if (key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A))
-	{
-		bomb_Spawn = true;
-	}
-	if ((key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->X)))
-	{
-		if (save_Coll)
+		if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
 		{
-			save_On = true;
+			up = true;
+
+			bomb_Vec = Vector2(0.0f, -1.0f);
+
 		}
-		if (get_Item == 0 && (item_flg > 0))
+		if (key->keyFlame(KEY_INPUT_DOWN) > 0 || stickL.y < -10000)
 		{
-			get_Item = 1;
+			down = true;
+			bomb_Vec = Vector2(0.0f, 1.0f);
 		}
-		if (tutorial_flg == 10)
+		if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
 		{
-			tutorial_flg = -1;
+			right = true;
+			game_object.game.lr = false;
+
+
+			bomb_Vec = Vector2(1.0f, -0.15f);
 		}
-	}
-	if (!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
-	{
-		ability2.flg = true;
-		ability2_on.flg = true;
-		ground_ability2_on = true;
-	}
-	if (ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
-	{
-		ability3_on = 1;
-	}
-	if (tutorial_flg > 0)
-	{
-		time = true;
-	}
-	if (tutorial_flg == 0)
-	{
-		time = false;
+		if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
+		{
+			left = true;
+			game_object.game.lr = true;
+			bomb_Vec = Vector2(-1.0f, -0.15f);
+		}
+		if (key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A))
+		{
+			bomb_Spawn = true;
+		}
+		if ((key->KeyTrigger(KEY_INPUT_Z) || con->TrlggerBotton(con->X)))
+		{
+			if (save_Coll)
+			{
+				save_On = true;
+			}
+			if (get_Item == 0 && (item_flg > 0))
+			{
+				get_Item = 1;
+			}
+			if (tutorial_flg == 10)
+			{
+				tutorial_flg = -1;
+			}
+		}
+		if (!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
+		{
+			ability2.flg = true;
+			ability2_on.flg = true;
+			ground_ability2_on = true;
+		}
+		if (ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
+		{
+			ability3_on = 1;
+		}
+		if (tutorial_flg > 0)
+		{
+			time = true;
+		}
+		if (tutorial_flg == 0)
+		{
+			time = false;
+		}
 	}
 }
 

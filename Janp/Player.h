@@ -25,7 +25,7 @@ public:
 	void Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Loading(Load* load);
-	void Input(Key* key, Controller* con, bool& time);
+	void Input(Key* key, Controller* con, bool& time, const int& get_game_end_set);
 	void Update(bool& shakeflg, BombMana* bomb,SideBomb*sideBomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void Save(const int& data_Num);

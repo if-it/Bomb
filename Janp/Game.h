@@ -1,6 +1,6 @@
 #pragma once
 #include"GameInclude.h"
-#define MAP_F 203
+#define MAP_F 300
 #define MAP_P_F 35
 class Game :public GameInclude
 {
@@ -34,6 +34,11 @@ private:
 	bool time;
 	bool flame_time;
 	int data_Num;
+
+	int game_end_set;
+	Vector2 game_end_pos;
+	Vector2 game_end_lerp;
+	bool game_end_on;
 
 	struct Option_Data
 	{

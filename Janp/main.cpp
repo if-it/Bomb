@@ -59,7 +59,6 @@ int WINAPI WinMain(
 
 		if (game->game_end_flg)break;
 		if (ProcessMessage() == -1)break;
-		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)break;
 	}
 
 	delete game;

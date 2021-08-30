@@ -10,7 +10,8 @@ public:
 	void Loading(Load* load);
 	void Update(const int& hp, const int& playerBomb, const int& maxHp,
 		const int& maxBomb, const int& get_guide, const Vector2& playerPos,
-		const bool& get_controller_flg, const bool& space_on_flg, int& tutorial_Flg,const bool&get_move_guide_on);
+		const bool& get_controller_flg, const bool& space_on_flg, int& tutorial_Flg,
+		const bool&get_move_guide_on,const bool&get_save, int& game_end_set);
 	void Draw(const Vector2& sc, const Vector2& shake);
 
 private:
@@ -24,7 +25,8 @@ private:
 	int button_A;
 	int con_LStick;
 	int tutorial[3];
-	int get_Item_Tex[3];
+	int get_Item_Tex[4];
+	int exitTex;
 
 
 	int backgroundTex;
@@ -41,6 +43,7 @@ private:
 	int pal;
 	int get_item_Pal;
 	int get_Item_Rand;
+	int save_flg;
 
 	bool bomb_One_Ani;
 	bool choice_guide_flg;
@@ -56,6 +59,7 @@ private:
 	bool blinking;
 	bool move_guide_on;
 	bool move_guide;
+	bool end_on;
 
 	Animation heart_Ani;
 	Animation bomb_Ani;
@@ -63,6 +67,7 @@ private:
 	Vector2 guide_Size;
 	Vector2 tutorial_Size;
 	Vector2 get_item_Size;
+	Vector2 exit_Size;
 
 	Count get_Item_Count;
 	Count blinking_Count;
