@@ -12,7 +12,9 @@ public:
 		const int& maxBomb, const int& get_guide, const Vector2& playerPos,
 		const bool& get_controller_flg, const bool& space_on_flg, int& tutorial_Flg,
 		const bool&get_move_guide_on,const bool&get_save, int& game_end_set);
+	void Exit(int& game_end_set);
 	void Draw(const Vector2& sc, const Vector2& shake);
+	void ExitDraw();
 
 private:
 	int heartTex[4];

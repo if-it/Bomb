@@ -11,9 +11,12 @@ public:
 	void SystemInit();
 	void FirstInit();
 	void Init();
+	void TitleInit();
 	bool Loading();
 	void Update();
 	void Draw();
+
+	bool Enter();
 
 	bool game_end_flg = false;
 	bool debug_mode_flg = false;
@@ -34,11 +37,17 @@ private:
 	bool time;
 	bool flame_time;
 	int data_Num;
+	int title_Pal;
 
 	int game_end_set;
-	Vector2 game_end_pos;
-	Vector2 game_end_lerp;
+	int title_Cursor;
+	Vector2 cursor_Pos;
+	Vector2 cursor_lerp;
 	bool game_end_on;
+
+	Vector2 title_Pos;
+	Vector2 text_Play_Pos;
+	Vector2 text_Exit_Pos;
 
 	struct Option_Data
 	{

@@ -64,10 +64,10 @@ protected:
 	int loadCount;
 	int pal;
 	int haikei;
-	int clear;
 	int title;
-	int button;
-	int stick;
+	int cursor;
+	int text_Play_Tex;
+	int text_Exit_Tex;
 	int bgm1;
 
 	enum SCENE
@@ -94,7 +94,7 @@ protected:
 	int scene;
 	int stage;
 	bool stageChange;
-	bool titleFlg;
+	int title_Flg;
 	bool title_To_Play;
 	Count bombShake;
 

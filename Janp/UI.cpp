@@ -298,6 +298,15 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 
 	//ExitUI
 
+	Exit(game_end_set);
+
+
+
+	Get_Tutorial_Flg = tutorial_flg;
+}
+
+void UI::Exit(int& game_end_set)
+{
 	if (game_end_set == 1)
 	{
 		end_on = true;
@@ -327,10 +336,6 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 			}
 		}
 	}
-
-
-
-	Get_Tutorial_Flg = tutorial_flg;
 }
 
 void UI::Draw(const Vector2& sc, const Vector2& shake)
@@ -393,8 +398,14 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[3], get_Item_on, false, true, shake, sc);
 		}
 	}
+	ExitDraw();
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void UI::ExitDraw()
+{
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 228);
 	DrawRotaTex(Vector2(WIDTH / 2, HEIGHT / 2), Vector2(256, 128), exit_Size, 0.0f, exitTex, end_on);
-
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
