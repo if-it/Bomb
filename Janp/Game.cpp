@@ -76,8 +76,10 @@ void Game::TitleInit()
 	title_Pal = 0;
 	title_Cursor = 0;
 	title_Pos = Vector2(WIDTH / 2 - 384, HEIGHT / 2 - 192);
-	text_Play_Pos = Vector2(WIDTH + 200, HEIGHT / 2 - 192);
+	text_Play_Pos = Vector2(WIDTH + 200, HEIGHT / 2);
 	text_Exit_Pos = Vector2(WIDTH + 200, HEIGHT / 2 + 100);
+
+	dust->TitleInit();
 
 	load->LoadTex("Load/Texture/Title.png", title);
 	load->LoadTex("Load/Texture/Text_Play.png", text_Play_Tex);
@@ -210,7 +212,7 @@ void Game::Update()
 			{
 				title_Pal = 255;
 
-				if (game_end_set == 0 && Enter())
+				if (game_end_set == 0)
 				{
 					title_Flg = 2;//タイトル表示終わり
 				}
@@ -218,20 +220,20 @@ void Game::Update()
 		}
 		else if (title_Flg == 2)//タイトル左に移動
 		{
-			title_Pos = Vector2::Lerp(title_Pos, Vector2(100, HEIGHT / 2 - 192), 0.1f);
-			if (title_Pos.x - 100 <= 10.0f)
+			title_Pos = Vector2::Lerp(title_Pos, Vector2(50, HEIGHT / 2 - 192), 0.03f);
+			if (title_Pos.x - 50 <= 5.0f)
 			{
 				title_Flg = 3;
 			}
 		}
 		else if (title_Flg == 3)//テキスト表示
 		{
-			title_Pos = Vector2::Lerp(title_Pos, Vector2(100, HEIGHT / 2 - 192), 0.1f);
-			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 500, HEIGHT / 2 - 192), 0.05f);
-			if (text_Play_Pos.x - (WIDTH - 500) <= 100.0f)
+			title_Pos = Vector2::Lerp(title_Pos, Vector2(50, HEIGHT / 2 - 192), 0.03f);
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 400, HEIGHT / 2), 0.05f);
+			if (text_Play_Pos.x - (WIDTH - 400) <= 100.0f)
 			{
-				text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 500, HEIGHT / 2 + 100), 0.05f);
-				if (text_Exit_Pos.x - (WIDTH - 500) <= 10.0f)
+				text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 400, HEIGHT / 2 + 100), 0.05f);
+				if (text_Exit_Pos.x - (WIDTH - 400) <= 10.0f)
 				{
 					title_Flg = 4;
 					cursor_Pos = Vector2(text_Play_Pos.x + 20, text_Play_Pos.y - 10);
@@ -241,8 +243,8 @@ void Game::Update()
 		}
 		else if (title_Flg == 4 && game_end_set == 0)//カーソル移動
 		{
-			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 500, HEIGHT / 2 - 192), 0.05f);
-			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 500, HEIGHT / 2 + 100), 0.05f);
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 400, HEIGHT / 2), 0.05f);
+			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 400, HEIGHT / 2 + 100), 0.05f);
 			if (key->KeyTrigger(KEY_INPUT_UP) > 0 || con->StickL().y > 10000)
 			{
 				--title_Cursor;
@@ -263,7 +265,7 @@ void Game::Update()
 			if (title_Cursor == 0)
 			{
 				cursor_lerp = Vector2(text_Play_Pos.x + 20, text_Play_Pos.y - 10);
-				if (Enter())title_Flg = 10;
+				if (Enter())title_Flg = 5;
 			}
 			else if (title_Cursor == 1)
 			{
@@ -273,8 +275,23 @@ void Game::Update()
 			}
 
 		}
+		if (title_Flg == 5)
+		{
+			title_Pos = Vector2::Lerp(title_Pos, Vector2(-1000, HEIGHT / 2 - 192), 0.03f);
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH+20, HEIGHT / 2), 0.05f);
+			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH+20, HEIGHT / 2 + 100), 0.05f);
+			if (title_Pos.x < -800)
+			{
+				title_Flg = 10;
+			}
+		}
+		else if (title_Flg == 6)
+		{
+
+		}
 		if (title_Flg == 10 && !title_To_Play && game_end_set == 0)//プレイシーンまで移動
 		{
+			title_Pal = 0;
 			title_To_Play = true;
 			title_Flg = 0;
 
@@ -292,6 +309,7 @@ void Game::Update()
 			}
 		}
 		ui->Exit(game_end_set);
+		dust->Update();
 		break;
 	case PLAYINIT:
 		if (SceneChangeSeb(8))
@@ -741,11 +759,12 @@ void Game::Draw()
 	case LOAD:
 		break;
 	case TITLE:
+		dust->Draw(Vector2(), Vector2());
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, title_Pal);
 		DrawTex(title_Pos, title, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		DrawTex(text_Play_Pos, text_Play_Tex, true);
 		DrawTex(text_Exit_Pos, text_Exit_Tex, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		ui->ExitDraw();
 		break;
 	case PLAYINIT:
@@ -761,7 +780,7 @@ void Game::Draw()
 		break;
 	}
 
-	if (game_end_set == 2 || game_end_set == 3 || title_Flg >= 4)
+	if (game_end_set == 2 || game_end_set == 3 || title_Flg == 4)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 		DrawTex(cursor_Pos, cursor, true);

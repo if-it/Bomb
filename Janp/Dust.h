@@ -9,6 +9,7 @@ public:
 	~Dust();
 
 	void Init(std::vector<std::vector<int>>& map, const int& stage);
+	void TitleInit();
 	void Loading(Load* load);
 	void Update();
 	void Draw(const Vector2& sc, const Vector2& shake);

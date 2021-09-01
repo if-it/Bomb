@@ -27,6 +27,24 @@ void Dust::Init(std::vector<std::vector<int>>& map, const int& stage)
 	}
 }
 
+void Dust::TitleInit()
+{
+	dust.clear();
+	mapX = WIDTH;
+	mapY = HEIGHT+100;
+	for (int i = 0; i < 60; ++i)
+	{
+		GameObject Init_Dust;
+
+		Init_Dust = GameObject();
+		Init_Dust.game.pal = GetRand(245) + 10;
+		Init_Dust.SetPos(Vector2(GetRand(mapX), GetRand(mapY)));
+		float size = GetRand(1) + 1;
+		Init_Dust.game.scale = Vector2(size, size);
+		dust.push_back(Init_Dust);
+	}
+}
+
 void Dust::Loading(Load* load)
 {
 	load->LoadTex("Load/Texture/Effect/boyaMaru.png", tex);
@@ -62,7 +80,7 @@ void Dust::Draw(const Vector2& sc, const Vector2& shake)
 	for (int i = 0; i < dust.size(); ++i)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, dust[i].game.pal);
-		DrawTex(dust[i], tex, true, Vector2(), sc);
+		DrawRotaTex(dust[i], tex, true, Vector2(), sc);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
