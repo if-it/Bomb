@@ -155,7 +155,7 @@ void ItemMana::Init(std::vector<std::vector<int>>& map, const int& stage)
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
 			bool same = false;
-			if ((map[y][x] >= 80 && map[y][x] <= 83)||(map[y][x] >= 92 && map[y][x] <= 93))
+			if ((map[y][x] >= 80 && map[y][x] <= 83)||(map[y][x] >= 92 && map[y][x] <= 94))
 			{
 				for (int i = 0; i < save_Data_Ori.size(); ++i)
 				{

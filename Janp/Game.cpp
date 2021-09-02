@@ -57,7 +57,7 @@ void Game::FirstInit()
 	//コントローラー振動ONOFF
 	con->Set_Shake_On(false);
 	game_end_flg = false;
-	debug_mode_flg = false;
+	debug_mode_flg = true;
 	scene = OPENING;
 	stage = MAP_F;
 	player->player_mapset = MAP_P_F;
