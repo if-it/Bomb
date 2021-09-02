@@ -93,8 +93,8 @@ private:
 	bool right;
 	bool ability1_on;
 	bool ground_ability2_on;
-	bool ability2_Activate;
 	bool ability2_lr;
+	int ability2_Activate;
 
 	int ability3_on;
 	int side_Ex_Coll;

@@ -29,6 +29,23 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 {
 	spawn = die;
 	game_object = GameObject("Enemy2Tex", false, Vector2(192, 192));
+	game_object = GameObject("Enemy2Tex", false, Vector2(192, 192));
+	game_object.color = COLOR(255, 0, 100);
+	spawn = false;
+	die = false;
+	move = false;
+	attack_Time = Count();
+	attack_End_Time = Count();
+	rush_Time = Count();
+	attack_front_flame = false;
+	arm = GameObject("Enemy2", false, Vector2(32, 128));
+	arm.color = COLOR(255, 0, 0);
+	attack_Animetion_flg = 0;
+	body = GameObject("Enemy2", false, Vector2(160, 160));
+	body.color = COLOR(255, 150, 50);
+	ani = Animation();
+	uturn[0] = false;
+	uturn[1] = false;
 	if (!spawn)
 	{
 		for (int y = 0; y < (int)collMap.size(); ++y)
@@ -145,6 +162,12 @@ void Enemy2::Update(const Vector2& pos, Collision* coll)
 
 			EnemyAllUpdate(flame_speed, max_speed);
 			PlayerCahck(pos, coll);
+			if (DieChack())
+			{
+				game_object.game.dis = false;
+				arm.game.dis = false;
+				body.game.dis = false;
+			}
 		}
 	}
 }

@@ -112,10 +112,10 @@ void Player::Save(const int& data_Num)
 
 void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
-	//player_mapset = 35;
+	player_mapset = 35;
 	Init(map, sc);
 	max_Hp = 3;
-	max_Bomb_Num = 1;
+	max_Bomb_Num = 0;
 	save_Data.ability1_flg = false;
 	save_Data.damage = 1;
 	save_Data.die_Count = 0;
@@ -205,7 +205,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	blinking_Count = Count();
 	die_End = false;
 	ground_ability2_on = false;
-	ability2_Activate = false;
+	ability2_Activate = 0;
 	ability2_lr = false;
 	shadow.clear();
 	shadow_on = Count();
@@ -284,13 +284,13 @@ void Player::Input(Key* key, Controller* con, bool& time, const int& get_game_en
 				tutorial_flg = -1;
 			}
 		}
-		if (!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
+		if (save_Data.ability2_flg&&!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
 		{
 			ability2.flg = true;
-			ability2_on.flg = true;
 			ground_ability2_on = true;
+			ability2_Activate = 1;
 		}
-		if (ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
+		if (save_Data.ability3_flg&&ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
 		{
 			ability3_on = 1;
 		}
@@ -358,17 +358,48 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 
 	now_Bomb_Num = max_Bomb_Num - now_Bomb_Num;
 
+	if (ability2.flg)
+	{
+		--now_Bomb_Num;
+	}
+	if (ability3_on > 0)
+	{
+		now_Bomb_Num -= 3;
+	}
+	if (now_Bomb_Num < 0)
+	{
+		if (ability2_Activate == 0)
+		{
+			ability3_on = 0;
+		}
+		if (ability2_Activate == 1)
+		{
+			ability2_Activate = -1;
+		}
+		if (ability2_Activate == 2)
+		{
+			if (ability3_on == 1)
+			{
+				ability3_on = 0;
+			}
+		}
+	}
+	if (now_Bomb_Num < 0)
+	{
+		now_Bomb_Num = 0;
+	}
+
 	if (save_Data.ability1_flg)
 	{
-	}
-	//ability1
-	bomb_Vec.Normalize();
+		//ability1
+		bomb_Vec.Normalize();
 
-	bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
-	/*else
+		bomb_Vec = bomb_Vec * ABILITY_BOMB_SPEED;
+	}
+	else
 	{
 		bomb_Vec = Vector2();
-	}*/
+	}
 
 	if (bomb_Spawn)//”š’e¶¬
 	{
@@ -377,25 +408,34 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	}
 
 	//ƒ_ƒbƒVƒ…
-	if (ability2.flg && now_Bomb_Num > 0)
+	if (ability2.Conuter(12) || ability2_Activate == -1)
 	{
-		--now_Bomb_Num;
-		const float ABILITY2_SPEED = 1.5f;
-		if (!ability2_Activate)
-		{
-			shadow_on.flg = true;
-			ability2_Activate = true;
-			ability2_lr = game_object.game.lr;
-			if (ability2_lr)
-			{
-				ability2_Vec.x = -8;
-			}
-			else
-			{
-				ability2_Vec.x = 8;
-			}
-		}
+		ability2_Activate = 0;
+		ability2_Vec = Vector2();
+		shadow_on = Count();
+		ability2 = Count();
+	}
 
+
+	if (ability2_Activate == 1)
+	{
+		ability2_on.flg = true;
+		shadow_on.flg = true;
+		ability2_Activate = 2;
+		ability2_lr = game_object.game.lr;
+		if (ability2_lr)
+		{
+			ability2_Vec.x = -8;
+		}
+		else
+		{
+			ability2_Vec.x = 8;
+		}
+	}
+
+	if (ability2_Activate == 2)
+	{
+		const float ABILITY2_SPEED = 1.5f;
 		game_object.game.rota = 0;
 		rota_Vec = 0;
 		animation.num = 0;
@@ -416,12 +456,6 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 			shadow_on.flg = true;
 			shadow.push_back(game_object);
 		}
-	}
-	if (ability2.Conuter(12))
-	{
-		ability2_Activate = false;
-		ability2_Vec = Vector2();
-		shadow_on = Count();
 	}
 	ability2_on.Conuter(25);
 

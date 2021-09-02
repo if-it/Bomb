@@ -57,7 +57,7 @@ void Game::FirstInit()
 	//コントローラー振動ONOFF
 	con->Set_Shake_On(false);
 	game_end_flg = false;
-	debug_mode_flg = true;
+	debug_mode_flg = false;
 	scene = OPENING;
 	stage = MAP_F;
 	player->player_mapset = MAP_P_F;
@@ -189,7 +189,7 @@ void Game::Update()
 			Init();
 			if (!debug_mode_flg)
 			{
-				//PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 				title_Flg = 1;
 			}
 			else
