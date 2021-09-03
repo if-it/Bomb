@@ -2,7 +2,7 @@
 #include "MapColl.h"
 #include"Collision.h"
 #include"Explosion.h"
-#define SIDE_EX_DAMAGE 5
+#define SIDE_EX_DAMAGE 4
 
 class Enemy :
 	public MapColl

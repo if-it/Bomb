@@ -12,7 +12,7 @@ void Enemy3::Init(Vector2 pos)
 {
 	game_object = GameObject("Enemy3");
 	game_object.color = COLOR(255, 0, 0);
-	game_object.game.allVec.pos = pos;
+	game_object.SetPos(pos);
 	invincible = Count();
 	exInvincible = Count();
 	hp = 3;
@@ -90,7 +90,7 @@ void Enemy3::Map_Jub(const int& mapPoint, const int& pointNum)
 		{
 			//game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
 			game_object.game.allVec.vec.x = 0;
- 			game_object.game.lr = true;
+			game_object.game.lr = true;
 		}
 	}
 
@@ -143,7 +143,7 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 }
 
 
-void Enemy3::Draw(const Vector2& sc, const Vector2& shake , const int& tex)
+void Enemy3::Draw(const Vector2& sc, const Vector2& shake, const int& tex)
 {
 	DrawRotaTex(game_object, tex, true, shake, sc);
 }

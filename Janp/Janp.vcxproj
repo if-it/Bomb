@@ -144,6 +144,8 @@
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Enemy3.cpp" />
     <ClCompile Include="Enemy3Mana.cpp" />
+    <ClCompile Include="Enemy4.cpp" />
+    <ClCompile Include="Enemy4Mana.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="ExplosionMana.cpp" />
     <ClCompile Include="Fuse.cpp" />
@@ -186,6 +188,8 @@
     <ClInclude Include="Enemy2.h" />
     <ClInclude Include="Enemy3.h" />
     <ClInclude Include="Enemy3Mana.h" />
+    <ClInclude Include="Enemy4.h" />
+    <ClInclude Include="Enemy4Mana.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="ExplosionMana.h" />
     <ClInclude Include="Fuse.h" />
