@@ -1222,7 +1222,7 @@ void Player::Coll(bool& hetstop)
 			side_Ex_Coll = 2;
 			rota_Vec = 10.0f;
 		}
-		if (nameTag == "Enemy1" || nameTag == "Enemy3")
+		if (nameTag == "Enemy1" || nameTag == "Enemy3" || nameTag == "Enemy4")
 		{
 			blowX = 9.0f;
 			blowY = 3.7f;

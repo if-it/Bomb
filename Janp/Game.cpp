@@ -33,6 +33,7 @@ Game::~Game()
 	delete enemy3Mana;
 	delete sideBomb;
 	delete sideExMana;
+	delete enemy4Mana;
 
 	coll_List.clear();
 	InitGraph();
@@ -329,6 +330,7 @@ void Game::Update()
 				sideExMana->Init();
 				enemy1Mana->Save();
 				enemy3Mana->Save();
+				enemy4Mana->Save();
 
 				Data_Load();
 			}
@@ -470,6 +472,7 @@ void Game::Stage_Init()
 	enemy1Mana->Init(map->map, load, stage);
 	enemy2->Init(map->map, load);
 	enemy3Mana->Init(map->map, load, stage);
+	enemy4Mana->Init(map->map, load, stage);
 	fuse->Init(map->map);
 	dust->Init(map->map, stage);
 	mapBombMana->Init(map->map);
@@ -542,6 +545,7 @@ void Game::Save()
 
 	enemy1Mana->Save();
 	enemy3Mana->Save();
+	enemy4Mana->Save();
 }
 
 void Game::Play_Scene()
@@ -564,6 +568,7 @@ void Game::Play_Scene()
 				//layerチェック
 
 				enemy1Mana->MoveChack(player->game_object.game.allVec.pos, coll);
+				enemy4Mana->MoveChack(player->game_object.game.allVec.pos, coll);
 
 				//Map当たり判定
 				Map_Coll_Update();
@@ -606,6 +611,7 @@ void Game::Play_Scene_Update()
 	player->Update(bombShake.flg, bombMana, sideBomb);
 	enemy1Mana->Update();
 	enemy3Mana->Update();
+	enemy4Mana->Update();
 	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
 	sideBomb->Update(con);
@@ -628,6 +634,7 @@ void Game::Map_Coll_Update()
 	bombMana->MapCollUpdate(map->map);
 	enemy1Mana->MapCollUpdate(map->map);
 	enemy3Mana->MapCollUpdate(map->map);
+	enemy4Mana->MapCollUpdate(map->map);
 	enemy2->MapCollUpdate(map->map);
 
 	exMana->Map_Coll_Update(map->map);
@@ -676,6 +683,12 @@ void Game::Obj_Coll_Update()
 	for (int i = 0; i < (int)enemy3Mana->enemy3.size(); ++i)
 	{
 		coll_List.push_back(&enemy3Mana->enemy3[i].game_object);
+	}
+
+	//Enemy4
+	for (int i = 0; i < (int)enemy4Mana->enemy4.size(); ++i)
+	{
+		coll_List.push_back(&enemy4Mana->enemy4[i].game_object);
 	}
 
 	//Saveポイント
@@ -732,6 +745,7 @@ void Game::Obj_Coll_Update()
 
 	enemy1Mana->Coll(exMana->ex);
 	enemy3Mana->Coll(exMana->ex);
+	enemy4Mana->Coll(exMana->ex);
 	bombMana->Coll(bombShake.flg, con);
 	enemy2->Coll(exMana->ex);
 	saveMana->Coll();
@@ -823,6 +837,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	enemy1Mana->Draw(sc2, shake2);
 	enemy2->Draw(sc2, shake2);
 	enemy3Mana->Draw(sc2, shake2);
+	enemy4Mana->Draw(sc2, shake2);
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
 	sideBomb->Draw(sc2, shake2);

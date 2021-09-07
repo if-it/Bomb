@@ -18,6 +18,7 @@
 #include"MapSwitch.h"
 #include"Enemy3Mana.h"
 #include"SideExplosionMana.h"
+#include"Enemy4Mana.h"
 
 class GameInclude :public Draw
 {
@@ -57,6 +58,7 @@ protected:
 	Enemy3Mana* enemy3Mana = new Enemy3Mana();
 	SideBomb* sideBomb = new SideBomb();
 	SideExplosionMana* sideExMana = new SideExplosionMana();
+	Enemy4Mana* enemy4Mana = new Enemy4Mana();
 
 	bool controllerOnly;
 	bool drawScene;

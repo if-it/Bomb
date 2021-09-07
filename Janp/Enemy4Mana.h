@@ -22,7 +22,7 @@ public:
     std::vector<Enemy4> enemy4;
 private:
     Animation ani;   
-    int enemy4Tex[2];
+    int tex;
     bool enemy_Spawn;
     bool one_Load_Tex;
     std::vector<Die_Data> die_List;

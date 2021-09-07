@@ -21,7 +21,7 @@ void Enemy4::Update()
 {
 	if (game_object.game.dis)
 	{
-		EnemyAllUpdate(0.2f, 6.0f);
+		EnemyAllUpdate(0.2f, 5.0f);
 	}
 }
 
@@ -66,6 +66,7 @@ void Enemy4::MoveChack(const Vector2& pos, Collision* coll)
 	{
 		game_object.game.lr = false;
 		game_object.game.allVec.vec.x += 0.8f;
+		game_object.game.rota += 10.0f;
 	}
 
 
@@ -76,9 +77,11 @@ void Enemy4::MoveChack(const Vector2& pos, Collision* coll)
 	{
 		game_object.game.lr = true;
 		game_object.game.allVec.vec.x -= 0.8f;
+		game_object.game.rota -= 10.0f;
 	}
 }
 
 void Enemy4::Draw(const Vector2& sc, const Vector2& shake, const int& enemy4Tex)
 {
+	DrawRotaTex(game_object, enemy4Tex, true, shake, sc);
 }

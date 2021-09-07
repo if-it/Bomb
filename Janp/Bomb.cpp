@@ -88,7 +88,7 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 				con->Shake(1000, 300);
 			}
 		}
-		if (nameTag == "Enemy1" || nameTag == "Enemy2" || nameTag == "Enemy3")
+		if (nameTag == "Enemy1" || nameTag == "Enemy2" || nameTag == "Enemy3" || nameTag == "Enemy4")
 		{
 
 			shakeflg = true;

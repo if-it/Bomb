@@ -23,6 +23,7 @@ void Enemy4Mana::Init(std::vector<std::vector<int>>& collMap, Load* load, const 
 				if (!one_Load_Tex)
 				{
 					one_Load_Tex = true;
+					load->LoadTex("Load/Texture/Enemy/Enemy4/Enemy4.png", tex);
 				}
 				bool die_on = false;
 				for (int i = 0; i < die_List.size(); ++i)
@@ -110,6 +111,6 @@ void Enemy4Mana::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int i = 0; i < (int)enemy4.size(); ++i)
 	{
-		enemy4[i].Draw(sc, shake, enemy4Tex[ani.num]);
+		enemy4[i].Draw(sc, shake, tex);
 	}
 }
