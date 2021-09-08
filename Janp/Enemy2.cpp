@@ -56,7 +56,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 				{
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
-					hp = 40;
+					hp = 80;
 					//spawn = true;
 					game_object.game.allVec.pos = Vector2(SIZE * x, SIZE * y);
 					game_object.game.dis = true;
@@ -316,29 +316,45 @@ void Enemy2::MapJub(const int& mapPoint, const int& pointNum)
 
 void Enemy2::Coll(std::vector<Explosion>& ex)
 {
-	const float BLOWX = 5.5f;
-	const float BLOWY = 13.0f;
 	for (int i = 0; i < (int)body.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = body.coll_Obj_List[i]->nameTag;
 
 		if (nameTag == "ex")
 		{
-			if (!exInvincible.flg)
+			if (!ex_Invincible.flg)
 			{
-				exInvincible.flg = true;
+				ex_Invincible.flg = true;
 
 				Damage(ex[body.coll_Obj_List[i]->num].damage);
-				if (DieChack())
-				{
-					body.game.dis = false;
-				}
 			}
 			if (nameTag == "RSideEx" || nameTag == "LSideEx")
 			{
-				if (!exInvincible.flg)
+				if (!ex_Invincible.flg)
 				{
-					exInvincible.flg = true;
+					ex_Invincible.flg = true;
+					Damage(SIDE_EX_DAMAGE);
+				}
+			}
+		}
+	}
+	for (int i = 0; i < (int)arm.coll_Obj_List.size(); ++i)
+	{
+		std::string nameTag = arm.coll_Obj_List[i]->nameTag;
+
+		if (nameTag == "ex")
+		{
+			if (!ex_Invincible.flg)
+			{
+				ex_Invincible.flg = true;
+
+				Damage(ex[arm.coll_Obj_List[i]->num].damage);
+			}
+			if (nameTag == "RSideEx" || nameTag == "LSideEx")
+			{
+				if (!ex_Invincible.flg)
+				{
+					ex_Invincible.flg = true;
 					Damage(SIDE_EX_DAMAGE);
 				}
 			}
@@ -346,11 +362,13 @@ void Enemy2::Coll(std::vector<Explosion>& ex)
 	}
 }
 
+
 void Enemy2::Draw(const Vector2& sc, const Vector2& shake)
 {
+	if (blinking)SetDrawBright(128, 128, 128);
 
 	DrawRotaTex(game_object, tex, true, shake, sc);
-
+	SetDrawBright(255, 255, 255);
 	Box(arm, false, shake, sc);
 	Box(body, false, shake, sc);
 }

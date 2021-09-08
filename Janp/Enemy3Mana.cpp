@@ -64,18 +64,24 @@ void Enemy3Mana::Save()
 }
 
 
-void Enemy3Mana::Update()
+void Enemy3Mana::Update(RockEffectMana* rockEffe)
 {
 	ani.AnimationOn(10, ENEMY3TEX);
+	int now_Num = 0;
 	for (int i = 0; i < (int)enemy3.size(); ++i)
 	{
-		enemy3[i].Update();
-		if (enemy3[i].Die())
+		if (enemy3[i].game_object.game.dis)
 		{
-			die_List.push_back(enemy3[i].die_Data);
+
+			enemy3[i].Update();
+			if (enemy3[i].Die(rockEffe, GetRand(2)+3))
+			{
+				die_List.push_back(enemy3[i].die_Data);
+			}
+			++now_Num;
 		}
 	}
-	if (NowNum()==0)
+	if (now_Num == 0)
 	{
 		enemy3.clear();
 	}
@@ -95,19 +101,6 @@ void Enemy3Mana::Coll(std::vector<Explosion>& ex)
 	{
 		enemy3[i].Coll(ex);
 	}
-}
-
-int Enemy3Mana::NowNum()
-{
-	int nowNum = 0;
-	for (int i = 0; i < (int)enemy3.size(); ++i)
-	{
-		if (enemy3[i].game_object.game.dis)
-		{
-			++nowNum;
-		}
-	}
-	return nowNum;
 }
 
 void Enemy3Mana::Draw(const Vector2& sc, const Vector2& shake)

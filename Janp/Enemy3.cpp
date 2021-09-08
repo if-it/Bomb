@@ -13,28 +13,26 @@ void Enemy3::Init(Vector2 pos)
 	game_object = GameObject("Enemy3");
 	game_object.color = COLOR(255, 0, 0);
 	game_object.SetPos(pos);
-	invincible = Count();
-	exInvincible = Count();
-	hp = 3;
+	ex_Invincible = Count();
+	hp = 7;
 	fVec = Vector2();
 }
 
 void Enemy3::Update()
 {
-	if (game_object.game.dis)
+
+	if (game_object.game.lr)
 	{
-		if (game_object.game.lr)
-		{
-			//ç∂
-			game_object.game.allVec.vec.x -= 0.4f;
-		}
-		else
-		{
-			//âE
-			game_object.game.allVec.vec.x += 0.4f;
-		}
-		EnemyAllUpdate(0.2f, 1.5f);
+		//ç∂
+		game_object.game.allVec.vec.x -= 0.4f;
 	}
+	else
+	{
+		//âE
+		game_object.game.allVec.vec.x += 0.4f;
+	}
+	EnemyAllUpdate(0.2f, 1.5f);
+
 }
 
 void Enemy3::MapCollUpdate(std::vector<std::vector<int>>& collMap)
@@ -115,9 +113,9 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 
 		if (nameTag == "ex")
 		{
-			if (!exInvincible.flg)
+			if (!ex_Invincible.flg)
 			{
-				exInvincible.flg = true;
+				ex_Invincible.flg = true;
 				//âE
 				if (!game_object.game.lr)
 				{
@@ -133,9 +131,9 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 		}
 		if (nameTag == "RSideEx" || nameTag == "LSideEx")
 		{
-			if (!exInvincible.flg)
+			if (!ex_Invincible.flg)
 			{
-				exInvincible.flg = true;
+				ex_Invincible.flg = true;
 				Damage(SIDE_EX_DAMAGE);
 			}
 		}
@@ -145,5 +143,7 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 
 void Enemy3::Draw(const Vector2& sc, const Vector2& shake, const int& tex)
 {
+	if (blinking)SetDrawBright(128, 128, 128);
 	DrawRotaTex(game_object, tex, true, shake, sc);
+	SetDrawBright(255, 255, 255);
 }

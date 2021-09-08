@@ -22,6 +22,7 @@ private:
 
 	void Map_Coll(std::vector<std::vector<int>>& collMap);
 	void MapJub(const int& mapPoint, const int& pointNum);
+	void CollJub(std::vector<Explosion>& ex,std::string nameTag);
 
 	int tex;
 	int  enemy2Tex[21];
@@ -34,7 +35,7 @@ private:
 	Count attack_End_Time;//攻撃が終わってからのクールタイム
 	Count rush_Time;//突進時間
 	int attack_Animetion_flg;//攻撃を始める
-	bool attack_front_flame;//前フレームAttackフラグがOnだったか
+	bool attack_front_flame;//前フレームAttackフラグがonだったか
 	Animation ani;
 	Animation attackAni;
 };

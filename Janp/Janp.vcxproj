@@ -164,6 +164,8 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RockEffect.cpp" />
+    <ClCompile Include="RockEffectMana.cpp" />
     <ClCompile Include="Save.cpp" />
     <ClCompile Include="SaveMana.cpp" />
     <ClCompile Include="SideBomb.cpp" />
@@ -207,6 +209,8 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RockEffect.h" />
+    <ClInclude Include="RockEffectMana.h" />
     <ClInclude Include="Save.h" />
     <ClInclude Include="SaveMana.h" />
     <ClInclude Include="SideBomb.h" />

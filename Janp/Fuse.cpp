@@ -585,19 +585,19 @@ void Fuse::Update(std::vector<std::vector<int>>& map, BombMana* bombMana)
 					{
 					case 4:// 4 è„ëÂñC
 						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y - SIZE),
-							Vector2(0.0f, -BSPEED), false, 1);
+							Vector2(0.0f, -BSPEED), false, 2);
 						break;
 					case 5:// 5 â∫ëÂñC
 						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x, fuses[i].object.game.allVec.pos.y + SIZE),
-							Vector2(0.0f, BSPEED), false, 1);
+							Vector2(0.0f, BSPEED), false, 2);
 						break;
 					case 6:// 6 ç∂ëÂñC
 						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x - SIZE, fuses[i].object.game.allVec.pos.y),
-							Vector2(-BSPEED, 0.0f), false, 1);
+							Vector2(-BSPEED, 0.0f), false, 2);
 						break;
 					case 7:// 7 âEëÂñC
 						bombMana->BombSpawn(Vector2(fuses[i].object.game.allVec.pos.x + SIZE, fuses[i].object.game.allVec.pos.y),
-							Vector2(BSPEED, 0.0f), false, 1);
+							Vector2(BSPEED, 0.0f), false, 2);
 						break;
 					case 8:// 8 è„ì±âŒê¸
 					case 14:// 14 ç∂â∫äp

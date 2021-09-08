@@ -53,18 +53,23 @@ void Enemy4Mana::Save()
 	die_List.clear();
 }
 
-void Enemy4Mana::Update()
+void Enemy4Mana::Update(RockEffectMana* rockEffe)
 {
+	int now_Num = 0;
 	ani.AnimationOn(10, 2);
 	for (int i = 0; i < (int)enemy4.size(); ++i)
 	{
-		enemy4[i].Update();
-		if (enemy4[i].Die())
+		if (enemy4[i].game_object.game.dis)
 		{
-			die_List.push_back(enemy4[i].die_Data);
+			enemy4[i].Update();
+			if (enemy4[i].Die(rockEffe, GetRand(2) + 5))
+			{
+				die_List.push_back(enemy4[i].die_Data);
+			}
+			++now_Num;
 		}
 	}
-	if (NowNum() == 0)
+	if (now_Num == 0)
 	{
 		enemy4.clear();
 	}
@@ -92,19 +97,6 @@ void Enemy4Mana::Coll(std::vector<Explosion>& ex)
 	{
 		enemy4[i].Coll(ex);
 	}
-}
-
-int Enemy4Mana::NowNum()
-{
-	int nowNum = 0;
-	for (int i = 0; i < (int)enemy4.size(); ++i)
-	{
-		if (enemy4[i].game_object.game.dis)
-		{
-			++nowNum;
-		}
-	}
-	return nowNum;
 }
 
 void Enemy4Mana::Draw(const Vector2& sc, const Vector2& shake)

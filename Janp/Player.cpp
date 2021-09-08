@@ -117,7 +117,7 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	max_Hp = 3;
 	max_Bomb_Num = 0;
 	save_Data.ability1_flg = false;
-	save_Data.damage = 1;
+	save_Data.damage = 2;
 	save_Data.die_Count = 0;
 	save_Data.ability2_flg = false;
 	save_Data.ability3_flg = false;
@@ -525,6 +525,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 
 
 
+	//アイテムとsaveオブジェクト
 	if (save_Coll || item_flg > 0)
 	{
 		get_guide = 0;

@@ -13,9 +13,8 @@ void Enemy1::Init(Vector2 pos)
 {
 	game_object.color = COLOR(255, 0, 0);
 	game_object.game.allVec.pos = pos;
-	invincible = Count();
-	exInvincible = Count();
-	hp = 4;
+	ex_Invincible = Count();
+	hp = 10;
 	fVec = Vector2();
 	move = Count();
 	move_End = Count();
@@ -24,40 +23,37 @@ void Enemy1::Init(Vector2 pos)
 
 void Enemy1::Update()
 {
-	if (game_object.game.dis)
+	EnemyAllUpdate(0.2f, 4.0f);
+
+	if (move.Conuter(40))
 	{
-		EnemyAllUpdate(0.2f, 4.0f);
+		game_object.game.rota = 0;
+		if (move_lr == 1)
+		{
+			move_lr = 3;
+		}
+		else if (move_lr == 2)
+		{
+			move_lr = 4;
+		}
+	}
+	if (move_lr == 3)
+	{
+		game_object.game.allVec.vec.x += 0.6f;
 
-		if (move.Conuter(40))
-		{
-			game_object.game.rota = 0;
-			if (move_lr == 1)
-			{
-				move_lr = 3;
-			}
-			else if (move_lr == 2)
-			{
-				move_lr = 4;
-			}
-		}
-		if (move_lr == 3)
-		{
-			game_object.game.allVec.vec.x += 0.6f;
+		move_End.flg = true;
+	}
+	else if (move_lr == 4)
+	{
+		game_object.game.allVec.vec.x -= 0.6f;
 
-			move_End.flg = true;
-		}
-		else if (move_lr == 4)
-		{
-			game_object.game.allVec.vec.x -= 0.6f;
-
-			move_End.flg = true;
-		}
-		if (move_End.Conuter(120))
-		{
-			move = Count();
-			move_End = Count();
-			move_lr = 0;
-		}
+		move_End.flg = true;
+	}
+	if (move_End.Conuter(120))
+	{
+		move = Count();
+		move_End = Count();
+		move_lr = 0;
 	}
 }
 
@@ -75,28 +71,11 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
-		if (nameTag == "Player")
-		{
-			if (!invincible.flg)
-			{
-				invincible.flg = true;
-				//âE
-				if (!game_object.game.lr)
-				{
-					fVec += Vector2(-BLOWX, -BLOWY);
-				}
-				//ç∂
-				else
-				{
-					fVec += Vector2(BLOWX, -BLOWY);
-				}
-			}
-		}
 		if (nameTag == "ex")
 		{
-			if (!exInvincible.flg)
+			if (!ex_Invincible.flg)
 			{
-				exInvincible.flg = true;
+				ex_Invincible.flg = true;
 				//âE
 				if (!game_object.game.lr)
 				{
@@ -113,9 +92,9 @@ void Enemy1::Coll(std::vector<Explosion>& ex)
 		}
 		if (nameTag == "RSideEx" || nameTag == "LSideEx")
 		{
-			if (!exInvincible.flg)
+			if (!ex_Invincible.flg)
 			{
-				exInvincible.flg = true;
+				ex_Invincible.flg = true;
 				Damage(SIDE_EX_DAMAGE);
 			}
 		}
@@ -161,6 +140,8 @@ void Enemy1::MoveChack(const Vector2& pos, Collision* coll)
 
 void Enemy1::Draw(const Vector2& sc, const Vector2& shake, const int& tex)
 {
+	if (blinking)SetDrawBright(128, 128, 128);
 	DrawRotaTex(game_object, tex, true, shake, sc);
+	SetDrawBright(255, 255, 255);
 }
 

@@ -136,6 +136,12 @@
     <Filter Include="Effect\SideExplosion">
       <UniqueIdentifier>{d0c50519-d032-41d7-a5b5-45138549a156}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\Rock">
+      <UniqueIdentifier>{1380985c-73fd-4dbf-b695-c8c9a06297c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjct\Enemy\Enemy4">
+      <UniqueIdentifier>{30c442c0-6100-48d2-87cf-ae8ff448383c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -259,10 +265,16 @@
       <Filter>Effect\SideExplosion</Filter>
     </ClCompile>
     <ClCompile Include="Enemy4.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>GameObjct\Enemy\Enemy4</Filter>
     </ClCompile>
     <ClCompile Include="Enemy4Mana.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>GameObjct\Enemy\Enemy4</Filter>
+    </ClCompile>
+    <ClCompile Include="RockEffect.cpp">
+      <Filter>Effect\Rock</Filter>
+    </ClCompile>
+    <ClCompile Include="RockEffectMana.cpp">
+      <Filter>Effect\Rock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,10 +396,16 @@
       <Filter>Effect\SideExplosion</Filter>
     </ClInclude>
     <ClInclude Include="Enemy4.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>GameObjct\Enemy\Enemy4</Filter>
     </ClInclude>
     <ClInclude Include="Enemy4Mana.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>GameObjct\Enemy\Enemy4</Filter>
+    </ClInclude>
+    <ClInclude Include="RockEffect.h">
+      <Filter>Effect\Rock</Filter>
+    </ClInclude>
+    <ClInclude Include="RockEffectMana.h">
+      <Filter>Effect\Rock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

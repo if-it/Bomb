@@ -61,19 +61,24 @@ void Enemy1Mana::Save()
 	die_List.clear();
 }
 
-void Enemy1Mana::Update()
+void Enemy1Mana::Update(RockEffectMana* rockEffe)
 {
 	ani.AnimationOn(10, 2);
+	int now_Num = 0;
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
-		enemy1[i].Update();
-		if (enemy1[i].Die())
+		if (enemy1[i].game_object.game.dis)
 		{
-			die_List.push_back(enemy1[i].die_Data);
+			enemy1[i].Update();
+			if (enemy1[i].Die(rockEffe, GetRand(2) + 4))
+			{
+				die_List.push_back(enemy1[i].die_Data);
+			}
+			++now_Num;
 		}
-		
+
 	}
-	if (NowNum() == 0)
+	if (now_Num == 0)
 	{
 		enemy1.clear();
 	}
@@ -104,23 +109,10 @@ void Enemy1Mana::Coll(std::vector<Explosion>& ex)
 	}
 }
 
-int Enemy1Mana::NowNum()
-{
-	int nowNum = 0;
-	for (int i = 0; i < (int)enemy1.size(); ++i)
-	{
-		if (enemy1[i].game_object.game.dis)
-		{
-			++nowNum;
-		}
-	}
-	return nowNum;
-}
-
 void Enemy1Mana::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int i = 0; i < (int)enemy1.size(); ++i)
 	{
-		enemy1[i].Draw(sc, shake,enemy1Tex[ani.num]);
+		enemy1[i].Draw(sc, shake, enemy1Tex[ani.num]);
 	}
 }

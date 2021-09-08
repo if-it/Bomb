@@ -59,6 +59,7 @@ protected:
 	SideBomb* sideBomb = new SideBomb();
 	SideExplosionMana* sideExMana = new SideExplosionMana();
 	Enemy4Mana* enemy4Mana = new Enemy4Mana();
+	RockEffectMana* rockEffeMana = new RockEffectMana();
 
 	bool controllerOnly;
 	bool drawScene;

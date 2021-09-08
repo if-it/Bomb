@@ -4,8 +4,9 @@ Enemy::Enemy()
 {
 	hp = 0;
 	fVec = Vector2();
-	invincible = Count();
-	exInvincible = Count();
+	ex_Invincible = Count();
+	damage_Blinking = Count();
+	blinking = false;
 }
 
 Enemy::~Enemy()
@@ -23,8 +24,21 @@ void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
 {
 	const int INVEICIBLE_TIME = 60;
 	const int EX_INVEICIBLE_TIME = 30;
-	invincible.Conuter(INVEICIBLE_TIME);
-	exInvincible.Conuter(EX_INVEICIBLE_TIME);
+	if (ex_Invincible.Conuter(EX_INVEICIBLE_TIME))
+	{
+		blinking = false;
+		damage_Blinking = Count();
+	}
+	if (damage_Blinking.Conuter(7))
+	{
+		damage_Blinking.flg = true;
+		if (blinking)blinking = false;
+		else blinking = true;
+	}
+	if (ex_Invincible.flg)
+	{
+		damage_Blinking.flg = true;
+	}
 	if (fVec != Vector2())
 	{
 		game_object.game.allVec.vec = Vector2();
@@ -91,11 +105,12 @@ void Enemy::Damage(int damage)
 	hp -= damage;
 }
 
-bool Enemy::Die()
+bool Enemy::Die(RockEffectMana* rockEffe, const int num)
 {
 	if (DieChack() && game_object.game.dis)
 	{
 		game_object.game.dis = false;
+		rockEffe->Spawn(game_object.GetPos(),num);
 		return true;
 	}
 	return false;

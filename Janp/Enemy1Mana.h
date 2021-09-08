@@ -11,11 +11,10 @@ public:
     ~Enemy1Mana();
     void Init(std::vector<std::vector<int>>& collMap, Load* load, const int& stage);
     void Save();
-    void Update();
+    void Update(RockEffectMana* rockEffe);
     void MapCollUpdate(std::vector<std::vector<int>>& collMap);
     void MoveChack(const Vector2& pos, Collision* coll);
     void Coll(std::vector<Explosion>& ex);
-    int NowNum();
     void Draw(const Vector2& sc, const Vector2& shake);
     std::vector<Enemy1> enemy1;
 private:

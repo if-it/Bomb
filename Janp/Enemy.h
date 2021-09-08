@@ -2,6 +2,7 @@
 #include "MapColl.h"
 #include"Collision.h"
 #include"Explosion.h"
+#include"RockEffectMana.h"
 #define SIDE_EX_DAMAGE 4
 
 class Enemy :
@@ -12,7 +13,7 @@ public:
 	~Enemy();
 	void AllInit(const int& stage, const int& mapX, const int& mapY);
 	void Damage(int damage);
-	bool Die();
+	bool Die(RockEffectMana*rockEffe, const int num);
 	struct Die_Data
 	{
 		int die_stage;
@@ -24,10 +25,15 @@ public:
 protected:
 	void EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed);
 	bool DieChack();
-	//–³“G
-	Count invincible;
+
 	//”š”j‚Ì–³“G
-	Count exInvincible;
+	Count ex_Invincible;
+
+	//ƒ_ƒ[ƒW‰‰o
+	Count damage_Blinking;
+	bool blinking;
+
+
 	int hp;
 	Vector2 fVec;
 

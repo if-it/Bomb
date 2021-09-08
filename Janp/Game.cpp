@@ -34,6 +34,7 @@ Game::~Game()
 	delete sideBomb;
 	delete sideExMana;
 	delete enemy4Mana;
+	delete rockEffeMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -109,6 +110,7 @@ void Game::Init()
 	exMana->Init();
 	sideBomb->Init();
 	sideExMana->Init();
+	rockEffeMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -142,6 +144,7 @@ bool Game::Loading()
 	mapSwitch->Loading(load);
 	sideBomb->Loading(load);
 	sideExMana->Loading(load);
+	rockEffeMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -190,7 +193,7 @@ void Game::Update()
 			Init();
 			if (!debug_mode_flg)
 			{
-				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				//PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 				title_Flg = 1;
 			}
 			else
@@ -325,6 +328,7 @@ void Game::Update()
 			if (player->Get_Die_End())
 			{
 				bombMana->Init();
+				rockEffeMana->Init();
 				exMana->Init();
 				sideBomb->Init();
 				sideExMana->Init();
@@ -609,9 +613,9 @@ void Game::Play_Scene_Update()
 
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(bombShake.flg, bombMana, sideBomb);
-	enemy1Mana->Update();
-	enemy3Mana->Update();
-	enemy4Mana->Update();
+	enemy1Mana->Update(rockEffeMana);
+	enemy3Mana->Update(rockEffeMana);
+	enemy4Mana->Update(rockEffeMana);
 	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll);
 	sideBomb->Update(con);
@@ -625,6 +629,7 @@ void Game::Play_Scene_Update()
 
 	exMana->Update();
 	dust->Update();
+	rockEffeMana->Update();
 
 }
 
@@ -845,7 +850,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//エフェクト関連2
 	exMana->Draw(sc2, shake2);
 	dust->Draw(sc2, shake2);
-
+	rockEffeMana->Draw(sc2, shake2);
 
 	//UI関連
 	ui->Draw(sc2, shake2);
