@@ -1223,11 +1223,17 @@ void Player::Coll(bool& hetstop)
 			side_Ex_Coll = 2;
 			rota_Vec = 10.0f;
 		}
-		if (nameTag == "Enemy1" || nameTag == "Enemy3" || nameTag == "Enemy4")
+		if (nameTag == "Enemy1" || nameTag == "Enemy3")
 		{
 			blowX = 9.0f;
 			blowY = 3.7f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
+		}
+		if (nameTag == "Enemy4")
+		{
+			blowX = 11.0f;
+			blowY = 4.0f;
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
 		}
 		if (nameTag == "Enemy2")
 		{

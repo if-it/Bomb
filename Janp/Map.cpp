@@ -731,10 +731,10 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 			switch (map[y][x])
 			{
 			case 2:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(), 0.0f, tex[2], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[2], true, false, true, shake, sc);
 				break;
 			case 3:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(), 0.0f, tex[3], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[3], true, false, true, shake, sc);
 
 				break;
 			case 40:

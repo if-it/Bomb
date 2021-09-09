@@ -12,7 +12,7 @@ void Enemy4::Init(Vector2 pos)
 {
 	game_object = GameObject("Enemy4", true, Vector2(64.0f, 64.0f));
 	game_object.SetPos(pos);
-	hp = 35;
+	hp = 30;
 	fVec = Vector2();
 	move = Count();
 	move_End = Count();
@@ -21,7 +21,7 @@ void Enemy4::Init(Vector2 pos)
 
 void Enemy4::Update()
 {
-	const float ROTA_SPEED =  20.0f;
+	const float ROTA_SPEED = 35.0f;
 	if (game_object.game.dis)
 	{
 		if (move_lr == 1)
@@ -33,7 +33,7 @@ void Enemy4::Update()
 		{
 			game_object.game.rota -= ROTA_SPEED;
 		}
-		if (move.Conuter(70))
+		if (move.Conuter(95))
 		{
 			game_object.game.rota = 0;
 			if (move_lr == 1)
@@ -57,7 +57,7 @@ void Enemy4::Update()
 			game_object.game.rota -= ROTA_SPEED;
 			move_End.flg = true;
 		}
-		if (move_End.Conuter(120))
+		if (move_End.Conuter(65))
 		{
 			move = Count();
 			move_End = Count();
@@ -100,7 +100,7 @@ void Enemy4::Coll(std::vector<Explosion>& ex)
 void Enemy4::MoveChack(const Vector2& pos, Collision* coll)
 {
 	Vector2 layer = game_object.game.allVec.pos;
-	const int LAYERSIZE = SIZE * 20;
+	const int LAYERSIZE = SIZE * 23;
 	//‰E
 
 
@@ -132,7 +132,7 @@ void Enemy4::MoveChack(const Vector2& pos, Collision* coll)
 
 void Enemy4::Draw(const Vector2& sc, const Vector2& shake, const int& enemy4Tex)
 {
-	if(blinking)SetDrawBright(128,128,128);
+	if (blinking)SetDrawBright(128, 128, 128);
 	DrawRotaTex(game_object, enemy4Tex, true, shake, sc);
-	SetDrawBright(255,255,255);
+	SetDrawBright(255, 255, 255);
 }

@@ -99,7 +99,7 @@ protected:
 	bool stageChange;
 	int title_Flg;
 	bool title_To_Play;
-	Count bombShake;
+	Count shake_Counter;
 
 	Vector2 sc;
 	Vector2 shake;

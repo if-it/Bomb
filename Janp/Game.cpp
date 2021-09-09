@@ -94,7 +94,7 @@ void Game::Init()
 	time = false;
 	stageChange = false;
 	title_To_Play = false;
-	bombShake = Count();
+	shake_Counter = Count();
 
 	map->Init(stage, load);
 
@@ -592,7 +592,7 @@ void Game::Play_Scene()
 		}
 		if (!time)
 		{
-			Shake(bombShake, 6, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
+			Shake(shake_Counter, 6, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
 		}
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
@@ -612,14 +612,14 @@ void Game::Play_Scene_Update()
 	backMap2->Update(sc);
 
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
-	player->Update(bombShake.flg, bombMana, sideBomb);
+	player->Update(shake_Counter.flg, bombMana, sideBomb);
 	enemy1Mana->Update(rockEffeMana);
 	enemy3Mana->Update(rockEffeMana);
 	enemy4Mana->Update(rockEffeMana);
-	bombMana->Update(bombShake.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
-	enemy2->Update(player->game_object.game.allVec.pos, coll);
+	bombMana->Update(shake_Counter.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
+	enemy2->Update(player->game_object.game.allVec.pos, coll,shake_Counter.flg);
 	sideBomb->Update(con);
-	sideExMana->Update(sideBomb->Get_Explosion_On(), sideBomb->game_object.GetPos(), map->map, bombShake.flg);
+	sideExMana->Update(sideBomb->Get_Explosion_On(), sideBomb->game_object.GetPos(), map->map, shake_Counter.flg);
 
 	fuse->Update(map->map, bombMana);
 	saveMana->Update();
@@ -751,11 +751,11 @@ void Game::Obj_Coll_Update()
 	enemy1Mana->Coll(exMana->ex);
 	enemy3Mana->Coll(exMana->ex);
 	enemy4Mana->Coll(exMana->ex);
-	bombMana->Coll(bombShake.flg, con);
+	bombMana->Coll(shake_Counter.flg, con);
 	enemy2->Coll(exMana->ex);
 	saveMana->Coll();
 	itemMana->Coll(player->Get_Get_Item());
-	mapBombMana->Coll(bombShake.flg, con, player->Get_Switch_On());
+	mapBombMana->Coll(shake_Counter.flg, con, player->Get_Switch_On());
 	mapSwitch->Coll(player->Get_Switch_On());
 
 

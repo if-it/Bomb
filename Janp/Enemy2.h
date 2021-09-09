@@ -10,7 +10,7 @@ public:
 	~Enemy2();
 
 	void Init(std::vector<std::vector<int>>& collMap, Load* load);
-	void Update(const Vector2& pos, Collision* coll);
+	void Update(const Vector2& pos, Collision* coll, bool&shake_flg);
 	void PlayerCahck(const Vector2& pos, Collision* coll);
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);
 	void Coll(std::vector<Explosion>& ex);
@@ -31,6 +31,7 @@ private:
 	bool die;
 	bool move;
 	bool uturn[2];
+	bool first_Attack;//最初の攻撃判定
 	Count attack_Time;//近づいてから攻撃までの時間
 	Count attack_End_Time;//攻撃が終わってからのクールタイム
 	Count rush_Time;//突進時間

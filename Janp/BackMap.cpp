@@ -74,67 +74,88 @@ void BackMap::Draw(const Vector2& sc, const Vector2& shake)
 			switch (backMap[y][x])
 			{
 			case 1:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[0], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[0], true, false, true, shake, sc);
 				break;
 			case 2:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[1], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[1], true, false, true, shake, sc);
 				break;
 			case 3:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[2], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[2], true, false, true, shake, sc);
 				break;
 			case 4:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[0], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[0], true, false, true, shake, sc);
 				break;
 			case 5:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[1], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[1], true, false, true, shake, sc);
 				break;
 			case 6:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[2], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[2], true, false, true, shake, sc);
 				break;
 			case 7:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[3], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[3], true, false, true, shake, sc);
 				break;
 			case 8:
-				DrawRotaTex(Vector2((float)(SIZE * x - SIZE / 2), (float)(SIZE * y - SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[4], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x - SIZE / 2), (float)(SIZE * y - SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[4], true, false, true, shake, sc);
 				break;
 			case 9:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[5], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[5], true, false, true, shake, sc);
 				break;
 			case 10:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[6], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[6], true, false, true, shake, sc);
 				break;
 			case 11:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[7], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[7], true, false, true, shake, sc);
 				break;
 			case 12:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[8], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[8], true, false, true, shake, sc);
 				break;
 			case 13:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[9], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[9], true, false, true, shake, sc);
 				break;
 			case 14:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[10], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[10], true, false, true, shake, sc);
 				break;
 			case 15:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[11], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[11], true, false, true, shake, sc);
 				break;
 			case 16:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[12], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),
+					Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[12], true, false, true, shake, sc);
 				break;
 			case 17:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[6], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[6], true, false, true, shake, sc);
 				break;
 			case 18:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[7], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[7], true, false, true, shake, sc);
 				break;
 			case 19:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[3], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[3], true, false, true, shake, sc);
 				break;
 			case 20:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[4], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[4], true, false, true, shake, sc);
 				break;
 			case 21:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex2[5], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[5], true, false, true, shake, sc);
 				break;
 			default:
 				break;
