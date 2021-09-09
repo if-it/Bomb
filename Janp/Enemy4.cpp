@@ -33,7 +33,7 @@ void Enemy4::Update()
 		{
 			game_object.game.rota -= ROTA_SPEED;
 		}
-		if (move.Conuter(40))
+		if (move.Conuter(70))
 		{
 			game_object.game.rota = 0;
 			if (move_lr == 1)
