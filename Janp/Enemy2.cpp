@@ -164,7 +164,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 				{
 					attack_End_Time = Count();
 					int rand = GetRand(10);
-					if (rand = 0)
+					if (rand == 0)
 					{
 						attack_Animetion_flg = 0;
 					}
