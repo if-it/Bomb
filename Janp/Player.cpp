@@ -214,6 +214,8 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	tutorial_flg = 0;
 	move_guide_on = false;
 	get_guide = -1;
+
+	control_flg = true;
 }
 
 void Player::Loading(Load* load)
@@ -224,9 +226,8 @@ void Player::Loading(Load* load)
 		64, 64, player_Black_Tex);
 }
 
-void Player::Input(Key* key, Controller* con, bool& time, const int& get_game_end_set)
+void Player::Input(Key* key, Controller* con, bool& time)
 {
-
 	up = false;
 	down = false;
 	right = false;
@@ -236,9 +237,8 @@ void Player::Input(Key* key, Controller* con, bool& time, const int& get_game_en
 	get_guide = -1;
 
 	Vector2 stickL = con->StickL();
-	if (get_game_end_set == 0)
+	if (control_flg)
 	{
-
 		if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
 		{
 			up = true;
@@ -284,13 +284,13 @@ void Player::Input(Key* key, Controller* con, bool& time, const int& get_game_en
 				tutorial_flg = -1;
 			}
 		}
-		if (save_Data.ability2_flg&&!ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
+		if (save_Data.ability2_flg && !ground_ability2_on && !ability2_on.flg && (key->KeyTrigger(KEY_INPUT_X) || con->TrlggerBotton(con->LB)))
 		{
 			ability2.flg = true;
 			ground_ability2_on = true;
 			ability2_Activate = 1;
 		}
-		if (save_Data.ability3_flg&&ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
+		if (save_Data.ability3_flg && ability3_on == 0 && (key->KeyTrigger(KEY_INPUT_C) || con->TrlggerBotton(con->B)))
 		{
 			ability3_on = 1;
 		}
@@ -1235,11 +1235,11 @@ void Player::Coll(bool& hetstop)
 			blowY = 4.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
 		}
-		if (nameTag == "Enemy2")
+		if (nameTag == "Enemy2" || nameTag == "RockAttack")
 		{
 			blowX = 15.0f;
 			blowY = 5.0f;
-			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
 		}
 		if (nameTag == "Save")
 		{

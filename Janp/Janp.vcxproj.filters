@@ -142,6 +142,9 @@
     <Filter Include="GameObjct\Enemy\Enemy4">
       <UniqueIdentifier>{30c442c0-6100-48d2-87cf-ae8ff448383c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\RockAttack">
+      <UniqueIdentifier>{f013a37a-f667-40d0-8b4a-ef51c17adf89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -276,6 +279,12 @@
     <ClCompile Include="RockEffectMana.cpp">
       <Filter>Effect\Rock</Filter>
     </ClCompile>
+    <ClCompile Include="RockAttack.cpp">
+      <Filter>GameObjct\RockAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="RockAttackMana.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -406,6 +415,12 @@
     </ClInclude>
     <ClInclude Include="RockEffectMana.h">
       <Filter>Effect\Rock</Filter>
+    </ClInclude>
+    <ClInclude Include="RockAttack.h">
+      <Filter>GameObjct\RockAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="RockAttackMana.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

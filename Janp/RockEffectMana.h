@@ -11,7 +11,6 @@ public:
     void Init();
     void Loading(Load* load);
     void Update();
-    int NowNum();
     void Spawn(const Vector2&pos,const int num);
     void Draw(const Vector2& sc, const Vector2& shake);
 

@@ -35,6 +35,7 @@ Game::~Game()
 	delete sideExMana;
 	delete enemy4Mana;
 	delete rockEffeMana;
+	delete rockAttackMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -111,6 +112,7 @@ void Game::Init()
 	sideBomb->Init();
 	sideExMana->Init();
 	rockEffeMana->Init();
+	rockAttackMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -145,6 +147,7 @@ bool Game::Loading()
 	sideBomb->Loading(load);
 	sideExMana->Loading(load);
 	rockEffeMana->Loading(load);
+	rockAttackMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -282,8 +285,8 @@ void Game::Update()
 		if (title_Flg == 5)
 		{
 			title_Pos = Vector2::Lerp(title_Pos, Vector2(-1000, HEIGHT / 2 - 192), 0.03f);
-			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH+20, HEIGHT / 2), 0.05f);
-			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH+20, HEIGHT / 2 + 100), 0.05f);
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH + 20, HEIGHT / 2), 0.05f);
+			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH + 20, HEIGHT / 2 + 100), 0.05f);
 			if (title_Pos.x < -800)
 			{
 				title_Flg = 10;
@@ -331,6 +334,7 @@ void Game::Update()
 				rockEffeMana->Init();
 				exMana->Init();
 				sideBomb->Init();
+				rockAttackMana->Init();
 				sideExMana->Init();
 				enemy1Mana->Save();
 				enemy3Mana->Save();
@@ -387,10 +391,12 @@ void Game::Update()
 	if (con->All_Het_Controller())
 	{
 		controller_on = true;
+		con->Set_Shake_On(option_Data.con_shake);
 	}
 	if (key->AllHetKey())
 	{
 		controller_on = false;
+		con->Set_Shake_On(false);
 	}
 	if (game_end_set > 0)
 	{
@@ -558,8 +564,17 @@ void Game::Play_Scene()
 	if (!player->Get_Save_On())
 	{
 
-		//入力
-		player->Input(key, con, time, game_end_set);
+		//Playerへの入力
+		if (game_end_set == 0 && enemy2->Get_Ex_On() == 0)
+		{
+			player->Set_Contorl_Flg(true);
+		}
+		else
+		{
+			player->Set_Contorl_Flg(false);
+		}
+		player->Input(key, con, time);
+
 		if (!hetStop.flg)
 		{
 
@@ -599,6 +614,11 @@ void Game::Play_Scene()
 			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(), player->Get_Move_Guide_On(),
 			player->Get_Save_On(), game_end_set);
 		hetStop.Conuter(8);
+
+		if (enemy2->Get_Ex_End())
+		{
+			title_Flg = 1;
+		}
 	}
 	else
 	{
@@ -617,7 +637,8 @@ void Game::Play_Scene_Update()
 	enemy3Mana->Update(rockEffeMana);
 	enemy4Mana->Update(rockEffeMana);
 	bombMana->Update(shake_Counter.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
-	enemy2->Update(player->game_object.game.allVec.pos, coll,shake_Counter.flg);
+	enemy2->Update(player->game_object.game.allVec.pos, coll, shake_Counter.flg, sc, rockAttackMana, exMana);
+	rockAttackMana->Update();
 	sideBomb->Update(con);
 	sideExMana->Update(sideBomb->Get_Explosion_On(), sideBomb->game_object.GetPos(), map->map, shake_Counter.flg);
 
@@ -682,6 +703,12 @@ void Game::Obj_Coll_Update()
 	coll_List.push_back(&enemy2->game_object);
 	coll_List.push_back(&enemy2->body);
 	coll_List.push_back(&enemy2->arm);
+
+	//RockAttack
+	for (int i = 0; i < (int)rockAttackMana->rock_Attack.size(); ++i)
+	{
+		coll_List.push_back(&rockAttackMana->rock_Attack[i].game_object);
+	}
 
 	//Enemy3
 
@@ -757,7 +784,7 @@ void Game::Obj_Coll_Update()
 	itemMana->Coll(player->Get_Get_Item());
 	mapBombMana->Coll(shake_Counter.flg, con, player->Get_Switch_On());
 	mapSwitch->Coll(player->Get_Switch_On());
-
+	rockAttackMana->Coll();
 
 	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
 
@@ -846,6 +873,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	player->Draw(sc2, shake2);
 	bombMana->Draw(sc2, shake2);
 	sideBomb->Draw(sc2, shake2);
+	rockAttackMana->Draw(sc2, shake2);
 
 	//エフェクト関連2
 	exMana->Draw(sc2, shake2);

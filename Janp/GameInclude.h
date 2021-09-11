@@ -20,6 +20,7 @@
 #include"SideExplosionMana.h"
 #include"Enemy4Mana.h"
 
+
 class GameInclude :public Draw
 {
 public:
@@ -60,6 +61,8 @@ protected:
 	SideExplosionMana* sideExMana = new SideExplosionMana();
 	Enemy4Mana* enemy4Mana = new Enemy4Mana();
 	RockEffectMana* rockEffeMana = new RockEffectMana();
+	RockAttackMana* rockAttackMana = new RockAttackMana();
+	
 
 	bool controllerOnly;
 	bool drawScene;

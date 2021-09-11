@@ -7,7 +7,7 @@ Enemy2::Enemy2()
 	spawn = false;
 	die = false;
 	move = false;
-	attack_Time = Count();
+	attack_Fist_Time = Count();
 	attack_End_Time = Count();
 	rush_Time = Count();
 	attack_front_flame = false;
@@ -33,9 +33,10 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 	spawn = false;
 	die = false;
 	move = false;
-	attack_Time = Count();
+	attack_Fist_Time = Count();
 	attack_End_Time = Count();
 	rush_Time = Count();
+	attack_Second_Time = Count();
 	attack_front_flame = false;
 	arm = GameObject("Enemy2", false, Vector2(32, 128));
 	arm.color = COLOR(255, 0, 0);
@@ -46,6 +47,13 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 	ani = Animation();
 	uturn[0] = false;
 	uturn[1] = false;
+	rock_Num = 0;
+	rock_Max_Num = 8;
+	die_Ex = Count();
+	die_Ex_Num = 0;
+	die_Ex_Max_Num = 0;
+	ex_End = false;
+	ex_on = 0;
 	if (!spawn)
 	{
 		for (int y = 0; y < (int)collMap.size(); ++y)
@@ -56,11 +64,11 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 				{
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
-					hp = 80;
+					hp = MAX_HP;
 					//spawn = true;
 					game_object.game.allVec.pos = Vector2(SIZE * x, SIZE * y);
 					game_object.game.dis = true;
-					attack_Time = Count();
+					attack_Fist_Time = Count();
 
 					arm.game.dis = false;
 					arm.SetPos(Vector2(game_object.GetPos().x - 32, game_object.GetPos().y + 32));
@@ -76,7 +84,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load)
 	}
 }
 
-void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
+void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const Vector2& sc, RockAttackMana* rockAttackMana, ExplosionMana* ex)
 {
 	if (game_object.game.dis)
 	{
@@ -85,7 +93,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 			float max_speed = 0.0f;
 			float flame_speed = 0.0f;
 			bool lr = game_object.game.lr;
-			attack_front_flame = attack_Time.flg;
+			attack_front_flame = attack_Fist_Time.flg;
 
 			body.game.lr = lr;
 			arm.game.lr = lr;
@@ -105,10 +113,18 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 			case 0:
 				max_speed = 5.4f;
 				flame_speed = 0.2f;
-				if (attack_Time.Conuter(28))
+				if (attack_Fist_Time.Conuter(28))
 				{
 					attack_Animetion_flg = 1;
-					attack_Time = Count();
+					attack_Fist_Time = Count();
+					attack_Second_Time = Count();
+				}
+				attack_Second_Time.flg = true;
+				if (attack_Second_Time.Conuter(180))
+				{
+					attack_Animetion_flg = 1;
+					attack_Fist_Time = Count();
+					attack_Second_Time = Count();
 				}
 				arm.game.dis = false;
 				tex = enemy2Tex[ani.num];
@@ -128,6 +144,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 				}
 				break;
 			case 2:
+				arm.game.dis = true;
 				tex = attackTex[attackAni.num];
 				if (attackAni.OneAnimation(attackAniNum[attackAni.num], 6))
 				{
@@ -135,10 +152,29 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 					attack_Animetion_flg = 3;
 					tex = enemy2Tex[0];
 					shake_flg = true;
+					arm.game.dis = false;
 				}
 				break;
 			case 3:
-				attack_Animetion_flg = 5;
+				if (!attack_Second_Time.flg)
+				{
+					rock_Num += GetRand(9) + 1;
+					rockAttackMana->Spawn(rock_Num, sc);
+					attack_Second_Time.flg = true;
+				}
+				if (attack_Second_Time.Conuter(60))
+				{
+					if (rock_Num > rock_Max_Num)
+					{
+						rock_Num = 0;
+						attack_Second_Time = Count();
+						attack_Animetion_flg = 5;
+					}
+					else
+					{
+						attack_Animetion_flg = 2;
+					}
+				}
 				break;
 			case 4:
 				tex = enemy2Tex[ani.num];
@@ -160,24 +196,50 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 				break;
 			case 5:
 				attack_End_Time.flg = true;
-				if (attack_End_Time.Conuter(10))
+				if (hp > (int)(MAX_HP / 3))
 				{
-					attack_End_Time = Count();
-					int rand = GetRand(10);
-					if (rand == 0)
+					if (attack_End_Time.Conuter(20))
 					{
-						attack_Animetion_flg = 0;
-					}
-					else if (rand >= 1 && rand <= 5)
-					{
-						attack_Animetion_flg = 2;
-					}
-					else if (rand == 10)
-					{
-						attack_Animetion_flg = 4;
-						rush_Time.flg = true;
+						attack_End_Time = Count();
+						int rand = GetRand(9);
+						if ((rand >= 2 && rand <= 6))
+						{
+							attack_Animetion_flg = 0;
+						}
+						else if (rand >= 0 && rand <= 2)
+						{
+							attack_Animetion_flg = 2;
+						}
+						else if (rand >= 7 && rand <= 9)
+						{
+							attack_Animetion_flg = 4;
+							rush_Time.flg = true;
+						}
 					}
 				}
+				else
+				{
+					rock_Max_Num = 10;
+					if (attack_End_Time.Conuter(10))
+					{
+						attack_End_Time = Count();
+						int rand = GetRand(10);
+						if (rand >= 4 && rand <= 6)
+						{
+							attack_Animetion_flg = 0;
+						}
+						else if (rand >= 0 && rand <= 3)
+						{
+							attack_Animetion_flg = 2;
+						}
+						else if (rand >= 7 && rand <= 10)
+						{
+							attack_Animetion_flg = 4;
+							rush_Time.flg = true;
+						}
+					}
+				}
+
 				break;
 			case 6:
 				attack_Animetion_flg = 5;
@@ -191,13 +253,43 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg)
 			if (DieChack())
 			{
 				die = true;
+				ex_on = 1;
 				arm.game.dis = false;
 				body.game.dis = false;
+				die_Ex_Max_Num = GetRand(4) + 15;
+				game_object.game.allVec.vec = Vector2();
+				rockAttackMana->Delete_Rock();
 			}
 		}
 		else
 		{
+			if (ex_on == 1)
+			{
 
+				die_Ex.flg = true;
+				shake_flg = true;
+				GameObject enemy2_End = game_object;
+				enemy2_End.game.allVec.pos += Vector2(GetRand(240), GetRand(192));
+				if (die_Ex.Conuter(10))
+				{
+					ex->ExSpawn(enemy2_End, 1);
+					++die_Ex_Num;
+				}
+				if (die_Ex_Num == die_Ex_Max_Num)
+				{
+					ex_on = 2;
+					
+				}
+			}
+			else if (ex_on == 2)
+			{
+				game_object.game.pal -= 10;
+				if (game_object.game.pal < 0)
+				{
+					ex_on = 3;
+					ex_End = true;
+				}
+			}
 		}
 	}
 }
@@ -216,7 +308,7 @@ void Enemy2::PlayerCahck(const Vector2& pos, Collision* coll)
 			//¶
 			if (attack_Animetion_flg == 0)
 			{
-				attack_Time.flg = true;
+				attack_Fist_Time.flg = true;
 				game_object.game.lr = true;
 				ani.num = 0;
 			}
@@ -226,7 +318,7 @@ void Enemy2::PlayerCahck(const Vector2& pos, Collision* coll)
 			//‰E
 			if (attack_Animetion_flg == 0)
 			{
-				attack_Time.flg = true;
+				attack_Fist_Time.flg = true;
 				game_object.game.lr = false;
 				ani.num = 0;
 			}
@@ -402,8 +494,9 @@ void Enemy2::Draw(const Vector2& sc, const Vector2& shake)
 {
 	if (blinking)SetDrawBright(128, 128, 128);
 
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)game_object.game.pal);
 	DrawRotaTex(game_object, tex, true, shake, sc);
 	SetDrawBright(255, 255, 255);
-	Box(arm, false, shake, sc);
-	Box(body, false, shake, sc);
+	/*Box(arm, false, shake, sc);
+	Box(body, false, shake, sc);*/
 }

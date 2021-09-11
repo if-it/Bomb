@@ -25,7 +25,7 @@ public:
 	void Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Loading(Load* load);
-	void Input(Key* key, Controller* con, bool& time, const int& get_game_end_set);
+	void Input(Key* key, Controller* con, bool& time);
 	void Update(bool& shakeflg, BombMana* bomb,SideBomb*sideBomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void Save(const int& data_Num);
@@ -51,6 +51,8 @@ public:
 	bool Get_Die_End() { return die_End; }
 	bool& Get_Switch_On() { return save_Data.switch_On; }
 	bool& Get_Move_Guide_On() { return move_guide_on; }
+
+	void Set_Contorl_Flg(const bool& flg) { control_flg = flg; }
 
 private:
 	void Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
@@ -117,6 +119,7 @@ private:
 	int get_guide;
 	bool die_End;
 	int tutorial_flg;
+	bool control_flg;
 
 	//“_–Å
 	bool blinking;
