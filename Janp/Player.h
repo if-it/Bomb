@@ -64,6 +64,8 @@ private:
 
 	int player_Tex[MAXTEX_X * MAXTEX_Y];
 	int player_Black_Tex[MAXTEX_X * MAXTEX_Y];
+	int hitSE;
+	int dashSE;
 
 	std::vector<GameObject> shadow;
 

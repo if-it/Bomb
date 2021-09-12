@@ -76,6 +76,7 @@ void BombMana::BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const b
 	InitBomb.playerOneColl = playerSp;
 	InitBomb.damage = damage;
 	InitBomb.game_object.game.num =(int)bomb.size();
+
 	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
 
 	bomb.push_back(InitBomb);

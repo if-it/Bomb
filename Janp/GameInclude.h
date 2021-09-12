@@ -95,6 +95,7 @@ protected:
 		MAPSET,
 		PLAYINIT,
 		PLAYINIT2,
+		ENDING,
 
 	};
 	int scene;

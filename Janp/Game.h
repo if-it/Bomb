@@ -64,5 +64,7 @@ private:
 	Meta_Data meta_Data;
 	Count hetStop;
 	bool controller_on;
+	int ending_Flg;
+	int selectSE;
 };
 

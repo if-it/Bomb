@@ -21,6 +21,7 @@ private:
     Count live_Count;
     bool explosion_on;
     int tex[6];
+    int spawnSE;
     Animation ani;
 };
 

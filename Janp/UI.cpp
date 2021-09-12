@@ -74,6 +74,7 @@ void UI::Loading(Load* load)
 	load->LoadTex("Load/Texture/UI/Save.png", get_Item_Tex[3]);
 
 	load->LoadTex("Load/Texture/UI/Exit.png", exitTex);
+	load->LoadTex("Load/Texture/UI/ThankYouForPlaying.png", endingTex);
 }
 
 void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
@@ -298,15 +299,16 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 
 	//ExitUI
 
-	Exit(game_end_set);
+	Exit(game_end_set,false);
 
 
 
 	Get_Tutorial_Flg = tutorial_flg;
 }
 
-void UI::Exit(int& game_end_set)
+void UI::Exit(int& game_end_set,bool ending_on)
 {
+	ending = ending_on;
 	if (game_end_set == 1)
 	{
 		end_on = true;
@@ -314,8 +316,8 @@ void UI::Exit(int& game_end_set)
 		if (exit_Size.x >= 1.0f)
 		{
 			exit_Size.x = 1.0f;
-			exit_Size.y += 0.06f;
-			if (exit_Size.y)
+			exit_Size.y += 0.5f;
+			if (exit_Size.y>=1.0f)
 			{
 				exit_Size.y = 1.0f;
 				game_end_set = 2;
@@ -406,6 +408,7 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 void UI::ExitDraw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 228);
-	DrawRotaTex(Vector2(WIDTH / 2, HEIGHT / 2), Vector2(256, 128), exit_Size, 0.0f, exitTex, end_on);
+	if(!ending)DrawRotaTex(Vector2(WIDTH / 2, HEIGHT / 2), Vector2(256, 128), exit_Size, 0.0f, exitTex, end_on);
+	else DrawRotaTex(Vector2(WIDTH / 2, HEIGHT / 2), Vector2(256, 128), exit_Size, 0.0f, endingTex, end_on);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

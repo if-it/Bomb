@@ -19,6 +19,7 @@ void SideBomb::Init()
 void SideBomb::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Bomb/SideBomb.png", 6, 6, 1, SIZE, SIZE, tex);
+	load->LoadSound("Load/Sound/SE/shoot.wav", spawnSE);
 }
 
 void SideBomb::Update(Controller* con)
@@ -43,6 +44,7 @@ void SideBomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 
 void SideBomb::Spawn(const Vector2 set_pos)
 {
+	PlaySoundMem(spawnSE, DX_PLAYTYPE_BACK, true);
 	game_object.game.dis = true;
 	game_object.SetPos(Vector2((float)((int)((set_pos.x + 16.0f) / SIZE) * SIZE), (float)((int)((set_pos.y + 16.0f) / SIZE) * SIZE)));
 	live_Count.flg = true;

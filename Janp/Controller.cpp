@@ -83,16 +83,16 @@ vector::Vector2 Controller::StickL()
 
 int Controller::StickLTriggerX()
 {
-	if (XInput.ThumbLX == 0)
+	if (XInput.ThumbLX < 10000 && XInput.ThumbLX > -10000)
 	{
 		stickLX = true;
 	}
-	if (XInput.ThumbLX > 0 && stickLX)
+	if (XInput.ThumbLX > 10000 && stickLX)
 	{
 		stickLX = false;
 		return 1;
 	}
-	if (XInput.ThumbLX < 0 && stickLX)
+	if (XInput.ThumbLX < -10000 && stickLX)
 	{
 		stickLX = false;
 		return -1;
@@ -102,16 +102,16 @@ int Controller::StickLTriggerX()
 
 int Controller::StickLTriggerY()
 {
-	if (XInput.ThumbLY == 0)
+	if (XInput.ThumbLY < 10000 && XInput.ThumbLY > -10000)
 	{
 		stickLY = true;
 	}
-	if (XInput.ThumbLY < 0 && stickLY)
+	if (XInput.ThumbLY > 10000 && stickLY)
 	{
 		stickLY = false;
 		return 1;
 	}
-	if (XInput.ThumbLY > 0 && stickLY)
+	if (XInput.ThumbLY < -10000 && stickLY)
 	{
 		stickLY = false;
 		return -1;

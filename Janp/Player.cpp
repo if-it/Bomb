@@ -224,6 +224,9 @@ void Player::Loading(Load* load)
 		64, 64, player_Tex);
 	load->LoadAnimeTex("Load/Texture/Player/Player_Black.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
 		64, 64, player_Black_Tex);
+	load->LoadSound("Load/Sound/SE/Hit.wav", hitSE);
+	ChangeVolumeSoundMem(180, hitSE);
+	load->LoadSound("Load/Sound/SE/Dash.wav", dashSE);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -419,6 +422,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 
 	if (ability2_Activate == 1)
 	{
+		PlaySoundMem(dashSE, DX_PLAYTYPE_BACK, true);
 		ability2_on.flg = true;
 		shadow_on.flg = true;
 		ability2_Activate = 2;
@@ -1297,6 +1301,7 @@ void Player::Blow(const float& blowX, const float& blowY, const bool& lr, bool& 
 {
 	if (!invincible.flg)
 	{
+		PlaySoundMem(hitSE, DX_PLAYTYPE_BACK, true);
 		invincible.flg = true;
 		blow.flg = true;
 		SubHp(subHp, hetstop);

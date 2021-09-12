@@ -96,6 +96,7 @@ void Game::Init()
 	stageChange = false;
 	title_To_Play = false;
 	shake_Counter = Count();
+	ending_Flg = 0;
 
 	map->Init(stage, load);
 
@@ -155,6 +156,9 @@ bool Game::Loading()
 
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
 
+	load->LoadSound("Load/Sound/SE/select.wav", selectSE);
+
+
 	FILE* fp;
 
 	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "r") == 0)
@@ -196,7 +200,8 @@ void Game::Update()
 			Init();
 			if (!debug_mode_flg)
 			{
-				//PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				ChangeVolumeSoundMem(230, bgm1);
 				title_Flg = 1;
 			}
 			else
@@ -243,8 +248,8 @@ void Game::Update()
 				if (text_Exit_Pos.x - (WIDTH - 400) <= 10.0f)
 				{
 					title_Flg = 4;
-					cursor_Pos = Vector2(text_Play_Pos.x + 20, text_Play_Pos.y - 10);
-					cursor_lerp = Vector2(text_Play_Pos.x + 20, text_Play_Pos.y - 10);
+					cursor_Pos = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
+					cursor_lerp = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
 				}
 			}
 		}
@@ -252,17 +257,20 @@ void Game::Update()
 		{
 			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 400, HEIGHT / 2), 0.05f);
 			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 400, HEIGHT / 2 + 100), 0.05f);
-			if (key->KeyTrigger(KEY_INPUT_UP) > 0 || con->StickL().y > 10000)
+			int stickLY = con->StickLTriggerY();
+			if (key->KeyTrigger(KEY_INPUT_UP) > 0 || stickLY == 1)
 			{
 				--title_Cursor;
+				PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 				if (title_Cursor < 0)
 				{
 					title_Cursor = 0;
 				}
 			}
-			if (key->KeyTrigger(KEY_INPUT_DOWN) > 0 || con->StickL().y < -10000)
+			if (key->KeyTrigger(KEY_INPUT_DOWN) > 0 || stickLY == -1)
 			{
 				++title_Cursor;
+				PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 				if (title_Cursor > 1)
 				{
 					title_Cursor = 1;
@@ -271,12 +279,12 @@ void Game::Update()
 
 			if (title_Cursor == 0)
 			{
-				cursor_lerp = Vector2(text_Play_Pos.x + 20, text_Play_Pos.y - 10);
+				cursor_lerp = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
 				if (Enter())title_Flg = 5;
 			}
 			else if (title_Cursor == 1)
 			{
-				cursor_lerp = Vector2(text_Exit_Pos.x + 20, text_Exit_Pos.y - 10);
+				cursor_lerp = Vector2(text_Exit_Pos.x + 15, text_Exit_Pos.y - 10);
 				if (Enter())game_end_set = 1;
 				if (key->KeyTrigger(KEY_INPUT_A))Delete_Data();
 			}
@@ -315,7 +323,7 @@ void Game::Update()
 				DeleteGraph(text_Exit_Tex);
 			}
 		}
-		ui->Exit(game_end_set);
+		ui->Exit(game_end_set, false);
 		dust->Update();
 		break;
 	case PLAYINIT:
@@ -353,7 +361,7 @@ void Game::Update()
 		Play_Scene();
 		break;
 	case MAPSET:
-		if (SceneChangeAdd(15))
+		if (SceneChangeAdd(18))
 		{
 			Init();
 			scene = PLAYINIT;
@@ -364,6 +372,16 @@ void Game::Update()
 		{
 			title_Flg = 1;
 		}
+		break;
+	case ENDING:
+		if (ending_Flg == 0 && SceneChangeSeb(5))ending_Flg = 1;
+
+		if (ending_Flg == 1)ui->Exit(ending_Flg, true);
+
+		if (ending_Flg == 2 && Enter())ending_Flg = 3;
+
+		if (ending_Flg == 3)title_Flg = 1;
+
 		break;
 	default:
 		break;
@@ -416,15 +434,18 @@ void Game::Update()
 	}
 	if (game_end_set == 3)
 	{
-		if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || con->StickL().x > 10000)
+		int stickLX = con->StickLTriggerX();
+		if (key->KeyTrigger(KEY_INPUT_RIGHT) || stickLX == 1)
 		{
 			cursor_lerp = Vector2(745, 430);
 			game_end_on = true;
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		}
-		if (key->keyFlame(KEY_INPUT_LEFT) > 0 || con->StickL().x < -10000)
+		if (key->KeyTrigger(KEY_INPUT_LEFT)  || stickLX == -1)
 		{
 			cursor_lerp = Vector2(545, 430);
 			game_end_on = false;
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		}
 		if (Enter())
 		{
@@ -607,7 +628,7 @@ void Game::Play_Scene()
 		}
 		if (!time)
 		{
-			Shake(shake_Counter, 6, Vector2((float)(GetRand(12) - GetRand(12)), (float)(GetRand(8) - GetRand(8))));
+			Shake(shake_Counter, 6, Vector2((float)(GetRand(14) - GetRand(14)), (float)(GetRand(9) - GetRand(9))));
 		}
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
@@ -615,9 +636,9 @@ void Game::Play_Scene()
 			player->Get_Save_On(), game_end_set);
 		hetStop.Conuter(8);
 
-		if (enemy2->Get_Ex_End())
+		if (enemy2->Get_Ex_End() && SceneChangeAdd(3))
 		{
-			title_Flg = 1;
+			scene = ENDING;
 		}
 	}
 	else
@@ -822,6 +843,10 @@ void Game::Draw()
 	case GAMECLEAR:
 		PlayDraw(sc, shake);
 		break;
+	case ENDING:
+		DrawGraph(0, 0, haikei, true);
+		ui->ExitDraw();
+		break;
 	default:
 		break;
 	}
@@ -835,6 +860,7 @@ void Game::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	Box(Vector2(), GetColor(0, 0, 0), drawScene, true, Vector2(), Vector2(), WIDTH, HEIGHT);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 }
 
 bool Game::Enter()
