@@ -157,6 +157,7 @@ bool Game::Loading()
 	load->LoadSound("Load/Sound/BGM/Castle.wav", bgm1);
 
 	load->LoadSound("Load/Sound/SE/select.wav", selectSE);
+	load->LoadSound("Load/Sound/SE/kettei.wav", ketteiSE);
 
 
 	FILE* fp;
@@ -867,6 +868,7 @@ bool Game::Enter()
 {
 	if (con->TrlggerBotton(con->A) || con->TrlggerBotton(con->X) || (key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN)))
 	{
+		PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 		return true;
 	}
 	return false;

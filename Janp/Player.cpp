@@ -176,6 +176,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	animation = Animation();
 	ability2 = Count();
 	ability2_on = Count();
+	walk = Count();
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -227,6 +228,7 @@ void Player::Loading(Load* load)
 	load->LoadSound("Load/Sound/SE/Hit.wav", hitSE);
 	ChangeVolumeSoundMem(180, hitSE);
 	load->LoadSound("Load/Sound/SE/Dash.wav", dashSE);
+	load->LoadSound("Load/Sound/SE/walk.wav", walkSE);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -622,15 +624,7 @@ void Player::Animation_Update()
 			animation.num = 0;
 		}
 	}
-	if (air)
-	{
-		animation.num = 0;
-		one_move_flg = false;
-		one_move_flg2 = false;
-		one_stop_flg = false;
-		animation.oneAnimeFlg = false;
-		air_Back_Count = Count();
-	}
+	
 
 	if (move)
 	{
@@ -639,6 +633,12 @@ void Player::Animation_Update()
 		animation.oneAnimeFlg = false;
 		one_move_flg2 = false;
 		animation.AnimationOn(animation_Count_Num, 12, 7);
+		walk.flg = true;
+		if (!air && walk.Conuter(24))
+		{
+			PlaySoundMem(walkSE, DX_PLAYTYPE_BACK, true);
+		}
+		
 	}
 	else
 	{
@@ -668,6 +668,15 @@ void Player::Animation_Update()
 		}
 	}
 
+	if (air)
+	{
+		animation.num = 0;
+		one_move_flg = false;
+		one_move_flg2 = false;
+		one_stop_flg = false;
+		animation.oneAnimeFlg = false;
+		air_Back_Count = Count();
+	}
 
 	if (invincible.flg)
 	{

@@ -66,6 +66,7 @@ private:
 	int player_Black_Tex[MAXTEX_X * MAXTEX_Y];
 	int hitSE;
 	int dashSE;
+	int walkSE;
 
 	std::vector<GameObject> shadow;
 
@@ -85,6 +86,7 @@ private:
 	Count ability2;
 	Count ability2_on;
 	Count shadow_on;
+	Count walk;
 
 	bool bomb_Spawn;
 	bool move;

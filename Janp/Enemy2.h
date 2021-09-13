@@ -32,6 +32,8 @@ private:
 	int tex;
 	int  enemy2Tex[21];
 	int attackTex[7];
+	int daipanSE;
+
 	int rock_Num;
 	int rock_Max_Num;
 	bool spawn;

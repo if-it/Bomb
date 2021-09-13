@@ -66,5 +66,6 @@ private:
 	bool controller_on;
 	int ending_Flg;
 	int selectSE;
+	int ketteiSE;
 };
 
