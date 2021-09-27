@@ -634,7 +634,7 @@ void Player::Animation_Update()
 		one_move_flg2 = false;
 		animation.AnimationOn(animation_Count_Num, 12, 7);
 		walk.flg = true;
-		if (!air && walk.Conuter(24))
+		if (!air && walk.Conuter(25))
 		{
 			PlaySoundMem(walkSE, DX_PLAYTYPE_BACK, true);
 		}

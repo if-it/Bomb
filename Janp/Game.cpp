@@ -104,7 +104,6 @@ void Game::Init()
 	itemMana->Init(map->map, stage);
 
 	player->Init(map->map, sc);
-
 	Stage_Init();
 
 	ui->Init();
@@ -124,6 +123,7 @@ void Game::Init()
 	cursor_Pos = Vector2();
 	cursor_lerp = Vector2();
 	game_end_on = false;
+	reset_con = 0;
 }
 
 
@@ -214,6 +214,7 @@ void Game::Update()
 		}
 		break;
 	case TITLE:
+		
 		if (title_Flg == 1 && SceneChangeSeb(8))//暗転タイトルまで
 		{
 			title_Flg = 0;
@@ -256,6 +257,12 @@ void Game::Update()
 		}
 		else if (title_Flg == 4 && game_end_set == 0)//カーソル移動
 		{
+			++reset_con;
+			if (reset_con == 180)
+			{
+				ReSetupJoypad();
+				reset_con = 0;
+			}
 			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 400, HEIGHT / 2), 0.05f);
 			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 400, HEIGHT / 2 + 100), 0.05f);
 			int stickLY = con->StickLTriggerY();

@@ -67,5 +67,6 @@ private:
 	int ending_Flg;
 	int selectSE;
 	int ketteiSE;
+	int reset_con;
 };
 
