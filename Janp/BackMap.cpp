@@ -58,7 +58,7 @@ void BackMap::Init(const int& stage)
 void BackMap::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap.png", BACKMAP_TEX_NUM, BACKMAP_TEX_NUM, 1, SIZE, SIZE, tex);
-	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap2.png", BACKMAP_TEX_NUM2, BACKMAP_TEX_NUM2, 1, SIZE * 2, SIZE * 2, tex2);
+	load->LoadAnimeTex("Load/Texture/Map/BackMap/BackMap2.png", BACKMAP_TEX_NUM2, BACKMAP_TEX_NUM2, 1, SIZE * 2 + 1, SIZE * 2, tex2);
 }
 
 void BackMap::Update()

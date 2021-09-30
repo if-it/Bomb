@@ -166,7 +166,7 @@ void Map::StageSet(const int& stage, Load* load)
 	fileNama += ".csv";
 
 
-	int map_type = (int)(stage/100) - (int)(stage_S/100);
+	int map_type = (int)(stage / 100) - (int)(stage_S / 100);
 	if (map_type < 0)
 	{
 		map_type *= -1;
@@ -178,9 +178,9 @@ void Map::StageSet(const int& stage, Load* load)
 			DeleteGraph(tex[i]);
 		}
 		map_type = stage;
-		if (map_type >= 100 && map_type < 200)load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
-		else if (map_type >= 200 && map_type < 300)load->LoadAnimeTex("Load/Texture/Map/Map/Map2.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
-		else if (map_type >= 300 && map_type < 400)load->LoadAnimeTex("Load/Texture/Map/Map/Map3.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+		if (map_type >= 100 && map_type < 200)load->LoadAnimeTex("Load/Texture/Map/Map/Map.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE + 1, SIZE, tex);
+		else if (map_type >= 200 && map_type < 300)load->LoadAnimeTex("Load/Texture/Map/Map/Map2.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE + 1, SIZE, tex);
+		else if (map_type >= 300 && map_type < 400)load->LoadAnimeTex("Load/Texture/Map/Map/Map3.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE + 1, SIZE, tex);
 	}
 	ifs.open(fileNama.c_str());
 	if (!ifs)
@@ -271,8 +271,8 @@ void Map::StageSet(const int& stage, Load* load)
 							!(map[map_num[n]][map_num[3 + j]] >= 35 && map[map_num[n]][map_num[3 + j]] <= 39) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 73 && map[map_num[n]][map_num[3 + j]] <= 77) &&
 							!(map[map_num[n]][map_num[3 + j]] >= 4 && map[map_num[n]][map_num[3 + j]] <= 7) &&
-							!(map[map_num[n]][map_num[3 + j]] >= 80 && map[map_num[n]][map_num[3 + j]] <= 85)&&
-							!(map[map_num[n]][map_num[3 + j]] >= 90 && map[map_num[n]][map_num[3 + j]] <= 94)&&
+							!(map[map_num[n]][map_num[3 + j]] >= 80 && map[map_num[n]][map_num[3 + j]] <= 85) &&
+							!(map[map_num[n]][map_num[3 + j]] >= 90 && map[map_num[n]][map_num[3 + j]] <= 94) &&
 							map[map_num[n]][map_num[3 + j]] < 100)
 						{
 							map_check[n][j] = true;
@@ -638,10 +638,10 @@ void Map::StageSet(const int& stage, Load* load)
 
 void Map::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/Map/Map/Map3.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE, SIZE, tex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/Map3.png", MAP_TEX_NUM, MAP_TEX_NUM, 1, SIZE + 1, SIZE, tex);
 
 	load->LoadAnimeTex("Load/Texture/Map/Map/BBlock.png", 10, 10, 1, SIZE * 2, SIZE * 2, Btex);
-	load->LoadAnimeTex("Load/Texture/Map/Map/toge.png", 4, 4, 1, SIZE, SIZE, togeTex);
+	load->LoadAnimeTex("Load/Texture/Map/Map/toge.png", 4, 4, 1, SIZE + 1, SIZE, togeTex);
 }
 
 void Map::FleMapInput()
@@ -726,7 +726,7 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 
 			if (map[y][x] == 1 || (map[y][x] >= 54 && map[y][x] <= 57))
 			{
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)),Vector2(SIZE/2,SIZE/2),Vector2(1.0f,1.0f),0.0f ,tex[0], true,false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[0], true, false, true, shake, sc);
 			}
 			switch (map[y][x])
 			{
@@ -816,7 +816,7 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, togeTex[2], true, false, true, shake, sc);
 				break;
 			case 77:
-				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f,1.0f), 0.0f, togeTex[3], true, false, true, shake, sc);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, togeTex[3], true, false, true, shake, sc);
 				break;
 			}
 

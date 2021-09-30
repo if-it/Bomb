@@ -201,7 +201,7 @@ void Game::Update()
 			Init();
 			if (!debug_mode_flg)
 			{
-				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				//PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 				ChangeVolumeSoundMem(230, bgm1);
 				title_Flg = 1;
 			}

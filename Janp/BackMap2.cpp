@@ -4,6 +4,7 @@
 
 BackMap2::BackMap2()
 {
+	tex = new int[MAP1];
 }
 
 BackMap2::~BackMap2()
@@ -24,7 +25,6 @@ void BackMap2::Init(const int& stage, Load* load)
 		back_count2[i] = 0;
 	}
 
-
 	int map_type = (int)(stage / 100) - (int)(stage_S / 100);
 	if (map_type < 0)
 	{
@@ -32,6 +32,10 @@ void BackMap2::Init(const int& stage, Load* load)
 	}
 	if (map_type >= 1 && stage != 0)
 	{
+		for (int i = 0; i < (int)(sizeof(tex) / sizeof(int)); ++i)
+		{
+			DeleteGraph(tex[i]);
+		}
 		delete[] tex;
 		for (int i = 0; i < 5; ++i)
 		{
@@ -41,7 +45,7 @@ void BackMap2::Init(const int& stage, Load* load)
 		if (map_type >= 100 && map_type < 200)
 		{
 			tex = new int[MAP1];
-			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", MAP1, MAP1, 1, SIZE, SIZE, tex);
+			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", MAP1, MAP1, 1, SIZE + 1, SIZE, tex);
 		}
 		else if (map_type >= 200 && map_type < 300)
 		{
@@ -55,7 +59,7 @@ void BackMap2::Init(const int& stage, Load* load)
 		else if (map_type >= 300 && map_type < 400)
 		{
 			tex = new int[MAP2];
-			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", MAP2, MAP2, 1, SIZE, SIZE, tex);
+			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", MAP2, MAP2, 1, SIZE + 1, SIZE, tex);
 
 			//‰¼
 			load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
@@ -111,8 +115,6 @@ void BackMap2::Init(const int& stage, Load* load)
 
 void BackMap2::Loading(Load* load)
 {
-	tex = new int[MAP2];
-	load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", MAP2, MAP2, 1, SIZE, SIZE, tex);
 	load->LoadTex("Load/Texture/Map/BackObj/Stage200Back1.png", stage2_Back_Tex[4]);
 	load->LoadTex("Load/Texture/Map/BackObj/Stage200Back2.png", stage2_Back_Tex[3]);
 	load->LoadTex("Load/Texture/Map/BackObj/Stage200Back3.png", stage2_Back_Tex[2]);
