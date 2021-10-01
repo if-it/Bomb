@@ -33,6 +33,9 @@ private:
 	void Option_Data_Save();
 	void Data_Load();
 	void Save();
+	void Cursor(int num, int numX);
+	void Bgm_Volume();
+	void Se_Volume();
 	Count sceneCount;
 	bool time;
 	bool flame_time;
@@ -40,19 +43,30 @@ private:
 	int title_Pal;
 
 	int game_end_set;
-	int title_Cursor;
+	Vector2 title_Cursor;
 	Vector2 cursor_Pos;
+	Vector2 cursor_Pos2;
 	Vector2 cursor_lerp;
+	Vector2 cursor_lerp2;
 	bool game_end_on;
 
 	Vector2 title_Pos;
 	Vector2 text_Play_Pos;
 	Vector2 text_Exit_Pos;
+	Vector2 text_Option_Pos;
+	Vector2 text_Options_Pos;
+
+	bool option_Sound;
+	bool option_Select;
+	bool option_Controller;
+	bool option_One_Shake;
+	float option_Sound_fle;
 
 	struct Option_Data
 	{
-		int BGM_Volume;
-		int SE_Volume;
+		float Main_Volume;
+		float BGM_Volume;
+		float SE_Volume;
 		bool con_shake;
 	};
 	Option_Data option_Data;

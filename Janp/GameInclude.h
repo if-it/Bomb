@@ -74,6 +74,10 @@ protected:
 	int cursor;
 	int text_Play_Tex;
 	int text_Exit_Tex;
+	int text_Option_Tex;
+	int text_Options_Tex[7];
+	int text_On_Off[2];
+	int text_Num[10];
 	int bgm1;
 
 	enum SCENE
