@@ -72,6 +72,7 @@ void Game::FirstInit()
 	meta_Data = { 0,0 };
 	controller_on = false;
 	TitleInit();
+	play_option_Flg = 0;
 }
 
 void Game::TitleInit()
@@ -219,7 +220,7 @@ void Game::Update()
 			Init();
 			if (!debug_mode_flg)
 			{
-				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				//PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 				Bgm_Volume();
 				Se_Volume();
 				title_Flg = 1;
@@ -362,13 +363,13 @@ void Game::Update()
 				else if (title_Cursor.y == 1)
 				{
 					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+					cursor_lerp2 = Vector2(cursor_lerp.x + 170, cursor_lerp.y);
 					if (Enter())title_Flg = 11;
 				}
 				else if (title_Cursor.y == 2)
 				{
 					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+					cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
 					if (Enter())
 					{
 						title_Flg = 12;
@@ -427,7 +428,7 @@ void Game::Update()
 				else if (title_Cursor.y == 1)//main
 				{
 					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
 
 					option_Data.Main_Volume += cursor_Flg;
 
@@ -446,7 +447,7 @@ void Game::Update()
 				else if (title_Cursor.y == 2)//music
 				{
 					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
 					option_Data.BGM_Volume += cursor_Flg;
 
 					if (option_Data.BGM_Volume > 1.01f)
@@ -463,7 +464,7 @@ void Game::Update()
 				else if (title_Cursor.y == 3)//sound
 				{
 					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
 					option_Data.SE_Volume += cursor_Flg;
 
 					if (option_Data.SE_Volume > 1.01f)
@@ -510,7 +511,7 @@ void Game::Update()
 				else if (title_Cursor.y == 1)
 				{
 					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
 					option_Data.con_shake = (bool)title_Cursor.x;
 					con->Set_Shake_On(option_Data.con_shake);
 					if (!option_One_Shake && option_Data.con_shake)
@@ -520,7 +521,7 @@ void Game::Update()
 					option_One_Shake = (bool)title_Cursor.x;
 				}
 
-				if (GetJoypadNum == 0)
+				if (GetJoypadNum() == 0)
 				{
 					++reset_con;
 					if (reset_con == 180)
@@ -533,7 +534,7 @@ void Game::Update()
 				{
 					title_Flg = 9;
 					option_Select = true;
-					option_Sound = false;
+					option_Controller = false;
 					Option_Data_Save();
 				}
 			}
@@ -620,6 +621,198 @@ void Game::Update()
 		if (ending_Flg == 3)title_Flg = 1;
 
 		break;
+	case OPTION:
+		if (play_option_Flg == 0)
+		{
+			scene = PLAY;
+		}
+		if (play_option_Flg == 1)
+		{
+			option_Select = true;
+			text_Option_Pos = Vector2(WIDTH / 2 - 96, HEIGHT / 2 - 200);
+			text_Options_Pos = Vector2(text_Option_Pos.x, HEIGHT / 2 - 100);
+
+			Cursor(3, 0);
+
+			if (title_Cursor.y == 0)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())play_option_Flg = 0;
+			}
+			else if (title_Cursor.y == 1)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 170, cursor_lerp.y);
+				if (Enter())play_option_Flg = 2;
+			}
+			else if (title_Cursor.y == 2)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
+				if (Enter())
+				{
+					play_option_Flg = 3;
+					title_Cursor.x = (float)option_Data.con_shake;
+				}
+			}
+			else if (title_Cursor.y == 3)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
+				if (Enter())
+				{
+					title_Flg = 1;
+				}
+			}
+			if (con->TrlggerBotton(con->B)||key->KeyTrigger(KEY_INPUT_ESCAPE))
+			{
+				play_option_Flg = 0;
+			}
+		}
+		else if (play_option_Flg == 2)
+		{
+			float cursor_Flg = 0.0f;
+			option_Select = false;
+			option_Sound = true;
+			Cursor(3, 2);
+
+			if (option_Sound_fle == 2 && title_Cursor.x == 0 ||
+				option_Sound_fle == 0 && title_Cursor.x == 1 ||
+				option_Sound_fle == 1 && title_Cursor.x == 2)
+			{
+				cursor_Flg = 0.1f;
+			}
+			if (option_Sound_fle == 0 && title_Cursor.x == 2 ||
+				option_Sound_fle == 1 && title_Cursor.x == 0 ||
+				option_Sound_fle == 2 && title_Cursor.x == 1)
+			{
+				cursor_Flg = -0.1f;
+			}
+
+			if (title_Cursor.y == 0)//back
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())
+				{
+					play_option_Flg = 1;
+					option_Select = true;
+					option_Sound = false;
+					Option_Data_Save();
+				}
+			}
+			else if (title_Cursor.y == 1)//main
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+
+				option_Data.Main_Volume += cursor_Flg;
+
+				if (option_Data.Main_Volume > 1.01f)
+				{
+					option_Data.Main_Volume = 0.0f;
+				}
+				else if (option_Data.Main_Volume < 0.0f)
+				{
+					option_Data.Main_Volume = 1.0f;
+				}
+
+				Bgm_Volume();
+				Se_Volume();
+			}
+			else if (title_Cursor.y == 2)//music
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+				option_Data.BGM_Volume += cursor_Flg;
+
+				if (option_Data.BGM_Volume > 1.01f)
+				{
+					option_Data.BGM_Volume = 0.0f;
+				}
+				else if (option_Data.BGM_Volume < 0.0f)
+				{
+					option_Data.BGM_Volume = 1.0f;
+				}
+
+				Bgm_Volume();
+			}
+			else if (title_Cursor.y == 3)//sound
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+				option_Data.SE_Volume += cursor_Flg;
+
+				if (option_Data.SE_Volume > 1.01f)
+				{
+					option_Data.SE_Volume = 0.0f;
+				}
+				else if (option_Data.SE_Volume < 0.0f)
+				{
+					option_Data.SE_Volume = 1.0f;
+				}
+
+				Se_Volume();
+			}
+			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
+			{
+				play_option_Flg = 1;
+				option_Select = true;
+				option_Sound = false;
+				Option_Data_Save();
+			}
+		}
+		else if (play_option_Flg == 3)
+		{
+			option_Select = false;
+			option_Controller = true;
+
+			Cursor(1, 1);
+
+			if (title_Cursor.y == 0)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())
+				{
+					play_option_Flg = 1;
+					option_Select = true;
+					option_Controller = false;
+					Option_Data_Save();
+				}
+			}
+			else if (title_Cursor.y == 1)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+				option_Data.con_shake = (bool)title_Cursor.x;
+				con->Set_Shake_On(option_Data.con_shake);
+				if (!option_One_Shake && option_Data.con_shake)
+				{
+					con->Shake(1000, 200);
+				}
+				option_One_Shake = (bool)title_Cursor.x;
+			}
+
+			if (GetJoypadNum() == 0)
+			{
+				++reset_con;
+				if (reset_con == 180)
+				{
+					ReSetupJoypad();
+					reset_con = 0;
+				}
+			}
+			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
+			{
+				play_option_Flg = 1;
+				option_Select = true;
+				option_Controller = false;
+				Option_Data_Save();
+			}
+		}
+		break;
 	default:
 		break;
 	}
@@ -659,8 +852,12 @@ void Game::Update()
 	}
 	if (game_end_set == 0 && (key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK)))
 	{
-		game_end_set = 1;
-		//if (debug_mode_flg)game_end_flg = true;
+		if (scene == TITLE)game_end_set = 1;
+		else
+		{
+			scene = OPTION;
+			play_option_Flg = 1;
+		}
 	}
 	if (game_end_set == 2)
 	{
@@ -1161,6 +1358,35 @@ void Game::Draw()
 	case MAPSET:
 		PlayDraw(sc, shake);
 		break;
+	case OPTION:
+		PlayDraw(sc, shake);
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		Box(Vector2(), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), WIDTH, HEIGHT);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		DrawTex(text_Option_Pos, text_Option_Tex, true);
+		DrawTex(text_Options_Pos, text_Options_Tex[0], true);
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[1], option_Select);
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 200), text_Options_Tex[5], option_Select);
+
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[2], option_Sound);
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 200), text_Options_Tex[3], option_Sound);
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 300), text_Options_Tex[4], option_Sound);
+
+		DrawTex(Vector2(text_Options_Pos.x + 250, text_Options_Pos.y + 100), text_Num[(int)option_Data.Main_Volume], option_Sound);
+		DrawTex(Vector2(text_Options_Pos.x + 270, text_Options_Pos.y + 100), text_Num[(int)(option_Data.Main_Volume * 10) % 10], option_Sound);
+
+		DrawTex(Vector2(text_Options_Pos.x + 250, text_Options_Pos.y + 200), text_Num[(int)option_Data.BGM_Volume], option_Sound);
+		DrawTex(Vector2(text_Options_Pos.x + 270, text_Options_Pos.y + 200), text_Num[(int)(option_Data.BGM_Volume * 10) % 10], option_Sound);
+
+		DrawTex(Vector2(text_Options_Pos.x + 250, text_Options_Pos.y + 300), text_Num[(int)option_Data.SE_Volume], option_Sound);
+		DrawTex(Vector2(text_Options_Pos.x + 270, text_Options_Pos.y + 300), text_Num[(int)(option_Data.SE_Volume * 10) % 10], option_Sound);
+
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[6], option_Controller);
+		DrawTex(Vector2(text_Options_Pos.x + 250, text_Options_Pos.y + 100), text_On_Off[(int)option_Data.con_shake], option_Controller);
+
+		break;
 	case GAMECLEAR:
 		PlayDraw(sc, shake);
 		break;
@@ -1172,7 +1398,7 @@ void Game::Draw()
 		break;
 	}
 
-	if (game_end_set == 2 || game_end_set == 3 || title_Flg == 4 || title_Flg >= 7)
+	if (game_end_set == 2 || game_end_set == 3 || title_Flg == 4 || title_Flg >= 7 || scene == OPTION)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 		DrawTex(cursor_Pos, cursor, true);

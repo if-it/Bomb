@@ -270,7 +270,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 			game_object.game.lr = true;
 			bomb_Vec = Vector2(-1.0f, -0.15f);
 		}
-		if (key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A))
+		if (key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A) > 0)
 		{
 			bomb_Spawn = true;
 		}
@@ -624,7 +624,7 @@ void Player::Animation_Update()
 			animation.num = 0;
 		}
 	}
-	
+
 
 	if (move)
 	{
@@ -638,7 +638,7 @@ void Player::Animation_Update()
 		{
 			PlaySoundMem(walkSE, DX_PLAYTYPE_BACK, true);
 		}
-		
+
 	}
 	else
 	{

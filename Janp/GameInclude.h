@@ -100,12 +100,13 @@ protected:
 		PLAYINIT,
 		PLAYINIT2,
 		ENDING,
-
+		OPTION,
 	};
 	int scene;
 	int stage;
 	bool stageChange;
 	int title_Flg;
+	int play_option_Flg;
 	bool title_To_Play;
 	Count shake_Counter;
 
