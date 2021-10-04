@@ -54,6 +54,7 @@ public:
 
 	void Set_Contorl_Flg(const bool& flg) { control_flg = flg; }
 
+
 private:
 	void Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
 	void Bomb_Spawn(BombMana* bomb);

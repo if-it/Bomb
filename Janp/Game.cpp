@@ -72,7 +72,6 @@ void Game::FirstInit()
 	meta_Data = { 0,0 };
 	controller_on = false;
 	TitleInit();
-	play_option_Flg = 0;
 }
 
 void Game::TitleInit()
@@ -132,6 +131,7 @@ void Game::Init()
 	option_Controller = false;
 	option_One_Shake = false;
 	option_Sound_fle = 0.0f;
+	play_option_Flg = 0;
 }
 
 
@@ -170,6 +170,8 @@ bool Game::Loading()
 	load->LoadTex("Load/Texture/Text_Sound.png", text_Options_Tex[4]);
 	load->LoadTex("Load/Texture/Text_Controller.png", text_Options_Tex[5]);
 	load->LoadTex("Load/Texture/Text_Vibrotion.png", text_Options_Tex[6]);
+	load->LoadTex("Load/Texture/Text_Title.png", text_Options_Tex[7]);
+
 	load->LoadAnimeTex("Load/Texture/Text_On_Off.png", 2, 2, 1, 96, 48, text_On_Off);
 	load->LoadAnimeTex("Load/Texture/Text_Num.png", 10, 10, 1, 19, 48, text_Num);
 
@@ -220,7 +222,7 @@ void Game::Update()
 			Init();
 			if (!debug_mode_flg)
 			{
-				//PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
+				PlaySoundMem(bgm1, DX_PLAYTYPE_LOOP, true);
 				Bgm_Volume();
 				Se_Volume();
 				title_Flg = 1;
@@ -622,7 +624,7 @@ void Game::Update()
 
 		break;
 	case OPTION:
-		if (play_option_Flg == 0)
+		if (play_option_Flg == 10)
 		{
 			scene = PLAY;
 		}
@@ -638,7 +640,7 @@ void Game::Update()
 			{
 				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
 				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-				if (Enter())play_option_Flg = 0;
+				if (Enter())play_option_Flg = 10;
 			}
 			else if (title_Cursor.y == 1)
 			{
@@ -659,15 +661,15 @@ void Game::Update()
 			else if (title_Cursor.y == 3)
 			{
 				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 120, cursor_lerp.y);
 				if (Enter())
 				{
 					title_Flg = 1;
 				}
 			}
-			if (con->TrlggerBotton(con->B)||key->KeyTrigger(KEY_INPUT_ESCAPE))
+			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK))
 			{
-				play_option_Flg = 0;
+				play_option_Flg = 10;
 			}
 		}
 		else if (play_option_Flg == 2)
@@ -852,7 +854,11 @@ void Game::Update()
 	}
 	if (game_end_set == 0 && (key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK)))
 	{
-		if (scene == TITLE)game_end_set = 1;
+		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
+		if (scene == TITLE)
+		{
+			if (title_Flg != 1)game_end_set = 1;
+		}
 		else
 		{
 			scene = OPTION;
@@ -1045,30 +1051,33 @@ void Game::Cursor(int numY, int numX)
 	{
 		title_Cursor.y = 0;
 	}
-	if (key->KeyTrigger(KEY_INPUT_RIGHT) > 0 || stickLX == 1)
+	if (numX != 0)
 	{
-		++title_Cursor.x;
-		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
-	}
-	if (key->KeyTrigger(KEY_INPUT_LEFT) > 0 || stickLX == -1)
-	{
-		--title_Cursor.x;
-		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
-	}
+		if (key->KeyTrigger(KEY_INPUT_RIGHT) > 0 || stickLX == 1)
+		{
+			++title_Cursor.x;
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
+		}
+		if (key->KeyTrigger(KEY_INPUT_LEFT) > 0 || stickLX == -1)
+		{
+			--title_Cursor.x;
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
+		}
 
-	if (title_Cursor.x < 0)
-	{
-		title_Cursor.x = numX;
-	}
-	if (title_Cursor.x > numX)
-	{
-		title_Cursor.x = 0;
+		if (title_Cursor.x < 0)
+		{
+			title_Cursor.x = numX;
+		}
+		if (title_Cursor.x > numX)
+		{
+			title_Cursor.x = 0;
+		}
 	}
 }
 
 void Game::Bgm_Volume()
 {
-	ChangeVolumeSoundMem(230 * option_Data.BGM_Volume * option_Data.Main_Volume, bgm1);
+	ChangeVolumeSoundMem(255 * option_Data.BGM_Volume * option_Data.Main_Volume, bgm1);
 }
 
 void Game::Se_Volume()
@@ -1084,7 +1093,11 @@ void Game::Play_Scene()
 	{
 
 		//Player‚Ö‚Ì“ü—Í
-		if (game_end_set == 0 && enemy2->Get_Ex_On() == 0)
+		if (play_option_Flg == 10 && con->FlameBotton(con->A) == 0)
+		{
+			play_option_Flg = 0;
+		}
+		if (play_option_Flg == 0 && game_end_set == 0 && enemy2->Get_Ex_On() == 0)
 		{
 			player->Set_Contorl_Flg(true);
 		}
@@ -1369,6 +1382,7 @@ void Game::Draw()
 		DrawTex(text_Options_Pos, text_Options_Tex[0], true);
 		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[1], option_Select);
 		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 200), text_Options_Tex[5], option_Select);
+		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 300), text_Options_Tex[7], option_Select);
 
 		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[2], option_Sound);
 		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 200), text_Options_Tex[3], option_Sound);
@@ -1385,6 +1399,7 @@ void Game::Draw()
 
 		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[6], option_Controller);
 		DrawTex(Vector2(text_Options_Pos.x + 250, text_Options_Pos.y + 100), text_On_Off[(int)option_Data.con_shake], option_Controller);
+
 
 		break;
 	case GAMECLEAR:
