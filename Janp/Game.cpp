@@ -1465,6 +1465,9 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	sideBomb->Draw(sc2, shake2);
 	rockAttackMana->Draw(sc2, shake2);
 
+	//手前Map関連
+	map->FrontDraw(sc2, shake2);
+
 	//エフェクト関連2
 	exMana->Draw(sc2, shake2);
 	dust->Draw(sc2, shake2);

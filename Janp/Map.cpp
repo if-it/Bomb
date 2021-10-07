@@ -73,8 +73,11 @@ void Map::Save_Date_Load(const int& date_Num, const int& stage, Load* load)
 
 void Map::Init(const int& stage, Load* load)
 {
+	front_Draw = false;
 	StageSet(stage, load);
 	stage_S = stage;
+	pal = 255;
+	pal_Flg = 0;
 }
 
 void Map::Save_Data_Init()
@@ -631,6 +634,11 @@ void Map::StageSet(const int& stage, Load* load)
 					break;
 				}
 			}
+
+			if (map[y][x] >= 200 && map[y][x] <= 204)
+			{
+				front_Draw = true;
+			}
 		}
 	}
 	FleMapInput();
@@ -660,18 +668,45 @@ void Map::FleMapInput()
 
 void Map::Update()
 {
-
-	for (int y = 0; y < (int)map.size(); ++y)
+	while (true)
 	{
-		for (int x = 0; x < (int)map[y].size(); ++x)
+		bool end_set = false;
+
+		for (int y = 0; y < (int)map.size(); ++y)
+
 		{
-			if (fleMap[y][x] != map[y][x])
+			for (int x = 0; x < (int)map[y].size(); ++x)
 			{
-				if (map[y][x] >= 40 && map[y][x] <= 49)continue;
-				Save_Data Init_SaveData = { stage_S,x,y,map[y][x] };
-				save_Data_Ori.push_back(Init_SaveData);
+				if (fleMap[y][x] != map[y][x])
+				{
+					if (map[y][x] >= 40 && map[y][x] <= 49)continue;
+					Save_Data Init_SaveData = { stage_S,x,y,map[y][x] };
+					save_Data_Ori.push_back(Init_SaveData);
+					if (fleMap[y][x] >= 200 && fleMap[y][x] <= 204)
+					{
+						int around_map_num_Y[3] = { y - 1,y,y + 1 };
+						int around_map_num_X[3] = { x - 1,x,x + 1 };
+
+						for (int i = 0; i < 3; ++i)
+						{
+							for (int n = 0; n < 3; ++n)
+							{
+								if (i == 1 && n == 1)continue;
+								if (around_map_num_Y[i] >= 0 && around_map_num_Y[i] < (int)map.size() &&
+									around_map_num_X[n] >= 0 && around_map_num_X[n] < (int)map[y].size() &&
+									map[around_map_num_Y[i]][around_map_num_X[n]] >= 200 && map[around_map_num_Y[i]][around_map_num_X[n]] <= 204)
+								{
+									map[around_map_num_Y[i]][around_map_num_X[n]] += 5;
+									end_set = true;
+								}
+							}
+						}
+
+					}
+				}
 			}
 		}
+		if (!end_set)break;
 	}
 	for (int y = 0; y < (int)map.size(); ++y)
 	{
@@ -707,12 +742,32 @@ void Map::Update()
 					}
 				}
 				break;
+			case 205:
+			case 206:
+			case 207:
+			case 208:
+			case 209:
+				if (pal_Flg == 0)pal_Flg = 1;
+				else if (pal_Flg == 2)map[y][x] = 0;
+				break;
 			default:
 				break;
 			}
 		}
 	}
-
+	if (pal_Flg == 2)
+	{
+		pal_Flg = 0;
+		pal = 255;
+	}
+	else if (pal_Flg == 1)
+	{
+		pal -= 12;
+		if (pal <= 0)
+		{
+			pal_Flg = 2;
+		}
+	}
 }
 
 
@@ -818,11 +873,86 @@ void Map::Draw(const Vector2& sc, const Vector2& shake)
 			case 77:
 				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, togeTex[3], true, false, true, shake, sc);
 				break;
+			case 205:
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[1], true, false, true, shake, sc);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+				break;
+			case 206:
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[4], true, false, true, shake, sc);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+				break;
+			case 207:
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[5], true, false, true, shake, sc);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+				break;
+			case 208:
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[6], true, false, true, shake, sc);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+				break;
+			case 209:
+				SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[0], true, false, true, shake, sc);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+				break;
+			default:
+				break;
 			}
 
 		}
 	}
 
+}
+
+void Map::FrontDraw(const Vector2& sc, const Vector2& shake)
+{
+	if (front_Draw)
+	{
+		for (int y = 0; y < (int)map.size(); ++y)
+		{
+			for (int x = 0; x < (int)map[y].size(); ++x)
+			{
+				switch (map[y][x])
+				{
+				case 205:
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				case 200:
+					DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[1], true, false, true, shake, sc);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+					break;
+				case 206:
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				case 201:
+					DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[4], true, false, true, shake, sc);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+					break;
+				case 207:
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				case 202:
+					DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[5], true, false, true, shake, sc);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+					break;
+				case 208:
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				case 203:
+					DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[6], true, false, true, shake, sc);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+					break;
+				case 209:
+					SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+				case 204:
+					DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[0], true, false, true, shake, sc);
+					SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
 }
 
 

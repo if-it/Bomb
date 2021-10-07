@@ -713,6 +713,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	air_Count = 0;
 	space_On = false;
 	move_guide_on = false;
+	through = false;
 
 	int SizeCut = 0;
 
@@ -759,6 +760,10 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		{
 			collMap[byNum[i]][bxNum[i]] = 41;
 		}
+	}
+	if (through)
+	{
+		collMap[byNum[4]][bxNum[4]] += 5;
 	}
 
 	if (air_Array[0] && air_Array[1] && air_Array[2])
@@ -1173,6 +1178,13 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			break;
 		case 91:
 			move_guide_on = true;
+			break;
+		case 200:
+		case 201:
+		case 202:
+		case 203:
+		case 204:
+			through = true;
 			break;
 		default:
 			break;

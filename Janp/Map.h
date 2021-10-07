@@ -18,6 +18,7 @@ public:
 	void FleMapInput();
 	void Update();
 	void Draw(const Vector2& sc, const Vector2& shake);
+	void FrontDraw(const Vector2& sc, const Vector2& shake);
 
 	std::vector<std::vector<int>> map;
 
@@ -31,6 +32,9 @@ private:
 	int togeTex[4];
 	int save_Data_Size;
 	int stage_S;
+	int pal;
+	int pal_Flg;
+	bool front_Draw;
 	struct Save_Data
 	{
 		int stage;

@@ -125,6 +125,7 @@ private:
 	bool die_End;
 	int tutorial_flg;
 	bool control_flg;
+	bool through;
 
 	//“_–Å
 	bool blinking;
