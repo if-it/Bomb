@@ -38,21 +38,17 @@ Player::~Player()
 {
 }
 
-void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_Num, Vector2& sc)
+void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& data_Num, Vector2& sc)
 {
-
+	using namespace std;
 	FILE* fp;
 
-	std::string fileNama;
-	switch (date_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
-		break;
-	}
+	string fileNama;
+
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Player/Player_Data.dat";
+
 	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
 	{
 		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
@@ -81,20 +77,15 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& date_N
 
 void Player::Save(const int& data_Num)
 {
+	using namespace std;
 	hp = max_Hp;
 	save_Data = { max_Hp,max_Bomb_Num,save_Data.damage,game_object.GetPos(),
 		save_Data.ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg,save_Data.switch_On };
-	std::string fileNama;
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Player/Player_Data.dat";
-		break;
-	}
-
+	string fileNama;
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Player/Player_Data.dat";
+	
 	FILE* fp;
 	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
 	{

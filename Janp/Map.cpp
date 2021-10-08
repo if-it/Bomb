@@ -11,21 +11,17 @@ Map::~Map()
 {
 }
 
-void Map::Save_Date_Load(const int& date_Num, const int& stage, Load* load)
+void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 {
+	using namespace std;
 	save_Data_Ori.clear();
 	//ロード
 	FILE* fp;
 	std::string fileNama;
-	switch (date_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
-		break;
-	}
+
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Map/Map_Data_F.dat";
 	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
 	{
 		fread_s(&save_Data_Size, sizeof(save_Data_Size), sizeof(save_Data_Size), 1, fp);
@@ -37,15 +33,9 @@ void Map::Save_Date_Load(const int& date_Num, const int& stage, Load* load)
 	}
 
 	FILE* fp2;
-	switch (date_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Map/Map_Data.dat";
 	if (save_Data_Size > 0)
 	{
 		Save_Data* data_array;
@@ -88,20 +78,15 @@ void Map::Save_Data_Init()
 
 void Map::Save(const int& data_Num)
 {
+	using namespace std;
 	save_Data_Size = save_Data_Ori.size();
 
 	std::string fileNama;
 
 	//セーブ
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data_F.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Map/Map_Data_F.dat";
 	FILE* fp;
 	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
 	{
@@ -114,17 +99,11 @@ void Map::Save(const int& data_Num)
 		return;
 	}
 
-	FILE* fp2;
 
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Map/Map_Data.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Map/Map_Data.dat";
+	FILE* fp2;
 
 	if (save_Data_Size > 0)
 	{
@@ -221,7 +200,7 @@ void Map::StageSet(const int& stage, Load* load)
 	{
 		for (int x = 0; x < (int)map[y].size(); ++x)
 		{
-			if (map[y][x] == 3)
+			if (map[y][x] == 3 || map[y][x] >= 200 && map[y][x] <= 209)
 			{
 
 				for (int i = 0; i < (int)save_Data_Ori.size(); ++i)

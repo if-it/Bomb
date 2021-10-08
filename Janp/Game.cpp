@@ -764,6 +764,7 @@ void Game::Update()
 				option_Sound = false;
 				Option_Data_Save();
 			}
+			option_Sound_fle = title_Cursor.x;
 		}
 		else if (play_option_Flg == 3)
 		{
@@ -908,19 +909,13 @@ void Game::Update()
 
 void Game::Data_Load()
 {
-
+	using namespace std;
 	FILE* fp;
 
 	std::string fileNama;
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Meta/Meta_Data.dat";
 
 	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
 	{
@@ -993,19 +988,15 @@ void Game::Option_Data_Save()
 
 void Game::Save()
 {
+	using namespace std;
 	saveMana->Save_Mode();
 	meta_Data.stage = stage;
 	Option_Data_Save();
 	std::string fileNama;
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Meta/Meta_Data.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Meta/Meta_Data.dat";
+	
 	FILE* fp;
 	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
 	{

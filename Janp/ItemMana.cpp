@@ -10,21 +10,15 @@ ItemMana::~ItemMana()
 
 void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data_Num, const int& stage)
 {
+	using namespace std;
 	save_Data_Ori.clear();
 
 	FILE* fp;
 
-	std::string fileNama;
-
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data_F.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data_F.dat";
-		break;
-	}
+	string fileNama;
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Item/Item_Data_F.dat";
 	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
 	{
 		fread_s(&save_Data_Size, sizeof(save_Data_Size), sizeof(save_Data_Size), 1, fp);
@@ -36,16 +30,9 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 	}
 
 	FILE* fp2;
-
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Item/Item_Data.dat";
 
 	if (save_Data_Size > 0)
 	{
@@ -62,7 +49,6 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 			{
 				save_Data_Ori.push_back(data_array[i]);
 			}
-
 		}
 		else
 		{
@@ -82,18 +68,14 @@ void ItemMana::Save_Data_Init()
 
 void ItemMana::Save(const int& data_Num)
 {
+	using namespace std;
 	save_Data_Size = save_Data_Ori.size();
 
 	std::string fileNama;
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data_F.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data_F.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Item/Item_Data_F.dat";
+	
 
 	FILE* fp;
 	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
@@ -108,16 +90,9 @@ void ItemMana::Save(const int& data_Num)
 	}
 
 	FILE* fp2;
-
-	switch (data_Num)
-	{
-	case 0:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data.dat";
-		break;
-	default:
-		fileNama = "Load/Data/SaveData/Data01/Item/Item_Data.dat";
-		break;
-	}
+	fileNama = "Load/Data/SaveData/Data";
+	fileNama += to_string(data_Num);
+	fileNama += "/Item/Item_Data.dat";
 
 	if (save_Data_Size > 0)
 	{
