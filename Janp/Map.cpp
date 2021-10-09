@@ -2,6 +2,7 @@
 #include<fstream>
 #include<sstream>
 
+
 Map::Map()
 {
 }
@@ -43,7 +44,11 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 		data_array = new Save_Data[save_Data_Size];
 		if (fopen_s(&fp2, fileNama.c_str(), "r") == 0)
 		{
-			fread_s(data_array, sizeof(Save_Data) * save_Data_Size, sizeof(Save_Data), save_Data_Size, fp2);
+			int a = 0;
+			int b = sizeof(Save_Data) * save_Data_Size;
+			int c = sizeof(data_array);
+			int d = sizeof(Save_Data);
+			a = fread_s(data_array, sizeof(Save_Data) * save_Data_Size, sizeof(Save_Data), save_Data_Size, fp2);
 
 			fclose(fp2);
 
@@ -114,11 +119,14 @@ void Map::Save(const int& data_Num)
 
 		for (int i = 0; i < save_Data_Size; ++i)
 		{
+			Save_Data a = save_Data_Ori[i];
 			data_array[i] = save_Data_Ori[i];
 		}
 		if (fopen_s(&fp2, fileNama.c_str(), "w") == 0)
 		{
-			fwrite(data_array, sizeof(Save_Data), save_Data_Size, fp2);
+			
+			int a = 0;
+			a = fwrite(data_array, sizeof(Save_Data), save_Data_Size, fp2);
 			fclose(fp2);
 		}
 		else
@@ -207,8 +215,14 @@ void Map::StageSet(const int& stage, Load* load)
 				{
 					if (save_Data_Ori[i].stage == stage && save_Data_Ori[i].map_num_X == x && save_Data_Ori[i].map_num_Y == y)
 					{
-						map[y][x] = save_Data_Ori[i].map_num;
-						break;
+						if (save_Data_Ori[i].map_num >= 205 && save_Data_Ori[i].map_num <= 209)
+						{
+							map[y][x] = 0;
+						}
+						else
+						{
+							map[y][x] = save_Data_Ori[i].map_num;
+						}
 					}
 				}
 			}
@@ -659,8 +673,6 @@ void Map::Update()
 				if (fleMap[y][x] != map[y][x])
 				{
 					if (map[y][x] >= 40 && map[y][x] <= 49)continue;
-					Save_Data Init_SaveData = { stage_S,x,y,map[y][x] };
-					save_Data_Ori.push_back(Init_SaveData);
 					if (fleMap[y][x] >= 200 && fleMap[y][x] <= 204)
 					{
 						int around_map_num_Y[3] = { y - 1,y,y + 1 };
@@ -681,6 +693,24 @@ void Map::Update()
 							}
 						}
 
+					}
+					else
+					{
+						bool map_save = false;
+						for (int i = 0; i < (int)save_Data_Ori.size(); ++i)
+						{
+							if (save_Data_Ori[i].stage == stage_S && save_Data_Ori[i].map_num_X == x && save_Data_Ori[i].map_num_Y == y)
+							{
+								map_save = true;
+								save_Data_Ori[i].map_num = map[y][x];
+								break;
+							}
+						}
+						if (!map_save)
+						{
+							Save_Data Init_SaveData = { stage_S,x,y,map[y][x] };
+							save_Data_Ori.push_back(Init_SaveData);
+						}
 					}
 				}
 			}

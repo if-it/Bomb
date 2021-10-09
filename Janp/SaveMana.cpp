@@ -21,7 +21,6 @@ void SaveMana::Init(std::vector<std::vector<int>>& map)
 			{
 				InitSave.Init(Vector2((float)(SIZE * x), (float)(SIZE * y)));
 				save.push_back(InitSave);
-				map[y][x] = 0;
 			}
 		}
 	}

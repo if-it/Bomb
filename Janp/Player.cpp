@@ -105,7 +105,7 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
 	player_mapset = 35;
 	Init(map, sc);
-	max_Hp = 3;
+	max_Hp = 2;
 	max_Bomb_Num = 0;
 	save_Data.ability1_flg = false;
 	save_Data.damage = 2;
