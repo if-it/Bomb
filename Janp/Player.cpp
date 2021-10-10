@@ -786,7 +786,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	}
 	else
 	{
-		sc2.x = ((int)(scX) * width + game_object.GetPos().x - (int)(scX) * width) / 2;
+		sc2.x = game_object.GetPos().x - width;
 	}
 
 	if (scY < 1)
@@ -799,7 +799,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	}
 	else
 	{
-		sc2.y = (((int)scY) * height + game_object.GetPos().y - ((int)scY) * height) / 2;
+		sc2.y = game_object.GetPos().y - height;
 	}
 
 	/*if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
