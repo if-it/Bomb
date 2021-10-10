@@ -19,7 +19,7 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 	fileNama = "Load/Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Item/Item_Data_F.dat";
-	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "rb") == 0)
 	{
 		fread_s(&save_Data_Size, sizeof(save_Data_Size), sizeof(save_Data_Size), 1, fp);
 		fclose(fp);
@@ -40,7 +40,7 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 		Save_Data* data_array;
 
 		data_array = new Save_Data[save_Data_Size];
-		if (fopen_s(&fp2, fileNama.c_str(), "r") == 0)
+		if (fopen_s(&fp2, fileNama.c_str(), "rb") == 0)
 		{
 			fread_s(data_array, sizeof(Save_Data) * save_Data_Size, sizeof(Save_Data), save_Data_Size, fp2);
 			fclose(fp2);
@@ -78,7 +78,7 @@ void ItemMana::Save(const int& data_Num)
 	
 
 	FILE* fp;
-	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "wb") == 0)
 	{
 		fwrite(&save_Data_Size, sizeof(save_Data_Size), 1, fp);
 		fclose(fp);
@@ -105,7 +105,7 @@ void ItemMana::Save(const int& data_Num)
 		{
 			data_array[i] = save_Data_Ori[i];
 		}
-		if (fopen_s(&fp2, fileNama.c_str(), "w") == 0)
+		if (fopen_s(&fp2, fileNama.c_str(), "wb") == 0)
 		{
 			fwrite(data_array, sizeof(Save_Data), save_Data_Size, fp2);
 			fclose(fp2);

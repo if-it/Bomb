@@ -309,9 +309,12 @@ void Game::Update()
 					cursor_lerp = Vector2(text_Exit_Pos.x + 15, text_Exit_Pos.y - 10);
 					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
 					if (Enter())game_end_set = 1;
-					//if (key->KeyTrigger(KEY_INPUT_A))Delete_Data();
+				
 				}
-
+				if (key->keyFlame(KEY_INPUT_I) > 0&& key->keyFlame(KEY_INPUT_N) > 0&& key->keyFlame(KEY_INPUT_0) > 0)
+				{
+					Delete_Data();
+				}
 			}
 			else if (title_Flg == 5)
 			{
@@ -917,7 +920,7 @@ void Game::Data_Load()
 	fileNama += to_string(data_Num);
 	fileNama += "/Meta/Meta_Data.dat";
 
-	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "rb") == 0)
 	{
 		fread_s(&meta_Data, sizeof(meta_Data), sizeof(meta_Data), 1, fp);
 		fclose(fp);
@@ -975,7 +978,7 @@ void Game::Delete_Data()
 void Game::Option_Data_Save()
 {
 	FILE* fp;
-	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "w") == 0)
+	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "wb") == 0)
 	{
 		fwrite(&option_Data, sizeof(option_Data), 1, fp);
 		fclose(fp);
@@ -996,9 +999,9 @@ void Game::Save()
 	fileNama = "Load/Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Meta/Meta_Data.dat";
-	
+
 	FILE* fp;
-	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "wb") == 0)
 	{
 		meta_Data.save_Count++;
 		fwrite(&meta_Data, sizeof(meta_Data), 1, fp);

@@ -23,7 +23,7 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 	fileNama = "Load/Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Map/Map_Data_F.dat";
-	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "rb") == 0)
 	{
 		fread_s(&save_Data_Size, sizeof(save_Data_Size), sizeof(save_Data_Size), 1, fp);
 		fclose(fp);
@@ -42,7 +42,7 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 		Save_Data* data_array;
 
 		data_array = new Save_Data[save_Data_Size];
-		if (fopen_s(&fp2, fileNama.c_str(), "r") == 0)
+		if (fopen_s(&fp2, fileNama.c_str(), "rb") == 0)
 		{
 			int a = 0;
 			int b = sizeof(Save_Data) * save_Data_Size;
@@ -52,7 +52,7 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 
 			fclose(fp2);
 
-			for (int i = 0; i < save_Data_Size; ++i)
+			for (int i = 0; i < a; ++i)
 			{
 				save_Data_Ori.push_back(data_array[i]);
 			}
@@ -93,7 +93,7 @@ void Map::Save(const int& data_Num)
 	fileNama += to_string(data_Num);
 	fileNama += "/Map/Map_Data_F.dat";
 	FILE* fp;
-	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "wb") == 0)
 	{
 		fwrite(&save_Data_Size, sizeof(save_Data_Size), 1, fp);
 		fclose(fp);
@@ -122,7 +122,7 @@ void Map::Save(const int& data_Num)
 			Save_Data a = save_Data_Ori[i];
 			data_array[i] = save_Data_Ori[i];
 		}
-		if (fopen_s(&fp2, fileNama.c_str(), "w") == 0)
+		if (fopen_s(&fp2, fileNama.c_str(), "wb") == 0)
 		{
 			
 			int a = 0;

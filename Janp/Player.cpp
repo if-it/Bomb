@@ -49,7 +49,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& data_N
 	fileNama += to_string(data_Num);
 	fileNama += "/Player/Player_Data.dat";
 
-	if (fopen_s(&fp, fileNama.c_str(), "r") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "rb") == 0)
 	{
 		fread_s(&save_Data, sizeof(save_Data), sizeof(save_Data), 1, fp);
 
@@ -85,9 +85,9 @@ void Player::Save(const int& data_Num)
 	fileNama = "Load/Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Player/Player_Data.dat";
-	
+
 	FILE* fp;
-	if (fopen_s(&fp, fileNama.c_str(), "w") == 0)
+	if (fopen_s(&fp, fileNama.c_str(), "wb") == 0)
 	{
 		fwrite(&save_Data, sizeof(save_Data), 1, fp);
 		fclose(fp);
@@ -767,9 +767,42 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		air_Sc = sc2;
 	}
 
+	float width = WIDTH / 2;
+	float height = HEIGHT / 2;
 
+	float scX = game_object.GetPos().x / width;
+	float scY = game_object.GetPos().y / height;
 
-	if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
+	float mapMaxX = (SIZE * (int)collMap[0].size()) / width;
+	float mapMaxY = (SIZE * (int)collMap.size()) / height;
+
+	if (scX < 1)
+	{
+		sc2.x = 0;
+	}
+	else if (mapMaxX - 1 < scX)
+	{
+		sc2.x = (SIZE * (int)collMap[0].size()) - WIDTH;
+	}
+	else
+	{
+		sc2.x = ((int)(scX) * width + game_object.GetPos().x - (int)(scX) * width) / 2;
+	}
+
+	if (scY < 1)
+	{
+		sc2.y = 0;
+	}
+	else if (mapMaxY - 1 < scY)
+	{
+		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
+	}
+	else
+	{
+		sc2.y = (((int)scY) * height + game_object.GetPos().y - ((int)scY) * height) / 2;
+	}
+
+	/*if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
 	{
 		sc2.x += vec.x;
 	}
@@ -795,7 +828,7 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	if (game_object.game.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2)
 	{
 		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
-	}
+	}*/
 
 	for (int i = 0; i < 5; ++i)
 	{
