@@ -309,9 +309,9 @@ void Game::Update()
 					cursor_lerp = Vector2(text_Exit_Pos.x + 15, text_Exit_Pos.y - 10);
 					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
 					if (Enter())game_end_set = 1;
-				
+
 				}
-				if (key->keyFlame(KEY_INPUT_I) > 0&& key->keyFlame(KEY_INPUT_N) > 0&& key->keyFlame(KEY_INPUT_0) > 0)
+				if (key->keyFlame(KEY_INPUT_I) > 0 && key->keyFlame(KEY_INPUT_N) > 0 && key->keyFlame(KEY_INPUT_0) > 0)
 				{
 					Delete_Data();
 				}
@@ -381,7 +381,7 @@ void Game::Update()
 						title_Cursor.x = (float)option_Data.con_shake;
 					}
 				}
-				if (con->TrlggerBotton(con->B))
+				if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
 				{
 					title_Flg = 10;
 				}
@@ -670,7 +670,7 @@ void Game::Update()
 					title_Flg = 1;
 				}
 			}
-			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK))
+			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
 			{
 				play_option_Flg = 10;
 			}
@@ -819,6 +819,28 @@ void Game::Update()
 			}
 		}
 		break;
+	case MENU:
+		int num;
+		num = 0;
+		if (player->Get_Ability1_Flg())
+		{
+			num = 1;
+		}
+		if (player->Get_Ability2_Flg())
+		{
+			num = 2;
+		}
+		if (player->Get_Ability3_Flg())
+		{
+			num = 3;
+		}
+		Cursor(1, num);
+		ui->Menu(title_Cursor);
+		if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK))
+		{
+			scene = PLAY;
+		}
+		break;
 	default:
 		break;
 	}
@@ -856,7 +878,7 @@ void Game::Update()
 	{
 		time = true;
 	}
-	if (game_end_set == 0 && (key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->BACK)))
+	if (game_end_set == 0 && (key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START)))
 	{
 		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		if (scene == TITLE)
@@ -1150,6 +1172,10 @@ void Game::Play_Scene()
 	{
 		Save();
 	}
+	if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK))
+	{
+		scene = MENU;
+	}
 }
 
 void Game::Play_Scene_Update()
@@ -1402,6 +1428,13 @@ void Game::Draw()
 	case ENDING:
 		DrawGraph(0, 0, haikei, true);
 		ui->ExitDraw();
+		break;
+	case MENU:
+		PlayDraw(sc, shake);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+		Box(Vector2(), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), WIDTH, HEIGHT);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		ui->MenuDraw();
 		break;
 	default:
 		break;

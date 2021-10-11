@@ -231,7 +231,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	bomb_Spawn = false;
 	ability1_on = false;
 	get_guide = -1;
-
+	bomb_Vec = Vector2();
 	Vector2 stickL = con->StickL();
 	if (control_flg)
 	{

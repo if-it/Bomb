@@ -101,6 +101,7 @@ protected:
 		PLAYINIT2,
 		ENDING,
 		OPTION,
+		MENU,
 	};
 	int scene;
 	int stage;

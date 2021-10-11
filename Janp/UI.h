@@ -13,8 +13,10 @@ public:
 		const bool& get_controller_flg, const bool& space_on_flg, int& tutorial_Flg,
 		const bool&get_move_guide_on,const bool&get_save, int& game_end_set);
 	void Exit(int& game_end_set, bool ending_on);
+	void Menu(Vector2 cou);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	void ExitDraw();
+	void MenuDraw();
 
 private:
 	int heartTex[4];
@@ -26,7 +28,7 @@ private:
 	int button_X;
 	int button_A;
 	int con_LStick;
-	int tutorial[3];
+	int tutorial[4];
 	int get_Item_Tex[4];
 	int exitTex;
 	int endingTex;
@@ -72,6 +74,7 @@ private:
 	Vector2 tutorial_Size;
 	Vector2 get_item_Size;
 	Vector2 exit_Size;
+	Vector2 menuPos[4];
 
 	Count get_Item_Count;
 	Count blinking_Count;

@@ -26,12 +26,12 @@ public:
 	void Init(std::vector<std::vector<int>>& map, Vector2& sc);
 	void Loading(Load* load);
 	void Input(Key* key, Controller* con, bool& time);
-	void Update(bool& shakeflg, BombMana* bomb,SideBomb*sideBomb);
+	void Update(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void Save(const int& data_Num);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
-	void Coll(bool &hetstop);
+	void Coll(bool& hetstop);
 	void TogeInit();
 
 	int player_mapset;
@@ -54,13 +54,16 @@ public:
 
 	void Set_Contorl_Flg(const bool& flg) { control_flg = flg; }
 
+	bool& Get_Ability1_Flg() { return save_Data.ability1_flg; }
+	bool& Get_Ability2_Flg() { return save_Data.ability2_flg; }
+	bool& Get_Ability3_Flg() { return save_Data.ability3_flg; }
 
 private:
 	void Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
 	void Bomb_Spawn(BombMana* bomb);
-	void Blow(const float& blowX, const float& blowY, const bool& lr,bool& hetstop, int subHp);
+	void Blow(const float& blowX, const float& blowY, const bool& lr, bool& hetstop, int subHp);
 	void Spine(bool& hetstop);
-	void SubHp(int subHp,bool& hetstop);
+	void SubHp(int subHp, bool& hetstop);
 	void Space_On();
 
 	int player_Tex[MAXTEX_X * MAXTEX_Y];
@@ -151,7 +154,7 @@ private:
 
 private:
 	//MapŠÖ˜A
-	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage,bool& hetstop);
+	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage);
 	void Animation_Update();
 	Vector2 sc2;
