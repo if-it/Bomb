@@ -36,6 +36,7 @@ Game::~Game()
 	delete enemy4Mana;
 	delete rockEffeMana;
 	delete rockAttackMana;
+	delete hpDropItemMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -114,6 +115,7 @@ void Game::Init()
 	sideExMana->Init();
 	rockEffeMana->Init();
 	rockAttackMana->Init();
+	hpDropItemMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -157,6 +159,7 @@ bool Game::Loading()
 	sideExMana->Loading(load);
 	rockEffeMana->Loading(load);
 	rockAttackMana->Loading(load);
+	hpDropItemMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -822,22 +825,27 @@ void Game::Update()
 	case MENU:
 		int num;
 		num = 0;
-		if (player->Get_Ability1_Flg())
+		if (player->Get_Max_Bomb_Num() > 0)
 		{
 			num = 1;
 		}
-		if (player->Get_Ability2_Flg())
+		if (player->Get_Ability1_Flg())
 		{
 			num = 2;
 		}
-		if (player->Get_Ability3_Flg())
+		if (player->Get_Ability2_Flg())
 		{
 			num = 3;
 		}
-		Cursor(1, num);
-		ui->Menu(title_Cursor);
-		if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK))
+		if (player->Get_Ability3_Flg())
 		{
+			num = 4;
+		}
+		Cursor(0, num);
+		ui->Menu(title_Cursor);
+		if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK)||con->TrlggerBotton(con->B))
+		{
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 			scene = PLAY;
 		}
 		break;
@@ -903,14 +911,14 @@ void Game::Update()
 	if (game_end_set == 3)
 	{
 		int stickLX = con->StickLTriggerX();
-		if (key->KeyTrigger(KEY_INPUT_RIGHT) || stickLX == 1)
+		if (key->KeyTrigger(KEY_INPUT_RIGHT) || stickLX == 1 || con->TrlggerBotton(con->RIGHT))
 		{
 			cursor_lerp = Vector2(743, 430);
 			cursor_lerp2 = Vector2(849, 430);
 			game_end_on = true;
 			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		}
-		if (key->KeyTrigger(KEY_INPUT_LEFT) || stickLX == -1)
+		if (key->KeyTrigger(KEY_INPUT_LEFT) || stickLX == -1 || con->TrlggerBotton(con->LEFT))
 		{
 			cursor_lerp = Vector2(543, 430);
 			cursor_lerp2 = Vector2(655, 430);
@@ -922,7 +930,7 @@ void Game::Update()
 			if (!game_end_on)game_end_flg = true;
 			else game_end_set = 4;
 		}
-		if (con->TrlggerBotton(con->B))
+		if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
 		{
 			game_end_set = 4;
 		}
@@ -970,7 +978,7 @@ void Game::Stage_Init()
 	backMap2->Init(stage, load);
 	saveMana->Init(map->map);
 	enemy1Mana->Init(map->map, load, stage);
-	enemy2->Init(map->map, load);
+	enemy2->Init(map->map, load, 255 * option_Data.SE_Volume * option_Data.Main_Volume);
 	enemy3Mana->Init(map->map, load, stage);
 	enemy4Mana->Init(map->map, load, stage);
 	fuse->Init(map->map);
@@ -1048,33 +1056,36 @@ void Game::Cursor(int numY, int numX)
 {
 	int stickLY = con->StickLTriggerY();
 	int stickLX = con->StickLTriggerX();
-	if (key->KeyTrigger(KEY_INPUT_UP) > 0 || stickLY == 1)
+	if (numY != 0)
 	{
-		--title_Cursor.y;
-		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
-	}
-	if (key->KeyTrigger(KEY_INPUT_DOWN) > 0 || stickLY == -1)
-	{
-		++title_Cursor.y;
-		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
-	}
+		if (key->KeyTrigger(KEY_INPUT_UP) > 0 || stickLY == 1 || con->TrlggerBotton(con->UP))
+		{
+			--title_Cursor.y;
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
+		}
+		if (key->KeyTrigger(KEY_INPUT_DOWN) > 0 || stickLY == -1 || con->TrlggerBotton(con->DOWN))
+		{
+			++title_Cursor.y;
+			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
+		}
 
-	if (title_Cursor.y < 0)
-	{
-		title_Cursor.y = numY;
-	}
-	if (title_Cursor.y > numY)
-	{
-		title_Cursor.y = 0;
+		if (title_Cursor.y < 0)
+		{
+			title_Cursor.y = numY;
+		}
+		if (title_Cursor.y > numY)
+		{
+			title_Cursor.y = 0;
+		}
 	}
 	if (numX != 0)
 	{
-		if (key->KeyTrigger(KEY_INPUT_RIGHT) > 0 || stickLX == 1)
+		if (key->KeyTrigger(KEY_INPUT_RIGHT) > 0 || stickLX == 1 || con->TrlggerBotton(con->RIGHT))
 		{
 			++title_Cursor.x;
 			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		}
-		if (key->KeyTrigger(KEY_INPUT_LEFT) > 0 || stickLX == -1)
+		if (key->KeyTrigger(KEY_INPUT_LEFT) > 0 || stickLX == -1 || con->TrlggerBotton(con->LEFT))
 		{
 			--title_Cursor.x;
 			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
@@ -1091,15 +1102,18 @@ void Game::Cursor(int numY, int numX)
 	}
 }
 
-void Game::Bgm_Volume()
+void Game::Bgm_Volume()//BGM音量
 {
 	ChangeVolumeSoundMem(255 * option_Data.BGM_Volume * option_Data.Main_Volume, bgm1);
 }
 
-void Game::Se_Volume()
+void Game::Se_Volume()//SE音量
 {
 	ChangeVolumeSoundMem(255 * option_Data.SE_Volume * option_Data.Main_Volume, selectSE);
 	ChangeVolumeSoundMem(255 * option_Data.SE_Volume * option_Data.Main_Volume, ketteiSE);
+	player->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
+	bombMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
+	exMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 }
 
 void Game::Play_Scene()
@@ -1174,6 +1188,7 @@ void Game::Play_Scene()
 	}
 	if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK))
 	{
+		PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		scene = MENU;
 	}
 }
@@ -1185,9 +1200,9 @@ void Game::Play_Scene_Update()
 
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(shake_Counter.flg, bombMana, sideBomb);
-	enemy1Mana->Update(rockEffeMana);
-	enemy3Mana->Update(rockEffeMana);
-	enemy4Mana->Update(rockEffeMana);
+	enemy1Mana->Update(rockEffeMana, hpDropItemMana);
+	enemy3Mana->Update(rockEffeMana, hpDropItemMana);
+	enemy4Mana->Update(rockEffeMana, hpDropItemMana);
 	bombMana->Update(shake_Counter.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll, shake_Counter.flg, sc, rockAttackMana, exMana);
 	rockAttackMana->Update();
@@ -1203,6 +1218,7 @@ void Game::Play_Scene_Update()
 	exMana->Update();
 	dust->Update();
 	rockEffeMana->Update();
+	hpDropItemMana->Update();
 
 }
 
@@ -1300,6 +1316,13 @@ void Game::Obj_Coll_Update()
 		coll_List.push_back(&mapSwitch->mapSwitch[i]);
 	}
 
+	//HpDropItem
+
+	for (int i = 0; i < (int)hpDropItemMana->hpDropItem.size(); ++i)
+	{
+		coll_List.push_back(&hpDropItemMana->hpDropItem[i].game_object);
+	}
+
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
@@ -1337,6 +1360,7 @@ void Game::Obj_Coll_Update()
 	mapBombMana->Coll(shake_Counter.flg, con, player->Get_Switch_On());
 	mapSwitch->Coll(player->Get_Switch_On());
 	rockAttackMana->Coll();
+	hpDropItemMana->Coll();
 
 	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
 
@@ -1491,6 +1515,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	bombMana->Draw(sc2, shake2);
 	sideBomb->Draw(sc2, shake2);
 	rockAttackMana->Draw(sc2, shake2);
+	hpDropItemMana->Draw(sc2, shake2);
 
 	//手前Map関連
 	map->FrontDraw(sc2, shake2);
@@ -1503,5 +1528,3 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	//UI関連
 	ui->Draw(sc2, shake2);
 }
-
-

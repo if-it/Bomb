@@ -28,7 +28,7 @@ private:
 	int button_X;
 	int button_A;
 	int con_LStick;
-	int tutorial[4];
+	int tutorial[5];
 	int get_Item_Tex[4];
 	int exitTex;
 	int endingTex;
@@ -74,7 +74,7 @@ private:
 	Vector2 tutorial_Size;
 	Vector2 get_item_Size;
 	Vector2 exit_Size;
-	Vector2 menuPos[4];
+	Vector2 menuPos[5];
 
 	Count get_Item_Count;
 	Count blinking_Count;

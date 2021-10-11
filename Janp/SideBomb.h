@@ -13,6 +13,7 @@ public:
     void Update(Controller* con);
     void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
     void Spawn(const Vector2 set_pos);
+    void Se_Volume(int volume);
     void Draw(const Vector2& sc, const Vector2& shake);
 
     bool& Get_Explosion_On() { return explosion_on; }

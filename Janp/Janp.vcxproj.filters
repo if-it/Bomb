@@ -145,6 +145,9 @@
     <Filter Include="GameObjct\RockAttack">
       <UniqueIdentifier>{f013a37a-f667-40d0-8b4a-ef51c17adf89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjct\HpDropItem">
+      <UniqueIdentifier>{9c11aeba-2881-4d95-b9e7-4e0de6b81b71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -285,6 +288,12 @@
     <ClCompile Include="RockAttackMana.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="HpDropItem.cpp">
+      <Filter>GameObjct\HpDropItem</Filter>
+    </ClCompile>
+    <ClCompile Include="HpDropItemMana.cpp">
+      <Filter>GameObjct\HpDropItem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -421,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="RockAttackMana.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="HpDropItem.h">
+      <Filter>GameObjct\HpDropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="HpDropItemMana.h">
+      <Filter>GameObjct\HpDropItem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

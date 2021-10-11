@@ -105,12 +105,13 @@ void Enemy::Damage(int damage)
 	hp -= damage;
 }
 
-bool Enemy::Die(RockEffectMana* rockEffe, const int num)
+bool Enemy::Die(RockEffectMana* rockEffe, const int num, HpDropItemMana* hpItemMana)
 {
 	if (DieChack() && game_object.game.dis)
 	{
 		game_object.game.dis = false;
 		rockEffe->Spawn(game_object.GetPos(),num);
+		hpItemMana->Spawn(game_object.GetPos());
 		return true;
 	}
 	return false;

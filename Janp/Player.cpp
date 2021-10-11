@@ -217,9 +217,10 @@ void Player::Loading(Load* load)
 	load->LoadAnimeTex("Load/Texture/Player/Player_Black.png", MAXTEX_X * MAXTEX_Y, MAXTEX_X, MAXTEX_Y,
 		64, 64, player_Black_Tex);
 	load->LoadSound("Load/Sound/SE/Hit.wav", hitSE);
-	ChangeVolumeSoundMem(180, hitSE);
 	load->LoadSound("Load/Sound/SE/Dash.wav", dashSE);
 	load->LoadSound("Load/Sound/SE/walk.wav", walkSE);
+	load->LoadSound("Load/Sound/SE/HpGet.wav", HpGetSE);
+	load->LoadSound("Load/Sound/SE/kettei.wav", ketteiSE);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -231,23 +232,22 @@ void Player::Input(Key* key, Controller* con, bool& time)
 	bomb_Spawn = false;
 	ability1_on = false;
 	get_guide = -1;
-	bomb_Vec = Vector2();
 	Vector2 stickL = con->StickL();
 	if (control_flg)
 	{
-		if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000)
+		if (key->keyFlame(KEY_INPUT_UP) > 0 || stickL.y > 10000 || con->FlameBotton(con->UP))
 		{
 			up = true;
 
 			bomb_Vec = Vector2(0.0f, -1.0f);
 
 		}
-		if (key->keyFlame(KEY_INPUT_DOWN) > 0 || stickL.y < -10000)
+		if (key->keyFlame(KEY_INPUT_DOWN) > 0 || stickL.y < -10000 || con->FlameBotton(con->DOWN))
 		{
 			down = true;
 			bomb_Vec = Vector2(0.0f, 1.0f);
 		}
-		if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000)
+		if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000 || con->FlameBotton(con->RIGHT))
 		{
 			right = true;
 			game_object.game.lr = false;
@@ -255,7 +255,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 
 			bomb_Vec = Vector2(1.0f, -0.15f);
 		}
-		if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000)
+		if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000 || con->FlameBotton(con->LEFT))
 		{
 			left = true;
 			game_object.game.lr = true;
@@ -270,6 +270,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 			if (save_Coll)
 			{
 				save_On = true;
+				PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 			}
 			if (get_Item == 0 && (item_flg > 0))
 			{
@@ -531,6 +532,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 
 	if (get_Item == 1)
 	{
+		PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 		get_Item = 2;
 		if (item_flg == 1)
 		{
@@ -1263,65 +1265,74 @@ void Player::Coll(bool& hetstop)
 			bomb_Janp = true;
 			rota_Vec = 10.0f;
 		}
-		if (nameTag == "RSideEx")
+		else if (nameTag == "RSideEx")
 		{
 			side_Ex_Coll = 1;
 			rota_Vec = 10.0f;
 		}
-		if (nameTag == "LSideEx")
+		else if (nameTag == "LSideEx")
 		{
 			side_Ex_Coll = 2;
 			rota_Vec = 10.0f;
 		}
-		if (nameTag == "Enemy1" || nameTag == "Enemy3")
+		else if (nameTag == "Enemy1" || nameTag == "Enemy3")
 		{
 			blowX = 9.0f;
 			blowY = 3.7f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
 		}
-		if (nameTag == "Enemy4")
+		else if (nameTag == "Enemy4")
 		{
 			blowX = 11.0f;
 			blowY = 4.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
 		}
-		if (nameTag == "Enemy2" || nameTag == "RockAttack")
+		else if (nameTag == "Enemy2" || nameTag == "RockAttack")
 		{
 			blowX = 15.0f;
 			blowY = 5.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
 		}
-		if (nameTag == "Save")
+		else if (nameTag == "Save")
 		{
 			save_Coll = true;
 		}
-		if (nameTag == "Item1")
+		else if (nameTag == "Item1")
 		{
 			item_flg = 1;
 		}
-		if (nameTag == "Item2")
+		else if (nameTag == "Item2")
 		{
 			item_flg = 2;
 		}
-		if (nameTag == "Item3")
+		else if (nameTag == "Item3")
 		{
 			item_flg = 3;
 		}
-		if (nameTag == "Item4")
+		else if (nameTag == "Item4")
 		{
 			item_flg = 4;
 		}
-		if (nameTag == "Ability1")
+		else if (nameTag == "Ability1")
 		{
 			item_flg = 5;
 		}
-		if (nameTag == "Ability2")
+		else if (nameTag == "Ability2")
 		{
 			item_flg = 6;
 		}
-		if (nameTag == "Ability3")
+		else if (nameTag == "Ability3")
 		{
 			item_flg = 7;
+		}
+		else if (nameTag == "HpDropItem")
+		{
+			++hp;
+			PlaySoundMem(HpGetSE, DX_PLAYTYPE_BACK, true);
+			if (hp > max_Hp)
+			{
+				hp = max_Hp;
+			}
 		}
 	}
 
@@ -1339,6 +1350,15 @@ void Player::TogeInit()
 		rota_Vec = 0;
 		invincible = Count();
 	}
+}
+
+void Player::Se_Volume(int volume)
+{
+	ChangeVolumeSoundMem(volume, hitSE);
+	ChangeVolumeSoundMem(volume, dashSE);
+	ChangeVolumeSoundMem(volume, walkSE);
+	ChangeVolumeSoundMem(volume, HpGetSE);
+	ChangeVolumeSoundMem(volume, ketteiSE);
 }
 
 

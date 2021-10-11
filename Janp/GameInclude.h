@@ -62,6 +62,7 @@ protected:
 	Enemy4Mana* enemy4Mana = new Enemy4Mana();
 	RockEffectMana* rockEffeMana = new RockEffectMana();
 	RockAttackMana* rockAttackMana = new RockAttackMana();
+	HpDropItemMana* hpDropItemMana = new HpDropItemMana();
 	
 
 	bool controllerOnly;

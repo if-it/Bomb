@@ -12,7 +12,7 @@ public:
 	Enemy2();
 	~Enemy2();
 
-	void Init(std::vector<std::vector<int>>& collMap, Load* load);
+	void Init(std::vector<std::vector<int>>& collMap, Load* load,int vol);
 	void Update(const Vector2& pos, Collision* coll, bool& shake_flg, const Vector2& sc, RockAttackMana* rockAttackMana, ExplosionMana* ex);
 	void PlayerCahck(const Vector2& pos, Collision* coll);
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);

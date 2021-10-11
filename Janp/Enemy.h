@@ -3,6 +3,7 @@
 #include"Collision.h"
 #include"Explosion.h"
 #include"RockEffectMana.h"
+#include"HpDropItemMana.h"
 #define SIDE_EX_DAMAGE 4
 
 class Enemy :
@@ -13,7 +14,7 @@ public:
 	~Enemy();
 	void AllInit(const int& stage, const int& mapX, const int& mapY);
 	void Damage(int damage);
-	bool Die(RockEffectMana*rockEffe, const int num);
+	bool Die(RockEffectMana*rockEffe, const int num,HpDropItemMana* hpItemMana);
 	struct Die_Data
 	{
 		int die_stage;

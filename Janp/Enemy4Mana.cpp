@@ -53,7 +53,7 @@ void Enemy4Mana::Save()
 	die_List.clear();
 }
 
-void Enemy4Mana::Update(RockEffectMana* rockEffe)
+void Enemy4Mana::Update(RockEffectMana* rockEffe, HpDropItemMana* hpItemMana)
 {
 	int now_Num = 0;
 	ani.AnimationOn(10, 2);
@@ -62,7 +62,7 @@ void Enemy4Mana::Update(RockEffectMana* rockEffe)
 		if (enemy4[i].game_object.game.dis)
 		{
 			enemy4[i].Update();
-			if (enemy4[i].Die(rockEffe, GetRand(2) + 5))
+			if (enemy4[i].Die(rockEffe, GetRand(2) + 5, hpItemMana))
 			{
 				die_List.push_back(enemy4[i].die_Data);
 			}

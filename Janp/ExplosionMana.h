@@ -17,6 +17,7 @@ public:
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
 	void ExSpawn(GameObject& go, const int& damage);
 	void Coll(Collision* coll, ALLVECTOR all, Vector2 size);
+	void Se_Volume(int volume);
 	void Draw(const Vector2& sc, const Vector2& shakeconst);
 
 	std::vector<Explosion>ex;

@@ -117,6 +117,11 @@ int BombMana::NowPlayerBombNum()
 	return nowNum;
 }
 
+void BombMana::Se_Volume(int volume)
+{
+	ChangeVolumeSoundMem(volume, bombSound);
+}
+
 void BombMana::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int i = 0; i < (int)bomb.size(); ++i)

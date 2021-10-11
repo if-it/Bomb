@@ -63,6 +63,11 @@ void ExplosionMana::Coll(Collision* coll, ALLVECTOR all, Vector2 size)
 	}
 }
 
+void ExplosionMana::Se_Volume(int volume)
+{
+	ChangeVolumeSoundMem(volume, exSound);
+}
+
 void ExplosionMana::Draw(const Vector2& sc, const Vector2& shakeconst)
 {
 	for (int i = 0; i < (int)ex.size(); ++i)

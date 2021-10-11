@@ -64,7 +64,7 @@ void Enemy3Mana::Save()
 }
 
 
-void Enemy3Mana::Update(RockEffectMana* rockEffe)
+void Enemy3Mana::Update(RockEffectMana* rockEffe, HpDropItemMana* hpItemMana)
 {
 	ani.AnimationOn(10, ENEMY3TEX);
 	int now_Num = 0;
@@ -74,7 +74,7 @@ void Enemy3Mana::Update(RockEffectMana* rockEffe)
 		{
 
 			enemy3[i].Update();
-			if (enemy3[i].Die(rockEffe, GetRand(2)+3))
+			if (enemy3[i].Die(rockEffe, GetRand(2) + 3, hpItemMana))
 			{
 				die_List.push_back(enemy3[i].die_Data);
 			}

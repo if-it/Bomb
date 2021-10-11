@@ -33,6 +33,7 @@ public:
 	bool Die();
 	void Coll(bool& hetstop);
 	void TogeInit();
+	void Se_Volume(int volume);
 
 	int player_mapset;
 
@@ -68,9 +69,12 @@ private:
 
 	int player_Tex[MAXTEX_X * MAXTEX_Y];
 	int player_Black_Tex[MAXTEX_X * MAXTEX_Y];
+
 	int hitSE;
 	int dashSE;
 	int walkSE;
+	int HpGetSE;
+	int ketteiSE;
 
 	std::vector<GameObject> shadow;
 

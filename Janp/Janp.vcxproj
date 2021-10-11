@@ -151,6 +151,8 @@
     <ClCompile Include="Fuse.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameInclude.cpp" />
+    <ClCompile Include="HpDropItem.cpp" />
+    <ClCompile Include="HpDropItemMana.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemMana.cpp" />
     <ClCompile Include="Key.cpp" />
@@ -199,6 +201,8 @@
     <ClInclude Include="Fuse.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameInclude.h" />
+    <ClInclude Include="HpDropItem.h" />
+    <ClInclude Include="HpDropItemMana.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemMana.h" />
     <ClInclude Include="Key.h" />

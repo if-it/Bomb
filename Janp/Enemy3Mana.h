@@ -13,7 +13,7 @@ public:
 	~Enemy3Mana();
 	void Init(std::vector<std::vector<int>>& collMap, Load* load, const int& stage);
 	void Save();
-	void Update(RockEffectMana* rockEffe);
+	void Update(RockEffectMana* rockEffe, HpDropItemMana* hpItemMana);
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);
 	void Coll(std::vector<Explosion>& ex);
 	void Draw(const Vector2& sc, const Vector2& shake);

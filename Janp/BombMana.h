@@ -21,6 +21,7 @@ public:
 	void MapCollUpdate(std::vector<std::vector<int>>& collMap);
 	int NowBombNum();
 	int NowPlayerBombNum();
+	void Se_Volume(int volume);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	std::vector<Bomb> bomb;
 

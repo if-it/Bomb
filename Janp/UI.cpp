@@ -45,7 +45,7 @@ void UI::Init()
 	move_guide = false;
 	save_flg = 0;
 	exit_Size = Vector2(0.0f, 0.01f);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		menuPos[i] = Vector2(WIDTH / 2 + 1024 * i, HEIGHT / 2);
 	}
@@ -71,6 +71,7 @@ void UI::Loading(Load* load)
 	load->LoadTex("Load/Texture/UI/Tutorial2.png", tutorial[1]);
 	load->LoadTex("Load/Texture/UI/Tutorial3.png", tutorial[2]);
 	load->LoadTex("Load/Texture/UI/Tutorial4.png", tutorial[3]);
+	load->LoadTex("Load/Texture/UI/Tutorial5.png", tutorial[4]);
 
 
 	load->LoadTex("Load/Texture/UI/GetBomb.png", get_Item_Tex[0]);
@@ -347,7 +348,7 @@ void UI::Exit(int& game_end_set, bool ending_on)
 
 void UI::Menu(Vector2 cou)
 {
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		menuPos[i] = Vector2::Lerp(menuPos[i], Vector2(WIDTH / 2 - 1024 * (cou.x - i), HEIGHT / 2), 0.1f);
 	}
@@ -430,8 +431,9 @@ void UI::MenuDraw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 228);
 	DrawRotaTex(menuPos[0], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[3], true);
-	DrawRotaTex(menuPos[1], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[0], true);
-	DrawRotaTex(menuPos[2], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[1], true);
-	DrawRotaTex(menuPos[3], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[2], true);
+	DrawRotaTex(menuPos[1], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[4], true);
+	DrawRotaTex(menuPos[2], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[0], true);
+	DrawRotaTex(menuPos[3], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[1], true);
+	DrawRotaTex(menuPos[4], Vector2(256, 318), Vector2(1.0f, 1.0f), 0.0f, tutorial[2], true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
