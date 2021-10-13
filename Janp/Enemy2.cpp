@@ -66,7 +66,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load, int vol)
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
 					load->LoadSound("Load/Sound/SE/daipan.wav", daipanSE);
 					ChangeVolumeSoundMem(vol, daipanSE);
-						hp = MAX_HP;
+					hp = MAX_HP;
 					//spawn = true;
 					game_object.game.allVec.pos = Vector2(SIZE * x, SIZE * y);
 					game_object.game.dis = true;

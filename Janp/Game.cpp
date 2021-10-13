@@ -532,7 +532,7 @@ void Game::Update()
 				if (GetJoypadNum() == 0)
 				{
 					++reset_con;
-					if (reset_con == 180)
+					if (reset_con == 60)
 					{
 						ReSetupJoypad();
 						reset_con = 0;
@@ -807,7 +807,7 @@ void Game::Update()
 			if (GetJoypadNum() == 0)
 			{
 				++reset_con;
-				if (reset_con == 180)
+				if (reset_con == 60)
 				{
 					ReSetupJoypad();
 					reset_con = 0;
