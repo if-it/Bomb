@@ -2,7 +2,8 @@
 #include "Draw.h"
 #include"Load.h"
 #define MAP1 7
-#define MAP2 22
+#define MAP2 14
+#define MAP3 22
 
 class BackMap2 :
     public Draw
@@ -18,6 +19,7 @@ private:
     std::vector<std::vector<int>> backMap;
     int* tex;
     int stage2_Back_Tex[5];
+    int texArray;
     Vector2 back_Pos[5];
     Vector2 back_Pos2[5];
     Vector2 back_Sc[5];
