@@ -8,6 +8,7 @@ int WINAPI WinMain(
 {
 	const char WINDOW_NAME[] = "Will of the sky";
 	SetOutApplicationLogValidFlag(FALSE);
+	SetWindowIconID(100);
 	//ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 	//ウィンドウサイズを手動では変更できず、
