@@ -209,7 +209,6 @@ void Game::Update()
 {
 	key->Input();
 	con->Input();
-	con->Set_Shake_On(option_Data.con_shake);
 
 
 
@@ -970,6 +969,7 @@ void Game::Data_Load()
 	itemMana->SaveData_Load(map->map, data_Num, stage);
 
 	Stage_Init();
+	con->Set_Shake_On(option_Data.con_shake);
 }
 
 void Game::Stage_Init()
