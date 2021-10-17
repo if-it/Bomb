@@ -534,6 +534,9 @@ void Game::Update()
 					if (reset_con == 60)
 					{
 						ReSetupJoypad();
+						con->Set_Shake_On(true);
+						con->Shake(1000, 200);
+						con->Set_Shake_On(option_Data.con_shake);
 						reset_con = 0;
 					}
 				}
@@ -810,6 +813,9 @@ void Game::Update()
 				{
 					ReSetupJoypad();
 					reset_con = 0;
+					con->Set_Shake_On(true);
+					con->Shake(1000, 200);
+					con->Set_Shake_On(option_Data.con_shake);
 				}
 			}
 			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
@@ -975,7 +981,7 @@ void Game::Data_Load()
 void Game::Stage_Init()
 {
 	backMap->Init(stage);
-	backMap2->Init(stage, load);
+	backMap2->Init(stage, load,sc);
 	saveMana->Init(map->map);
 	enemy1Mana->Init(map->map, load, stage);
 	enemy2->Init(map->map, load, 255 * option_Data.SE_Volume * option_Data.Main_Volume);

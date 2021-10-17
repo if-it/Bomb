@@ -135,6 +135,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 			if (map[y][x] == player_mapset)
 			{
 				game_object.game.allVec.pos = Vector2((float)(SIZE * x), (float)(SIZE * y));
+				air_Pos = game_object.GetPos();
 				sc2 = Vector2(((float)(-WIDTH / 2) + (SIZE * x + SIZE)), (float)((-HEIGHT / 2) + (SIZE * y + SIZE)));
 				if (game_object.GetPos().x < WIDTH / 2 - SIZE / 2)
 				{
@@ -185,7 +186,6 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	save_Coll = false;
 	save_On = false;
 
-	air_Pos = Vector2();
 	air_Sc = Vector2();
 	ability2_Vec = Vector2();
 	sideBomb_Vec = Vector2();
@@ -437,7 +437,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 		const float ABILITY2_SPEED = 1.5f;
 		game_object.game.rota = 0;
 		rota_Vec = 0;
-		animation.num = 0;
+		animation.num = 7;
 		if (ability2_lr)
 		{
 			//ç∂
