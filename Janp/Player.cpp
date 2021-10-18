@@ -45,7 +45,7 @@ void Player::SaveData_Load(std::vector<std::vector<int>>& map, const int& data_N
 
 	string fileNama;
 
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Player/Player_Data.dat";
 
@@ -82,7 +82,7 @@ void Player::Save(const int& data_Num)
 	save_Data = { max_Hp,max_Bomb_Num,save_Data.damage,game_object.GetPos(),
 		save_Data.ability1_flg,sc2,save_Data.die_Count,save_Data.ability2_flg,save_Data.ability3_flg,save_Data.ability4_flg,save_Data.switch_On };
 	string fileNama;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Player/Player_Data.dat";
 

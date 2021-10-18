@@ -16,7 +16,7 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 	FILE* fp;
 
 	string fileNama;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Item/Item_Data_F.dat";
 	if (fopen_s(&fp, fileNama.c_str(), "rb") == 0)
@@ -72,7 +72,7 @@ void ItemMana::Save(const int& data_Num)
 	save_Data_Size = save_Data_Ori.size();
 
 	std::string fileNama;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Item/Item_Data_F.dat";
 	
@@ -90,7 +90,7 @@ void ItemMana::Save(const int& data_Num)
 	}
 
 	FILE* fp2;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Item/Item_Data.dat";
 

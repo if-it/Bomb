@@ -951,7 +951,7 @@ void Game::Data_Load()
 	FILE* fp;
 
 	std::string fileNama;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Meta/Meta_Data.dat";
 
@@ -1014,7 +1014,7 @@ void Game::Delete_Data()
 void Game::Option_Data_Save()
 {
 	FILE* fp;
-	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "wb") == 0)
+	if (fopen_s(&fp, "Data/SaveData/Option/Option_Data.dat", "wb") == 0)
 	{
 		fwrite(&option_Data, sizeof(option_Data), 1, fp);
 		fclose(fp);
@@ -1032,7 +1032,7 @@ void Game::Save()
 	meta_Data.stage = stage;
 	Option_Data_Save();
 	std::string fileNama;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Meta/Meta_Data.dat";
 

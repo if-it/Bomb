@@ -20,7 +20,7 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 	FILE* fp;
 	std::string fileNama;
 
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Map/Map_Data_F.dat";
 	if (fopen_s(&fp, fileNama.c_str(), "rb") == 0)
@@ -34,7 +34,7 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 	}
 
 	FILE* fp2;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Map/Map_Data.dat";
 	if (save_Data_Size > 0)
@@ -90,7 +90,7 @@ void Map::Save(const int& data_Num)
 	std::string fileNama;
 
 	//セーブ
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Map/Map_Data_F.dat";
 	FILE* fp;
@@ -106,7 +106,7 @@ void Map::Save(const int& data_Num)
 	}
 
 
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Map/Map_Data.dat";
 	FILE* fp2;
@@ -152,7 +152,7 @@ void Map::StageSet(const int& stage, Load* load)
 
 	//マップチップデータ
 
-	fileNama = "Load/Data/Map/Map/BombMap - Stage";
+	fileNama = "Data/Map/Map/BombMap - Stage";
 	fileNama += to_string(stage);
 	fileNama += ".csv";
 

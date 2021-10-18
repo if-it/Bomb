@@ -21,7 +21,7 @@ void BackMap::Init(const int& stage)
 	ifstream ifs;
 	string fileNama;
 
-	fileNama = "Load/Data/Map/BackMap/Bomb_BackMap - Stage";
+	fileNama = "Data/Map/BackMap/Bomb_BackMap - Stage";
 	fileNama += to_string(stage);
 	fileNama += ".csv";
 
