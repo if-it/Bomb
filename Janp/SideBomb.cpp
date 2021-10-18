@@ -20,6 +20,7 @@ void SideBomb::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/Bomb/SideBomb.png", 6, 6, 1, SIZE, SIZE, tex);
 	load->LoadSound("Load/Sound/SE/shoot.wav", spawnSE);
+	load->LoadSound("Load/Sound/SE/Beem.wav", beemSE);
 }
 
 void SideBomb::Update(Controller* con)
@@ -32,6 +33,7 @@ void SideBomb::Update(Controller* con)
 	{
 		game_object.game.allVec.vec = Vector2();
 		explosion_on = true;
+		PlaySoundMem(beemSE, DX_PLAYTYPE_BACK, true);
 	}
 	if (live_Count.count < 120)game_object.game.allVec.vec.y += 0.2f;
 	if (explosion_on) ani.AnimationOn(1, 6);
@@ -48,6 +50,12 @@ void SideBomb::Spawn(const Vector2 set_pos)
 	game_object.game.dis = true;
 	game_object.SetPos(Vector2((float)((int)((set_pos.x + 16.0f) / SIZE) * SIZE), (float)((int)((set_pos.y + 16.0f) / SIZE) * SIZE)));
 	live_Count.flg = true;
+}
+
+void SideBomb::Se_Volume(int volume)
+{
+	ChangeVolumeSoundMem(volume, spawnSE);
+	ChangeVolumeSoundMem(volume, beemSE);
 }
 
 void SideBomb::Draw(const Vector2& sc, const Vector2& shake)

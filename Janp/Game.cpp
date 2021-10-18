@@ -67,7 +67,7 @@ void Game::FirstInit()
 	player->player_mapset = MAP_P_F;
 	Init();
 	time = false;
-	data_Num = 0;
+	data_Num = 1;
 
 	option_Data = { 0,0,false };
 	meta_Data = { 0,0 };
@@ -1004,7 +1004,7 @@ void Game::Delete_Data()
 {
 	Meta_Data_Init();
 
-	map->Save_Data_Init();
+	map->Save_Data_Init(stage,load);
 	player->Save_Data_Init(map->map, sc);
 	itemMana->Save_Data_Init();
 
@@ -1120,6 +1120,7 @@ void Game::Se_Volume()//SE‰¹—Ê
 	player->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 	bombMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 	exMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
+	sideBomb->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 }
 
 void Game::Play_Scene()
@@ -1175,7 +1176,7 @@ void Game::Play_Scene()
 		}
 		if (!time)
 		{
-			Shake(shake_Counter, 6, Vector2((float)(GetRand(14) - GetRand(14)), (float)(GetRand(9) - GetRand(9))));
+			Shake(shake_Counter, 10, Vector2((float)(GetRand(16) - GetRand(16)), (float)(GetRand(10) - GetRand(10))));
 		}
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),

@@ -11,7 +11,7 @@ public:
 	~Map();
 	void Save_Date_Load(const int& date_Num, const int& stage, Load* load);
 	void Init(const int& stage, Load* load);
-	void Save_Data_Init();
+	void Save_Data_Init(const int& stage, Load* load);
 	void Save(const int& data_Num);
 	void StageSet(const int& stage, Load* load);
 	void Loading(Load* load);

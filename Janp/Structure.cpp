@@ -13,19 +13,17 @@ Structure::~Structure()
 
 
 
-void Structure::SizeChange(Count & ani, Vector2&size, Vector2 change,int maxCount)
+void Structure::SizeChange(Count& count, Vector2& size,  Vector2& sizeAdd, int maxCount, Vector2 change)
 {
-	if (ani.flg)
+	if (count.flg)
 	{
-		ani.count++;
-		size.x += change.x;
-		size.y += change.y;
-	}
-	if (ani.count == maxCount)
-	{
-		ani.count = 0;
-		ani.flg = false;
-		size = Vector2(1.0f,1.0f);
+		sizeAdd += change;
+		size += sizeAdd;
+		if (count.Conuter(maxCount))
+		{
+			size = Vector2(1.0f, 1.0f);
+			sizeAdd = Vector2();
+		}
 	}
 }
 

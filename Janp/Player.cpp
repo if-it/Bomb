@@ -169,6 +169,8 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	ability2 = Count();
 	ability2_on = Count();
 	walk = Count();
+	size_Change_Count = Count();
+	size_Change_Count2 = Count();
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -189,6 +191,8 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	air_Sc = Vector2();
 	ability2_Vec = Vector2();
 	sideBomb_Vec = Vector2();
+	size_Add = Vector2();
+	size_Add2 = Vector2();
 	rota_Vec = 0;
 	item_flg = 0;
 	get_Item = 0;
@@ -221,6 +225,7 @@ void Player::Loading(Load* load)
 	load->LoadSound("Load/Sound/SE/walk.wav", walkSE);
 	load->LoadSound("Load/Sound/SE/HpGet.wav", HpGetSE);
 	load->LoadSound("Load/Sound/SE/kettei.wav", ketteiSE);
+	load->LoadSound("Load/Sound/SE/Kanenone.wav", kanenoneSE);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -417,6 +422,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 
 	if (ability2_Activate == 1)
 	{
+		size_Change_Count2.flg = true;
 		PlaySoundMem(dashSE, DX_PLAYTYPE_BACK, true);
 		ability2_on.flg = true;
 		shadow_on.flg = true;
@@ -485,6 +491,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	if (ability3_on == 1)
 	{
 		ability3_on = 2;
+		size_Change_Count.flg = true;
 		sideBomb->Spawn(game_object.GetPos());
 	}
 	if (!sideBomb->Get_live_Count_Flg())
@@ -519,7 +526,11 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	}
 
 	//‚Á”ò‚Ñ
-	if (blow.flg)game_object.game.allVec.vec = fVec;
+	if (blow.flg)
+	{
+		game_object.game.allVec.vec = fVec;
+		size_Change_Count.flg = true;
+	}
 	blow.Conuter(2);
 
 
@@ -576,9 +587,9 @@ void Player::Bomb_Spawn(BombMana* bomb)
 {
 	Vector2 bombPos = game_object.GetPos();
 	bombPos += SIZE / 2;
-
 	if (now_Bomb_Num > 0)
 	{
+		size_Change_Count.flg = true;
 		bomb->BombSpawn(bombPos, bomb_Vec, true, save_Data.damage);
 	}
 }
@@ -685,7 +696,8 @@ void Player::Animation_Update()
 		if (blinking)	blinking = false;
 		else blinking = true;
 	}
-
+	SizeChange(size_Change_Count, game_object.game.scale, size_Add, 10, Vector2(-0.01f, 0.005f));
+	SizeChange(size_Change_Count2, game_object.game.scale, size_Add2, 5, Vector2(0.0f, -0.05f));
 }
 
 //Map”»’è
@@ -757,12 +769,14 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	if (through)
 	{
 		collMap[byNum[4]][bxNum[4]] += 5;
+		PlaySoundMem(kanenoneSE, DX_PLAYTYPE_BACK, true);
 	}
 
 	if (air_Array[0] && air_Array[1] && air_Array[2])
 	{
 		air = true;
 	}
+
 	if (!air_Array[0] && !air_Array[1] && !air_Array[2])
 	{
 		air_Pos = game_object.GetPos();
@@ -1264,6 +1278,7 @@ void Player::Coll(bool& hetstop)
 			game_object.game.allVec.vec.y -= EXJUMP;
 			bomb_Janp = true;
 			rota_Vec = 10.0f;
+			size_Change_Count.flg = true;
 		}
 		else if (nameTag == "RSideEx")
 		{
@@ -1359,6 +1374,7 @@ void Player::Se_Volume(int volume)
 	ChangeVolumeSoundMem(volume, walkSE);
 	ChangeVolumeSoundMem(volume, HpGetSE);
 	ChangeVolumeSoundMem(volume, ketteiSE);
+	ChangeVolumeSoundMem(volume, kanenoneSE);
 }
 
 

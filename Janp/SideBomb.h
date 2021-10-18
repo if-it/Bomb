@@ -23,6 +23,7 @@ private:
     bool explosion_on;
     int tex[6];
     int spawnSE;
+    int beemSE;
     Animation ani;
 };
 

@@ -61,6 +61,7 @@ public:
 
 private:
 	void Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb);
+	void Animation_Update();
 	void Bomb_Spawn(BombMana* bomb);
 	void Blow(const float& blowX, const float& blowY, const bool& lr, bool& hetstop, int subHp);
 	void Spine(bool& hetstop);
@@ -75,6 +76,7 @@ private:
 	int walkSE;
 	int HpGetSE;
 	int ketteiSE;
+	int kanenoneSE;
 
 	std::vector<GameObject> shadow;
 
@@ -84,6 +86,8 @@ private:
 	Vector2 air_Sc;
 	Vector2 ability2_Vec;
 	Vector2 sideBomb_Vec;
+	Vector2 size_Add;
+	Vector2 size_Add2;
 
 	Animation animation;
 
@@ -95,6 +99,8 @@ private:
 	Count ability2_on;
 	Count shadow_on;
 	Count walk;
+	Count size_Change_Count;
+	Count size_Change_Count2;
 
 	bool bomb_Spawn;
 	bool move;
@@ -160,7 +166,7 @@ private:
 	//MapŠÖ˜A
 	void Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool& stageChange, int& stage, bool& hetstop);
 	void MapJub(const int& mapPoint, const int& pointNum, bool& stageChange, int& stage);
-	void Animation_Update();
+
 	Vector2 sc2;
 	Vector2 vec;
 	bool back_flg[5];

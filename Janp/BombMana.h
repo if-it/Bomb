@@ -28,7 +28,7 @@ public:
 	int* GetBombTex() { return bombTex; }
 	int GetBombSound() { return bombSound; }
 private:
-
+	
 	int bombTex[BOMBTEX];
 	int bombSound;
 

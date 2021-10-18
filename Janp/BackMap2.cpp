@@ -6,6 +6,7 @@ BackMap2::BackMap2()
 {
 	tex = new int[MAP1];
 	texArray = 0;
+	black = false;
 }
 
 BackMap2::~BackMap2()
@@ -15,7 +16,6 @@ BackMap2::~BackMap2()
 
 void BackMap2::Init(const int& stage, Load* load, const Vector2& sc)
 {
-	black = false;
 	for (int i = 0; i < MAP2BACK; ++i)
 	{
 		back_Pos[i] = Vector2(0, 0);
@@ -59,6 +59,7 @@ void BackMap2::Init(const int& stage, Load* load, const Vector2& sc)
 		}
 		else if (map_type >= 200 && map_type < 300)
 		{
+			black = false;
 			tex = new int[MAP2];
 			texArray = MAP2;
 			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", MAP2, MAP2, 1, SIZE + 1, SIZE, tex);
@@ -70,6 +71,7 @@ void BackMap2::Init(const int& stage, Load* load, const Vector2& sc)
 		}
 		else if (map_type >= 300 && map_type < 400)
 		{
+			black = false;
 			tex = new int[MAP3];
 			texArray = MAP3;
 			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap3.png", MAP3, MAP3, 1, SIZE + 1, SIZE, tex);

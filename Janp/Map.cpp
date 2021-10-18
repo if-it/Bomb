@@ -59,7 +59,7 @@ void Map::Save_Date_Load(const int& data_Num, const int& stage, Load* load)
 		}
 		else
 		{
-			Save_Data_Init();
+			Save_Data_Init(stage,load);
 		}
 		delete[] data_array;
 	}
@@ -75,10 +75,11 @@ void Map::Init(const int& stage, Load* load)
 	pal_Flg = 0;
 }
 
-void Map::Save_Data_Init()
+void Map::Save_Data_Init(const int& stage, Load* load)
 {
 	save_Data_Size = 0;
 	save_Data_Ori.clear();
+	Init(stage, load);
 }
 
 void Map::Save(const int& data_Num)

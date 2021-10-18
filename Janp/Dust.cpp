@@ -11,7 +11,7 @@ Dust::~Dust()
 void Dust::Init(std::vector<std::vector<int>>& map, const int& stage)
 {
 	dust.clear();
-	if (stage >= 300 && stage < 400)
+	if (stage >= 100 && stage < 200 || stage >= 300 && stage < 400)
 	{
 		mapX = map[0].size() * SIZE;
 		mapY = map.size() * SIZE;
@@ -22,6 +22,8 @@ void Dust::Init(std::vector<std::vector<int>>& map, const int& stage)
 			Init_Dust = GameObject();
 			Init_Dust.game.pal = GetRand(245) + 10;
 			Init_Dust.SetPos(Vector2(GetRand(mapX), GetRand(mapY)));
+			if (stage >= 100 && stage < 200)Init_Dust.color = COLOR(106, 174, 200);
+			else Init_Dust.color = COLOR(255, 255, 255);
 			dust.push_back(Init_Dust);
 		}
 	}
@@ -31,7 +33,7 @@ void Dust::TitleInit()
 {
 	dust.clear();
 	mapX = WIDTH;
-	mapY = HEIGHT+100;
+	mapY = HEIGHT + 100;
 	for (int i = 0; i < 60; ++i)
 	{
 		GameObject Init_Dust;
@@ -40,6 +42,7 @@ void Dust::TitleInit()
 		Init_Dust.game.pal = GetRand(245) + 10;
 		Init_Dust.SetPos(Vector2(GetRand(mapX), GetRand(mapY)));
 		float size = GetRand(1) + 1;
+		Init_Dust.color = COLOR(255, 255, 255);
 		Init_Dust.game.scale = Vector2(size, size);
 		dust.push_back(Init_Dust);
 	}
@@ -79,9 +82,10 @@ void Dust::Draw(const Vector2& sc, const Vector2& shake)
 {
 	for (int i = 0; i < dust.size(); ++i)
 	{
+		SetBright(dust[i].color);
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, dust[i].game.pal);
 		DrawRotaTex(dust[i], tex, true, Vector2(), sc);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
+	SetDrawBright(255, 255, 255);
 }

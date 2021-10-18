@@ -192,7 +192,7 @@ protected:
 		void SetPos(Vector2 pos) { game.allVec.pos = pos; }
 	};
 
-	void SizeChange(Count& count, Vector2& size, Vector2 change, int maxCount);
+	void SizeChange(Count& count, Vector2& size, Vector2& sizeAdd, int maxCount, Vector2 change);
 	void AnimeEnd(Count& ani, int maxCount, Vector2& size, Vector2 sizeNum);
 	void SetBright(COLOR color = COLOR(255, 255, 255));
 	unsigned int MyGetColor(COLOR color);
