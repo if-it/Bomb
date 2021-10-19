@@ -6,7 +6,7 @@ int WINAPI WinMain(
 	_In_ int nCmdShow
 )
 {
-	const char WINDOW_NAME[] = "Will of the sky";
+	const char WINDOW_NAME[] = "Will of the Sky";
 	SetOutApplicationLogValidFlag(FALSE);
 	SetWindowIconID(100);
 	//ウィンドウモードに設定
