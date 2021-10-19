@@ -30,7 +30,7 @@ void ItemMana::SaveData_Load(std::vector<std::vector<int>>& map, const int& data
 	}
 
 	FILE* fp2;
-	fileNama = "Load/Data/SaveData/Data";
+	fileNama = "Data/SaveData/Data";
 	fileNama += to_string(data_Num);
 	fileNama += "/Item/Item_Data.dat";
 
