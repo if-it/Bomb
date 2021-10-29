@@ -14,10 +14,10 @@ public:
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
 	void Coll(bool& shakeflg, Controller* con);
 	void Coll_End_Set(ExplosionMana* ex);
+	void Map_Coll(std::vector<std::vector<int>>& collMap);
 	void Draw(const Vector2& sc, const Vector2& shake, const int* bombTex);
 
-
-	//GameObject ex;
+	void MapJub(const int& mapPoint, const int& pointNum);
 	Animation bombAni;
 	int time;
 	bool playerSpawn;
@@ -26,7 +26,6 @@ public:
 	bool stopMove;
 	int damage;
 
-	//void exSpawn(const int& exSound, std::vector<Explosion>& ex);
 
 };
 

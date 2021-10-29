@@ -875,7 +875,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			vec.y = 0;
 			coll_flg[0] = true;
 		}
-		if (TOGE)
+		if (NEEDLE)
 		{
 			toge_flg[0] = true;
 		}
@@ -886,7 +886,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 	}
 	else if (pointNum == 1) //YŽ²
 	{
-		if (mapPoint == 0 || TOGE || mapPoint == 84)
+		if (mapPoint == 0 || NEEDLE || mapPoint == 84)
 		{
 			air_Array[air_Count] = true;
 			air_Count++;
@@ -903,7 +903,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			vec.y = 0;
 			coll_flg[1] = true;
 		}
-		if (TOGE)
+		if (NEEDLE)
 		{
 			toge_flg[1] = true;
 		}
@@ -940,7 +940,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			vec.x = 0;
 			coll_flg[2] = true;
 		}
-		if (TOGE)
+		if (NEEDLE)
 		{
 			toge_flg[2] = true;
 		}
@@ -968,7 +968,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			vec.x = 0;
 			coll_flg[3] = true;
 		}
-		if (TOGE)
+		if (NEEDLE)
 		{
 			toge_flg[3] = true;
 		}

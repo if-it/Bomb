@@ -73,6 +73,87 @@ void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
 	if (game_object.game.dis)Map_Coll(collMap);
 }
 
+void Bomb::Map_Coll(std::vector<std::vector<int>>& collMap)
+{
+	//上左
+	MapJub(MapPointerY(1, 1, collMap), 0);
+	//上右
+	MapJub(MapPointerY(game_object.game.size.x - 1, 1, collMap), 0);
+
+	//下左
+	MapJub(MapPointerY(1, game_object.game.size.y - 1, collMap), 1);
+	//下右
+	MapJub(MapPointerY(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 1);
+
+	game_object.game.allVec.AddPosY();
+
+	//右上
+	MapJub(MapPointerX(game_object.game.size.x - 1, 1, collMap), 2);
+	//右下
+	MapJub(MapPointerX(game_object.game.size.x - 1, game_object.game.size.y - 1, collMap), 2);
+
+	//左上
+	MapJub(MapPointerX(1, 1, collMap), 3);
+	//左下
+	MapJub(MapPointerX(1, game_object.game.size.y - 1, collMap), 3);
+
+	game_object.game.allVec.AddPosX();
+}
+
+void Bomb::MapJub(const int& mapPoint, const int& pointNum)
+{
+	if (pointNum == 0) //Y軸
+	{
+		if (WALL)
+		{
+			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
+			game_object.game.allVec.vec.y = 0;
+		}
+		if (NEEDLE)
+		{
+			game_object.game.dis = false;
+		}
+	}
+	else if (pointNum == 1) //Y軸
+	{
+		if (WALL)
+		{
+			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
+			game_object.game.allVec.vec.y = 0;
+		}
+		if (NEEDLE)
+		{
+			game_object.game.dis = false;
+		}
+	}
+
+	else if (pointNum == 2)//X軸
+	{
+		if (WALL)
+		{
+			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
+			game_object.game.allVec.vec.x = 0;
+		}
+		if (NEEDLE)
+		{
+			game_object.game.dis = false;
+		}
+	}
+
+	else if (pointNum == 3)//X軸
+	{
+		if (WALL)
+		{
+			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
+			game_object.game.allVec.vec.x = 0;
+		}
+		if (NEEDLE)
+		{
+			game_object.game.dis = false;
+		}
+	}
+}
+
 void Bomb::Coll(bool& shakeflg, Controller* con)
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
