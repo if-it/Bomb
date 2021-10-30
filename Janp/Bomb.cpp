@@ -61,9 +61,12 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool
 				con->Shake(1000, 200);
 			}
 		}
-		if (time == 80)
+		if (time == 80&& playerOneColl)
 		{
-			playerOneColl = false;
+			game_object.game.dis = false;
+			ex->ExSpawn(game_object, damage);
+			shakeflg = true;
+			con->Shake(1000, 200);
 		}
 	}
 }
@@ -106,7 +109,6 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
 			game_object.game.allVec.vec.y = 0;
 		}
 		if (NEEDLE)
@@ -118,8 +120,23 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.game.allVec.vec.y -= game_object.game.allVec.vec.y;
 			game_object.game.allVec.vec.y = 0;
+
+			if (game_object.game.allVec.vec.x > 0)
+			{
+				game_object.game.allVec.vec.x -= 0.2f;
+			}
+			else if (game_object.game.allVec.vec.x < 0)
+			{
+				game_object.game.allVec.vec.x += 0.2f;
+			}
+			if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-0.2f) ||
+				(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.2f))
+			{
+				game_object.game.allVec.vec.x = 0;
+			}
+
+
 		}
 		if (NEEDLE)
 		{
@@ -131,7 +148,6 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
 			game_object.game.allVec.vec.x = 0;
 		}
 		if (NEEDLE)
@@ -144,7 +160,6 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	{
 		if (WALL)
 		{
-			game_object.game.allVec.vec.x -= game_object.game.allVec.vec.x;
 			game_object.game.allVec.vec.x = 0;
 		}
 		if (NEEDLE)

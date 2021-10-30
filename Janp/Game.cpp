@@ -186,7 +186,7 @@ bool Game::Loading()
 
 	FILE* fp;
 
-	if (fopen_s(&fp, "Load/Data/SaveData/Option/Option_Data.dat", "r") == 0)
+	if (fopen_s(&fp, "Data/SaveData/Option/Option_Data.dat", "r") == 0)
 	{
 		fread_s(&option_Data, sizeof(option_Data), sizeof(option_Data), 1, fp);
 		fclose(fp);
