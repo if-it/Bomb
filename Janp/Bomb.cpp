@@ -61,12 +61,9 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool
 				con->Shake(1000, 200);
 			}
 		}
-		if (time == 80&& playerOneColl)
+		if (time == 80)
 		{
-			game_object.game.dis = false;
-			ex->ExSpawn(game_object, damage);
-			shakeflg = true;
-			con->Shake(1000, 200);
+			playerOneColl = false;
 		}
 	}
 }

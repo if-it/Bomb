@@ -105,7 +105,7 @@ void Player::Save_Data_Init(std::vector<std::vector<int>>& map, Vector2& sc)
 {
 	player_mapset = 35;
 	Init(map, sc);
-	max_Hp = 2;
+	max_Hp = 3;
 	max_Bomb_Num = 0;
 	save_Data.ability1_flg = false;
 	save_Data.damage = 2;
@@ -1068,9 +1068,6 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			case 104:
 				stage = 102;
 				break;
-			case 200:
-				stage = 302;
-				break;
 			case 201:
 				stage = 205;
 				break;
@@ -1090,10 +1087,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 				stage = 300;
 				break;
 			case 302:
-				stage = 200;
+				stage = 304;
 				break;
 			case 304:
-				stage = 305;
+				stage = 302;
 				break;
 			case 305:
 				stage = 304;
