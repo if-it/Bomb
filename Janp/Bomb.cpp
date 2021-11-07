@@ -28,39 +28,30 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool
 	time++;
 	if (game_object.game.dis)
 	{
-		if (stopMove && !world_Time && flame_time)
+		game_object.game.allVec.vec.y += 0.1f;
+
+		if (game_object.game.allVec.vec.x > 0)
 		{
-			stopMove = false;
-			game_object.game.allVec.vec = ability_Vec;
+			game_object.game.allVec.vec.x -= 0.1f;
 		}
-		else
+		else if (game_object.game.allVec.vec.x < 0)
 		{
-
-
-			game_object.game.allVec.vec.y += 0.1f;
-
-			if (game_object.game.allVec.vec.x > 0)
-			{
-				game_object.game.allVec.vec.x -= 0.1f;
-			}
-			else if (game_object.game.allVec.vec.x < 0)
-			{
-				game_object.game.allVec.vec.x += 0.1f;
-			}
-			if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-0.1f) ||
-				(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.1f))
-			{
-				game_object.game.allVec.vec.x = 0;
-			}
-
-			if (bombAni.OneAnimation(28, 8))
-			{
-				game_object.game.dis = false;
-				ex->ExSpawn(game_object, damage);
-				shakeflg = true;
-				con->Shake(1000, 200);
-			}
+			game_object.game.allVec.vec.x += 0.1f;
 		}
+		if ((game_object.game.allVec.vec.x < 0 && game_object.game.allVec.vec.x>-0.1f) ||
+			(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.1f))
+		{
+			game_object.game.allVec.vec.x = 0;
+		}
+
+		if (bombAni.OneAnimation(28, 8))
+		{
+			game_object.game.dis = false;
+			ex->ExSpawn(game_object, damage);
+			shakeflg = true;
+			con->Shake(1000, 200);
+		}
+
 		if (time == 80)
 		{
 			playerOneColl = false;
@@ -181,7 +172,7 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 				con->Shake(1000, 300);
 			}
 		}
-		if (nameTag == "Enemy1" || nameTag == "Enemy2" || nameTag == "Enemy3" || nameTag == "Enemy4"|| nameTag == "RockAttack")
+		if (nameTag == "Enemy1" || nameTag == "Enemy2" || nameTag == "Enemy3" || nameTag == "Enemy4" || nameTag == "RockAttack")
 		{
 
 			shakeflg = true;

@@ -116,6 +116,7 @@ void Game::Init()
 	rockEffeMana->Init();
 	rockAttackMana->Init();
 	hpDropItemMana->Init();
+	orbitBomb->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -160,6 +161,7 @@ bool Game::Loading()
 	rockEffeMana->Loading(load);
 	rockAttackMana->Loading(load);
 	hpDropItemMana->Loading(load);
+	orbitBomb->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -1221,6 +1223,7 @@ void Game::Play_Scene_Update()
 	itemMana->Update();
 	mapBombMana->Update(player->Get_Switch_On());
 	mapSwitch->Update();
+	orbitBomb->Update(player->game_object.GetPos(), player->Get_Bomb_Vec(), map->map, player->Get_Ability1_Flg());
 
 	exMana->Update();
 	dust->Update();
@@ -1523,6 +1526,8 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	sideBomb->Draw(sc2, shake2);
 	rockAttackMana->Draw(sc2, shake2);
 	hpDropItemMana->Draw(sc2, shake2);
+
+	orbitBomb->Draw(sc2, shake2);
 
 	//Žè‘OMapŠÖ˜A
 	map->FrontDraw(sc2, shake2);

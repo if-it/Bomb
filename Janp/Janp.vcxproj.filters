@@ -285,6 +285,9 @@
     <ClCompile Include="HpDropItemMana.cpp">
       <Filter>GameObjct\HpDropItem</Filter>
     </ClCompile>
+    <ClCompile Include="OrbitBomb.cpp">
+      <Filter>GameObjct\Bomb\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="HpDropItemMana.h">
       <Filter>GameObjct\HpDropItem</Filter>
+    </ClInclude>
+    <ClInclude Include="OrbitBomb.h">
+      <Filter>GameObjct\Bomb\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

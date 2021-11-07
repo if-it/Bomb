@@ -19,6 +19,7 @@
 #include"Enemy3Mana.h"
 #include"SideExplosionMana.h"
 #include"Enemy4Mana.h"
+#include"OrbitBomb.h"
 
 
 class GameInclude :public Draw
@@ -63,6 +64,7 @@ protected:
 	RockEffectMana* rockEffeMana = new RockEffectMana();
 	RockAttackMana* rockAttackMana = new RockAttackMana();
 	HpDropItemMana* hpDropItemMana = new HpDropItemMana();
+	OrbitBomb* orbitBomb = new OrbitBomb();
 	
 
 	bool controllerOnly;
