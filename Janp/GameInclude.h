@@ -65,6 +65,7 @@ protected:
 	RockAttackMana* rockAttackMana = new RockAttackMana();
 	HpDropItemMana* hpDropItemMana = new HpDropItemMana();
 	OrbitBomb* orbitBomb = new OrbitBomb();
+	BlockParticleMana* blockParticleMana = new BlockParticleMana();
 	
 
 	bool controllerOnly;

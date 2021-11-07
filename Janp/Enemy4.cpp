@@ -12,7 +12,7 @@ void Enemy4::Init(Vector2 pos)
 {
 	game_object = GameObject("Enemy4", true, Vector2(64.0f, 64.0f));
 	game_object.SetPos(pos);
-	hp = 30;
+	hp = 20;
 	fVec = Vector2();
 	move = Count();
 	move_End = Count();

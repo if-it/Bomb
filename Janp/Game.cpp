@@ -117,6 +117,7 @@ void Game::Init()
 	rockAttackMana->Init();
 	hpDropItemMana->Init();
 	orbitBomb->Init();
+	blockParticleMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -1229,7 +1230,7 @@ void Game::Play_Scene_Update()
 	dust->Update();
 	rockEffeMana->Update();
 	hpDropItemMana->Update();
-
+	blockParticleMana->Update(stage);
 }
 
 void Game::Map_Coll_Update()
@@ -1241,7 +1242,7 @@ void Game::Map_Coll_Update()
 	enemy4Mana->MapCollUpdate(map->map);
 	enemy2->MapCollUpdate(map->map);
 
-	exMana->Map_Coll_Update(map->map);
+	exMana->Map_Coll_Update(map->map, blockParticleMana);
 	sideBomb->Map_Coll_Update(map->map);
 }
 
@@ -1536,6 +1537,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	exMana->Draw(sc2, shake2);
 	dust->Draw(sc2, shake2);
 	rockEffeMana->Draw(sc2, shake2);
+	blockParticleMana->Draw(sc2, shake2);
 
 	//UIŠÖ˜A
 	ui->Draw(sc2, shake2);
