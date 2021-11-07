@@ -16,6 +16,7 @@ public:
     void Loading(Load* load);
     void Update(const Vector2& sc);
     void Draw(const Vector2& sc, const Vector2& shake);
+    void Draw_Background(const Vector2& sc, const Vector2& shake);
 private:
     std::vector<std::vector<int>> backMap;
     int* tex;

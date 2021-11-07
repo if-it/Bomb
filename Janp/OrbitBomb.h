@@ -15,6 +15,7 @@ private:
     Bomb bomb;
     std::vector<GameObject> orbit;
     int count;
-    int tex;
+    int tex[8];
+    Animation ani;
 };
 

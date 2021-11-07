@@ -2,6 +2,7 @@
 
 OrbitBomb::OrbitBomb()
 {
+	ani = Animation();
 }
 
 OrbitBomb::~OrbitBomb()
@@ -14,11 +15,12 @@ void OrbitBomb::Init()
 	orbit.clear();
 	bomb.Init();
 	count = 0;
+	
 }
 
 void OrbitBomb::Loading(Load* load)
 {
-	load->LoadTex("Load/Texture/UI/Orbit.png",tex);
+	load->LoadAnimeTex("Load/Texture/UI/Orbit.png",8,8,1,SIZE,SIZE,tex);
 }
 
 void OrbitBomb::Update(const Vector2& pos, const Vector2& vec, std::vector<std::vector<int>>& collMap, const bool& dis)
@@ -52,17 +54,14 @@ void OrbitBomb::Update(const Vector2& pos, const Vector2& vec, std::vector<std::
 
 			bomb.Map_Coll_Update(collMap);
 
-
-			if (count % 5 == 0)
+			if (count / 5 >=5&&(bomb.game_object.game.allVec.vec.x==0|| bomb.game_object.game.allVec.vec.y == 0)|| count / 5 >= 15)
 			{
 				orbit.push_back(bomb.game_object);
-			}
-			if (count / 5 == 30||bomb.game_object.game.allVec.vec.x==0|| bomb.game_object.game.allVec.vec.y == 0)
-			{
 				break;
 			}
 			++count;
 		}
+		ani.AnimationOn(3, 8);
 	}
 }
 
@@ -72,7 +71,7 @@ void OrbitBomb::Draw(const Vector2& sc, const Vector2& shake)
 	{
 		for (int i = 0; i < (int)orbit.size(); ++i)
 		{
-			DrawTex(orbit[i], tex, true, shake, sc);
+			DrawTex(orbit[i], tex[ani.num], true, shake, sc);
 		}
 	}
 }

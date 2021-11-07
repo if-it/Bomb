@@ -176,14 +176,7 @@ void BackMap2::Update(const Vector2& sc)
 
 void BackMap2::Draw(const Vector2& sc, const Vector2& shake)
 {
-	for (int i = 0; i < MAP2BACK; ++i)
-	{
-		DrawTex(back_Pos[i], stage_Back_Tex[i], true, true, Vector2(), back_Sc[i]);
-		DrawTex(back_Pos2[i], stage_Back_Tex[i], true, true, Vector2(), back_Sc2[i]);
-	}
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
-	Box(Vector2(), GetColor(0, 0, 0), black, true, Vector2(), Vector2(), WIDTH, HEIGHT);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	Draw_Background(sc, shake);
 	for (int y = 0; y < (int)backMap.size(); ++y)
 	{
 		for (int x = 0; x < (int)backMap[y].size(); ++x)
@@ -193,4 +186,16 @@ void BackMap2::Draw(const Vector2& sc, const Vector2& shake)
 			DrawRotaTex(Vector2((float)(SIZE * x + SIZE / 2), (float)(SIZE * y + SIZE / 2)), Vector2(SIZE / 2, SIZE / 2), Vector2(1.0f, 1.0f), 0.0f, tex[texNum], true, false, true, shake, sc);
 		}
 	}
+}
+
+void BackMap2::Draw_Background(const Vector2& sc, const Vector2& shake)
+{
+	for (int i = 0; i < MAP2BACK; ++i)
+	{
+		DrawTex(back_Pos[i], stage_Back_Tex[i], true, true, Vector2(), back_Sc[i]);
+		DrawTex(back_Pos2[i], stage_Back_Tex[i], true, true, Vector2(), back_Sc2[i]);
+	}
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 125);
+	Box(Vector2(), GetColor(0, 0, 0), black, true, Vector2(), Vector2(), WIDTH, HEIGHT);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

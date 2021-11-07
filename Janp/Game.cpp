@@ -198,7 +198,7 @@ bool Game::Loading()
 		option_Data = { 1.0f, 0.5f, 0.5f, false };
 	}
 
-
+	Data_Load();
 	if (loadCount >= 0)return true;
 	return false;
 }
@@ -1391,7 +1391,6 @@ void Game::Draw()
 	case LOAD:
 		break;
 	case TITLE:
-		dust->Draw(Vector2(), Vector2());
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, title_Pal);
 		DrawTex(title_Pos, title, true);
 		DrawTex(text_Play_Pos, text_Play_Tex, true);
@@ -1417,6 +1416,7 @@ void Game::Draw()
 		DrawTex(Vector2(text_Options_Pos.x, text_Options_Pos.y + 100), text_Options_Tex[6], option_Controller);
 		DrawTex(Vector2(text_Options_Pos.x + 250, text_Options_Pos.y + 100), text_On_Off[(int)option_Data.con_shake], option_Controller);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		dust->Draw(Vector2(), Vector2());
 		ui->ExitDraw();
 		break;
 	case PLAYINIT:
