@@ -132,6 +132,8 @@
   <ItemGroup>
     <ClCompile Include="BackMap.cpp" />
     <ClCompile Include="BackMap2.cpp" />
+    <ClCompile Include="BlockParticle.cpp" />
+    <ClCompile Include="BlockParticleMana.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BombMana.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -183,6 +185,8 @@
   <ItemGroup>
     <ClInclude Include="BackMap.h" />
     <ClInclude Include="BackMap2.h" />
+    <ClInclude Include="BlockParticle.h" />
+    <ClInclude Include="BlockParticleMana.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BombMana.h" />
     <ClInclude Include="Collision.h" />

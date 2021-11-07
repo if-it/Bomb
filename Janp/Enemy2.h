@@ -3,7 +3,7 @@
 #include"Load.h"
 #include"RockAttackMana.h"
 #include"ExplosionMana.h"
-#define MAX_HP 350
+#define MAX_HP 300
 
 class Enemy2 :
 	public Enemy

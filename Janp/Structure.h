@@ -132,7 +132,7 @@ protected:
 		int red;
 		int green;
 		int blue;
-		COLOR(int r = 0, int g = 0, int b = 0)
+		COLOR(int r = 255, int g = 255, int b = 255)
 		{
 			red = r;
 			green = g;

@@ -617,7 +617,7 @@ void Player::Animation_Update()
 		if (!one_move_flg)
 		{
 			one_move_flg = true;
-			animation.num = 7;
+			animation.num = 6;
 		}
 	}
 	else
@@ -637,7 +637,7 @@ void Player::Animation_Update()
 		animation_Count_Num = 10;
 		animation.oneAnimeFlg = false;
 		one_move_flg2 = false;
-		animation.AnimationOn(animation_Count_Num, 12, 7);
+		animation.AnimationOn(animation_Count_Num, 12, 6);
 		walk.flg = true;
 		if (!air && walk.Conuter(25))
 		{
@@ -1242,11 +1242,17 @@ void Player::Coll(bool& hetstop)
 			blowY = 4.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
 		}
-		else if (nameTag == "Enemy2" || nameTag == "RockAttack")
+		else if (nameTag == "Enemy2")
 		{
 			blowX = 15.0f;
 			blowY = 5.0f;
 			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 2);
+		}
+		else if (nameTag == "RockAttack")
+		{
+			blowX = 15.0f;
+			blowY = 5.0f;
+			Blow(blowX, blowY, game_object.coll_Obj_List[i]->lr, hetstop, 1);
 		}
 		else if (nameTag == "Save")
 		{

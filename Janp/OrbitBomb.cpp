@@ -54,7 +54,7 @@ void OrbitBomb::Update(const Vector2& pos, const Vector2& vec, std::vector<std::
 
 			bomb.Map_Coll_Update(collMap);
 
-			if (count / 5 >=5&&(bomb.game_object.game.allVec.vec.x==0|| bomb.game_object.game.allVec.vec.y == 0)|| count / 5 >= 15)
+			if (count / 5 >=4&&(bomb.game_object.game.allVec.vec.x==0|| bomb.game_object.game.allVec.vec.y == 0)|| count / 5 >= 5)
 			{
 				orbit.push_back(bomb.game_object);
 				break;

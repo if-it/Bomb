@@ -139,6 +139,9 @@
     <Filter Include="GameObjct\HpDropItem">
       <UniqueIdentifier>{9c11aeba-2881-4d95-b9e7-4e0de6b81b71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\BlockParticle">
+      <UniqueIdentifier>{d9063411-e021-47fb-b2dc-51a452fb1d42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -288,6 +291,12 @@
     <ClCompile Include="OrbitBomb.cpp">
       <Filter>GameObjct\Bomb\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="BlockParticle.cpp">
+      <Filter>Effect\BlockParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockParticleMana.cpp">
+      <Filter>Effect\BlockParticle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -433,6 +442,12 @@
     </ClInclude>
     <ClInclude Include="OrbitBomb.h">
       <Filter>GameObjct\Bomb\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockParticle.h">
+      <Filter>Effect\BlockParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockParticleMana.h">
+      <Filter>Effect\BlockParticle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

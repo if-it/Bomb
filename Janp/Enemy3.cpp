@@ -14,7 +14,7 @@ void Enemy3::Init(Vector2 pos)
 	game_object.color = COLOR(255, 0, 0);
 	game_object.SetPos(pos);
 	ex_Invincible = Count();
-	hp = 7;
+	hp = 5;
 	fVec = Vector2();
 }
 

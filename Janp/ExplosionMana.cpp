@@ -42,16 +42,17 @@ void ExplosionMana::ExSpawn(GameObject& go , const int& damage)
 	InitEx.game_object.game.allVec.pos -= SIZE / 2;
 	InitEx.damage = damage;
 	InitEx.game_object.game.num = (int)ex.size();
+	InitEx.dis2 = true;
 	PlaySoundMem(exSound, DX_PLAYTYPE_BACK, true);
 	//InitEx.game_object.allVec.pos -= SIZE / 2;
 	ex.push_back(InitEx);
 }
 
-void ExplosionMana::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
+void ExplosionMana::Map_Coll_Update(std::vector<std::vector<int>>& collMap, BlockParticleMana* blockParticleMana)
 {
 	for (int i = 0; i < (int)ex.size(); ++i)
 	{
-		ex[i].Map_Coll_Update(collMap);
+		ex[i].Map_Coll_Update(collMap, blockParticleMana);
 	}
 }
 
@@ -81,7 +82,7 @@ int ExplosionMana::NowExNum()
 	int nuwNum = 0;
 	for (int i = 0; i < (int)ex.size(); ++i)
 	{
-		if (ex[i].game_object.game.dis)++nuwNum;
+		if (ex[i].game_object.game.dis||ex[i].dis2)++nuwNum;
 	}
 	return nuwNum;
 }
