@@ -3,7 +3,6 @@
 Enemy2::Enemy2()
 {
 	game_object = GameObject("Enemy2Tex", false, Vector2(192, 192));
-	game_object.color = COLOR(255, 0, 100);
 	spawn = false;
 	die = false;
 	move = false;
@@ -27,9 +26,9 @@ Enemy2::~Enemy2()
 
 void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load, int vol)
 {
+	
 	spawn = die;
 	game_object = GameObject("Enemy2Tex", false, Vector2(240, 192));
-	game_object.color = COLOR(255, 0, 100);
 	spawn = false;
 	die = false;
 	move = false;
@@ -54,6 +53,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load, int vol)
 	die_Ex_Max_Num = 0;
 	ex_End = false;
 	ex_on = 0;
+	rush_Count = 0;
 	if (!spawn)
 	{
 		for (int y = 0; y < (int)collMap.size(); ++y)
@@ -62,6 +62,7 @@ void Enemy2::Init(std::vector<std::vector<int>>& collMap, Load* load, int vol)
 			{
 				if (collMap[y][x] == 101)
 				{
+					AllInit(103, x, y);
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2w.png", 21, 21, 1, 240, 192, enemy2Tex);
 					load->LoadAnimeTex("Load/Texture/Enemy/Enemy2/Enemy2_Attack.png", 7, 7, 1, 240, 192, attackTex);
 					load->LoadSound("Load/Sound/SE/daipan.wav", daipanSE);
@@ -132,7 +133,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				tex = enemy2Tex[ani.num];
 				ani.AnimationOn(4, 21);
 				break;
-			case 1:
+			case 1://‹ß‚Ã‚¢‚Ä‰£‚é
 				max_speed = 5.4f;
 				flame_speed = 0.2f;
 				arm.game.dis = true;
@@ -145,7 +146,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 					tex = enemy2Tex[0];
 				}
 				break;
-			case 2:
+			case 2://—ŽÎ
 				arm.game.dis = true;
 				tex = attackTex[attackAni.num];
 				if (attackAni.OneAnimation(attackAniNum[attackAni.num], 6))
@@ -161,62 +162,41 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 			case 3:
 				if (!attack_Second_Time.flg)
 				{
-					rock_Num += GetRand(9) + 1;
+					rock_Num += GetRand(9) + 7;
 					rockAttackMana->Spawn(rock_Num, sc);
 					attack_Second_Time.flg = true;
 				}
 				if (attack_Second_Time.Conuter(60))
 				{
-					if (rock_Num > rock_Max_Num)
-					{
-						rock_Num = 0;
-						attack_Second_Time = Count();
-						attack_Animetion_flg = 5;
-					}
-					else
-					{
-						attack_Animetion_flg = 2;
-					}
+					rock_Num = 0;
+					attack_Second_Time = Count();
+					attack_Animetion_flg = 5;
 				}
 				break;
-			case 4:
-				tex = enemy2Tex[ani.num];
-				ani.AnimationOn(2, 21);
-
-				max_speed = 10.8f;
-				flame_speed = 0.2f;
-
-				if (uturn[0])lr = false;
-				if (uturn[1])lr = true;
-
-				if (lr)game_object.game.allVec.vec.x -= 6.0f;
-				else game_object.game.allVec.vec.x += 6.0f;
-
-				if (rush_Time.Conuter(45))
+			case 4://“Ëi
+				++rush_Count;
+				game_object.color = COLOR(255, 200, 200);
+				if (rush_Count >= 90)
 				{
-					attack_Animetion_flg = 5;
+					rush_Count = 0;
+					attack_Animetion_flg = 7;
 				}
 				break;
 			case 5:
 				attack_End_Time.flg = true;
-				if (hp > (int)(MAX_HP / 3))
+				if (hp > (int)(MAX_HP / 2))
 				{
 					if (attack_End_Time.Conuter(20))
 					{
 						attack_End_Time = Count();
 						int rand = GetRand(9);
-						if ((rand >= 2 && rand <= 6))
+						if ((rand >= 4 && rand <= 9))
 						{
 							attack_Animetion_flg = 0;
 						}
-						else if (rand >= 0 && rand <= 2)
+						else if (rand >= 0 && rand <= 3)
 						{
 							attack_Animetion_flg = 2;
-						}
-						else if (rand >= 7 && rand <= 9)
-						{
-							attack_Animetion_flg = 4;
-							rush_Time.flg = true;
 						}
 					}
 				}
@@ -246,6 +226,26 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				break;
 			case 6:
 				attack_Animetion_flg = 5;
+				break;
+			case 7:
+				game_object.color = COLOR();
+				rush_Count = 0;
+				tex = enemy2Tex[ani.num];
+				ani.AnimationOn(2, 21);
+
+				max_speed = 10.8f;
+				flame_speed = 0.2f;
+
+				if (uturn[0])lr = false;
+				if (uturn[1])lr = true;
+
+				if (lr)game_object.game.allVec.vec.x -= 6.0f;
+				else game_object.game.allVec.vec.x += 6.0f;
+
+				if (rush_Time.Conuter(40))
+				{
+					attack_Animetion_flg = 5;
+				}
 				break;
 			default:
 				break;
@@ -495,8 +495,8 @@ void Enemy2::Coll(std::vector<Explosion>& ex)
 
 void Enemy2::Draw(const Vector2& sc, const Vector2& shake)
 {
+	SetBright(game_object.color);
 	if (blinking)SetDrawBright(128, 128, 128);
-
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)game_object.game.pal);
 	DrawRotaTex(game_object, tex, true, shake, sc);
 	SetDrawBright(255, 255, 255);

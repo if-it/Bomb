@@ -14,7 +14,7 @@ void BlockParticle::Update()
 {
 	if (game_object.game.dis)
 	{
-		game_object.game.allVec.vec.y += 0.1f;
+		game_object.game.allVec.vec.y += 0.3f;
 
 		if (game_object.game.allVec.vec.x > 0)
 		{

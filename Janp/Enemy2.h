@@ -42,6 +42,7 @@ private:
 	bool uturn[2];
 	bool ex_End;
 	int ex_on;
+	int rush_Count;
 	bool first_Attack;//最初の攻撃判定
 	Count attack_Fist_Time;//近づいてから攻撃までの時間
 	Count attack_End_Time;//攻撃が終わってからのクールタイム

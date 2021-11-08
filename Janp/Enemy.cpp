@@ -18,6 +18,7 @@ void Enemy::AllInit(const int& stage, const int& mapX, const int& mapY)
 	die_Data.die_stage = stage;
 	die_Data.map_x = mapX;
 	die_Data.map_y = mapY;
+	blinking = false;
 }
 
 void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
