@@ -985,6 +985,7 @@ void Game::Stage_Init()
 {
 	backMap->Init(stage);
 	backMap2->Init(stage, load,sc);
+	frontMap->Init(stage, load);
 	saveMana->Init(map->map);
 	enemy1Mana->Init(map->map, load, stage);
 	enemy2->Init(map->map, load, 255 * option_Data.SE_Volume * option_Data.Main_Volume);
@@ -1207,6 +1208,7 @@ void Game::Play_Scene_Update()
 {
 	map->Update();
 	backMap2->Update(sc);
+	frontMap->Update();
 
 	player->Set_Now_Bomb_Num(bombMana->NowPlayerBombNum());
 	player->Update(shake_Counter.flg, bombMana, sideBomb);
@@ -1532,7 +1534,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 
 	//手前Map関連
 	map->FrontDraw(sc2, shake2);
-
+	frontMap->Draw(sc2, shake);
 	//エフェクト関連2
 	exMana->Draw(sc2, shake2);
 	dust->Draw(sc2, shake2);

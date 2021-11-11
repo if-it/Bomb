@@ -20,6 +20,7 @@
 #include"SideExplosionMana.h"
 #include"Enemy4Mana.h"
 #include"OrbitBomb.h"
+#include"FrontMap.h"
 
 
 class GameInclude :public Draw
@@ -66,6 +67,7 @@ protected:
 	HpDropItemMana* hpDropItemMana = new HpDropItemMana();
 	OrbitBomb* orbitBomb = new OrbitBomb();
 	BlockParticleMana* blockParticleMana = new BlockParticleMana();
+	FrontMap* frontMap = new FrontMap();
 	
 
 	bool controllerOnly;

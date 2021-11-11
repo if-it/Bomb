@@ -150,6 +150,7 @@
     <ClCompile Include="Enemy4Mana.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="ExplosionMana.cpp" />
+    <ClCompile Include="FrontMap.cpp" />
     <ClCompile Include="Fuse.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameInclude.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Enemy4Mana.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="ExplosionMana.h" />
+    <ClInclude Include="FrontMap.h" />
     <ClInclude Include="Fuse.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameInclude.h" />

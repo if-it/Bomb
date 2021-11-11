@@ -142,6 +142,9 @@
     <Filter Include="Effect\BlockParticle">
       <UniqueIdentifier>{d9063411-e021-47fb-b2dc-51a452fb1d42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\FrontMap">
+      <UniqueIdentifier>{ff2464cc-5a4c-4508-97ab-e596f927f2fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -297,6 +300,9 @@
     <ClCompile Include="BlockParticleMana.cpp">
       <Filter>Effect\BlockParticle</Filter>
     </ClCompile>
+    <ClCompile Include="FrontMap.cpp">
+      <Filter>Map\FrontMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -448,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="BlockParticleMana.h">
       <Filter>Effect\BlockParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="FrontMap.h">
+      <Filter>Map\FrontMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
