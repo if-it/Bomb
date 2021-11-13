@@ -2,7 +2,7 @@
 #include "Draw.h"
 #include"Load.h"
 #define BACKMAP_TEX_NUM 13
-#define BACKMAP_TEX_NUM2 9
+#define BACKMAP_TEX_NUM2 12
 
 class BackMap :
     public Draw

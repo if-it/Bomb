@@ -29,6 +29,11 @@ void FrontMap::Init(const int& stage, Load* load)
 		guide_Flg = true;
 		load->LoadAnimeTex("Load/Texture/Map/FrontMap/guide.png", 20, 20, 1, 230, 316, guide);
 	}
+	else if (stage == 100)
+	{
+		guide_Flg = true;
+		load->LoadAnimeTex("Load/Texture/Map/FrontMap/guide2.png", 20, 20, 1, 112, 193, guide);
+	}
 	else
 	{
 		guide_Flg = false;
@@ -50,7 +55,7 @@ void FrontMap::Init(const int& stage, Load* load)
 		{
 			through_Tex = new int[FRONT_MAP1];
 			texArray = FRONT_MAP1;
-			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", FRONT_MAP1, FRONT_MAP1, 1, SIZE + 1, SIZE, through_Tex);
+			//load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap.png", FRONT_MAP1, FRONT_MAP1, 1, SIZE + 1, SIZE, through_Tex);
 
 
 		}
@@ -58,13 +63,13 @@ void FrontMap::Init(const int& stage, Load* load)
 		{
 			through_Tex = new int[FRONT_MAP2];
 			texArray = FRONT_MAP2;
-			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", FRONT_MAP2, FRONT_MAP2, 1, SIZE + 1, SIZE, through_Tex);
+			//load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap2.png", FRONT_MAP2, FRONT_MAP2, 1, SIZE + 1, SIZE, through_Tex);
 		}
 		else if (map_type >= 300 && map_type < 400)
 		{
 			through_Tex = new int[FRONT_MAP3];
 			texArray = FRONT_MAP3;
-			load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap3.png", FRONT_MAP3, FRONT_MAP3, 1, SIZE + 1, SIZE, through_Tex);
+			//load->LoadAnimeTex("Load/Texture/Map/BackMap2/BackMap3.png", FRONT_MAP3, FRONT_MAP3, 1, SIZE + 1, SIZE, through_Tex);
 		}
 	}
 

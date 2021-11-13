@@ -157,6 +157,22 @@ void BackMap::Draw(const Vector2& sc, const Vector2& shake)
 				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
 					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[5], true, false, true, shake, sc);
 				break;
+			case 22:
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[8], true, false, true, shake, sc);
+				break;
+			case 23:
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[9], true, false, true, shake, sc);
+				break;
+			case 24:
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[10], true, false, true, shake, sc);
+				break;
+			case 25:
+				DrawRotaTex(Vector2((float)(SIZE * x + SIZE), (float)(SIZE * y + SIZE)),
+					Vector2(SIZE, SIZE), Vector2(1.0f, 1.0f), 0.0f, tex2[11], true, false, true, shake, sc);
+				break;
 			default:
 				break;
 			}
