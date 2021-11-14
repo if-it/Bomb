@@ -604,6 +604,10 @@ void Game::Update()
 			else
 			{
 				player->TogeInit();
+				bombMana->Init();
+				exMana->Init();
+				sideBomb->Init();
+				sideExMana->Init();
 			}
 		}
 		hetStop.Conuter(10);
