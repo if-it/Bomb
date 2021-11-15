@@ -411,7 +411,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	}
 
 	//ƒ_ƒbƒVƒ…
-	if (ability2.Conuter(12) || ability2_Activate == -1)
+	if (ability2.Conuter(15) || ability2_Activate == -1)
 	{
 		ability2_Activate = 0;
 		ability2_Vec = Vector2();

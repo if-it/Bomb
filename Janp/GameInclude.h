@@ -21,7 +21,7 @@
 #include"Enemy4Mana.h"
 #include"OrbitBomb.h"
 #include"FrontMap.h"
-
+#include"AroundEffectMana.h"
 
 class GameInclude :public Draw
 {
@@ -68,6 +68,7 @@ protected:
 	OrbitBomb* orbitBomb = new OrbitBomb();
 	BlockParticleMana* blockParticleMana = new BlockParticleMana();
 	FrontMap* frontMap = new FrontMap();
+	AroundEffectMana* aroundEffeMana = new AroundEffectMana();
 	
 
 	bool controllerOnly;

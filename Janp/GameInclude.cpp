@@ -82,6 +82,15 @@ void GameInclude::Shake(Count& count, int num, Vector2 shakeMax)
 {
 	if (count.flg)
 	{
+		if (sc.x >= 0 && sc.x <= SIZE)
+		{
+			if (shakeMax.x > 0) shakeMax.x *= -1;;
+		}
+		if (sc.y == 0 && sc.y <= SIZE)
+		{
+			if (shakeMax.y > 0)shakeMax.y += -1;
+		}
+
 		shake = shakeMax;
 	}
 	else

@@ -12,12 +12,10 @@ Game::~Game()
 	delete con;
 	delete key;
 	delete mouse;
-
 	delete map;
 	delete player;
 	delete coll;
 	delete fuse;
-
 	delete bombMana;
 	delete exMana;
 	delete enemy1Mana;
@@ -37,6 +35,10 @@ Game::~Game()
 	delete rockEffeMana;
 	delete rockAttackMana;
 	delete hpDropItemMana;
+	delete orbitBomb;
+	delete blockParticleMana;
+	delete frontMap;
+	delete aroundEffeMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -118,6 +120,7 @@ void Game::Init()
 	hpDropItemMana->Init();
 	orbitBomb->Init();
 	blockParticleMana->Init();
+	aroundEffeMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -163,6 +166,7 @@ bool Game::Loading()
 	rockAttackMana->Loading(load);
 	hpDropItemMana->Loading(load);
 	orbitBomb->Loading(load);
+	aroundEffeMana->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -1237,6 +1241,7 @@ void Game::Play_Scene_Update()
 	rockEffeMana->Update();
 	hpDropItemMana->Update();
 	blockParticleMana->Update(stage);
+	aroundEffeMana->Update();
 }
 
 void Game::Map_Coll_Update()
@@ -1544,6 +1549,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	dust->Draw(sc2, shake2);
 	rockEffeMana->Draw(sc2, shake2);
 	blockParticleMana->Draw(sc2, shake2);
+	aroundEffeMana->Draw();
 
 	//UIŠÖ˜A
 	ui->Draw(sc2, shake2);

@@ -130,6 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AroundEffect.cpp" />
+    <ClCompile Include="AroundEffectMana.cpp" />
     <ClCompile Include="BackMap.cpp" />
     <ClCompile Include="BackMap2.cpp" />
     <ClCompile Include="BlockParticle.cpp" />
@@ -184,6 +186,8 @@
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AroundEffect.h" />
+    <ClInclude Include="AroundEffectMana.h" />
     <ClInclude Include="BackMap.h" />
     <ClInclude Include="BackMap2.h" />
     <ClInclude Include="BlockParticle.h" />
