@@ -1188,7 +1188,7 @@ void Game::Play_Scene()
 		}
 		if (!time)
 		{
-			Shake(shake_Counter, 10, Vector2((float)(GetRand(16) - GetRand(16)), (float)(GetRand(10) - GetRand(10))));
+			Shake(shake_Counter, 10, Vector2((float)(GetRand(16) - GetRand(16)), (float)(GetRand(10) - GetRand(10))),map->map);
 		}
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
@@ -1501,7 +1501,7 @@ void Game::Draw()
 
 bool Game::Enter()
 {
-	if (con->TrlggerBotton(con->A) || con->TrlggerBotton(con->X) || (key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN)))
+	if (con->TrlggerBotton(con->A) || con->TrlggerBotton(con->X) ||key->KeyTrigger(KEY_INPUT_SPACE)|| key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
 	{
 		PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 		return true;

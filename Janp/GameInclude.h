@@ -35,7 +35,7 @@ protected:
 	bool SceneChangeSeb(int seb);
 	bool SceneChangeAdd(int add);
 	bool SceneChanger(int a);
-	void Shake(Count& count, int num, Vector2 shakeMax);
+	void Shake(Count& count, int num, Vector2 shakeMax, std::vector<std::vector<int>>& map);
 
 
 	Controller* con = new Controller();
