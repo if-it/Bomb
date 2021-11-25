@@ -9,9 +9,9 @@ public:
 	AroundEffectMana();
 	~AroundEffectMana();
 	void Init();
-	void Spawen(const int& num);
+	void Spawen(const int& num, const int& hp);
 	void Loading(Load* load);
-	void Update();
+	void Update(const int& hp);
 	void Draw();
 private:
 	int tex;

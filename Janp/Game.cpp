@@ -1241,7 +1241,7 @@ void Game::Play_Scene_Update()
 	rockEffeMana->Update();
 	hpDropItemMana->Update();
 	blockParticleMana->Update(stage);
-	aroundEffeMana->Update();
+	aroundEffeMana->Update(player->Get_Now_Hp());
 }
 
 void Game::Map_Coll_Update()
@@ -1359,7 +1359,6 @@ void Game::Obj_Coll_Update()
 				coll_List[n]->game.nameTag;
 				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
 			}
-
 		}
 	}
 
