@@ -52,7 +52,7 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool
 			con->Shake(1000, 200);
 		}
 
-		if (time == 80)
+		if (time == 120)
 		{
 			playerOneColl = false;
 		}

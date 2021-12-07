@@ -31,6 +31,7 @@ Player::Player()
 	save_On = false;
 	space_On = false;
 	get_guide = -1;
+
 }
 
 
@@ -212,6 +213,10 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	get_guide = -1;
 
 	control_flg = true;
+	exit_Ex = false;
+	ex_Chain = 0.0f;
+	junp_Chain = 0.0f;
+
 }
 
 void Player::Loading(Load* load)
@@ -681,6 +686,11 @@ void Player::Animation_Update()
 		one_stop_flg = false;
 		animation.oneAnimeFlg = false;
 		air_Back_Count = Count();
+	}
+	else
+	{
+		ex_Chain = 0.0f;
+		junp_Chain = 0.0f;
 	}
 
 	if (invincible.flg)
@@ -1209,16 +1219,40 @@ void Player::Coll(bool& hetstop)
 	save_Coll = false;
 	float blowX = 0.0f;
 	float blowY = 0.0f;
+
+	for (int i = 0; i < (int)game_object.coll_Exit_Obj_List.size(); ++i)
+	{
+		std::string nameTag = game_object.coll_Exit_Obj_List[i]->nameTag;
+		if (nameTag == "ex")
+		{
+			exit_Ex = false;
+		}
+	}
+
+
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
-		if (nameTag == "ex")
+		if (nameTag == "ex" && !exit_Ex)
 		{
+			++ex_Chain;
+			if (ex_Chain > 5)
+			{
+				ex_Chain = 5;
+			}
+
+			 junp_Chain += EXJUMP/ex_Chain;
+
+			 if (junp_Chain > EXJUMP * 3)
+			 {
+				 junp_Chain = EXJUMP * 2;
+			 }
 			game_object.game.allVec.vec.y = 0;
-			game_object.game.allVec.vec.y -= EXJUMP;
+			game_object.game.allVec.vec.y -= junp_Chain;
 			bomb_Janp = true;
 			rota_Vec = 10.0f;
 			size_Change_Count.flg = true;
+			exit_Ex = true;
 		}
 		else if (nameTag == "RSideEx")
 		{

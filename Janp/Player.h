@@ -10,7 +10,7 @@
 #define MAXSPEED 4
 #define MAXTEX_X 6
 #define MAXTEX_Y 2
-#define BOMBVEC 10.0f
+#define BOMBVEC 8.0f
 #define EXJUMP 10.0f
 #define ABILITY_BOMB_SPEED 12.0f
 #define SIDE_EX_MAX_SPEED 20.0f
@@ -143,6 +143,11 @@ private:
 	//“_–Å
 	bool blinking;
 	Count blinking_Count;
+
+	bool exit_Ex;
+	float ex_Chain;
+	std::vector<bool> exit_Ex_List;
+	float junp_Chain;
 
 	struct Save_Data
 	{

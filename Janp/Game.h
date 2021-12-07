@@ -28,6 +28,7 @@ private:
 	void Play_Scene_Update();
 	void Map_Coll_Update();
 	void Obj_Coll_Update();
+	void Obj_Coll_Add();
 	void PlayDraw(const Vector2& sc2, const Vector2& shake2);
 	void Delete_Data();
 	void Option_Data_Save();

@@ -29,6 +29,16 @@ bool Collision::CollsionObj(const GameObject& gameobject1, const GameObject& gam
 	}
 	return false;
 }
+//GameObject+Game
+bool Collision::CollsionObj(const GameObject& gameobject1, const Game& gameobject2)
+{
+	if (gameobject1.game.dis && gameobject2.dis)
+	{
+		return Collsion(gameobject1.game.allVec.pos, gameobject1.game.size.x, gameobject1.game.size.y,
+			gameobject2.allVec.pos, gameobject2.size.x, gameobject2.size.y);
+	}
+	return false;
+}
 //“_‚Æ–Ê
 bool Collision::PointCollsion(Vector2 pos, int sizeX, int sizeY, Vector2 poss, int size2X, int size2Y)
 {

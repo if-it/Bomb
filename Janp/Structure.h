@@ -175,7 +175,8 @@ protected:
 		Game game;
 		COLOR color;
 		//“–‚½‚è”»’èƒŠƒXƒg
-		std::vector<Game*>coll_Obj_List;
+		std::vector<Game*>coll_Obj_List;//“–‚½‚Á‚Ä‚¢‚é‚Æ‚«
+		std::vector<Game*>coll_Exit_Obj_List;//“–‚½‚Á‚Ä‚¢‚éó‘Ô‚©‚çŠO‚ê‚½‚ç
 		bool same;
 
 		GameObject(const std::string& NameTag = "noName", const bool& disFlg = true,

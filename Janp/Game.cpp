@@ -1259,10 +1259,101 @@ void Game::Map_Coll_Update()
 
 void Game::Obj_Coll_Update()
 {
+
 	//GameObjectリストの初期化
 	coll_List.clear();
 	//GameObjectリストにGameObjectの追加
 
+	Obj_Coll_Add();
+	//爆弾が悪いと思う!
+	//前フレームで当たってたけど今当たってないものを追加
+	for (int i = 0; i < (int)coll_List.size(); ++i)
+	{
+		coll_List[i]->coll_Exit_Obj_List.clear();
+		for (int n = 0; n < (int)coll_List[i]->coll_Obj_List.size(); ++n)
+		{
+			if (!coll->CollsionObj(*coll_List[i], *coll_List[i]->coll_Obj_List[n]))
+			{
+				coll_List[i]->coll_Exit_Obj_List.push_back(coll_List[i]->coll_Obj_List[n]);
+			}
+		}
+	}
+	//
+
+	//当たり判定リストに当たっている物を追加
+	for (int i = 0; i < (int)coll_List.size(); ++i)
+	{
+		coll_List[i]->coll_Obj_List.clear();
+		if (coll_List[i]->same) { continue; }
+		for (int n = 0; n < (int)coll_List.size(); ++n)
+		{
+			if (i == n || coll_List[n]->same) { continue; }
+
+			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
+			{
+				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
+			}
+		}
+	}
+	//
+
+
+	//当たり判定
+	player->Coll(hetStop.flg);
+	//爆発とひも
+	for (int i = 0; i < exMana->ex.size(); ++i)
+	{
+		fuse->Coll(coll, exMana->ex[i].game_object);
+	}
+
+	enemy1Mana->Coll(exMana->ex);
+	enemy3Mana->Coll(exMana->ex);
+	enemy4Mana->Coll(exMana->ex);
+	bombMana->Coll(shake_Counter.flg, con);
+	enemy2->Coll(exMana->ex);
+	saveMana->Coll();
+	itemMana->Coll(player->Get_Get_Item());
+	mapBombMana->Coll(shake_Counter.flg, con, player->Get_Switch_On());
+	mapSwitch->Coll(player->Get_Switch_On());
+	rockAttackMana->Coll();
+	hpDropItemMana->Coll();
+
+	//
+
+	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
+
+	bombMana->Coll_End_Set(exMana);
+	mapBombMana->Coll_End_Set(exMana);
+
+	//
+
+	//ポインタが変わってしまうのでもう一回当たり判定リストに当たっている物を追加
+	// 
+	//GameObjectリストの初期化
+	coll_List.clear();
+	//GameObjectリストにGameObjectの追加
+
+	Obj_Coll_Add();
+	//当たっているものを追加
+	for (int i = 0; i < (int)coll_List.size(); ++i)
+	{
+		coll_List[i]->coll_Obj_List.clear();
+		if (coll_List[i]->same) { continue; }
+		for (int n = 0; n < (int)coll_List.size(); ++n)
+		{
+			if (i == n || coll_List[n]->same) { continue; }
+
+			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
+			{
+				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
+			}
+		}
+	}
+	//
+}
+
+void Game::Obj_Coll_Add()//オブジェクト追加するだけ
+{
 	//player
 	coll_List.push_back(&player->game_object);
 
@@ -1344,50 +1435,6 @@ void Game::Obj_Coll_Update()
 	{
 		coll_List.push_back(&hpDropItemMana->hpDropItem[i].game_object);
 	}
-
-	//当たり判定リストに当たっている物を追加
-	for (int i = 0; i < (int)coll_List.size(); ++i)
-	{
-		coll_List[i]->coll_Obj_List.clear();
-		if (coll_List[i]->same) { continue; }
-		for (int n = 0; n < (int)coll_List.size(); ++n)
-		{
-			if (i == n || coll_List[n]->same) { continue; }
-
-			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
-			{
-				coll_List[n]->game.nameTag;
-				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
-			}
-		}
-	}
-
-
-	//当たり判定
-	player->Coll(hetStop.flg);
-	//爆発とひも
-	for (int i = 0; i < exMana->ex.size(); ++i)
-	{
-		fuse->Coll(coll, exMana->ex[i].game_object);
-	}
-
-	enemy1Mana->Coll(exMana->ex);
-	enemy3Mana->Coll(exMana->ex);
-	enemy4Mana->Coll(exMana->ex);
-	bombMana->Coll(shake_Counter.flg, con);
-	enemy2->Coll(exMana->ex);
-	saveMana->Coll();
-	itemMana->Coll(player->Get_Get_Item());
-	mapBombMana->Coll(shake_Counter.flg, con, player->Get_Switch_On());
-	mapSwitch->Coll(player->Get_Switch_On());
-	rockAttackMana->Coll();
-	hpDropItemMana->Coll();
-
-	//全ての当たり判定が終了したら結果に応じてオブジェクトを生成
-
-	bombMana->Coll_End_Set(exMana);
-	mapBombMana->Coll_End_Set(exMana);
-
 }
 
 
