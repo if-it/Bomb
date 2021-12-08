@@ -48,7 +48,7 @@ void MapSwitch::Coll(bool& switch_on)
 		for (int n = 0; n < (int)mapSwitch[i].coll_Obj_List.size(); ++n)
 		{
 			std::string nameTag = mapSwitch[i].coll_Obj_List[n]->nameTag;
-			if (nameTag == "ex" && !one_Coll.flg)
+			if ((nameTag == "ex"||nameTag=="ex_player") && !one_Coll.flg)
 			{
 				one_Coll.flg = true;
 				if (switch_on) 

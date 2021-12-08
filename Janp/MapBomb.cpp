@@ -52,7 +52,7 @@ void MapBomb::Coll_End_Set(ExplosionMana* ex)
 	if (exSpawn)
 	{
 		exSpawn = false;
-		ex->ExSpawn(game_object, 1);
+		ex->ExSpawn(game_object, 1,false);
 	}
 }
 

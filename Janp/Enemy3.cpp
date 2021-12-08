@@ -111,7 +111,7 @@ void Enemy3::Coll(std::vector<Explosion>& ex)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
 
-		if (nameTag == "ex")
+		if (nameTag == "ex" || nameTag == "ex_player")
 		{
 			if (!ex_Invincible.flg)
 			{

@@ -608,6 +608,7 @@ bool Player::Die()
 	return false;
 }
 
+
 void Player::Animation_Update()
 {
 
@@ -686,11 +687,6 @@ void Player::Animation_Update()
 		one_stop_flg = false;
 		animation.oneAnimeFlg = false;
 		air_Back_Count = Count();
-	}
-	else
-	{
-		ex_Chain = 0.0f;
-		junp_Chain = 0.0f;
 	}
 
 	if (invincible.flg)
@@ -786,6 +782,13 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 	{
 		air = true;
 	}
+
+	if (!air)
+	{
+		ex_Chain = 0.0f;
+		junp_Chain = 0.0f;
+	}
+
 
 	if (!air_Array[0] && !air_Array[1] && !air_Array[2])
 	{
@@ -1211,6 +1214,18 @@ void Player::Space_On()
 	}
 }
 
+void Player::Exit_Coll()
+{
+	//ìñÇΩÇ¡ÇƒÇ¢ÇΩèÛë‘Ç©ÇÁäOÇÍÇΩÇ∆Ç´
+	for (int i = 0; i < (int)game_object.coll_Exit_Obj_List.size(); ++i)
+	{
+		std::string nameTag = game_object.coll_Exit_Obj_List[i]->nameTag;
+		if (nameTag == "ex" || nameTag == "ex_player")
+		{
+			exit_Ex = false;
+		}
+	}
+}
 
 void Player::Coll(bool& hetstop)
 {
@@ -1220,39 +1235,44 @@ void Player::Coll(bool& hetstop)
 	float blowX = 0.0f;
 	float blowY = 0.0f;
 
-	for (int i = 0; i < (int)game_object.coll_Exit_Obj_List.size(); ++i)
-	{
-		std::string nameTag = game_object.coll_Exit_Obj_List[i]->nameTag;
-		if (nameTag == "ex")
-		{
-			exit_Ex = false;
-		}
-	}
-
-
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
-		if (nameTag == "ex" && !exit_Ex)
+		if (nameTag == "ex")
 		{
-			++ex_Chain;
-			if (ex_Chain > 5)
+			if (!exit_Ex)
 			{
-				ex_Chain = 5;
+				++ex_Chain;
+				if (ex_Chain > 5)
+				{
+					ex_Chain = 5;
+				}
+
+				junp_Chain += EXJUMP / ex_Chain;
+
+				if (junp_Chain > EXJUMP * 2)
+				{
+					junp_Chain = EXJUMP * 2;
+				}
+				game_object.game.allVec.vec.y = 0;
+				game_object.game.allVec.vec.y -= junp_Chain;
+				bomb_Janp = true;
+				rota_Vec = junp_Chain;
+				size_Change_Count.flg = true;
+				exit_Ex = true;
 			}
-
-			 junp_Chain += EXJUMP/ex_Chain;
-
-			 if (junp_Chain > EXJUMP * 3)
-			 {
-				 junp_Chain = EXJUMP * 2;
-			 }
-			game_object.game.allVec.vec.y = 0;
-			game_object.game.allVec.vec.y -= junp_Chain;
-			bomb_Janp = true;
-			rota_Vec = 10.0f;
-			size_Change_Count.flg = true;
-			exit_Ex = true;
+		}
+		else if (nameTag == "ex_player")
+		{
+			if (!exit_Ex)
+			{
+				game_object.game.allVec.vec.y = 0;
+				game_object.game.allVec.vec.y -= EXJUMP;
+				bomb_Janp = true;
+				rota_Vec = EXJUMP;
+				size_Change_Count.flg = true;
+				exit_Ex = true;
+			}
 		}
 		else if (nameTag == "RSideEx")
 		{

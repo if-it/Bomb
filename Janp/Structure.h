@@ -176,6 +176,7 @@ protected:
 		COLOR color;
 		//当たり判定リスト
 		std::vector<Game*>coll_Obj_List;//当たっているとき
+		std::vector<Game>coll_Obj_List2;//ポインタ型じゃない版
 		std::vector<Game*>coll_Exit_Obj_List;//当たっている状態から外れたら
 		bool same;
 
@@ -186,6 +187,7 @@ protected:
 			game = Game(NameTag, disFlg, TexSize, Scale);
 			color = COLOR();
 			coll_Obj_List.clear();
+			coll_Exit_Obj_List.clear();
 			same = Same;
 		}
 

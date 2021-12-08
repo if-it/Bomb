@@ -275,7 +275,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				enemy2_End.game.allVec.pos += Vector2(GetRand(240), GetRand(192));
 				if (die_Ex.Conuter(10))
 				{
-					ex->ExSpawn(enemy2_End, 1);
+					ex->ExSpawn(enemy2_End, 1, false);
 					++die_Ex_Num;
 				}
 				if (die_Ex_Num == die_Ex_Max_Num)
@@ -450,7 +450,7 @@ void Enemy2::Coll(std::vector<Explosion>& ex)
 	{
 		std::string nameTag = body.coll_Obj_List[i]->nameTag;
 
-		if (nameTag == "ex")
+		if (nameTag == "ex" || nameTag == "ex_player")
 		{
 			if (!ex_Invincible.flg)
 			{

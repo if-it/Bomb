@@ -32,11 +32,15 @@ void ExplosionMana::Update()
 	}
 }
 
-void ExplosionMana::ExSpawn(GameObject& go , const int& damage)
+void ExplosionMana::ExSpawn(GameObject& go , const int& damage,const bool& player)
 {
 
 	Explosion InitEx;
 	InitEx.Init();
+	if (player)
+	{
+		InitEx.game_object.game.nameTag = "ex_player";
+	}
 	InitEx.game_object.game.dis = true;
 	InitEx.game_object.game.allVec.pos = go.game.allVec.pos;
 	InitEx.game_object.game.allVec.pos -= SIZE / 2;

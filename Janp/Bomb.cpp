@@ -47,12 +47,12 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool
 		if (bombAni.OneAnimation(28, 8))
 		{
 			game_object.game.dis = false;
-			ex->ExSpawn(game_object, damage);
+			ex->ExSpawn(game_object, damage,playerSpawn);
 			shakeflg = true;
 			con->Shake(1000, 200);
 		}
 
-		if (time == 120)
+		if (time == 80)
 		{
 			playerOneColl = false;
 		}
@@ -194,7 +194,7 @@ void Bomb::Coll_End_Set(ExplosionMana* ex)
 	if (exSpawn)
 	{
 		exSpawn = false;
-		ex->ExSpawn(game_object, damage);
+		ex->ExSpawn(game_object, damage,playerSpawn);
 	}
 }
 

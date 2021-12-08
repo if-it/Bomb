@@ -77,7 +77,7 @@ void Enemy4::Coll(std::vector<Explosion>& ex)
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
 		std::string nameTag = game_object.coll_Obj_List[i]->nameTag;
-		if (nameTag == "ex")
+		if (nameTag == "ex" || nameTag == "ex_player")
 		{
 			if (!ex_Invincible.flg)
 			{

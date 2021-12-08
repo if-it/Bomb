@@ -859,7 +859,7 @@ void Game::Update()
 		}
 		Cursor(0, num);
 		ui->Menu(title_Cursor);
-		if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK)||con->TrlggerBotton(con->B))
+		if (key->KeyTrigger(KEY_INPUT_TAB) || con->TrlggerBotton(con->BACK) || con->TrlggerBotton(con->B))
 		{
 			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 			scene = PLAY;
@@ -992,7 +992,7 @@ void Game::Data_Load()
 void Game::Stage_Init()
 {
 	backMap->Init(stage);
-	backMap2->Init(stage, load,sc);
+	backMap2->Init(stage, load, sc);
 	frontMap->Init(stage, load);
 	saveMana->Init(map->map);
 	enemy1Mana->Init(map->map, load, stage);
@@ -1016,7 +1016,7 @@ void Game::Delete_Data()
 {
 	Meta_Data_Init();
 
-	map->Save_Data_Init(stage,load);
+	map->Save_Data_Init(stage, load);
 	player->Save_Data_Init(map->map, sc);
 	itemMana->Save_Data_Init();
 
@@ -1188,7 +1188,7 @@ void Game::Play_Scene()
 		}
 		if (!time)
 		{
-			Shake(shake_Counter, 10, Vector2((float)(GetRand(16) - GetRand(16)), (float)(GetRand(10) - GetRand(10))),map->map);
+			Shake(shake_Counter, 10, Vector2((float)(GetRand(16) - GetRand(16)), (float)(GetRand(10) - GetRand(10))), map->map);
 		}
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
@@ -1265,25 +1265,46 @@ void Game::Obj_Coll_Update()
 	//GameObjectリストにGameObjectの追加
 
 	Obj_Coll_Add();
-	//爆弾が悪いと思う!
+
 	//前フレームで当たってたけど今当たってないものを追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
 		coll_List[i]->coll_Exit_Obj_List.clear();
-		for (int n = 0; n < (int)coll_List[i]->coll_Obj_List.size(); ++n)
+		for (int n = 0; n < (int)coll_List[i]->coll_Obj_List2.size(); ++n)
 		{
-			if (!coll->CollsionObj(*coll_List[i], *coll_List[i]->coll_Obj_List[n]))
+			bool coll_dis = false;
+			for (int k = 0; k < (int)coll_List.size(); ++k)
 			{
-				coll_List[i]->coll_Exit_Obj_List.push_back(coll_List[i]->coll_Obj_List[n]);
+				if (coll_List[k]->game.nameTag == coll_List[i]->coll_Obj_List2[n].nameTag &&
+					coll_List[k]->game.num == coll_List[i]->coll_Obj_List2[n].num)
+				{
+					coll_dis = true;
+					if (!coll->CollsionObj(*coll_List[i], *coll_List[k]))
+					{
+						coll_List[i]->coll_Exit_Obj_List.push_back(&coll_List[k]->game);
+					}
+				}
+
+			}
+			if (!coll_dis)
+			{
+				coll_List[i]->coll_Exit_Obj_List.push_back(&coll_List[i]->coll_Obj_List2[n]);
 			}
 		}
 	}
+	//
+
+	//当たってない状態になった時に行う処理
+
+	player->Exit_Coll();
+
 	//
 
 	//当たり判定リストに当たっている物を追加
 	for (int i = 0; i < (int)coll_List.size(); ++i)
 	{
 		coll_List[i]->coll_Obj_List.clear();
+		coll_List[i]->coll_Obj_List2.clear();
 		if (coll_List[i]->same) { continue; }
 		for (int n = 0; n < (int)coll_List.size(); ++n)
 		{
@@ -1292,6 +1313,7 @@ void Game::Obj_Coll_Update()
 			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
 			{
 				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
+				coll_List[i]->coll_Obj_List2.push_back(coll_List[n]->game);
 			}
 		}
 	}
@@ -1324,32 +1346,6 @@ void Game::Obj_Coll_Update()
 
 	bombMana->Coll_End_Set(exMana);
 	mapBombMana->Coll_End_Set(exMana);
-
-	//
-
-	//ポインタが変わってしまうのでもう一回当たり判定リストに当たっている物を追加
-	// 
-	//GameObjectリストの初期化
-	coll_List.clear();
-	//GameObjectリストにGameObjectの追加
-
-	Obj_Coll_Add();
-	//当たっているものを追加
-	for (int i = 0; i < (int)coll_List.size(); ++i)
-	{
-		coll_List[i]->coll_Obj_List.clear();
-		if (coll_List[i]->same) { continue; }
-		for (int n = 0; n < (int)coll_List.size(); ++n)
-		{
-			if (i == n || coll_List[n]->same) { continue; }
-
-			if (coll->CollsionObj(*coll_List[i], *coll_List[n]))
-			{
-				coll_List[i]->coll_Obj_List.push_back(&coll_List[n]->game);
-			}
-		}
-	}
-	//
 }
 
 void Game::Obj_Coll_Add()//オブジェクト追加するだけ
@@ -1547,7 +1543,7 @@ void Game::Draw()
 
 bool Game::Enter()
 {
-	if (con->TrlggerBotton(con->A) || con->TrlggerBotton(con->X) ||key->KeyTrigger(KEY_INPUT_SPACE)|| key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
+	if (con->TrlggerBotton(con->A) || con->TrlggerBotton(con->X) || key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
 	{
 		PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 		return true;

@@ -31,6 +31,7 @@ public:
 	void Save(const int& data_Num);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	bool Die();
+	void Exit_Coll();
 	void Coll(bool& hetstop);
 	void TogeInit();
 	void Se_Volume(int volume);
