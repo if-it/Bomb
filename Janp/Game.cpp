@@ -39,6 +39,7 @@ Game::~Game()
 	delete blockParticleMana;
 	delete frontMap;
 	delete aroundEffeMana;
+	delete text;
 
 	coll_List.clear();
 	InitGraph();
@@ -64,7 +65,8 @@ void Game::FirstInit()
 	con->Set_Shake_On(false);
 	game_end_flg = false;
 	debug_mode_flg = false;
-	scene = OPENING;
+	scene = FIRST_SCENE;
+	before_Scene = FIRST_SCENE;
 	stage = MAP_F;
 	player->player_mapset = MAP_P_F;
 	Init();
@@ -75,6 +77,7 @@ void Game::FirstInit()
 	meta_Data = { 0,0 };
 	controller_on = false;
 	TitleInit();
+	talk_Flg = 100;
 }
 
 void Game::TitleInit()
@@ -167,6 +170,7 @@ bool Game::Loading()
 	hpDropItemMana->Loading(load);
 	orbitBomb->Loading(load);
 	aroundEffeMana->Loading(load);
+	text->Loading(load);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -221,7 +225,7 @@ void Game::Update()
 
 	switch (scene)
 	{
-	case OPENING:
+	case FIRST_SCENE:
 		SetBackgroundColor(0xEF, 0xFF, 0xEF);
 		scene = LOAD;
 		break;
@@ -574,6 +578,10 @@ void Game::Update()
 					Data_Load();
 					DeleteGraph(title);
 					DeleteGraph(text_Play_Tex);
+					/*if (meta_Data.save_Count < 1)
+					{
+					}*/
+					scene = OPENING_INIT;
 				}
 			}
 		}
@@ -645,7 +653,7 @@ void Game::Update()
 	case OPTION:
 		if (play_option_Flg == 10)
 		{
-			scene = PLAY;
+			scene = before_Scene;
 		}
 		if (play_option_Flg == 1)
 		{
@@ -865,6 +873,23 @@ void Game::Update()
 			scene = PLAY;
 		}
 		break;
+	case OPENING_INIT:
+
+		player->Init(map->map, sc);
+		text->Init(talk_Flg);
+		scene = OPENING_INIT2;
+
+		break;
+	case OPENING_INIT2:
+		if (SceneChangeSeb(8))
+		{
+			scene = OPENING;
+		}
+		break;
+	case OPENING:
+		Play_Scene();
+		text->Update(talk_Flg, con);
+		break;
 	default:
 		break;
 	}
@@ -911,16 +936,19 @@ void Game::Update()
 		}
 		else
 		{
+			before_Scene = scene;
 			scene = OPTION;
 			play_option_Flg = 1;
 		}
 	}
+	const Vector2 CURSOR_POS = Vector2(WIDTH / 2 + 28, HEIGHT / 2 + 28);
 	if (game_end_set == 2)
 	{
-		cursor_Pos = Vector2(743, 430);
-		cursor_Pos2 = Vector2(849, 430);
-		cursor_lerp = Vector2(743, 430);
-		cursor_lerp2 = Vector2(849, 430);
+		cursor_Pos = CURSOR_POS;
+		cursor_Pos2 = CURSOR_POS;
+		cursor_Pos2.x += 106;
+		cursor_lerp = cursor_Pos;
+		cursor_lerp2 = cursor_Pos2;
 		game_end_on = true;
 		game_end_set = 3;
 	}
@@ -929,15 +957,15 @@ void Game::Update()
 		int stickLX = con->StickLTriggerX();
 		if (key->KeyTrigger(KEY_INPUT_RIGHT) || stickLX == 1 || con->TrlggerBotton(con->RIGHT))
 		{
-			cursor_lerp = Vector2(743, 430);
-			cursor_lerp2 = Vector2(849, 430);
+			cursor_lerp = CURSOR_POS;
+			cursor_lerp2 = Vector2(CURSOR_POS.x + 106.0f, CURSOR_POS.y);
 			game_end_on = true;
 			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		}
 		if (key->KeyTrigger(KEY_INPUT_LEFT) || stickLX == -1 || con->TrlggerBotton(con->LEFT))
 		{
-			cursor_lerp = Vector2(543, 430);
-			cursor_lerp2 = Vector2(655, 430);
+			cursor_lerp = Vector2(CURSOR_POS.x - 210.0f, CURSOR_POS.y);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 124.0f, cursor_lerp.y);
 			game_end_on = false;
 			PlaySoundMem(selectSE, DX_PLAYTYPE_BACK, true);
 		}
@@ -1146,7 +1174,7 @@ void Game::Play_Scene()
 		{
 			play_option_Flg = 0;
 		}
-		if (play_option_Flg == 0 && game_end_set == 0 && enemy2->Get_Ex_On() == 0)
+		if (play_option_Flg == 0 && game_end_set == 0 && enemy2->Get_Ex_On() == 0 && scene == PLAY)
 		{
 			player->Set_Contorl_Flg(true);
 		}
@@ -1440,7 +1468,7 @@ void Game::Draw()
 	DrawGraph(0, 0, haikei, true);
 	switch (scene)
 	{
-	case OPENING:
+	case FIRST_SCENE:
 		break;
 	case LOAD:
 		break;
@@ -1523,6 +1551,12 @@ void Game::Draw()
 		Box(Vector2(), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), WIDTH, HEIGHT);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		ui->MenuDraw();
+		break;
+	case OPENING_INIT:
+	case OPENING_INIT2:
+	case OPENING:
+		PlayDraw(sc, shake);
+		text->Draw();
 		break;
 	default:
 		break;

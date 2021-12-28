@@ -62,6 +62,7 @@ private:
 	bool option_Controller;
 	bool option_One_Shake;
 	float option_Sound_fle;
+	int talk_Flg;
 
 	struct Option_Data
 	{

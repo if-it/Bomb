@@ -22,6 +22,7 @@
 #include"OrbitBomb.h"
 #include"FrontMap.h"
 #include"AroundEffectMana.h"
+#include"Text.h"
 
 class GameInclude :public Draw
 {
@@ -69,7 +70,7 @@ protected:
 	BlockParticleMana* blockParticleMana = new BlockParticleMana();
 	FrontMap* frontMap = new FrontMap();
 	AroundEffectMana* aroundEffeMana = new AroundEffectMana();
-	
+	Text* text = new Text();
 
 	bool controllerOnly;
 	bool drawScene;
@@ -90,7 +91,7 @@ protected:
 	enum SCENE
 	{
 		INIT,
-		OPENING,
+		FIRST_SCENE,
 		LOAD,
 		UNLOAD,
 		TITLE,
@@ -109,8 +110,12 @@ protected:
 		ENDING,
 		OPTION,
 		MENU,
+		OPENING_INIT,
+		OPENING_INIT2,
+		OPENING,
 	};
 	int scene;
+	int before_Scene;
 	int stage;
 	bool stageChange;
 	int title_Flg;

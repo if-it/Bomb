@@ -47,7 +47,7 @@ void UI::Init()
 	exit_Size = Vector2(0.0f, 0.01f);
 	for (int i = 0; i < 5; ++i)
 	{
-		menuPos[i] = Vector2(WIDTH / 2 + 1024 * i, HEIGHT / 2);
+		menuPos[i] = Vector2(WIDTH / 2 + 1500 * i, HEIGHT / 2);
 	}
 }
 
@@ -350,7 +350,7 @@ void UI::Menu(Vector2 cou)
 {
 	for (int i = 0; i < 5; ++i)
 	{
-		menuPos[i] = Vector2::Lerp(menuPos[i], Vector2(WIDTH / 2 - 1024 * (cou.x - i), HEIGHT / 2), 0.1f);
+		menuPos[i] = Vector2::Lerp(menuPos[i], Vector2(WIDTH / 2 - 1500 * (cou.x - i), HEIGHT / 2), 0.1f);
 	}
 }
 
