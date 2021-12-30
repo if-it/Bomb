@@ -29,7 +29,9 @@ private:
 	void Map_Coll_Update();
 	void Obj_Coll_Update();
 	void Obj_Coll_Add();
+	void Opening_Scene();
 	void PlayDraw(const Vector2& sc2, const Vector2& shake2);
+	void PlayDraw_No_UI(const Vector2& sc2, const Vector2& shake2);
 	void Delete_Data();
 	void Option_Data_Save();
 	void Data_Load();
@@ -42,7 +44,8 @@ private:
 	bool flame_time;
 	int data_Num;
 	int title_Pal;
-
+	int opening_Flg;
+	int opening_count;
 	int game_end_set;
 	Vector2 title_Cursor;
 	Vector2 cursor_Pos;

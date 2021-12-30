@@ -49,7 +49,7 @@ Game::~Game()
 void Game::SystemInit()
 {
 	// マウスを表示状態にする？
-	SetMouseDispFlag(TRUE);
+	SetMouseDispFlag(FALSE);
 
 	//コントローラーしか使えない？
 	ControllerOnly(false);
@@ -61,8 +61,6 @@ void Game::SystemInit()
 void Game::FirstInit()
 {
 	ParentInit();
-	//コントローラー振動ONOFF
-	con->Set_Shake_On(false);
 	game_end_flg = false;
 	debug_mode_flg = false;
 	scene = FIRST_SCENE;
@@ -76,8 +74,11 @@ void Game::FirstInit()
 	option_Data = { 0,0,false };
 	meta_Data = { 0,0 };
 	controller_on = false;
+	if (con->Set() == 0)controller_on = true;
 	TitleInit();
 	talk_Flg = 100;
+	opening_Flg = 0;
+	opening_count = 0;
 }
 
 void Game::TitleInit()
@@ -578,10 +579,10 @@ void Game::Update()
 					Data_Load();
 					DeleteGraph(title);
 					DeleteGraph(text_Play_Tex);
-					/*if (meta_Data.save_Count < 1)
+					if (player->Get_Max_Bomb_Num() < 1)
 					{
-					}*/
-					scene = OPENING_INIT;
+						scene = OPENING_INIT;
+					}
 				}
 			}
 		}
@@ -875,10 +876,9 @@ void Game::Update()
 		break;
 	case OPENING_INIT:
 
-		player->Init(map->map, sc);
 		text->Init(talk_Flg);
 		scene = OPENING_INIT2;
-
+		player->Set_Rota_Vec(20.0f);
 		break;
 	case OPENING_INIT2:
 		if (SceneChangeSeb(8))
@@ -887,8 +887,7 @@ void Game::Update()
 		}
 		break;
 	case OPENING:
-		Play_Scene();
-		text->Update(talk_Flg, con);
+		Opening_Scene();
 		break;
 	default:
 		break;
@@ -1461,6 +1460,41 @@ void Game::Obj_Coll_Add()//オブジェクト追加するだけ
 	}
 }
 
+void Game::Opening_Scene()
+{
+
+	if(opening_Flg>2) Play_Scene();
+	switch (opening_Flg)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		++opening_count;
+		if (opening_count >= 20)
+		{
+			++opening_Flg;
+		}
+		break;
+	case 5:
+		break;
+	case 6:
+		if (!player->Get_Air())
+		{
+			opening_Flg = 7;
+		}
+		break;
+	case 7:
+		text->Update(talk_Flg, Enter());
+		if (text->Get_End()) { scene = PLAY; }
+		break;
+	default:
+		break;
+	}
+	
+}
+
 
 
 void Game::Draw()
@@ -1555,8 +1589,25 @@ void Game::Draw()
 	case OPENING_INIT:
 	case OPENING_INIT2:
 	case OPENING:
-		PlayDraw(sc, shake);
-		text->Draw();
+		switch (opening_Flg)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+			break;
+		case 6:
+			PlayDraw_No_UI(sc, shake);
+			break;
+		case 7:
+			PlayDraw_No_UI(sc, shake);
+			text->Draw();
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		break;
@@ -1577,7 +1628,7 @@ void Game::Draw()
 
 bool Game::Enter()
 {
-	if (con->TrlggerBotton(con->A) || con->TrlggerBotton(con->X) || key->KeyTrigger(KEY_INPUT_SPACE) || key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
+	if (con->TrlggerBotton(con->X) || key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
 	{
 		PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 		return true;
@@ -1590,6 +1641,14 @@ bool Game::Enter()
 
 
 void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
+{
+
+	PlayDraw_No_UI(sc2, shake2);
+	//UI関連
+	ui->Draw(sc2, shake2);
+}
+
+void Game::PlayDraw_No_UI(const Vector2& sc2, const Vector2& shake2)
 {
 	//Map関連
 	backMap2->Draw(sc2, shake2);
@@ -1626,7 +1685,4 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 	rockEffeMana->Draw(sc2, shake2);
 	blockParticleMana->Draw(sc2, shake2);
 	aroundEffeMana->Draw();
-
-	//UI関連
-	ui->Draw(sc2, shake2);
 }

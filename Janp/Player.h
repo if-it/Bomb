@@ -39,6 +39,7 @@ public:
 	int player_mapset;
 
 	void Set_Now_Bomb_Num(const int& num) { now_Bomb_Num = num; }
+	void Set_Rota_Vec(const float& num) { rota_Vec = num; }
 	int Get_Now_Bomb_Num() { return now_Bomb_Num; }
 	int Get_Max_Bomb_Num() { return max_Bomb_Num; }
 	int Get_Now_Hp() { return hp; }
@@ -53,6 +54,7 @@ public:
 	bool Get_Die_End() { return die_End; }
 	bool& Get_Switch_On() { return save_Data.switch_On; }
 	bool& Get_Move_Guide_On() { return move_guide_on; }
+	bool& Get_Air() { return air; }
 
 	void Set_Contorl_Flg(const bool& flg) { control_flg = flg; }
 

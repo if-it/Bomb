@@ -45,6 +45,7 @@ private:
 	DINPUT_JOYSTATE DInput;
 	XINPUT_STATE XInput;
 	bool botton[15];
+	bool flame_botton[15];
 	int flame[15];
 	bool LTrigger;
 	int LFlame;

@@ -12,12 +12,18 @@ public:
 	~Text();
 	void Init(int& talk_Scene);
 	void Loading(Load* load);
-	void Update(int& talk_Scene,Controller* con);
+	void Update(int& talk_Scene, bool enter);
 	void Draw();
 
+	bool Get_End() { return end; }
 private:
 	int tex[TEX_MAX_NUM];
-	std::vector<std::vector<int>> texts;
-	std::vector<std::vector<GameObject>> text_obj;
+	std::vector<int> texts;
+	std::vector<GameObject> text_obj;
+	int count;
+	int now_Num;
+	int talk_Flg;
+	int next;
+	bool end;
 };
 

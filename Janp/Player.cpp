@@ -260,7 +260,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		if (key->keyFlame(KEY_INPUT_RIGHT) > 0 || stickL.x > 10000 || con->FlameBotton(con->RIGHT))
 		{
 			right = true;
-			game_object.game.lr = false;
+
 
 
 			bomb_Vec = Vector2(1.0f, -0.15f);
@@ -268,7 +268,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 		if (key->keyFlame(KEY_INPUT_LEFT) > 0 || stickL.x < -10000 || con->FlameBotton(con->LEFT))
 		{
 			left = true;
-			game_object.game.lr = true;
+
 			bomb_Vec = Vector2(-1.0f, -0.15f);
 		}
 		if ((key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A) > 0))
@@ -336,10 +336,12 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	if (right)
 	{
 		game_object.game.allVec.vec.x += SPEED;
+		game_object.game.lr = false;
 	}
 	else if (left)
 	{
 		game_object.game.allVec.vec.x -= SPEED;
+		game_object.game.lr = true;
 	}
 	else if (game_object.game.allVec.vec.x > 0)//êßå‰
 	{
