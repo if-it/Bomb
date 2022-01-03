@@ -24,8 +24,8 @@ public:
     void Draw(const Vector2& sc, const Vector2& shake);
 
     std::vector<Item> item;
-private:
     int tex[5];
+private:
     Animation item_Ani;
     std::vector<Save_Data> save_Data_Ori;
     int save_Data_Size;

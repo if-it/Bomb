@@ -85,7 +85,7 @@ void Text::Update(int& talk_Scene, bool enter)
 	{
 	case 0:
 		++count;
-		if (count == 8)
+		if (count == 5)
 		{
 			count = 0;
 			text_obj[now_Num].game.dis = true;
@@ -128,6 +128,8 @@ void Text::Update(int& talk_Scene, bool enter)
 		else
 		{
 			end = true;
+			texts.clear();
+			text_obj.clear();
 		}
 		break;
 	default:

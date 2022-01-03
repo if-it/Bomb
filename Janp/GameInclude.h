@@ -23,6 +23,7 @@
 #include"FrontMap.h"
 #include"AroundEffectMana.h"
 #include"Text.h"
+#include"SkillEffectMana.h"
 
 class GameInclude :public Draw
 {
@@ -71,6 +72,7 @@ protected:
 	FrontMap* frontMap = new FrontMap();
 	AroundEffectMana* aroundEffeMana = new AroundEffectMana();
 	Text* text = new Text();
+	SkillEffectMana* skillEffectMana;
 
 	bool controllerOnly;
 	bool drawScene;

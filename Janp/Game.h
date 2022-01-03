@@ -25,11 +25,13 @@ private:
 	void Stage_Init();
 	void Meta_Data_Init();
 	void Play_Scene();
+	void Title_Scene();
 	void Play_Scene_Update();
 	void Map_Coll_Update();
 	void Obj_Coll_Update();
 	void Obj_Coll_Add();
 	void Opening_Scene();
+	void Option_Scene();
 	void PlayDraw(const Vector2& sc2, const Vector2& shake2);
 	void PlayDraw_No_UI(const Vector2& sc2, const Vector2& shake2);
 	void Delete_Data();

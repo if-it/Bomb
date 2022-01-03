@@ -250,345 +250,7 @@ void Game::Update()
 		}
 		break;
 	case TITLE:
-		if (game_end_set == 0)
-		{
-			if (title_Flg == 1 && SceneChangeSeb(8))//暗転タイトルまで
-			{
-				title_Flg = 0;
-			}
-			if (title_Flg == 0)//タイトル表示
-			{
-				title_Pal += 3;
-				if (title_Pal >= 255)
-				{
-					title_Pal = 255;
-
-					if (game_end_set == 0)
-					{
-						title_Flg = 2;//タイトル表示終わり
-					}
-				}
-			}
-			else if (title_Flg == 2)//タイトル左に移動
-			{
-				title_Pos = Vector2::Lerp(title_Pos, Vector2(50, HEIGHT / 2 - 192), 0.03f);
-				if (title_Pos.x - 50 <= 5.0f)
-				{
-					title_Flg = 3;
-				}
-			}
-			else if (title_Flg == 3)//テキスト表示
-			{
-				title_Pos = Vector2::Lerp(title_Pos, Vector2(50, HEIGHT / 2 - 192), 0.03f);
-				text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 500, HEIGHT / 2 - 100), 0.05f);
-				if (text_Play_Pos.x - (WIDTH - 500) <= 100.0f)
-				{
-					text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2), 0.05f);
-					if (text_Option_Pos.x - (WIDTH - 328) <= 10.0f)
-					{
-						text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 500, HEIGHT / 2 + 100), 0.05f);
-						if (text_Exit_Pos.x - (WIDTH - 500) <= 10.0f)
-						{
-							title_Flg = 4;
-							cursor_Pos = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
-							cursor_Pos2 = Vector2(cursor_Pos.x + 100, cursor_Pos.y);
-							cursor_lerp = cursor_Pos;
-							cursor_lerp2 = cursor_Pos2;
-						}
-					}
-				}
-			}
-			else if (title_Flg == 4)//カーソル移動
-			{
-				text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 500, HEIGHT / 2 - 100), 0.05f);
-				text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2), 0.05f);
-				text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 500, HEIGHT / 2 + 100), 0.05f);
-
-				Cursor(2, 0);
-
-				if (title_Cursor.y == 0)
-				{
-					cursor_lerp = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-					if (Enter())title_Flg = 5;
-				}
-				else if (title_Cursor.y == 1)
-				{
-					cursor_lerp = Vector2(text_Option_Pos.x - 15, text_Option_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 150, cursor_lerp.y);
-					if (Enter())title_Flg = 7;
-				}
-				else if (title_Cursor.y == 2)
-				{
-					cursor_lerp = Vector2(text_Exit_Pos.x + 15, text_Exit_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-					if (Enter())game_end_set = 1;
-
-				}
-				if (key->keyFlame(KEY_INPUT_I) > 0 && key->keyFlame(KEY_INPUT_N) > 0 && key->keyFlame(KEY_INPUT_0) > 0)
-				{
-					Delete_Data();
-				}
-			}
-			else if (title_Flg == 5)
-			{
-				title_Pos = Vector2::Lerp(title_Pos, Vector2(-1000, HEIGHT / 2 - 192), 0.03f);
-				text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH + 200, HEIGHT / 2), 0.05f);
-				text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH + 200, HEIGHT / 2 + 100), 0.05f);
-				if (title_Pos.x < -800)
-				{
-					title_Flg = 6;
-				}
-			}
-			else if (title_Flg == 7)//設定
-			{
-				title_Cursor = Vector2();
-				text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH + 200, HEIGHT / 2 - 100), 0.03f);
-
-				text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH + 200, HEIGHT / 2 + 100), 0.03f);
-				if (text_Play_Pos.x > WIDTH + 100)
-				{
-					title_Flg = 8;
-					option_Select = true;
-				}
-			}
-			else if (title_Flg == 8)
-			{
-				text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2 - 200), 0.05f);
-				text_Options_Pos = Vector2::Lerp(text_Options_Pos, Vector2(text_Option_Pos.x, HEIGHT / 2 - 100), 0.05f);
-				cursor_lerp = Vector2(text_Option_Pos.x - 15, text_Option_Pos.y - 10);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 150, cursor_lerp.y);
-				if (text_Option_Pos.y - (HEIGHT / 2 - 200) < 10.0f)
-				{
-					title_Flg = 9;
-
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-				}
-			}
-			else if (title_Flg == 9)//設定セレクト
-			{
-				text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2 - 200), 0.05f);
-				text_Options_Pos = Vector2::Lerp(text_Options_Pos, Vector2(text_Option_Pos.x, HEIGHT / 2 - 100), 0.05f);
-
-				Cursor(2, 0);
-
-				if (title_Cursor.y == 0)
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-					if (Enter())title_Flg = 10;
-				}
-				else if (title_Cursor.y == 1)
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 170, cursor_lerp.y);
-					if (Enter())title_Flg = 11;
-				}
-				else if (title_Cursor.y == 2)
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
-					if (Enter())
-					{
-						title_Flg = 12;
-						title_Cursor.x = (float)option_Data.con_shake;
-					}
-				}
-				if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
-				{
-					title_Flg = 10;
-				}
-			}
-			else if (title_Flg == 10)//戻る
-			{
-				text_Options_Pos = Vector2::Lerp(text_Options_Pos, Vector2(WIDTH + 200, HEIGHT / 2), 0.05f);
-				text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2), 0.05f);
-				cursor_lerp = Vector2(text_Option_Pos.x - 15, text_Option_Pos.y - 10);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 150, cursor_lerp.y);
-				title_Cursor = Vector2();
-				if (text_Options_Pos.x > WIDTH + 100)
-				{
-					title_Flg = 4;
-				}
-			}
-			else if (title_Flg == 11)//音量
-			{
-				float cursor_Flg = 0.0f;
-				option_Select = false;
-				option_Sound = true;
-				Cursor(3, 2);
-
-				if (option_Sound_fle == 2 && title_Cursor.x == 0 ||
-					option_Sound_fle == 0 && title_Cursor.x == 1 ||
-					option_Sound_fle == 1 && title_Cursor.x == 2)
-				{
-					cursor_Flg = 0.1f;
-				}
-				if (option_Sound_fle == 0 && title_Cursor.x == 2 ||
-					option_Sound_fle == 1 && title_Cursor.x == 0 ||
-					option_Sound_fle == 2 && title_Cursor.x == 1)
-				{
-					cursor_Flg = -0.1f;
-				}
-
-				if (title_Cursor.y == 0)//back
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-					if (Enter())
-					{
-						title_Flg = 9;
-						option_Select = true;
-						option_Sound = false;
-						Option_Data_Save();
-					}
-				}
-				else if (title_Cursor.y == 1)//main
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-
-					option_Data.Main_Volume += cursor_Flg;
-
-					if (option_Data.Main_Volume > 1.01f)
-					{
-						option_Data.Main_Volume = 0.0f;
-					}
-					else if (option_Data.Main_Volume < 0.0f)
-					{
-						option_Data.Main_Volume = 1.0f;
-					}
-
-					Bgm_Volume();
-					Se_Volume();
-				}
-				else if (title_Cursor.y == 2)//music
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-					option_Data.BGM_Volume += cursor_Flg;
-
-					if (option_Data.BGM_Volume > 1.01f)
-					{
-						option_Data.BGM_Volume = 0.0f;
-					}
-					else if (option_Data.BGM_Volume < 0.0f)
-					{
-						option_Data.BGM_Volume = 1.0f;
-					}
-
-					Bgm_Volume();
-				}
-				else if (title_Cursor.y == 3)//sound
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-					option_Data.SE_Volume += cursor_Flg;
-
-					if (option_Data.SE_Volume > 1.01f)
-					{
-						option_Data.SE_Volume = 0.0f;
-					}
-					else if (option_Data.SE_Volume < 0.0f)
-					{
-						option_Data.SE_Volume = 1.0f;
-					}
-
-					Se_Volume();
-				}
-
-				if (con->TrlggerBotton(con->B))
-				{
-					title_Flg = 9;
-					option_Select = true;
-					option_Sound = false;
-					Option_Data_Save();
-				}
-
-				option_Sound_fle = title_Cursor.x;
-			}
-			else if (title_Flg == 12)//コントローラー
-			{
-				option_Select = false;
-				option_Controller = true;
-
-				Cursor(1, 1);
-
-				if (title_Cursor.y == 0)
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-					if (Enter())
-					{
-						title_Flg = 9;
-						option_Select = true;
-						option_Controller = false;
-						Option_Data_Save();
-					}
-				}
-				else if (title_Cursor.y == 1)
-				{
-					cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-					cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-					option_Data.con_shake = (bool)title_Cursor.x;
-					con->Set_Shake_On(option_Data.con_shake);
-					if (!option_One_Shake && option_Data.con_shake)
-					{
-						con->Shake(1000, 200);
-					}
-					option_One_Shake = (bool)title_Cursor.x;
-				}
-
-				if (GetJoypadNum() == 0)
-				{
-					++reset_con;
-					if (reset_con == 60)
-					{
-						ReSetupJoypad();
-						con->Set_Shake_On(true);
-						con->Shake(1000, 200);
-						con->Set_Shake_On(option_Data.con_shake);
-						reset_con = 0;
-					}
-				}
-				if (con->TrlggerBotton(con->B))
-				{
-					title_Flg = 9;
-					option_Select = true;
-					option_Controller = false;
-					Option_Data_Save();
-				}
-			}
-
-
-
-			if (title_Flg == 6 && !title_To_Play)//プレイシーンまで移動
-			{
-				title_Pal = 0;
-				title_To_Play = true;
-				title_Flg = 0;
-
-			}
-
-			if (title_To_Play)
-			{
-				if (SceneChangeAdd(5))
-				{
-					scene = PLAYINIT;
-					Data_Load();
-					DeleteGraph(title);
-					DeleteGraph(text_Play_Tex);
-					if (player->Get_Max_Bomb_Num() < 1)
-					{
-						scene = OPENING_INIT;
-					}
-				}
-			}
-		}
-		ui->Exit(game_end_set, false);
-		dust->Update();
-
+		Title_Scene();
 		break;
 	case PLAYINIT:
 		if (SceneChangeSeb(8))
@@ -652,200 +314,7 @@ void Game::Update()
 
 		break;
 	case OPTION:
-		if (play_option_Flg == 10)
-		{
-			scene = before_Scene;
-		}
-		if (play_option_Flg == 1)
-		{
-			option_Select = true;
-			text_Option_Pos = Vector2(WIDTH / 2 - 96, HEIGHT / 2 - 200);
-			text_Options_Pos = Vector2(text_Option_Pos.x, HEIGHT / 2 - 100);
-
-			Cursor(3, 0);
-
-			if (title_Cursor.y == 0)
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-				if (Enter())play_option_Flg = 10;
-			}
-			else if (title_Cursor.y == 1)
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 170, cursor_lerp.y);
-				if (Enter())play_option_Flg = 2;
-			}
-			else if (title_Cursor.y == 2)
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
-				if (Enter())
-				{
-					play_option_Flg = 3;
-					title_Cursor.x = (float)option_Data.con_shake;
-				}
-			}
-			else if (title_Cursor.y == 3)
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 120, cursor_lerp.y);
-				if (Enter())
-				{
-					title_Flg = 1;
-				}
-			}
-			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
-			{
-				play_option_Flg = 10;
-			}
-		}
-		else if (play_option_Flg == 2)
-		{
-			float cursor_Flg = 0.0f;
-			option_Select = false;
-			option_Sound = true;
-			Cursor(3, 2);
-
-			if (option_Sound_fle == 2 && title_Cursor.x == 0 ||
-				option_Sound_fle == 0 && title_Cursor.x == 1 ||
-				option_Sound_fle == 1 && title_Cursor.x == 2)
-			{
-				cursor_Flg = 0.1f;
-			}
-			if (option_Sound_fle == 0 && title_Cursor.x == 2 ||
-				option_Sound_fle == 1 && title_Cursor.x == 0 ||
-				option_Sound_fle == 2 && title_Cursor.x == 1)
-			{
-				cursor_Flg = -0.1f;
-			}
-
-			if (title_Cursor.y == 0)//back
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-				if (Enter())
-				{
-					play_option_Flg = 1;
-					option_Select = true;
-					option_Sound = false;
-					Option_Data_Save();
-				}
-			}
-			else if (title_Cursor.y == 1)//main
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-
-				option_Data.Main_Volume += cursor_Flg;
-
-				if (option_Data.Main_Volume > 1.01f)
-				{
-					option_Data.Main_Volume = 0.0f;
-				}
-				else if (option_Data.Main_Volume < 0.0f)
-				{
-					option_Data.Main_Volume = 1.0f;
-				}
-
-				Bgm_Volume();
-				Se_Volume();
-			}
-			else if (title_Cursor.y == 2)//music
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-				option_Data.BGM_Volume += cursor_Flg;
-
-				if (option_Data.BGM_Volume > 1.01f)
-				{
-					option_Data.BGM_Volume = 0.0f;
-				}
-				else if (option_Data.BGM_Volume < 0.0f)
-				{
-					option_Data.BGM_Volume = 1.0f;
-				}
-
-				Bgm_Volume();
-			}
-			else if (title_Cursor.y == 3)//sound
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-				option_Data.SE_Volume += cursor_Flg;
-
-				if (option_Data.SE_Volume > 1.01f)
-				{
-					option_Data.SE_Volume = 0.0f;
-				}
-				else if (option_Data.SE_Volume < 0.0f)
-				{
-					option_Data.SE_Volume = 1.0f;
-				}
-
-				Se_Volume();
-			}
-			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
-			{
-				play_option_Flg = 1;
-				option_Select = true;
-				option_Sound = false;
-				Option_Data_Save();
-			}
-			option_Sound_fle = title_Cursor.x;
-		}
-		else if (play_option_Flg == 3)
-		{
-			option_Select = false;
-			option_Controller = true;
-
-			Cursor(1, 1);
-
-			if (title_Cursor.y == 0)
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
-				if (Enter())
-				{
-					play_option_Flg = 1;
-					option_Select = true;
-					option_Controller = false;
-					Option_Data_Save();
-				}
-			}
-			else if (title_Cursor.y == 1)
-			{
-				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
-				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
-				option_Data.con_shake = (bool)title_Cursor.x;
-				con->Set_Shake_On(option_Data.con_shake);
-				if (!option_One_Shake && option_Data.con_shake)
-				{
-					con->Shake(1000, 200);
-				}
-				option_One_Shake = (bool)title_Cursor.x;
-			}
-
-			if (GetJoypadNum() == 0)
-			{
-				++reset_con;
-				if (reset_con == 60)
-				{
-					ReSetupJoypad();
-					reset_con = 0;
-					con->Set_Shake_On(true);
-					con->Shake(1000, 200);
-					con->Set_Shake_On(option_Data.con_shake);
-				}
-			}
-			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
-			{
-				play_option_Flg = 1;
-				option_Select = true;
-				option_Controller = false;
-				Option_Data_Save();
-			}
-		}
+		Option_Scene();
 		break;
 	case MENU:
 		int num;
@@ -1160,6 +629,349 @@ void Game::Se_Volume()//SE音量
 	bombMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 	exMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 	sideBomb->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
+}
+
+void Game::Title_Scene()
+{
+	if (game_end_set == 0)
+	{
+		if (title_Flg == 1 && SceneChangeSeb(8))//暗転タイトルまで
+		{
+			title_Flg = 0;
+		}
+		if (title_Flg == 0)//タイトル表示
+		{
+			title_Pal += 3;
+			if (title_Pal >= 255)
+			{
+				title_Pal = 255;
+
+				if (game_end_set == 0)
+				{
+					title_Flg = 2;//タイトル表示終わり
+				}
+			}
+		}
+		else if (title_Flg == 2)//タイトル左に移動
+		{
+			title_Pos = Vector2::Lerp(title_Pos, Vector2(50, HEIGHT / 2 - 192), 0.03f);
+			if (title_Pos.x - 50 <= 5.0f)
+			{
+				title_Flg = 3;
+			}
+		}
+		else if (title_Flg == 3)//テキスト表示
+		{
+			title_Pos = Vector2::Lerp(title_Pos, Vector2(50, HEIGHT / 2 - 192), 0.03f);
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 500, HEIGHT / 2 - 100), 0.05f);
+			if (text_Play_Pos.x - (WIDTH - 500) <= 100.0f)
+			{
+				text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2), 0.05f);
+				if (text_Option_Pos.x - (WIDTH - 328) <= 10.0f)
+				{
+					text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 500, HEIGHT / 2 + 100), 0.05f);
+					if (text_Exit_Pos.x - (WIDTH - 500) <= 10.0f)
+					{
+						title_Flg = 4;
+						cursor_Pos = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
+						cursor_Pos2 = Vector2(cursor_Pos.x + 100, cursor_Pos.y);
+						cursor_lerp = cursor_Pos;
+						cursor_lerp2 = cursor_Pos2;
+					}
+				}
+			}
+		}
+		else if (title_Flg == 4)//カーソル移動
+		{
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH - 500, HEIGHT / 2 - 100), 0.05f);
+			text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2), 0.05f);
+			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH - 500, HEIGHT / 2 + 100), 0.05f);
+
+			Cursor(2, 0);
+
+			if (title_Cursor.y == 0)
+			{
+				cursor_lerp = Vector2(text_Play_Pos.x + 15, text_Play_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())title_Flg = 5;
+			}
+			else if (title_Cursor.y == 1)
+			{
+				cursor_lerp = Vector2(text_Option_Pos.x - 15, text_Option_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 150, cursor_lerp.y);
+				if (Enter())title_Flg = 7;
+			}
+			else if (title_Cursor.y == 2)
+			{
+				cursor_lerp = Vector2(text_Exit_Pos.x + 15, text_Exit_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())game_end_set = 1;
+
+			}
+			if (key->keyFlame(KEY_INPUT_I) > 0 && key->keyFlame(KEY_INPUT_N) > 0 && key->keyFlame(KEY_INPUT_0) > 0)
+			{
+				Delete_Data();
+			}
+		}
+		else if (title_Flg == 5)
+		{
+			title_Pos = Vector2::Lerp(title_Pos, Vector2(-1000, HEIGHT / 2 - 192), 0.03f);
+			text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH + 200, HEIGHT / 2), 0.05f);
+			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH + 200, HEIGHT / 2 + 100), 0.05f);
+			if (title_Pos.x < -800)
+			{
+				title_Flg = 6;
+			}
+		}
+		else if (title_Flg == 7)//設定
+		{
+			title_Cursor = Vector2();
+			text_Play_Pos = Vector2::Lerp(text_Play_Pos, Vector2(WIDTH + 200, HEIGHT / 2 - 100), 0.03f);
+
+			text_Exit_Pos = Vector2::Lerp(text_Exit_Pos, Vector2(WIDTH + 200, HEIGHT / 2 + 100), 0.03f);
+			if (text_Play_Pos.x > WIDTH + 100)
+			{
+				title_Flg = 8;
+				option_Select = true;
+			}
+		}
+		else if (title_Flg == 8)
+		{
+			text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2 - 200), 0.05f);
+			text_Options_Pos = Vector2::Lerp(text_Options_Pos, Vector2(text_Option_Pos.x, HEIGHT / 2 - 100), 0.05f);
+			cursor_lerp = Vector2(text_Option_Pos.x - 15, text_Option_Pos.y - 10);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 150, cursor_lerp.y);
+			if (text_Option_Pos.y - (HEIGHT / 2 - 200) < 10.0f)
+			{
+				title_Flg = 9;
+
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+			}
+		}
+		else if (title_Flg == 9)//設定セレクト
+		{
+			text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2 - 200), 0.05f);
+			text_Options_Pos = Vector2::Lerp(text_Options_Pos, Vector2(text_Option_Pos.x, HEIGHT / 2 - 100), 0.05f);
+
+			Cursor(2, 0);
+
+			if (title_Cursor.y == 0)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())title_Flg = 10;
+			}
+			else if (title_Cursor.y == 1)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 170, cursor_lerp.y);
+				if (Enter())title_Flg = 11;
+			}
+			else if (title_Cursor.y == 2)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
+				if (Enter())
+				{
+					title_Flg = 12;
+					title_Cursor.x = (float)option_Data.con_shake;
+				}
+			}
+			if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
+			{
+				title_Flg = 10;
+			}
+		}
+		else if (title_Flg == 10)//戻る
+		{
+			text_Options_Pos = Vector2::Lerp(text_Options_Pos, Vector2(WIDTH + 200, HEIGHT / 2), 0.05f);
+			text_Option_Pos = Vector2::Lerp(text_Option_Pos, Vector2(WIDTH - 469, HEIGHT / 2), 0.05f);
+			cursor_lerp = Vector2(text_Option_Pos.x - 15, text_Option_Pos.y - 10);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 150, cursor_lerp.y);
+			title_Cursor = Vector2();
+			if (text_Options_Pos.x > WIDTH + 100)
+			{
+				title_Flg = 4;
+			}
+		}
+		else if (title_Flg == 11)//音量
+		{
+			float cursor_Flg = 0.0f;
+			option_Select = false;
+			option_Sound = true;
+			Cursor(3, 2);
+
+			if (option_Sound_fle == 2 && title_Cursor.x == 0 ||
+				option_Sound_fle == 0 && title_Cursor.x == 1 ||
+				option_Sound_fle == 1 && title_Cursor.x == 2)
+			{
+				cursor_Flg = 0.1f;
+			}
+			if (option_Sound_fle == 0 && title_Cursor.x == 2 ||
+				option_Sound_fle == 1 && title_Cursor.x == 0 ||
+				option_Sound_fle == 2 && title_Cursor.x == 1)
+			{
+				cursor_Flg = -0.1f;
+			}
+
+			if (title_Cursor.y == 0)//back
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())
+				{
+					title_Flg = 9;
+					option_Select = true;
+					option_Sound = false;
+					Option_Data_Save();
+				}
+			}
+			else if (title_Cursor.y == 1)//main
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+
+				option_Data.Main_Volume += cursor_Flg;
+
+				if (option_Data.Main_Volume > 1.01f)
+				{
+					option_Data.Main_Volume = 0.0f;
+				}
+				else if (option_Data.Main_Volume < 0.0f)
+				{
+					option_Data.Main_Volume = 1.0f;
+				}
+
+				Bgm_Volume();
+				Se_Volume();
+			}
+			else if (title_Cursor.y == 2)//music
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+				option_Data.BGM_Volume += cursor_Flg;
+
+				if (option_Data.BGM_Volume > 1.01f)
+				{
+					option_Data.BGM_Volume = 0.0f;
+				}
+				else if (option_Data.BGM_Volume < 0.0f)
+				{
+					option_Data.BGM_Volume = 1.0f;
+				}
+
+				Bgm_Volume();
+			}
+			else if (title_Cursor.y == 3)//sound
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+				option_Data.SE_Volume += cursor_Flg;
+
+				if (option_Data.SE_Volume > 1.01f)
+				{
+					option_Data.SE_Volume = 0.0f;
+				}
+				else if (option_Data.SE_Volume < 0.0f)
+				{
+					option_Data.SE_Volume = 1.0f;
+				}
+
+				Se_Volume();
+			}
+
+			if (con->TrlggerBotton(con->B))
+			{
+				title_Flg = 9;
+				option_Select = true;
+				option_Sound = false;
+				Option_Data_Save();
+			}
+
+			option_Sound_fle = title_Cursor.x;
+		}
+		else if (title_Flg == 12)//コントローラー
+		{
+			option_Select = false;
+			option_Controller = true;
+
+			Cursor(1, 1);
+
+			if (title_Cursor.y == 0)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+				if (Enter())
+				{
+					title_Flg = 9;
+					option_Select = true;
+					option_Controller = false;
+					Option_Data_Save();
+				}
+			}
+			else if (title_Cursor.y == 1)
+			{
+				cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+				cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+				option_Data.con_shake = (bool)title_Cursor.x;
+				con->Set_Shake_On(option_Data.con_shake);
+				if (!option_One_Shake && option_Data.con_shake)
+				{
+					con->Shake(1000, 200);
+				}
+				option_One_Shake = (bool)title_Cursor.x;
+			}
+
+			if (GetJoypadNum() == 0)
+			{
+				++reset_con;
+				if (reset_con == 60)
+				{
+					ReSetupJoypad();
+					con->Set_Shake_On(true);
+					con->Shake(1000, 200);
+					con->Set_Shake_On(option_Data.con_shake);
+					reset_con = 0;
+				}
+			}
+			if (con->TrlggerBotton(con->B))
+			{
+				title_Flg = 9;
+				option_Select = true;
+				option_Controller = false;
+				Option_Data_Save();
+			}
+		}
+
+
+
+		if (title_Flg == 6 && !title_To_Play)//プレイシーンまで移動
+		{
+			title_Pal = 0;
+			title_To_Play = true;
+			title_Flg = 0;
+
+		}
+
+		if (title_To_Play)
+		{
+			if (SceneChangeAdd(5))
+			{
+				scene = PLAYINIT;
+				Data_Load();
+				DeleteGraph(title);
+				DeleteGraph(text_Play_Tex);
+				if (player->Get_Max_Bomb_Num() < 1)
+				{
+					scene = OPENING_INIT;
+				}
+			}
+		}
+	}
+	ui->Exit(game_end_set, false);
+	dust->Update();
+
 }
 
 void Game::Play_Scene()
@@ -1478,21 +1290,232 @@ void Game::Opening_Scene()
 		}
 		break;
 	case 5:
-		break;
-	case 6:
 		if (!player->Get_Air())
 		{
-			opening_Flg = 7;
+			++opening_Flg;
+			skillEffectMana = new SkillEffectMana();
+			skillEffectMana->Init(player->game_object.GetPos());
+			skillEffectMana->Loading(itemMana->tex, aroundEffeMana->tex);
+			shake_Counter.flg = true;
+		}
+		break;
+	case 6:
+		skillEffectMana->Update(sc);
+		if (skillEffectMana->Get_Skill_End())
+		{
+			++opening_Flg;
 		}
 		break;
 	case 7:
 		text->Update(talk_Flg, Enter());
-		if (text->Get_End()) { scene = PLAY; }
+		if (text->Get_End()) 
+		{
+			scene = PLAY;
+			delete skillEffectMana;
+		}
 		break;
 	default:
 		break;
 	}
 	
+}
+
+void Game::Option_Scene()
+{
+	if (play_option_Flg == 10)
+	{
+		scene = before_Scene;
+	}
+	if (play_option_Flg == 1)
+	{
+		option_Select = true;
+		text_Option_Pos = Vector2(WIDTH / 2 - 96, HEIGHT / 2 - 200);
+		text_Options_Pos = Vector2(text_Option_Pos.x, HEIGHT / 2 - 100);
+
+		Cursor(3, 0);
+
+		if (title_Cursor.y == 0)
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+			if (Enter())play_option_Flg = 10;
+		}
+		else if (title_Cursor.y == 1)
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 170, cursor_lerp.y);
+			if (Enter())play_option_Flg = 2;
+		}
+		else if (title_Cursor.y == 2)
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 230, cursor_lerp.y);
+			if (Enter())
+			{
+				play_option_Flg = 3;
+				title_Cursor.x = (float)option_Data.con_shake;
+			}
+		}
+		else if (title_Cursor.y == 3)
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 120, cursor_lerp.y);
+			if (Enter())
+			{
+				title_Flg = 1;
+			}
+		}
+		if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE) || con->TrlggerBotton(con->START))
+		{
+			play_option_Flg = 10;
+		}
+	}
+	else if (play_option_Flg == 2)
+	{
+		float cursor_Flg = 0.0f;
+		option_Select = false;
+		option_Sound = true;
+		Cursor(3, 2);
+
+		if (option_Sound_fle == 2 && title_Cursor.x == 0 ||
+			option_Sound_fle == 0 && title_Cursor.x == 1 ||
+			option_Sound_fle == 1 && title_Cursor.x == 2)
+		{
+			cursor_Flg = 0.1f;
+		}
+		if (option_Sound_fle == 0 && title_Cursor.x == 2 ||
+			option_Sound_fle == 1 && title_Cursor.x == 0 ||
+			option_Sound_fle == 2 && title_Cursor.x == 1)
+		{
+			cursor_Flg = -0.1f;
+		}
+
+		if (title_Cursor.y == 0)//back
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+			if (Enter())
+			{
+				play_option_Flg = 1;
+				option_Select = true;
+				option_Sound = false;
+				Option_Data_Save();
+			}
+		}
+		else if (title_Cursor.y == 1)//main
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+
+			option_Data.Main_Volume += cursor_Flg;
+
+			if (option_Data.Main_Volume > 1.01f)
+			{
+				option_Data.Main_Volume = 0.0f;
+			}
+			else if (option_Data.Main_Volume < 0.0f)
+			{
+				option_Data.Main_Volume = 1.0f;
+			}
+
+			Bgm_Volume();
+			Se_Volume();
+		}
+		else if (title_Cursor.y == 2)//music
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 190);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+			option_Data.BGM_Volume += cursor_Flg;
+
+			if (option_Data.BGM_Volume > 1.01f)
+			{
+				option_Data.BGM_Volume = 0.0f;
+			}
+			else if (option_Data.BGM_Volume < 0.0f)
+			{
+				option_Data.BGM_Volume = 1.0f;
+			}
+
+			Bgm_Volume();
+		}
+		else if (title_Cursor.y == 3)//sound
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 290);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+			option_Data.SE_Volume += cursor_Flg;
+
+			if (option_Data.SE_Volume > 1.01f)
+			{
+				option_Data.SE_Volume = 0.0f;
+			}
+			else if (option_Data.SE_Volume < 0.0f)
+			{
+				option_Data.SE_Volume = 1.0f;
+			}
+
+			Se_Volume();
+		}
+		if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
+		{
+			play_option_Flg = 1;
+			option_Select = true;
+			option_Sound = false;
+			Option_Data_Save();
+		}
+		option_Sound_fle = title_Cursor.x;
+	}
+	else if (play_option_Flg == 3)
+	{
+		option_Select = false;
+		option_Controller = true;
+
+		Cursor(1, 1);
+
+		if (title_Cursor.y == 0)
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y - 10);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 100, cursor_lerp.y);
+			if (Enter())
+			{
+				play_option_Flg = 1;
+				option_Select = true;
+				option_Controller = false;
+				Option_Data_Save();
+			}
+		}
+		else if (title_Cursor.y == 1)
+		{
+			cursor_lerp = Vector2(text_Options_Pos.x - 15, text_Options_Pos.y + 90);
+			cursor_lerp2 = Vector2(cursor_lerp.x + 400, cursor_lerp.y);
+			option_Data.con_shake = (bool)title_Cursor.x;
+			con->Set_Shake_On(option_Data.con_shake);
+			if (!option_One_Shake && option_Data.con_shake)
+			{
+				con->Shake(1000, 200);
+			}
+			option_One_Shake = (bool)title_Cursor.x;
+		}
+
+		if (GetJoypadNum() == 0)
+		{
+			++reset_con;
+			if (reset_con == 60)
+			{
+				ReSetupJoypad();
+				reset_con = 0;
+				con->Set_Shake_On(true);
+				con->Shake(1000, 200);
+				con->Set_Shake_On(option_Data.con_shake);
+			}
+		}
+		if (con->TrlggerBotton(con->B) || key->KeyTrigger(KEY_INPUT_ESCAPE))
+		{
+			play_option_Flg = 1;
+			option_Select = true;
+			option_Controller = false;
+			Option_Data_Save();
+		}
+	}
 }
 
 
@@ -1596,10 +1619,13 @@ void Game::Draw()
 		case 2:
 		case 3:
 		case 4:
+			break;
 		case 5:
+			PlayDraw_No_UI(sc, shake);
 			break;
 		case 6:
 			PlayDraw_No_UI(sc, shake);
+			skillEffectMana->Draw(sc, shake);
 			break;
 		case 7:
 			PlayDraw_No_UI(sc, shake);

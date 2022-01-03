@@ -13,8 +13,8 @@ public:
 	void Loading(Load* load);
 	void Update(const int& hp);
 	void Draw();
-private:
 	int tex;
+private:
 	AroundEffect around_Efe[AROUND_NUM];
 };
 

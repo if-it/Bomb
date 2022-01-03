@@ -148,6 +148,9 @@
     <Filter Include="Effect\AroundEffect">
       <UniqueIdentifier>{c5436bc2-37b1-4c90-bf93-9218e0fedb27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\SkillEffect">
+      <UniqueIdentifier>{8bbdb90c-4e60-48ba-94d8-a995982ccbcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -315,6 +318,15 @@
     <ClCompile Include="Text.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SkillEffect.cpp">
+      <Filter>Effect\SkillEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillEffectMana.cpp">
+      <Filter>Effect\SkillEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillEffectOrigin.cpp">
+      <Filter>Effect\SkillEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -478,6 +490,15 @@
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillEffectMana.h">
+      <Filter>Effect\SkillEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillEffect.h">
+      <Filter>Effect\SkillEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillEffectOrigin.h">
+      <Filter>Effect\SkillEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -196,7 +196,7 @@ void ItemMana::Update()
 {
 	if (item_Ani.num == 0 && !one_Ani)
 	{
-		ani_Num[0] = GetRand(200) + 3;
+		ani_Num[0] = GetRand(150) + 3;
 		one_Ani = true;
 	}
 	else
