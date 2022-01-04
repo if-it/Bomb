@@ -55,6 +55,7 @@ public:
 	bool& Get_Switch_On() { return save_Data.switch_On; }
 	bool& Get_Move_Guide_On() { return move_guide_on; }
 	bool& Get_Air() { return air; }
+	bool& Get_Exit_Ex() { return exit_Ex; }
 
 	void Set_Contorl_Flg(const bool& flg) { control_flg = flg; }
 

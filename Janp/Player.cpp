@@ -1409,12 +1409,19 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 		DrawRotaTex(shadow[i], player_Tex[animation.num], true, shake, sc);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
 	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
+	if (exit_Ex)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 90);
+		DrawRotaTex(game_object, player_Black_Tex[animation.num], true, shake, sc);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 	if (!blinking)
 	{
+		SetBright(COLOR(0, 0, 0));
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 		DrawRotaTex(game_object, player_Black_Tex[animation.num], true, shake, sc);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		SetBright();
 	}
 }

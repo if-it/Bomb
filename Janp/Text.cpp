@@ -63,7 +63,7 @@ void Text::Init(int& talk_Scene)
 			++y_num;
 			x_num = -1;
 		}
-		text_obj[i].SetPos(Vector2(WIDTH / 2 - 550 + SIZE * x_num, HEIGHT / 2 + 320 + (SIZE + 10) * y_num));
+		text_obj[i].SetPos(Vector2(WIDTH / 2 - 350 + SIZE * x_num, HEIGHT / 2 + 320 + (SIZE + 10) * y_num));
 		++x_num;
 	}
 
@@ -145,6 +145,7 @@ void Text::Update(int& talk_Scene, bool enter)
 void Text::Draw()
 {
 	Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), 1200, 200);
+	Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), GetColor(255, 0, 0), true, true, Vector2(), Vector2(), 200, 250);
 	for (int i = 0; i < (int)texts.size(); ++i)
 	{
 		DrawTex(text_obj[i], tex[texts[i]]);

@@ -151,6 +151,9 @@
     <Filter Include="Effect\SkillEffect">
       <UniqueIdentifier>{8bbdb90c-4e60-48ba-94d8-a995982ccbcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect\BombEffect">
+      <UniqueIdentifier>{600191d0-0f33-451c-8278-6d8963769c94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map.cpp">
@@ -327,6 +330,15 @@
     <ClCompile Include="SkillEffectOrigin.cpp">
       <Filter>Effect\SkillEffect</Filter>
     </ClCompile>
+    <ClCompile Include="BombSpawnEffect.cpp">
+      <Filter>Effect\BombEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="BombBlowEffect.cpp">
+      <Filter>Effect\BombEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="BombBlowEffectMana.cpp">
+      <Filter>Effect\BombEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -499,6 +511,15 @@
     </ClInclude>
     <ClInclude Include="SkillEffectOrigin.h">
       <Filter>Effect\SkillEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="BombSpawnEffect.h">
+      <Filter>Effect\BombEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="BombBlowEffect.h">
+      <Filter>Effect\BombEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="BombBlowEffectMana.h">
+      <Filter>Effect\BombEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

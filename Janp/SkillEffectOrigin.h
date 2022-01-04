@@ -1,6 +1,6 @@
 #pragma once
 #include "SkillEffect.h"
-#define SKILL_EFFECT_ORIGIN_SPEED 0.08f
+#define SKILL_EFFECT_ORIGIN_SPEED 0.2f
 class SkillEffectOrigin :
 	public SkillEffect
 {

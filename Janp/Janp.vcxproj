@@ -137,7 +137,10 @@
     <ClCompile Include="BlockParticle.cpp" />
     <ClCompile Include="BlockParticleMana.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BombBlowEffect.cpp" />
+    <ClCompile Include="BombBlowEffectMana.cpp" />
     <ClCompile Include="BombMana.cpp" />
+    <ClCompile Include="BombSpawnEffect.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Draw.cpp" />
@@ -197,7 +200,10 @@
     <ClInclude Include="BlockParticle.h" />
     <ClInclude Include="BlockParticleMana.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BombBlowEffect.h" />
+    <ClInclude Include="BombBlowEffectMana.h" />
     <ClInclude Include="BombMana.h" />
+    <ClInclude Include="BombSpawnEffect.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Draw.h" />

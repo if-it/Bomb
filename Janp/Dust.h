@@ -14,9 +14,9 @@ public:
 	void Update();
 	void Draw(const Vector2& sc, const Vector2& shake);
 
+	int tex;
 private:
 	std::vector< GameObject> dust;
-	int tex;
 	int mapX;
 	int mapY;
 };

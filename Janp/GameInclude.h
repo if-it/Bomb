@@ -24,6 +24,8 @@
 #include"AroundEffectMana.h"
 #include"Text.h"
 #include"SkillEffectMana.h"
+#include"BombSpawnEffect.h"
+#include"BombBlowEffectMana.h"
 
 class GameInclude :public Draw
 {
@@ -73,6 +75,8 @@ protected:
 	AroundEffectMana* aroundEffeMana = new AroundEffectMana();
 	Text* text = new Text();
 	SkillEffectMana* skillEffectMana;
+	BombSpawnEffect* bombSpawnEffect = new BombSpawnEffect();
+	BombBlowEffectMana* bombBlowEffectMana = new BombBlowEffectMana();
 
 	bool controllerOnly;
 	bool drawScene;

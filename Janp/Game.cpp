@@ -40,6 +40,8 @@ Game::~Game()
 	delete frontMap;
 	delete aroundEffeMana;
 	delete text;
+	delete bombSpawnEffect;
+	delete bombBlowEffectMana;
 
 	coll_List.clear();
 	InitGraph();
@@ -125,6 +127,8 @@ void Game::Init()
 	orbitBomb->Init();
 	blockParticleMana->Init();
 	aroundEffeMana->Init();
+	bombSpawnEffect->Init();
+	bombBlowEffectMana->Init();
 
 	shake = Vector2();
 	sceneCount = Count();
@@ -172,6 +176,7 @@ bool Game::Loading()
 	orbitBomb->Loading(load);
 	aroundEffeMana->Loading(load);
 	text->Loading(load);
+	bombBlowEffectMana->Loading(dust->tex);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -1081,6 +1086,8 @@ void Game::Play_Scene_Update()
 	hpDropItemMana->Update();
 	blockParticleMana->Update(stage);
 	aroundEffeMana->Update(player->Get_Now_Hp());
+	bombSpawnEffect->Update(player->game_object.GetPos(), player->Get_Now_Bomb_Num());
+	bombBlowEffectMana->Update(player->Get_Exit_Ex(), player->game_object.GetPos());
 }
 
 void Game::Map_Coll_Update()
@@ -1711,4 +1718,6 @@ void Game::PlayDraw_No_UI(const Vector2& sc2, const Vector2& shake2)
 	rockEffeMana->Draw(sc2, shake2);
 	blockParticleMana->Draw(sc2, shake2);
 	aroundEffeMana->Draw();
+	bombSpawnEffect->Draw(sc2, shake2);
+	bombBlowEffectMana->Draw(sc2, shake2);
 }
