@@ -10,7 +10,7 @@ Text::~Text()
 {
 }
 
-void Text::Init(int& talk_Scene)
+void Text::Init(int& talk_Scene, Load* load)
 {
 	using namespace std;
 
@@ -24,6 +24,7 @@ void Text::Init(int& talk_Scene)
 	{
 	case 1:
 		filename += "Taiin/Taiin";
+		load->LoadTex("Load/Texture/Chara/Taiin.png", chara_Tex);
 		break;
 	default:
 		break;
@@ -76,10 +77,10 @@ void Text::Init(int& talk_Scene)
 
 void Text::Loading(Load* load)
 {
-	load->LoadAnimeTex("Load/Texture/font.png", TEX_MAX_NUM, 5, 69, 32, 32, tex);
+	load->LoadAnimeTex("Load/Texture/font.png", TEX_MAX_NUM, 5, 69, 32, 32, text_Tex);
 }
 
-void Text::Update(int& talk_Scene, bool enter)
+void Text::Update(int& talk_Scene, bool enter, Load* load)
 {
 	switch (talk_Flg)
 	{
@@ -123,13 +124,14 @@ void Text::Update(int& talk_Scene, bool enter)
 		}
 		if (next != talk_Scene)
 		{
-			Init(talk_Scene);
+			Init(talk_Scene,load);
 		}
 		else
 		{
 			end = true;
 			texts.clear();
 			text_obj.clear();
+			DeleteGraph(chara_Tex);
 		}
 		break;
 	default:
@@ -145,9 +147,10 @@ void Text::Update(int& talk_Scene, bool enter)
 void Text::Draw()
 {
 	Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), 1200, 200);
-	Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), GetColor(255, 0, 0), true, true, Vector2(), Vector2(), 200, 250);
+	//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), GetColor(255, 0, 0), true, true, Vector2(), Vector2(), 200, 250);
+	DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), chara_Tex, true, true);
 	for (int i = 0; i < (int)texts.size(); ++i)
 	{
-		DrawTex(text_obj[i], tex[texts[i]]);
+		DrawTex(text_obj[i], text_Tex[texts[i]]);
 	}
 }

@@ -350,7 +350,7 @@ void Game::Update()
 		break;
 	case OPENING_INIT:
 
-		text->Init(talk_Flg);
+		text->Init(talk_Flg,load);
 		scene = OPENING_INIT2;
 		player->Set_Rota_Vec(20.0f);
 		break;
@@ -1314,7 +1314,7 @@ void Game::Opening_Scene()
 		}
 		break;
 	case 7:
-		text->Update(talk_Flg, Enter());
+		text->Update(talk_Flg, Enter(),load);
 		if (text->Get_End()) 
 		{
 			scene = PLAY;
