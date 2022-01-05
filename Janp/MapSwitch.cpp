@@ -38,7 +38,7 @@ void MapSwitch::Loading(Load* load)
 
 void MapSwitch::Update()
 {
-	one_Coll.Conuter(40);
+	one_Coll.Counter(40);
 }
 
 void MapSwitch::Coll(bool& switch_on)

@@ -33,7 +33,7 @@ void Enemy4::Update()
 		{
 			game_object.game.rota -= ROTA_SPEED;
 		}
-		if (move.Conuter(95))
+		if (move.Counter(95))
 		{
 			game_object.game.rota = 0;
 			if (move_lr == 1)
@@ -57,7 +57,7 @@ void Enemy4::Update()
 			game_object.game.rota -= ROTA_SPEED;
 			move_End.flg = true;
 		}
-		if (move_End.Conuter(65))
+		if (move_End.Counter(65))
 		{
 			move = Count();
 			move_End = Count();

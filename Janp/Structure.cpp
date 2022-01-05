@@ -19,7 +19,7 @@ void Structure::SizeChange(Count& count, Vector2& size,  Vector2& sizeAdd, int m
 	{
 		sizeAdd += change;
 		size += sizeAdd;
-		if (count.Conuter(maxCount))
+		if (count.Counter(maxCount))
 		{
 			size = Vector2(1.0f, 1.0f);
 			sizeAdd = Vector2();

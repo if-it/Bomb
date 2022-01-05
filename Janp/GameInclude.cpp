@@ -111,5 +111,5 @@ void GameInclude::Shake(Count& count, int num, Vector2 shakeMax, std::vector<std
 	{
 		shake = Vector2();
 	}
-	count.Conuter(num);
+	count.Counter(num);
 }

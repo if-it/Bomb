@@ -19,7 +19,7 @@ void MapBomb::Init(const Vector2& pos)
 
 void MapBomb::Update(const bool& switch_on)
 {
-	bomb_count.Conuter(60 * 3);
+	bomb_count.Counter(60 * 3);
 
 	if (!switch_on)
 	{

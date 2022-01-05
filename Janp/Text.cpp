@@ -4,6 +4,7 @@
 
 Text::Text()
 {
+	game_object.game.pal = 0;
 }
 
 Text::~Text()
@@ -24,7 +25,7 @@ void Text::Init(int& talk_Scene, Load* load)
 	{
 	case 1:
 		filename += "Taiin/Taiin";
-		load->LoadTex("Load/Texture/Chara/Taiin.png", chara_Tex);
+		load->LoadAnimeTex("Load/Texture/Chara/Taiin.png", 2, 2, 1, 200, 250, chara_Tex);
 		break;
 	default:
 		break;
@@ -64,7 +65,7 @@ void Text::Init(int& talk_Scene, Load* load)
 			++y_num;
 			x_num = -1;
 		}
-		text_obj[i].SetPos(Vector2(WIDTH / 2 - 350 + SIZE * x_num, HEIGHT / 2 + 320 + (SIZE + 10) * y_num));
+		text_obj[i].SetPos(Vector2(WIDTH / 2 - 350 + SIZE * x_num, HEIGHT / 2 + 350 + (SIZE + 10) * y_num));
 		++x_num;
 	}
 
@@ -73,18 +74,46 @@ void Text::Init(int& talk_Scene, Load* load)
 	talk_Flg = 0;
 	next = talk_Scene;
 	end = false;
+	enter_Flg = false;
+	enter_Pos = Vector2(WIDTH / 2 - 24, HEIGHT / 2 + 450);
+	animation[0] = 30;
+	animation[1] = 5;
+	ani = Animation();
 }
 
 void Text::Loading(Load* load)
 {
 	load->LoadAnimeTex("Load/Texture/font.png", TEX_MAX_NUM, 5, 69, 32, 32, text_Tex);
+	load->LoadAnimeTex("Load/Texture//UI/Text_Next.png", 2, 2, 1, 48, 48, text_Next_Tex);
+	load->LoadTex("Load/Texture/UI/Text_back.png", text_Back_Tex);
 }
 
-void Text::Update(int& talk_Scene, bool enter, Load* load)
+void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_controller_flg)
 {
+	con_Flg = (int)get_controller_flg;
+	enter_Flg = enter;
+	if (enter_Flg)enter_Count.flg = true;
+
+	enter_Count.Counter(20);
+	ani.AnimationOn(animation[ani.num], 2);
+	if (ani.num == 1)
+	{
+		animation[0] = GetRand(250) + 10;
+	}
+
+
+
 	switch (talk_Flg)
 	{
 	case 0:
+		game_object.game.pal += 20;
+		if (game_object.game.pal >= 255)
+		{
+			game_object.game.pal = 255;
+			talk_Flg = 1;
+		}
+		break;
+	case 1:
 		++count;
 		if (count == 5)
 		{
@@ -94,26 +123,26 @@ void Text::Update(int& talk_Scene, bool enter, Load* load)
 			if (now_Num >= texts.size())
 			{
 				now_Num = 0;
-				talk_Flg = 2;
+				talk_Flg = 3;
 			}
 		}
-		if (enter)
+		if (enter_Flg)
 		{
-			talk_Flg = 1;
+			talk_Flg = 2;
 		}
 		break;
 
-	case 1:
+	case 2:
 		for (int i = 0; i < (int)texts.size(); ++i)
 		{
 			text_obj[i].game.dis = true;
 		}
-		talk_Flg = 2;
-		break;
-	case 2:
-		if (enter)talk_Flg = 3;
+		talk_Flg = 3;
 		break;
 	case 3:
+		if (enter_Flg)talk_Flg = 4;
+		break;
+	case 4:
 		switch (talk_Scene)
 		{
 		case 100:
@@ -124,14 +153,25 @@ void Text::Update(int& talk_Scene, bool enter, Load* load)
 		}
 		if (next != talk_Scene)
 		{
-			Init(talk_Scene,load);
+			Init(talk_Scene, load);
 		}
 		else
 		{
+			talk_Flg = 5;
+		}
+		break;
+	case 5:
+		game_object.game.pal -= 20;
+		if (game_object.game.pal <= 0)
+		{
 			end = true;
+			con_Flg = 0;
+			enter_Count = Count();
 			texts.clear();
 			text_obj.clear();
-			DeleteGraph(chara_Tex);
+			DeleteGraph(chara_Tex[0]);
+			DeleteGraph(chara_Tex[1]);
+			game_object.game.pal = 0;
 		}
 		break;
 	default:
@@ -146,11 +186,21 @@ void Text::Update(int& talk_Scene, bool enter, Load* load)
 
 void Text::Draw()
 {
-	Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), 1200, 200);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, game_object.game.pal);
+	//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), 1200, 200);
+	DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), text_Back_Tex, true);
 	//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), GetColor(255, 0, 0), true, true, Vector2(), Vector2(), 200, 250);
-	DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), chara_Tex, true, true);
+	DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), chara_Tex[ani.num], true);
+	DrawTex(enter_Pos, text_Next_Tex[con_Flg], true);
+	if (enter_Count.flg)
+	{
+		SetBright(COLOR(150, 150, 150));
+		DrawTex(enter_Pos, text_Next_Tex[con_Flg], true);
+		SetBright();
+	}
 	for (int i = 0; i < (int)texts.size(); ++i)
 	{
 		DrawTex(text_obj[i], text_Tex[texts[i]]);
 	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

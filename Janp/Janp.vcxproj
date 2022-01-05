@@ -172,6 +172,7 @@
     <ClCompile Include="MapColl.cpp" />
     <ClCompile Include="MapSwitch.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="OpeningScene.cpp" />
     <ClCompile Include="OrbitBomb.cpp" />
     <ClCompile Include="Parent.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="MapColl.h" />
     <ClInclude Include="MapSwitch.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="OpeningScene.h" />
     <ClInclude Include="OrbitBomb.h" />
     <ClInclude Include="Parent.h" />
     <ClInclude Include="Player.h" />

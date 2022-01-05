@@ -316,8 +316,8 @@ void Player::Input(Key* key, Controller* con, bool& time)
 void Player::Update(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 {
 	Move(shakeflg, bomb, sideBomb);
-	invincible.Conuter(90);
-	bomb_Shot.Conuter(30);
+	invincible.Counter(90);
+	bomb_Shot.Counter(30);
 	Animation_Update();
 }
 
@@ -418,7 +418,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 	}
 
 	//ƒ_ƒbƒVƒ…
-	if (ability2.Conuter(15) || ability2_Activate == -1)
+	if (ability2.Counter(15) || ability2_Activate == -1)
 	{
 		ability2_Activate = 0;
 		ability2_Vec = Vector2();
@@ -463,13 +463,13 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 		}
 		game_object.game.allVec.vec = ability2_Vec;
 
-		if (shadow_on.Conuter(2))
+		if (shadow_on.Counter(2))
 		{
 			shadow_on.flg = true;
 			shadow.push_back(game_object);
 		}
 	}
-	ability2_on.Conuter(25);
+	ability2_on.Counter(25);
 
 	int shadow_Num = 0;
 	for (int i = 0; i < (int)shadow.size(); ++i)
@@ -538,7 +538,7 @@ void Player::Move(bool& shakeflg, BombMana* bomb, SideBomb* sideBomb)
 		game_object.game.allVec.vec = fVec;
 		size_Change_Count.flg = true;
 	}
-	blow.Conuter(2);
+	blow.Counter(2);
 
 
 
@@ -647,7 +647,7 @@ void Player::Animation_Update()
 		one_move_flg2 = false;
 		animation.AnimationOn(animation_Count_Num, 12, 6);
 		walk.flg = true;
-		if (!air && walk.Conuter(25))
+		if (!air && walk.Counter(25))
 		{
 			PlaySoundMem(walkSE, DX_PLAYTYPE_BACK, true);
 		}
@@ -699,7 +699,7 @@ void Player::Animation_Update()
 	{
 		blinking = true;
 	}
-	if (blinking_Count.Conuter(9))
+	if (blinking_Count.Counter(9))
 	{
 		if (blinking)	blinking = false;
 		else blinking = true;
@@ -1412,7 +1412,7 @@ void Player::Draw(const Vector2& sc, const Vector2& shake)
 	DrawRotaTex(game_object, player_Tex[animation.num], true, shake, sc);
 	if (exit_Ex)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 90);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 		DrawRotaTex(game_object, player_Black_Tex[animation.num], true, shake, sc);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}

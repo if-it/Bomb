@@ -83,7 +83,7 @@ void SideExplosionMana::Update(const bool& explosion_on, const Vector2& set_pos,
 			}
 			if(ani_End)Init();
 		}
-		end.Conuter(1000);
+		end.Counter(1000);
 		ani.AnimationOn(1, 16);
 	}
 }

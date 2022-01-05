@@ -41,7 +41,7 @@ protected:
 			count = 0;
 			flg = flgSet;
 		}
-		bool Conuter(int maxCount)
+		bool Counter(int maxCount)
 		{
 			if (flg)
 			{
@@ -71,7 +71,7 @@ protected:
 		}
 		void AnimationOn(int maxCount, int maxNum, int lowNum = 0)
 		{
-			if (counter.Conuter(maxCount))
+			if (counter.Counter(maxCount))
 			{
 				counter.flg = true;
 				num++;
@@ -97,13 +97,13 @@ protected:
 						return oneAnimeFlg;
 					}
 				}
-				counter.Conuter(maxCount);
+				counter.Counter(maxCount);
 			}
 			return oneAnimeFlg;
 		}
 		void Round_Trip_Animation(int maxCount, int maxNum, int lowNum = 0)
 		{
-			if (counter.Conuter(maxCount))
+			if (counter.Counter(maxCount))
 			{
 				counter.flg = true;
 				if (!round)

@@ -25,7 +25,7 @@ void Enemy1::Update()
 {
 	EnemyAllUpdate(0.2f, 4.0f);
 
-	if (move.Conuter(40))
+	if (move.Counter(40))
 	{
 		game_object.game.rota = 0;
 		if (move_lr == 1)
@@ -49,7 +49,7 @@ void Enemy1::Update()
 
 		move_End.flg = true;
 	}
-	if (move_End.Conuter(120))
+	if (move_End.Counter(120))
 	{
 		move = Count();
 		move_End = Count();

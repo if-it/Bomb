@@ -25,12 +25,12 @@ void Enemy::EnemyAllUpdate(const float Enemy_Speed, const float Enemy_Max_Speed)
 {
 	const int INVEICIBLE_TIME = 60;
 	const int EX_INVEICIBLE_TIME = 30;
-	if (ex_Invincible.Conuter(EX_INVEICIBLE_TIME))
+	if (ex_Invincible.Counter(EX_INVEICIBLE_TIME))
 	{
 		blinking = false;
 		damage_Blinking = Count();
 	}
-	if (damage_Blinking.Conuter(7))
+	if (damage_Blinking.Counter(7))
 	{
 		damage_Blinking.flg = true;
 		if (blinking)blinking = false;

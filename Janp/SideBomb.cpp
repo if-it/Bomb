@@ -25,7 +25,7 @@ void SideBomb::Loading(Load* load)
 
 void SideBomb::Update(Controller* con)
 {
-	if (live_Count.Conuter(200))
+	if (live_Count.Counter(200))
 	{
 		Init();
 	}

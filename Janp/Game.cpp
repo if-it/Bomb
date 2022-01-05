@@ -51,7 +51,7 @@ Game::~Game()
 void Game::SystemInit()
 {
 	// マウスを表示状態にする？
-	SetMouseDispFlag(FALSE);
+	SetMouseDispFlag(TRUE);
 
 	//コントローラーしか使えない？
 	ControllerOnly(false);
@@ -78,8 +78,6 @@ void Game::FirstInit()
 	controller_on = false;
 	if (con->Set() == 0)controller_on = true;
 	TitleInit();
-	talk_Flg = 100;
-	opening_Flg = 0;
 	opening_count = 0;
 }
 
@@ -97,7 +95,7 @@ void Game::TitleInit()
 
 	load->LoadTex("Load/Texture/Title.png", title);
 	load->LoadTex("Load/Texture/Text_Play.png", text_Play_Tex);
-
+	opening_Flg = 0;
 }
 
 void Game::Init()
@@ -290,7 +288,7 @@ void Game::Update()
 				sideExMana->Init();
 			}
 		}
-		hetStop.Conuter(10);
+		hetStop.Counter(10);
 		break;
 	case PLAY:
 		Play_Scene();
@@ -350,7 +348,7 @@ void Game::Update()
 		break;
 	case OPENING_INIT:
 
-		text->Init(talk_Flg,load);
+		text->Init(meta_Data.talk_Flg, load);
 		scene = OPENING_INIT2;
 		player->Set_Rota_Vec(20.0f);
 		break;
@@ -510,7 +508,7 @@ void Game::Meta_Data_Init()
 {
 	stage = MAP_F;
 
-	meta_Data = { stage,0 };
+	meta_Data = { stage,0,100 };
 }
 
 void Game::Delete_Data()
@@ -1038,7 +1036,7 @@ void Game::Play_Scene()
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
 			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(), player->Get_Move_Guide_On(),
 			player->Get_Save_On(), game_end_set);
-		hetStop.Conuter(8);
+		hetStop.Counter(8);
 
 		if (enemy2->Get_Ex_End() && SceneChangeAdd(3))
 		{
@@ -1282,21 +1280,13 @@ void Game::Obj_Coll_Add()//オブジェクト追加するだけ
 void Game::Opening_Scene()
 {
 
-	if(opening_Flg>2) Play_Scene();
+	if (opening_Flg > 1) Play_Scene();
 	switch (opening_Flg)
 	{
 	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		++opening_count;
-		if (opening_count >= 20)
-		{
-			++opening_Flg;
-		}
+	
 		break;
-	case 5:
+	case 1:
 		if (!player->Get_Air())
 		{
 			++opening_Flg;
@@ -1304,18 +1294,19 @@ void Game::Opening_Scene()
 			skillEffectMana->Init(player->game_object.GetPos());
 			skillEffectMana->Loading(itemMana->tex, aroundEffeMana->tex);
 			shake_Counter.flg = true;
+			player->game_object.game.allVec.vec.y = 2.0f;
 		}
 		break;
-	case 6:
+	case 2:
 		skillEffectMana->Update(sc);
 		if (skillEffectMana->Get_Skill_End())
 		{
 			++opening_Flg;
 		}
 		break;
-	case 7:
-		text->Update(talk_Flg, Enter(),load);
-		if (text->Get_End()) 
+	case 3:
+		text->Update(meta_Data.talk_Flg, Enter(), load, controller_on);
+		if (text->Get_End())
 		{
 			scene = PLAY;
 			delete skillEffectMana;
@@ -1324,7 +1315,7 @@ void Game::Opening_Scene()
 	default:
 		break;
 	}
-	
+
 }
 
 void Game::Option_Scene()

@@ -116,14 +116,14 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 			case 0:
 				max_speed = 5.4f;
 				flame_speed = 0.2f;
-				if (attack_Fist_Time.Conuter(28))
+				if (attack_Fist_Time.Counter(28))
 				{
 					attack_Animetion_flg = 1;
 					attack_Fist_Time = Count();
 					attack_Second_Time = Count();
 				}
 				attack_Second_Time.flg = true;
-				if (attack_Second_Time.Conuter(180))
+				if (attack_Second_Time.Counter(180))
 				{
 					attack_Animetion_flg = 1;
 					attack_Fist_Time = Count();
@@ -166,7 +166,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 					rockAttackMana->Spawn(rock_Num, sc);
 					attack_Second_Time.flg = true;
 				}
-				if (attack_Second_Time.Conuter(60))
+				if (attack_Second_Time.Counter(60))
 				{
 					rock_Num = 0;
 					attack_Second_Time = Count();
@@ -186,7 +186,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				attack_End_Time.flg = true;
 				if (hp > (int)(MAX_HP / 2))
 				{
-					if (attack_End_Time.Conuter(20))
+					if (attack_End_Time.Counter(20))
 					{
 						attack_End_Time = Count();
 						int rand = GetRand(9);
@@ -203,7 +203,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				else
 				{
 					rock_Max_Num = 10;
-					if (attack_End_Time.Conuter(10))
+					if (attack_End_Time.Counter(10))
 					{
 						attack_End_Time = Count();
 						int rand = GetRand(10);
@@ -242,7 +242,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				if (lr)game_object.game.allVec.vec.x -= 6.0f;
 				else game_object.game.allVec.vec.x += 6.0f;
 
-				if (rush_Time.Conuter(40))
+				if (rush_Time.Counter(40))
 				{
 					attack_Animetion_flg = 5;
 				}
@@ -273,7 +273,7 @@ void Enemy2::Update(const Vector2& pos, Collision* coll, bool& shake_flg, const 
 				shake_flg = true;
 				GameObject enemy2_End = game_object;
 				enemy2_End.game.allVec.pos += Vector2(GetRand(240), GetRand(192));
-				if (die_Ex.Conuter(10))
+				if (die_Ex.Counter(10))
 				{
 					ex->ExSpawn(enemy2_End, 1, false);
 					++die_Ex_Num;

@@ -214,7 +214,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 					blinking = true;
 				}
 			}
-			if (blinking_Count.Conuter(get_Item_Rand))
+			if (blinking_Count.Counter(get_Item_Rand))
 			{
 				get_Item_Rand = GetRand(3) + 2;
 				blinking_Count.flg = true;
@@ -226,7 +226,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 			{
 				get_item_Pal = 228;
 			}
-			if (get_Item_Count.Conuter(80))
+			if (get_Item_Count.Counter(80))
 			{
 				get_Item_Count = Count();
 				get_Item_Count.flg = true;
