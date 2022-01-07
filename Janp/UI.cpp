@@ -20,7 +20,7 @@ void UI::Init()
 	bomb_Ani_Num = 0;
 	bomb_One_Ani = false;
 	pal = 0;
-	choice_guide = -1;
+	choice_Guide = -1;
 	guide_Size = Vector2(0.0f, 0.1f);
 	choice_guide_flg = false;
 	space_guide = false;
@@ -36,15 +36,17 @@ void UI::Init()
 	get_item_Size = Vector2();
 	get_Item_Count = Count();
 	blinking_Count = Count();
-	get_Item_guide = 0;
+	get_Item_Guide = 0;
 	get_Item_end = false;
 	get_Item_on = false;
 	blinking = false;
 	get_Item_Rand = 0;
-	move_guide_on = false;
-	move_guide = false;
+	move_Guide_on = false;
+	move_Guide = false;
 	save_flg = 0;
 	exit_Size = Vector2(0.0f, 0.01f);
+	ex_Chain_Num = 0;
+	ex_Chain_Obj = GameObject("", false);
 	for (int i = 0; i < 5; ++i)
 	{
 		menuPos[i] = Vector2(WIDTH / 2 + 1500 * i, HEIGHT / 2);
@@ -81,12 +83,13 @@ void UI::Loading(Load* load)
 
 	load->LoadTex("Load/Texture/UI/Exit.png", exitTex);
 	load->LoadTex("Load/Texture/UI/ThankYouForPlaying.png", endingTex);
+
 }
 
 void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	const int& maxBomb, const int& get_guide, const Vector2& playerPos,
 	const bool& get_controller_flg, const bool& space_on_flg, int& Get_Tutorial_Flg,
-	const bool& get_move_guide_on, const bool& get_save, int& game_end_set)
+	const bool& get_move_guide_on, const bool& get_save, int& game_end_set, const int ex_Chain)
 {
 	text_Back_Pos = Vector2(playerPos.x, playerPos.y - SIZE - 10);
 	max_Heart_Num = maxHp;
@@ -95,9 +98,9 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	max_Bomb_Num = maxBomb;
 	controller_flg = get_controller_flg;
 	tutorial_flg = Get_Tutorial_Flg;
-	choice_guide = get_guide;
+	choice_Guide = get_guide;
 	space_guide = space_on_flg;
-	move_guide_on = get_move_guide_on;
+	move_Guide_on = get_move_guide_on;
 
 	if (bomb_Ani.num != 0)
 	{
@@ -124,7 +127,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 	bomb_Ani.AnimationOn(bomb_Ani_Num, 4);
 
 	ui_on = false;
-	if (choice_guide == 0 || space_guide || move_guide_on)
+	if (choice_Guide == 0 || space_guide || move_Guide_on)
 	{
 		ui_on = true;
 		ui_on2 = true;
@@ -156,9 +159,9 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 				guide_Size.y = 1.0f;
 			}
 		}
-		if (choice_guide == 0)choice_guide_flg = true;
+		if (choice_Guide == 0)choice_guide_flg = true;
 		if (space_guide)space_guide_flg = true;
-		if (move_guide_on)move_guide = true;
+		if (move_Guide_on)move_Guide = true;
 		if (pal >= 128)
 		{
 			pal = 128;
@@ -180,20 +183,20 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 				ui_on2 = false;
 				choice_guide_flg = false;
 				space_guide_flg = false;
-				move_guide = false;
+				move_Guide = false;
 				pal = 0;
 				guide_Size = Vector2(0.0f, 0.1f);
 			}
 		}
 	}
 	//ƒAƒCƒeƒ€GetUI
-	if (choice_guide > 0 || get_Item_on || save_flg == 2)
+	if (choice_Guide > 0 || get_Item_on || save_flg == 2)
 	{
 		if (!get_Item_on)
 		{
 			get_Item_on = true;
 			blinking_Count.flg = true;
-			if (save_flg != 2)get_Item_guide = choice_guide;
+			if (save_flg != 2)get_Item_Guide = choice_Guide;
 			get_Item_Rand = GetRand(3) + 2;
 		}
 		if (!get_Item_end)
@@ -252,7 +255,7 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 				get_item_Pal = 0;
 				get_Item_end = false;
 				get_Item_on = false;
-				get_Item_guide = -1;
+				get_Item_Guide = -1;
 				blinking_Count = Count();
 				get_item_Size = Vector2();
 				save_flg = 0;
@@ -301,7 +304,6 @@ void UI::Update(const int& hp, const int& playerBomb, const int& maxHp,
 			}
 		}
 	}
-
 
 	//ExitUI
 
@@ -379,13 +381,13 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 	{
 		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(16, 16), guide_Size, 0.0f, button_X, choice_guide_flg, false, true, shake, sc);
 		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(16, 16), guide_Size, 0.0f, button_A, space_guide_flg, false, true, shake, sc);
-		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(32, 16), guide_Size, 0.0f, con_LStick, move_guide, false, true, shake, sc);
+		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(32, 16), guide_Size, 0.0f, con_LStick, move_Guide, false, true, shake, sc);
 	}
 	else
 	{
 		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(16, 16), guide_Size, 0.0f, key_Z, choice_guide_flg, false, true, shake, sc);
-		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(16, 16), guide_Size, 0.0f, key_Space, space_guide_flg, false, true, shake, sc);
-		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(32, 16), guide_Size, 0.0f, key_Arrow, move_guide, false, true, shake, sc);
+		DrawRotaTex(Vector2(guide_Pos.x - 8, guide_Pos.y), Vector2(16, 16), guide_Size, 0.0f, key_Space, space_guide_flg, false, true, shake, sc);
+		DrawRotaTex(Vector2(guide_Pos.x, guide_Pos.y), Vector2(32, 16), guide_Size, 0.0f, key_Arrow, move_Guide, false, true, shake, sc);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, tutorial_Pal);
@@ -397,15 +399,15 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 	if (blinking)
 	{
 		Vector2 get_Item_Pos = Vector2(text_Back_Pos.x + 32, text_Back_Pos.y + 16);
-		if (get_Item_guide == 1)
+		if (get_Item_Guide == 1)
 		{
 			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[0], get_Item_on, false, true, shake, sc);
 		}
-		if (get_Item_guide == 2)
+		if (get_Item_Guide == 2)
 		{
 			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[1], get_Item_on, false, true, shake, sc);
 		}
-		if (get_Item_guide == 4)
+		if (get_Item_Guide == 4)
 		{
 			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[2], get_Item_on, false, true, shake, sc);
 		}
@@ -414,9 +416,12 @@ void UI::Draw(const Vector2& sc, const Vector2& shake)
 			DrawRotaTex(get_Item_Pos, Vector2(64, 16), get_item_Size, 0.0f, get_Item_Tex[3], get_Item_on, false, true, shake, sc);
 		}
 	}
+
+
 	ExitDraw();
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 }
 
 void UI::ExitDraw()

@@ -833,34 +833,6 @@ void Player::Map_Coll(std::vector<std::vector<int>>& collMap, Vector2& sc, bool&
 		sc2.y = game_object.GetPos().y + SIZE - height;
 	}
 
-	/*if (game_object.game.allVec.pos.x >= WIDTH / 2 - SIZE / 2 && game_object.game.allVec.pos.x <= (SIZE * (int)collMap[0].size()) - WIDTH / 2)
-	{
-		sc2.x += vec.x;
-	}
-
-	if (game_object.game.allVec.pos.x < WIDTH / 2 - SIZE / 2)
-	{
-		sc2.x = 0;
-	}
-	if (game_object.game.allVec.pos.x > (SIZE * (int)collMap[0].size()) - WIDTH / 2)
-	{
-		sc2.x = (SIZE * (int)collMap[0].size()) - WIDTH;
-	}
-
-
-	if (game_object.game.allVec.pos.y >= HEIGHT / 2 + SIZE / 2 && game_object.game.allVec.pos.y <= (SIZE * (int)collMap.size()) - HEIGHT / 2)
-	{
-		sc2.y += vec.y;
-	}
-	if (game_object.game.allVec.pos.y < HEIGHT / 2)
-	{
-		sc2.y = 0;
-	}
-	if (game_object.game.allVec.pos.y > (SIZE * (int)collMap.size()) - HEIGHT / 2)
-	{
-		sc2.y = (SIZE * (int)collMap.size()) - HEIGHT;
-	}*/
-
 	for (int i = 0; i < 5; ++i)
 	{
 		if (toge_flg[i])
@@ -1250,7 +1222,14 @@ void Player::Coll(bool& hetstop)
 					ex_Chain = 5;
 				}
 
-				junp_Chain += EXJUMP / ex_Chain;
+				if (ex_Chain == 1)
+				{
+					junp_Chain = EXJUMP;
+				}
+				else
+				{
+					junp_Chain = EXJUMP + ((float)ex_Chain / 4);
+				}
 
 				if (junp_Chain > EXJUMP * 2)
 				{

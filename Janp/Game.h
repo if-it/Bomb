@@ -89,5 +89,6 @@ private:
 	int selectSE;
 	int ketteiSE;
 	int reset_con;
+	int daipanSE;
 };
 

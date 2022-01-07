@@ -26,6 +26,7 @@
 #include"SkillEffectMana.h"
 #include"BombSpawnEffect.h"
 #include"BombBlowEffectMana.h"
+#include "OpeningScene.h"
 
 class GameInclude :public Draw
 {
@@ -74,9 +75,13 @@ protected:
 	FrontMap* frontMap = new FrontMap();
 	AroundEffectMana* aroundEffeMana = new AroundEffectMana();
 	Text* text = new Text();
-	SkillEffectMana* skillEffectMana;
 	BombSpawnEffect* bombSpawnEffect = new BombSpawnEffect();
 	BombBlowEffectMana* bombBlowEffectMana = new BombBlowEffectMana();
+
+
+
+	SkillEffectMana* skillEffectMana;
+	OpeningScene* openingScene;
 
 	bool controllerOnly;
 	bool drawScene;
@@ -119,6 +124,8 @@ protected:
 		OPENING_INIT,
 		OPENING_INIT2,
 		OPENING,
+		TALKINIT,
+		TALK,
 	};
 	int scene;
 	int before_Scene;

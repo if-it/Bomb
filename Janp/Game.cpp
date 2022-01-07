@@ -351,6 +351,10 @@ void Game::Update()
 		text->Init(meta_Data.talk_Flg, load);
 		scene = OPENING_INIT2;
 		player->Set_Rota_Vec(20.0f);
+		openingScene = new OpeningScene();
+		openingScene->Init();
+		openingScene->Loading(load, itemMana->tex, backMap2->stage_Back_Tex);
+		openingScene->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
 		break;
 	case OPENING_INIT2:
 		if (SceneChangeSeb(8))
@@ -360,6 +364,17 @@ void Game::Update()
 		break;
 	case OPENING:
 		Opening_Scene();
+		break;
+	case TALKINIT:
+		text->Init(meta_Data.talk_Flg, load);
+		scene = TALK;
+		break;
+	case TALK:
+		text->Update(meta_Data.talk_Flg, Enter(), load, controller_on);
+		if (text->Get_End())
+		{
+			scene = PLAY;
+		}
 		break;
 	default:
 		break;
@@ -626,12 +641,14 @@ void Game::Bgm_Volume()//BGM音量
 
 void Game::Se_Volume()//SE音量
 {
-	ChangeVolumeSoundMem(255 * option_Data.SE_Volume * option_Data.Main_Volume, selectSE);
-	ChangeVolumeSoundMem(255 * option_Data.SE_Volume * option_Data.Main_Volume, ketteiSE);
-	player->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
-	bombMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
-	exMana->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
-	sideBomb->Se_Volume(255 * option_Data.SE_Volume * option_Data.Main_Volume);
+	int volume = 255 * option_Data.SE_Volume * option_Data.Main_Volume;
+	ChangeVolumeSoundMem(volume, selectSE);
+	ChangeVolumeSoundMem(volume, ketteiSE);
+	player->Se_Volume(volume);
+	bombMana->Se_Volume(volume);
+	exMana->Se_Volume(volume);
+	sideBomb->Se_Volume(volume);
+	text->Se_Volume(volume);
 }
 
 void Game::Title_Scene()
@@ -1035,12 +1052,17 @@ void Game::Play_Scene()
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
 			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(), player->Get_Move_Guide_On(),
-			player->Get_Save_On(), game_end_set);
+			player->Get_Save_On(), game_end_set,player->Get_Ex_Cain());
 		hetStop.Counter(8);
 
 		if (enemy2->Get_Ex_End() && SceneChangeAdd(3))
 		{
 			scene = ENDING;
+		}
+		if (player->Get_Now_Bomb_Num() == 1 && meta_Data.talk_Flg == 102 && ui->Get_Get_Item_End())
+		{
+			scene = TALKINIT;
+			meta_Data.talk_Flg = 103;
 		}
 	}
 	else
@@ -1280,36 +1302,53 @@ void Game::Obj_Coll_Add()//オブジェクト追加するだけ
 void Game::Opening_Scene()
 {
 
-	if (opening_Flg > 1) Play_Scene();
+	if (opening_Flg > 0) Play_Scene();
 	switch (opening_Flg)
 	{
 	case 0:
-	
+		if (openingScene->Update())
+		{
+			if (SceneChangeAdd(5))
+			{
+				++opening_Flg;
+				player->game_object.game.allVec.vec.y = 1.0f;
+			}
+		}
 		break;
 	case 1:
-		if (!player->Get_Air())
+		if (SceneChangeSeb(8))
+		{
+			++opening_Flg;
+		}
+		break;
+	case 2:
+		if (player->game_object.game.allVec.vec.y <= 0)
 		{
 			++opening_Flg;
 			skillEffectMana = new SkillEffectMana();
 			skillEffectMana->Init(player->game_object.GetPos());
 			skillEffectMana->Loading(itemMana->tex, aroundEffeMana->tex);
 			shake_Counter.flg = true;
-			player->game_object.game.allVec.vec.y = 2.0f;
+			load->LoadSound("Load/Sound/SE/daipan.wav", daipanSE);
+			PlaySoundMem(daipanSE, DX_PLAYTYPE_BACK);
+			openingScene->Se_Sound();
 		}
 		break;
-	case 2:
+	case 3:
 		skillEffectMana->Update(sc);
 		if (skillEffectMana->Get_Skill_End())
 		{
 			++opening_Flg;
 		}
 		break;
-	case 3:
+	case 4:
 		text->Update(meta_Data.talk_Flg, Enter(), load, controller_on);
 		if (text->Get_End())
 		{
 			scene = PLAY;
 			delete skillEffectMana;
+			delete openingScene;
+			DeleteSoundMem(daipanSE);
 		}
 		break;
 	default:
@@ -1560,6 +1599,8 @@ void Game::Draw()
 	case PLAYINIT2:
 	case PLAY:
 	case MAPSET:
+	case TALKINIT:
+	case TALK:
 		PlayDraw(sc, shake);
 		break;
 	case OPTION:
@@ -1607,25 +1648,22 @@ void Game::Draw()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		ui->MenuDraw();
 		break;
-	case OPENING_INIT:
 	case OPENING_INIT2:
 	case OPENING:
 		switch (opening_Flg)
 		{
 		case 0:
+			openingScene->Draw();
+			break;
 		case 1:
 		case 2:
-		case 3:
-		case 4:
-			break;
-		case 5:
 			PlayDraw_No_UI(sc, shake);
 			break;
-		case 6:
+		case 3:
 			PlayDraw_No_UI(sc, shake);
 			skillEffectMana->Draw(sc, shake);
 			break;
-		case 7:
+		case 4:
 			PlayDraw_No_UI(sc, shake);
 			text->Draw();
 			break;
@@ -1669,6 +1707,7 @@ void Game::PlayDraw(const Vector2& sc2, const Vector2& shake2)
 
 	PlayDraw_No_UI(sc2, shake2);
 	//UI関連
+	text->Draw();
 	ui->Draw(sc2, shake2);
 }
 

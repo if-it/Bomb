@@ -26,6 +26,7 @@ void Text::Init(int& talk_Scene, Load* load)
 	case 1:
 		filename += "Taiin/Taiin";
 		load->LoadAnimeTex("Load/Texture/Chara/Taiin.png", 2, 2, 1, 200, 250, chara_Tex);
+		load->LoadSound("Load/Sound/SE/Taiin.wav", voice);
 		break;
 	default:
 		break;
@@ -70,6 +71,7 @@ void Text::Init(int& talk_Scene, Load* load)
 	}
 
 	count = 0;
+	count2 = 0;
 	now_Num = 0;
 	talk_Flg = 0;
 	next = talk_Scene;
@@ -79,6 +81,11 @@ void Text::Init(int& talk_Scene, Load* load)
 	animation[0] = 30;
 	animation[1] = 5;
 	ani = Animation();
+	enter_Pos2[0] = enter_Pos;
+	enter_Pos2[1] = enter_Pos;
+	enter_Pos2[1].y += 10;
+	enter_Move = false;
+	dis = true;
 }
 
 void Text::Loading(Load* load)
@@ -100,7 +107,14 @@ void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_contr
 	{
 		animation[0] = GetRand(250) + 10;
 	}
-
+	++count2;
+	if (count2 == 30)
+	{
+		count2 = 0;
+		if (enter_Move)	enter_Move = false;
+		else enter_Move = true;
+		enter_Pos = enter_Pos2[(int)enter_Move];
+	}
 
 
 	switch (talk_Flg)
@@ -115,8 +129,10 @@ void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_contr
 		break;
 	case 1:
 		++count;
-		if (count == 5)
+		if (count == 8)
 		{
+			if (texts[now_Num] != 279)PlaySoundMem(voice, DX_PLAYTYPE_BACK);
+
 			count = 0;
 			text_obj[now_Num].game.dis = true;
 			++now_Num;
@@ -146,6 +162,7 @@ void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_contr
 		switch (talk_Scene)
 		{
 		case 100:
+		case 101:
 			++talk_Scene;
 			break;
 		default:
@@ -172,6 +189,8 @@ void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_contr
 			DeleteGraph(chara_Tex[0]);
 			DeleteGraph(chara_Tex[1]);
 			game_object.game.pal = 0;
+			DeleteSoundMem(voice);
+			dis = false;
 		}
 		break;
 	default:
@@ -184,23 +203,31 @@ void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_contr
 
 }
 
+void Text::Se_Volume(int volume)
+{
+	ChangeVolumeSoundMem(volume, voice);
+}
+
 void Text::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, game_object.game.pal);
-	//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), 1200, 200);
-	DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), text_Back_Tex, true);
-	//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), GetColor(255, 0, 0), true, true, Vector2(), Vector2(), 200, 250);
-	DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), chara_Tex[ani.num], true);
-	DrawTex(enter_Pos, text_Next_Tex[con_Flg], true);
-	if (enter_Count.flg)
+	if (dis)
 	{
-		SetBright(COLOR(150, 150, 150));
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, game_object.game.pal);
+		//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), GetColor(0, 0, 0), true, true, Vector2(), Vector2(), 1200, 200);
+		DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 300), text_Back_Tex, true);
+		//Box(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), GetColor(255, 0, 0), true, true, Vector2(), Vector2(), 200, 250);
+		DrawTex(Vector2(WIDTH / 2 - 600, HEIGHT / 2 + 250), chara_Tex[ani.num], true);
 		DrawTex(enter_Pos, text_Next_Tex[con_Flg], true);
-		SetBright();
+		if (enter_Count.flg)
+		{
+			SetBright(COLOR(150, 150, 150));
+			DrawTex(enter_Pos, text_Next_Tex[con_Flg], true);
+			SetBright();
+		}
+		for (int i = 0; i < (int)texts.size(); ++i)
+		{
+			DrawTex(text_obj[i], text_Tex[texts[i]]);
+		}
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
-	for (int i = 0; i < (int)texts.size(); ++i)
-	{
-		DrawTex(text_obj[i], text_Tex[texts[i]]);
-	}
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

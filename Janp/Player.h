@@ -47,6 +47,7 @@ public:
 	int& Get_Get_Item() { return get_Item; }
 	int& Get_Tutorial_Flg() { return tutorial_flg; }
 	int& Get_Get_Guide() { return get_guide; }
+	int Get_Ex_Cain() { return ex_Chain; }
 	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
@@ -58,6 +59,7 @@ public:
 	bool& Get_Exit_Ex() { return exit_Ex; }
 
 	void Set_Contorl_Flg(const bool& flg) { control_flg = flg; }
+
 
 	bool& Get_Ability1_Flg() { return save_Data.ability1_flg; }
 	bool& Get_Ability2_Flg() { return save_Data.ability2_flg; }
@@ -149,7 +151,7 @@ private:
 	Count blinking_Count;
 
 	bool exit_Ex;
-	float ex_Chain;
+	int ex_Chain;
 	std::vector<bool> exit_Ex_List;
 	float junp_Chain;
 

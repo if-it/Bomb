@@ -11,13 +11,15 @@ public:
 	void Update(const int& hp, const int& playerBomb, const int& maxHp,
 		const int& maxBomb, const int& get_guide, const Vector2& playerPos,
 		const bool& get_controller_flg, const bool& space_on_flg, int& tutorial_Flg,
-		const bool&get_move_guide_on,const bool&get_save, int& game_end_set);
+		const bool&get_move_guide_on,const bool&get_save, int& game_end_set,const int ex_Chain);
 	void Exit(int& game_end_set, bool ending_on);
 	void Menu(Vector2 cou);
 	void Draw(const Vector2& sc, const Vector2& shake);
 	void ExitDraw();
 	void MenuDraw();
 
+	int Get_Get_Item_Guide() { return get_Item_Guide; }
+	bool Get_Get_Item_End() { return get_Item_end; }
 private:
 	int heartTex[4];
 	int bombTex[5];
@@ -32,15 +34,16 @@ private:
 	int get_Item_Tex[4];
 	int exitTex;
 	int endingTex;
-
-
 	int backgroundTex;
+	int num_Tex[11];
+
+
 	int bomb_Ani_Num;
 	int heart_Num;
 	int max_Heart_Num;
 	int bomb_Num;
-	int choice_guide;
-	int get_Item_guide;
+	int choice_Guide;
+	int get_Item_Guide;
 	int max_Bomb_Num;
 	int tutorial_flg;
 	int tutorial_flg2;
@@ -62,8 +65,8 @@ private:
 	bool get_Item_on;
 	bool get_Item_end;
 	bool blinking;
-	bool move_guide_on;
-	bool move_guide;
+	bool move_Guide_on;
+	bool move_Guide;
 	bool end_on;
 	bool ending;
 
@@ -78,5 +81,7 @@ private:
 
 	Count get_Item_Count;
 	Count blinking_Count;
+	GameObject ex_Chain_Obj;
+	int ex_Chain_Num;
 };
 

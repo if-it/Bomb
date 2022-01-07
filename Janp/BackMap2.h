@@ -17,10 +17,11 @@ public:
     void Update(const Vector2& sc);
     void Draw(const Vector2& sc, const Vector2& shake);
     void Draw_Background(const Vector2& sc, const Vector2& shake);
+
+    int stage_Back_Tex[MAP2BACK];
 private:
     std::vector<std::vector<int>> backMap;
     int* tex;
-    int stage_Back_Tex[MAP2BACK];
     int texArray;
     Vector2 back_Pos[MAP2BACK];
     Vector2 back_Pos2[MAP2BACK];
