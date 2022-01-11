@@ -977,12 +977,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 202:
-				stage = 303;
-				break;
-			case 303:
-				stage = 202;
-				break;
+			
 			default:
 				break;
 			}
@@ -992,28 +987,10 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 100:
-				stage = 104;
-				break;
-			case 104:
-				stage = 100;
-				break;
 			case 200:
-				stage = 304;
-				break;
-			case 202:
-				stage = 303;
-				break;
-			case 301:
-				stage = 302;
-				break;
-			case 302:
 				stage = 301;
 				break;
-			case 303:
-				stage = 202;
-				break;
-			case 304:
+			case 301:
 				stage = 200;
 				break;
 			default:
@@ -1025,35 +1002,11 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 101:
-				stage = 102;
-				break;
-			case 102:
-				stage = 101;
-				break;
-			case 103:
-				stage = 104;
-				break;
-			case 104:
-				stage = 103;
-				break;
-			case 200:
-				stage = 201;
-				break;
-			case 201:
-				stage = 200;
-				break;
 			case 300:
 				stage = 301;
 				break;
 			case 301:
 				stage = 300;
-				break;
-			case 302:
-				stage = 304;
-				break;
-			case 304:
-				stage = 302;
 				break;
 			default:
 				break;
@@ -1064,18 +1017,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 100:
-				stage = 101;
-				break;
-			case 101:
-				stage = 100;
-				break;
-			case 300:
-				stage = 303;
-				break;
-			case 303:
-				stage = 300;
-				break;
+			
 			default:
 				break;
 			}
@@ -1085,24 +1027,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 101:
-				stage = 102;
-				break;
-			case 102:
-				stage = 101;
-				break;
-			case 201:
-				stage = 202;
-				break;
-			case 202:
-				stage = 201;
-				break;
-			case 300:
-				stage = 303;
-				break;
-			case 303:
-				stage = 300;
-				break;
+			
 			default:
 				break;
 			}
@@ -1112,24 +1037,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			case 100:
-				stage = 202;
-				break;
-			case 103:
-				stage = 303;
-				break;
-			case 202:
-				stage = 100;
-				break;
-			case 300:
-				stage = 301;
-				break;
-			case 301:
-				stage = 300;
-				break;
-			case 303:
-				stage = 103;
-				break;
+			
 			default:
 				break;
 			}
@@ -1228,7 +1136,7 @@ void Player::Coll(bool& hetstop)
 				}
 				else
 				{
-					junp_Chain = EXJUMP + ((float)ex_Chain / 4);
+					junp_Chain = EXJUMP + ((float)ex_Chain / 3);
 				}
 
 				if (junp_Chain > EXJUMP * 2)

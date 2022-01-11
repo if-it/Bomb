@@ -1059,7 +1059,7 @@ void Game::Play_Scene()
 		{
 			scene = ENDING;
 		}
-		if (player->Get_Now_Bomb_Num() == 1 && meta_Data.talk_Flg == 102 && ui->Get_Get_Item_End())
+		if (meta_Data.talk_Flg == 102 && ui->Get_Get_Item_End())
 		{
 			scene = TALKINIT;
 			meta_Data.talk_Flg = 103;
