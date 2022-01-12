@@ -278,6 +278,10 @@ void Game::Update()
 				enemy4Mana->Save();
 
 				Data_Load();
+				if (player->Get_Max_Bomb_Num() < 1)
+				{
+					scene = OPENING_INIT;
+				}
 			}
 			else
 			{
@@ -491,7 +495,7 @@ void Game::Data_Load()
 	}
 
 	stage = meta_Data.stage;
-
+	flame_Talk_Flg = meta_Data.talk_Flg;
 
 	map->Save_Date_Load(data_Num, stage, load);
 
@@ -997,6 +1001,7 @@ void Game::Title_Scene()
 void Game::Play_Scene()
 {
 	flame_time = time;
+	flame_Talk_Flg = meta_Data.talk_Flg;
 	if (!player->Get_Save_On())
 	{
 
@@ -1052,18 +1057,30 @@ void Game::Play_Scene()
 		ui->Update(player->Get_Now_Hp(), player->Get_Now_Bomb_Num(), player->Get_Max_Hp(),
 			player->Get_Max_Bomb_Num(), player->Get_Get_Guide(), player->game_object.GetPos(),
 			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(), player->Get_Move_Guide_On(),
-			player->Get_Save_On(), game_end_set,player->Get_Ex_Cain());
+			player->Get_Save_On(), game_end_set, player->Get_Ex_Cain());
 		hetStop.Counter(8);
 
 		if (enemy2->Get_Ex_End() && SceneChangeAdd(3))
 		{
 			scene = ENDING;
 		}
-		if (meta_Data.talk_Flg == 102 && ui->Get_Get_Item_End())
+		switch (meta_Data.talk_Flg)
+		{
+		case 102:
+			if (ui->Get_Get_Item_End())meta_Data.talk_Flg = 103;
+			break;
+		case 104:
+		case 105:
+			if (player->Get_Center_Map_Num() == 500)meta_Data.talk_Flg = 106;
+			break;
+		default:
+			break;
+		}
+		if (meta_Data.talk_Flg != flame_Talk_Flg)
 		{
 			scene = TALKINIT;
-			meta_Data.talk_Flg = 103;
 		}
+
 	}
 	else
 	{
@@ -1349,6 +1366,7 @@ void Game::Opening_Scene()
 			delete skillEffectMana;
 			delete openingScene;
 			DeleteSoundMem(daipanSE);
+			opening_Flg = 0;
 		}
 		break;
 	default:

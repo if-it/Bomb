@@ -86,6 +86,8 @@ private:
 	Count hetStop;
 	bool controller_on;
 	int ending_Flg;
+	int flame_Talk_Flg;
+
 	int selectSE;
 	int ketteiSE;
 	int reset_con;

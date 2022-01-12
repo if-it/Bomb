@@ -216,7 +216,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	exit_Ex = false;
 	ex_Chain = 0.0f;
 	junp_Chain = 0.0f;
-
+	center_Map_Num = 0;
 }
 
 void Player::Loading(Load* load)
@@ -1002,6 +1002,12 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
+			case 100:
+				stage = 200;
+				break;
+			case 200:
+				stage = 100;
+				break;
 			case 300:
 				stage = 301;
 				break;
@@ -1064,6 +1070,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 		default:
 			break;
 		}
+		center_Map_Num = mapPoint;
 	}
 }
 
@@ -1125,9 +1132,9 @@ void Player::Coll(bool& hetstop)
 			if (!exit_Ex)
 			{
 				++ex_Chain;
-				if (ex_Chain > 5)
+				if (ex_Chain > 10)
 				{
-					ex_Chain = 5;
+					ex_Chain = 10;
 				}
 
 				if (ex_Chain == 1)

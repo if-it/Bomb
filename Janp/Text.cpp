@@ -165,6 +165,10 @@ void Text::Update(int& talk_Scene, bool enter, Load* load, const bool& get_contr
 		case 101:
 			++talk_Scene;
 			break;
+		case 103:
+			if (get_controller_flg)talk_Scene += 2;
+			else ++talk_Scene;
+			break;
 		default:
 			break;
 		}

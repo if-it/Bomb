@@ -48,6 +48,7 @@ public:
 	int& Get_Tutorial_Flg() { return tutorial_flg; }
 	int& Get_Get_Guide() { return get_guide; }
 	int Get_Ex_Cain() { return ex_Chain; }
+	int Get_Center_Map_Num() { return center_Map_Num; }
 	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
@@ -154,6 +155,7 @@ private:
 	int ex_Chain;
 	std::vector<bool> exit_Ex_List;
 	float junp_Chain;
+	int center_Map_Num;
 
 	struct Save_Data
 	{
