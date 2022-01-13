@@ -17,11 +17,11 @@ public:
 	void Se_Volume(int volume);
 
 	bool Get_End() { return end; }
+	int text_Next_Tex[2];
 private:
 	int text_Tex[TEX_MAX_NUM];
 	int chara_Tex[2];
 	int text_Back_Tex;
-	int text_Next_Tex[2];
 	int voice;
 
 	std::vector<int> texts;

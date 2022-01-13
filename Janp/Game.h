@@ -87,6 +87,7 @@ private:
 	bool controller_on;
 	int ending_Flg;
 	int flame_Talk_Flg;
+	bool ending;
 
 	int selectSE;
 	int ketteiSE;

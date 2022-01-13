@@ -1,12 +1,12 @@
 #pragma once
 #include "Draw.h"
-class RockLihgtEffect :
+class RockLightEffect :
     public Draw
 {
 public:
-    RockLihgtEffect();
-    ~RockLihgtEffect();
-    void Init(const Vector2&pos);
+    RockLightEffect();
+    ~RockLightEffect();
+    void Init(const Vector2& pos);
     void Update();
     void Draw(const Vector2& sc, const Vector2& shake);
 private:

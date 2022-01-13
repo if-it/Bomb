@@ -217,6 +217,7 @@ void Player::Init(std::vector<std::vector<int>>& map, Vector2& sc)
 	ex_Chain = 0.0f;
 	junp_Chain = 0.0f;
 	center_Map_Num = 0;
+	rockObj_Coll = false;
 }
 
 void Player::Loading(Load* load)
@@ -231,6 +232,17 @@ void Player::Loading(Load* load)
 	load->LoadSound("Load/Sound/SE/HpGet.wav", HpGetSE);
 	load->LoadSound("Load/Sound/SE/kettei.wav", ketteiSE);
 	load->LoadSound("Load/Sound/SE/Kanenone.wav", kanenoneSE);
+
+	load->LoadSound("Load/Sound/SE/chain0.wav", chainSE[0]);
+	load->LoadSound("Load/Sound/SE/chain1.wav", chainSE[1]);
+	load->LoadSound("Load/Sound/SE/chain2.wav", chainSE[2]);
+	load->LoadSound("Load/Sound/SE/chain3.wav", chainSE[3]);
+	load->LoadSound("Load/Sound/SE/chain4.wav", chainSE[4]);
+	load->LoadSound("Load/Sound/SE/chain5.wav", chainSE[5]);
+	load->LoadSound("Load/Sound/SE/chain6.wav", chainSE[6]);
+	load->LoadSound("Load/Sound/SE/chain7.wav", chainSE[7]);
+	load->LoadSound("Load/Sound/SE/chain8.wav", chainSE[8]);
+	load->LoadSound("Load/Sound/SE/chain9.wav", chainSE[9]);
 }
 
 void Player::Input(Key* key, Controller* con, bool& time)
@@ -977,7 +989,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -1023,7 +1035,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -1033,7 +1045,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -1043,7 +1055,7 @@ void Player::MapJub(const int& mapPoint, const int& pointNum, bool& stageChange,
 			stageChange = true;
 			switch (stage)
 			{
-			
+
 			default:
 				break;
 			}
@@ -1123,6 +1135,7 @@ void Player::Coll(bool& hetstop)
 	save_Coll = false;
 	float blowX = 0.0f;
 	float blowY = 0.0f;
+	rockObj_Coll = false;
 
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
 	{
@@ -1135,6 +1148,11 @@ void Player::Coll(bool& hetstop)
 				if (ex_Chain > 10)
 				{
 					ex_Chain = 10;
+					PlaySoundMem(chainSE[9], DX_PLAYTYPE_BACK, true);
+				}
+				else
+				{
+					PlaySoundMem(chainSE[ex_Chain - 1], DX_PLAYTYPE_BACK, true);
 				}
 
 				if (ex_Chain == 1)
@@ -1245,6 +1263,10 @@ void Player::Coll(bool& hetstop)
 				hp = max_Hp;
 			}
 		}
+		else if (nameTag == "RockObj")
+		{
+			rockObj_Coll = true;
+		}
 	}
 
 }
@@ -1271,6 +1293,10 @@ void Player::Se_Volume(int volume)
 	ChangeVolumeSoundMem(volume, HpGetSE);
 	ChangeVolumeSoundMem(volume, ketteiSE);
 	ChangeVolumeSoundMem(volume, kanenoneSE);
+	for (int i = 0; i < 10; ++i)
+	{
+		ChangeVolumeSoundMem(volume+40, chainSE[i]);
+	}
 }
 
 

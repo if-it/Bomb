@@ -348,8 +348,8 @@
     <ClCompile Include="RockObject.cpp">
       <Filter>GameObjct\RockObject</Filter>
     </ClCompile>
-    <ClCompile Include="RockLihgtEffect.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="RockLightEffect.cpp">
+      <Filter>GameObjct\RockObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,8 +539,8 @@
     <ClInclude Include="RockObject.h">
       <Filter>GameObjct\RockObject</Filter>
     </ClInclude>
-    <ClInclude Include="RockLihgtEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="RockLightEffect.h">
+      <Filter>GameObjct\RockObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

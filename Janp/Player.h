@@ -52,8 +52,9 @@ public:
 	Vector2 Get_Bomb_Vec() { return bomb_Vec; }
 	bool Get_Save_On() { return save_On; }
 	bool Get_Toge_Flg() { return toge_flg[4]; }
-	bool& Get_Space_On() { return space_On; }
 	bool Get_Die_End() { return die_End; }
+	bool Get_RockObj_Coll(){ return rockObj_Coll; }
+	bool& Get_Space_On() { return space_On; }
 	bool& Get_Switch_On() { return save_Data.switch_On; }
 	bool& Get_Move_Guide_On() { return move_guide_on; }
 	bool& Get_Air() { return air; }
@@ -84,6 +85,7 @@ private:
 	int HpGetSE;
 	int ketteiSE;
 	int kanenoneSE;
+	int chainSE[10];
 
 	std::vector<GameObject> shadow;
 
@@ -156,6 +158,7 @@ private:
 	std::vector<bool> exit_Ex_List;
 	float junp_Chain;
 	int center_Map_Num;
+	bool rockObj_Coll;
 
 	struct Save_Data
 	{

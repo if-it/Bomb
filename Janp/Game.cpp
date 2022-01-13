@@ -42,6 +42,7 @@ Game::~Game()
 	delete text;
 	delete bombSpawnEffect;
 	delete bombBlowEffectMana;
+	delete rockObject;
 
 	coll_List.clear();
 	InitGraph();
@@ -51,7 +52,7 @@ Game::~Game()
 void Game::SystemInit()
 {
 	// マウスを表示状態にする？
-	SetMouseDispFlag(TRUE);
+	SetMouseDispFlag(FALSE);
 
 	//コントローラーしか使えない？
 	ControllerOnly(false);
@@ -145,6 +146,7 @@ void Game::Init()
 	option_One_Shake = false;
 	option_Sound_fle = 0.0f;
 	play_option_Flg = 0;
+	ending = false;
 }
 
 
@@ -175,6 +177,7 @@ bool Game::Loading()
 	aroundEffeMana->Loading(load);
 	text->Loading(load);
 	bombBlowEffectMana->Loading(dust->tex);
+	rockObject->Loading(itemMana->tex);
 
 	load->LoadTex("Load/Texture/haikei.png", haikei);
 	load->LoadTex("Load/Texture/Cursor.png", cursor);
@@ -521,6 +524,7 @@ void Game::Stage_Init()
 	dust->Init(map->map, stage);
 	mapBombMana->Init(map->map);
 	mapSwitch->Init(map->map);
+	rockObject->Init(map->map);
 }
 
 void Game::Meta_Data_Init()
@@ -1010,7 +1014,7 @@ void Game::Play_Scene()
 		{
 			play_option_Flg = 0;
 		}
-		if (play_option_Flg == 0 && game_end_set == 0 && enemy2->Get_Ex_On() == 0 && scene == PLAY)
+		if (play_option_Flg == 0 && game_end_set == 0 && !ending && scene == PLAY)
 		{
 			player->Set_Contorl_Flg(true);
 		}
@@ -1059,8 +1063,12 @@ void Game::Play_Scene()
 			controller_on, player->Get_Space_On(), player->Get_Tutorial_Flg(), player->Get_Move_Guide_On(),
 			player->Get_Save_On(), game_end_set, player->Get_Ex_Cain());
 		hetStop.Counter(8);
-
-		if (enemy2->Get_Ex_End() && SceneChangeAdd(3))
+		if (player->Get_RockObj_Coll())
+		{
+			ending = true;
+			rockObject->game_object.game.dis = false;
+		}
+		if (ending && SceneChangeAdd(3))
 		{
 			scene = ENDING;
 		}
@@ -1116,6 +1124,7 @@ void Game::Play_Scene_Update()
 	mapBombMana->Update(player->Get_Switch_On());
 	mapSwitch->Update();
 	orbitBomb->Update(player->game_object.GetPos(), player->Get_Bomb_Vec(), map->map, player->Get_Ability1_Flg());
+	rockObject->Update();
 
 	exMana->Update();
 	dust->Update();
@@ -1314,6 +1323,9 @@ void Game::Obj_Coll_Add()//オブジェクト追加するだけ
 	{
 		coll_List.push_back(&hpDropItemMana->hpDropItem[i].game_object);
 	}
+
+	//RockObj
+	coll_List.push_back(&rockObject->game_object);
 }
 
 void Game::Opening_Scene()
@@ -1695,9 +1707,10 @@ void Game::Draw()
 
 	if (game_end_set == 2 || game_end_set == 3 || title_Flg == 4 || title_Flg >= 7 || scene == OPTION)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 180);
 		DrawTex(cursor_Pos, cursor, true);
 		DrawRotaTex(Vector2(cursor_Pos2.x + 16.0f, cursor_Pos2.y + 35.0f), Vector2(16.0f, 35.0f), Vector2(1.0f, 1.0f), 0.0f, cursor, true, true);
+		DrawTex(Vector2(WIDTH / 2 - 24, HEIGHT - 150), text->text_Next_Tex[(int)controller_on], true);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
@@ -1754,18 +1767,19 @@ void Game::PlayDraw_No_UI(const Vector2& sc2, const Vector2& shake2)
 	sideBomb->Draw(sc2, shake2);
 	rockAttackMana->Draw(sc2, shake2);
 	hpDropItemMana->Draw(sc2, shake2);
+	rockObject->Draw(sc2, shake2);
 
-	orbitBomb->Draw(sc2, shake2);
+	orbitBomb->Draw(sc2, shake2);//軌道UI
 
 	//手前Map関連
 	map->FrontDraw(sc2, shake2);
-	frontMap->Draw(sc2, shake);
+	frontMap->Draw(sc2, shake2);
 	//エフェクト関連2
 	exMana->Draw(sc2, shake2);
-	dust->Draw(sc2, shake2);
 	rockEffeMana->Draw(sc2, shake2);
 	blockParticleMana->Draw(sc2, shake2);
 	aroundEffeMana->Draw();
 	bombSpawnEffect->Draw(sc2, shake2);
 	bombBlowEffectMana->Draw(sc2, shake2);
+	dust->Draw(sc2, shake2);
 }

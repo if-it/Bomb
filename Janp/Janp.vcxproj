@@ -180,7 +180,7 @@
     <ClCompile Include="RockAttackMana.cpp" />
     <ClCompile Include="RockEffect.cpp" />
     <ClCompile Include="RockEffectMana.cpp" />
-    <ClCompile Include="RockLihgtEffect.cpp" />
+    <ClCompile Include="RockLightEffect.cpp" />
     <ClCompile Include="RockObject.cpp" />
     <ClCompile Include="Save.cpp" />
     <ClCompile Include="SaveMana.cpp" />
@@ -245,7 +245,7 @@
     <ClInclude Include="RockAttackMana.h" />
     <ClInclude Include="RockEffect.h" />
     <ClInclude Include="RockEffectMana.h" />
-    <ClInclude Include="RockLihgtEffect.h" />
+    <ClInclude Include="RockLightEffect.h" />
     <ClInclude Include="RockObject.h" />
     <ClInclude Include="Save.h" />
     <ClInclude Include="SaveMana.h" />

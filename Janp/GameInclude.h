@@ -27,6 +27,7 @@
 #include"BombSpawnEffect.h"
 #include"BombBlowEffectMana.h"
 #include "OpeningScene.h"
+#include"RockObject.h"
 
 class GameInclude :public Draw
 {
@@ -77,7 +78,7 @@ protected:
 	Text* text = new Text();
 	BombSpawnEffect* bombSpawnEffect = new BombSpawnEffect();
 	BombBlowEffectMana* bombBlowEffectMana = new BombBlowEffectMana();
-
+	RockObject* rockObject = new RockObject();
 
 
 	SkillEffectMana* skillEffectMana;
