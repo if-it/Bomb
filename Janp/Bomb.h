@@ -10,7 +10,7 @@ public:
 	Bomb();
 	~Bomb();
 	void Init();
-	void Update(bool& shakeflg, Controller* con,ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec);
+	void Update(bool* shakeflg, Controller* con,ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec);
 	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
 	void Coll(bool& shakeflg, Controller* con);
 	void Coll_End_Set(ExplosionMana* ex);
@@ -18,6 +18,7 @@ public:
 	void Draw(const Vector2& sc, const Vector2& shake, const int* bombTex);
 
 	void MapJub(const int& mapPoint, const int& pointNum);
+	void Explosin();
 	Animation bombAni;
 	int time;
 	bool playerSpawn;
@@ -26,6 +27,8 @@ public:
 	bool stopMove;
 	int damage;
 
-
+	ExplosionMana* ex_mana;
+	bool* shake_flg;
+	Controller* con_P;
 };
 

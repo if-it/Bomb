@@ -23,8 +23,11 @@ void Bomb::Init()
 	stopMove = false;
 }
 
-void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
+void Bomb::Update(bool* shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
 {
+	ex_mana = ex;
+	con_P = con;
+	shake_flg = shakeflg;
 	time++;
 	if (game_object.game.dis)
 	{
@@ -46,10 +49,8 @@ void Bomb::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool
 
 		if (bombAni.OneAnimation(28, 8))
 		{
-			game_object.game.dis = false;
-			ex->ExSpawn(game_object, damage,playerSpawn);
-			shakeflg = true;
-			con->Shake(1000, 200);
+			Explosin();
+			ex_mana->ExSpawn(game_object, damage,playerSpawn);
 		}
 
 		if (time == 80)
@@ -110,7 +111,7 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 		{
 			game_object.game.allVec.vec.y = 0;
 
-			if (game_object.game.allVec.vec.x > 0)
+			/*if (game_object.game.allVec.vec.x > 0)
 			{
 				game_object.game.allVec.vec.x -= 0.2f;
 			}
@@ -122,9 +123,9 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 				(game_object.game.allVec.vec.x > 0 && game_object.game.allVec.vec.x < 0.2f))
 			{
 				game_object.game.allVec.vec.x = 0;
-			}
-
-
+			}*/
+			Explosin();
+			ex_mana->ExSpawn(game_object, damage, playerSpawn);
 		}
 		if (NEEDLE)
 		{
@@ -157,6 +158,13 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 	}
 }
 
+void Bomb::Explosin()
+{
+	game_object.game.dis = false;
+	*shake_flg = true;
+	con_P->Shake(1000, 300);
+}
+
 void Bomb::Coll(bool& shakeflg, Controller* con)
 {
 	for (int i = 0; i < (int)game_object.coll_Obj_List.size(); ++i)
@@ -166,19 +174,14 @@ void Bomb::Coll(bool& shakeflg, Controller* con)
 		{
 			if (!playerOneColl)
 			{
-				shakeflg = true;
-				game_object.game.dis = false;
+				Explosin();
 				exSpawn = true;
-				con->Shake(1000, 300);
 			}
 		}
 		if (nameTag == "Enemy1" || nameTag == "Enemy2" || nameTag == "Enemy3" || nameTag == "Enemy4" || nameTag == "RockAttack")
 		{
-
-			shakeflg = true;
-			game_object.game.dis = false;
+			Explosin();
 			exSpawn = true;
-			con->Shake(1000, 300);
 		}
 		if (nameTag == "Ability")
 		{

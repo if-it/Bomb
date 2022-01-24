@@ -35,8 +35,11 @@ void BombMana::Loading(const int& bombSoundC, const int* bombTexC)
 
 
 
-void BombMana::Update(bool& shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
+void BombMana::Update(bool* shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
 {
+	ex_mana = ex;
+	con_P = con;
+	shake_flg = shakeflg;
 	for (int i = 0; i < (int)bomb.size(); ++i)
 	{
 		bomb[i].Update(shakeflg, con, ex, world_Time, flame_time, ability_Vec);
@@ -76,7 +79,9 @@ void BombMana::BombSpawn(const Vector2& set_pos, const Vector2& set_vec, const b
 	InitBomb.playerOneColl = playerSp;
 	InitBomb.damage = damage;
 	InitBomb.game_object.game.num =(int)bomb.size();
-
+	InitBomb.ex_mana = ex_mana;
+	InitBomb.con_P = con_P;
+	InitBomb.shake_flg = shake_flg;
 	PlaySoundMem(bombSound, DX_PLAYTYPE_BACK, true);
 
 	bomb.push_back(InitBomb);

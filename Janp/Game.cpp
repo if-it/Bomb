@@ -1112,7 +1112,7 @@ void Game::Play_Scene_Update()
 	enemy1Mana->Update(rockEffeMana, hpDropItemMana);
 	enemy3Mana->Update(rockEffeMana, hpDropItemMana);
 	enemy4Mana->Update(rockEffeMana, hpDropItemMana);
-	bombMana->Update(shake_Counter.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
+	bombMana->Update(&shake_Counter.flg, con, exMana, time, flame_time, player->Get_Bomb_Vec());
 	enemy2->Update(player->game_object.game.allVec.pos, coll, shake_Counter.flg, sc, rockAttackMana, exMana);
 	rockAttackMana->Update();
 	sideBomb->Update(con);
