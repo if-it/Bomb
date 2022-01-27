@@ -21,6 +21,7 @@ void Bomb::Init()
 	damage = 1;
 	exSpawn = false;
 	stopMove = false;
+	type = 0;
 }
 
 void Bomb::Update(bool* shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec)
@@ -50,7 +51,7 @@ void Bomb::Update(bool* shakeflg, Controller* con, ExplosionMana* ex, const bool
 		if (bombAni.OneAnimation(28, 8))
 		{
 			Explosin();
-			ex_mana->ExSpawn(game_object, damage,playerSpawn);
+			ex_mana->ExSpawn(game_object, damage, playerSpawn);
 		}
 
 		if (time == 80)
@@ -60,8 +61,9 @@ void Bomb::Update(bool* shakeflg, Controller* con, ExplosionMana* ex, const bool
 	}
 }
 
-void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap)
+void Bomb::Map_Coll_Update(std::vector<std::vector<int>>& collMap, int num)
 {
+	type = num;
 	if (game_object.game.dis)Map_Coll(collMap);
 }
 
@@ -124,8 +126,11 @@ void Bomb::MapJub(const int& mapPoint, const int& pointNum)
 			{
 				game_object.game.allVec.vec.x = 0;
 			}*/
-			Explosin();
-			ex_mana->ExSpawn(game_object, damage, playerSpawn);
+			if (type == 0)
+			{
+				Explosin();
+				ex_mana->ExSpawn(game_object, damage, playerSpawn);
+			}
 		}
 		if (NEEDLE)
 		{
@@ -197,7 +202,7 @@ void Bomb::Coll_End_Set(ExplosionMana* ex)
 	if (exSpawn)
 	{
 		exSpawn = false;
-		ex->ExSpawn(game_object, damage,playerSpawn);
+		ex->ExSpawn(game_object, damage, playerSpawn);
 	}
 }
 

@@ -14,7 +14,7 @@ void Enemy1::Init(Vector2 pos)
 	game_object.color = COLOR(255, 0, 0);
 	game_object.game.allVec.pos = pos;
 	ex_Invincible = Count();
-	hp = 8;
+	hp = 6;
 	fVec = Vector2();
 	move = Count();
 	move_End = Count();

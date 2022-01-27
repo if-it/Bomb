@@ -1721,7 +1721,8 @@ void Game::Draw()
 
 bool Game::Enter()
 {
-	if (con->TrlggerBotton(con->X) || key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
+	if (con->TrlggerBotton(con->X) || con->TrlggerBotton(con->A) || key->KeyTrigger(KEY_INPUT_SPACE) ||
+		key->KeyTrigger(KEY_INPUT_Z) || key->KeyTrigger(KEY_INPUT_RETURN))
 	{
 		PlaySoundMem(ketteiSE, DX_PLAYTYPE_BACK, true);
 		return true;

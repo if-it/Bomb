@@ -283,7 +283,7 @@ void Player::Input(Key* key, Controller* con, bool& time)
 
 			bomb_Vec = Vector2(-1.0f, -0.15f);
 		}
-		if ((key->keyFlame(KEY_INPUT_SPACE) > 0 || con->FlameBotton(con->A) > 0))
+		if ((key->KeyTrigger(KEY_INPUT_SPACE) > 0 || con->TrlggerBotton(con->A) > 0))
 		{
 			bomb_Spawn = true;
 		}

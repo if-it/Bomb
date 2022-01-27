@@ -10,8 +10,8 @@ public:
 	Bomb();
 	~Bomb();
 	void Init();
-	void Update(bool* shakeflg, Controller* con,ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec);
-	void Map_Coll_Update(std::vector<std::vector<int>>& collMap);
+	void Update(bool* shakeflg, Controller* con, ExplosionMana* ex, const bool& world_Time, const bool& flame_time, const Vector2& ability_Vec);
+	void Map_Coll_Update(std::vector<std::vector<int>>& collMap, int num = 0);
 	void Coll(bool& shakeflg, Controller* con);
 	void Coll_End_Set(ExplosionMana* ex);
 	void Map_Coll(std::vector<std::vector<int>>& collMap);
@@ -26,6 +26,7 @@ public:
 	bool exSpawn;
 	bool stopMove;
 	int damage;
+	int type;
 
 	ExplosionMana* ex_mana;
 	bool* shake_flg;
